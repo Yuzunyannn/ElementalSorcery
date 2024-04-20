@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.computer.soft;
+package yuzunyannn.elementalsorcery.computer.softs;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -25,6 +25,7 @@ import yuzunyannn.elementalsorcery.computer.render.DragInteractor;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.computer.render.GStringBtn;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
+import yuzunyannn.elementalsorcery.computer.soft.OPSender;
 import yuzunyannn.elementalsorcery.nodegui.GActionEaseOutBack;
 import yuzunyannn.elementalsorcery.nodegui.GActionMoveBy;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
@@ -41,7 +42,7 @@ import yuzunyannn.elementalsorcery.util.LambdaReference;
 import yuzunyannn.elementalsorcery.util.item.BigItemStack;
 
 @SideOnly(Side.CLIENT)
-public class APPTutorialGPad extends GImage {
+public class AppTutorialGPad extends GImage {
 
 	public static final int ACT_DESCRIBE = 0;
 	public static final int ACT_CRAFT = 1;
@@ -60,7 +61,7 @@ public class APPTutorialGPad extends GImage {
 	protected GNode optionContainer;
 	protected double optionWidth = 26;
 
-	public APPTutorialGPad(Tutorial tutorial, AppTutorialGui gui, int w, int h) {
+	public AppTutorialGPad(Tutorial tutorial, AppTutorialGui gui, int w, int h) {
 		super(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_P1);
 
 		this.gui = gui;
@@ -84,13 +85,13 @@ public class APPTutorialGPad extends GImage {
 		setName("Tutorial Pad");
 		double topLength = 14;
 
-		GImage line1 = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L2);
+		GImage line1 = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L1_V);
 		line1.setSplit9();
 		line1.setSize(3, getHeight());
 		line1.setPosition(optionWidth, 0);
 		line1.setColorRef(gui.detailColor);
 		addChild(line1);
-		GImage line2 = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L1);
+		GImage line2 = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L1_H);
 		line2.setSplit9();
 		line2.setSize(getWidth(), 3);
 		line2.setPosition(0, topLength);
@@ -427,9 +428,9 @@ public class APPTutorialGPad extends GImage {
 	protected void printBuilding() {
 		TutorialBuilding building = tutorial.getBuilding();
 		if (building == null) return;
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setString("ptbd", tutorial.getId());
-		gui.trySendOperation(nbt);
+		OPSender sender = new OPSender("ptbd");
+		sender.write(sender.args(1), tutorial.getId());
+		gui.trySendOperation(sender.tag());
 	}
 
 }

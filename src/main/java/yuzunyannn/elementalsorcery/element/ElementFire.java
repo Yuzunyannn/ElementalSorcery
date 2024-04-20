@@ -105,7 +105,7 @@ public class ElementFire extends ElementCommon {
 			if (world.isRemote) return;
 			entity.setFire((int) (20 * MathHelper.sqrt(storage.getPower())));
 			float dmg = MathHelper.sqrt(storage.getPower()) / 4;
-			DamageSource ds = DamageHelper.getDamageSource(storage, caster.asEntityLivingBase(), null);
+			DamageSource ds = DamageHelper.getDamageSource(storage, caster.toEntityLiving(), null);
 			entity.attackEntityFrom(ds, dmg);
 			return;
 		}
@@ -135,7 +135,7 @@ public class ElementFire extends ElementCommon {
 			IElementInventory eInv = ElementHelper.getElementInventory(tileEntity);
 			if (eInv != null && !ElementHelper.isEmpty(eInv)) {
 				world.setBlockToAir(pos);
-				BlockElementContainer.doExploded(world, pos, eInv, caster.asEntityLivingBase());
+				BlockElementContainer.doExploded(world, pos, eInv, caster.toEntityLiving());
 				try {
 					block.dropBlockAsItemWithChance(world, pos, state, 0.75f, 0);
 				} catch (Exception e) {}
@@ -145,7 +145,7 @@ public class ElementFire extends ElementCommon {
 
 		if (block instanceof BlockTNT) {
 			((BlockTNT) block).explode(world, pos, state.withProperty(BlockTNT.EXPLODE, true),
-					caster.asEntityLivingBase());
+					caster.toEntityLiving());
 			return;
 		}
 

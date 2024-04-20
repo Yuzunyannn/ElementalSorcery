@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.computer.soft;
+package yuzunyannn.elementalsorcery.computer.softs;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class AppTutorialGui extends AppGuiCommon {
 	protected Color detailObjColor;
 	protected int currIndex;
 	protected final AppTutorial app;
-	protected APPTutorialGPad currTutorial;
+	protected AppTutorialGPad currTutorial;
 
 	protected class LevelBtn extends GImage {
 
@@ -110,7 +110,7 @@ public class AppTutorialGui extends AppGuiCommon {
 		avigation.setPosition(0, bar.getHeight());
 		scene.addChild(avigation);
 
-		GImage line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L1);
+		GImage line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L1_H);
 		line.setSplit9();
 		line.setSize(naviWidth, 3);
 		line.setPosition(0, 8);
@@ -155,7 +155,7 @@ public class AppTutorialGui extends AppGuiCommon {
 		detailNode.setPosition(naviWidth, bar.getHeight() + 12);
 		scene.addChild(detailNode);
 
-		line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L1);
+		line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L1_H);
 		line.setSplit9();
 		line.setSize(detailNode.getWidth(), 3);
 		line.setPosition(0, 9);
@@ -273,7 +273,7 @@ public class AppTutorialGui extends AppGuiCommon {
 			double yBase = height;
 
 			if (i > 0) {
-				GImage line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L3);
+				GImage line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L2_H);
 				line.setSize(1, detailContainer.getHeight() / 1.5);
 				line.setAnchor(0.5, 0.5, 0);
 				line.setPosition(xBase - padding, yBase);
@@ -388,7 +388,7 @@ public class AppTutorialGui extends AppGuiCommon {
 		closeTutorial();
 		int w = runtime.getWidth();
 		int h = runtime.getHeight();
-		currTutorial = new APPTutorialGPad(tutorial, this, w, h);
+		currTutorial = new AppTutorialGPad(tutorial, this, w, h);
 		currTutorial.setPosition(0, 0, 500);
 		currTutorial.setGaps(true);
 		this.scene.addChild(currTutorial);

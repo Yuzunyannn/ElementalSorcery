@@ -32,7 +32,7 @@ public class DungeonFuncPotion extends GameFuncTimes {
 	protected void execute(GameFuncExecuteContext context) {
 		Vec3d vec = context.getSrcObj().getObjectPosition();
 		World world = context.getWorld();
-		WorldHelper.applyPotion(world, vec, context.getSrcObj().asEntityLivingBase(), effects, isLingering);
+		WorldHelper.applyPotion(world, vec, context.getSrcObj().toEntityLiving(), effects, isLingering);
 	}
 
 	@Override

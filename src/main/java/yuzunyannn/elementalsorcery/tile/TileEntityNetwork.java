@@ -16,11 +16,12 @@ import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.tile.ICanSync;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
+import yuzunyannn.elementalsorcery.util.helper.INBTSS;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 import yuzunyannn.elementalsorcery.util.helper.NBTSaver;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
-public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveStatusable {
+public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveStatusable, INBTSS {
 
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {
@@ -32,7 +33,9 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 
 	@Override
 	final public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		readUpdateData(new NBTSender(pkt.getNbtCompound()));
+		NBTSender sender = new NBTSender(pkt.getNbtCompound());
+		if (sender.has("~)")) recvUpdateData(sender);
+		else readUpdateData(sender);
 	}
 
 	@Override
@@ -68,6 +71,7 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 
 	@Override
 	public boolean isAlive() {
+		if (world == null) return false;
 		return !this.isInvalid();
 	}
 
@@ -105,6 +109,7 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 
 	public void updateToClient(NBTTagCompound custom) {
 		if (world.isRemote) return;
+		custom.setBoolean("~)", true);
 		updateToClient(new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), custom));
 	}
 
@@ -119,19 +124,26 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 		}
 	}
 
+	@Override
 	public void writeSaveData(INBTWriter writer) {
 
 	}
 
+	@Override
 	public void readSaveData(INBTReader reader) {
 
 	}
 
+	@Override
 	public void writeUpdateData(INBTWriter writer) {
 
 	}
 
+	@Override
 	public void readUpdateData(INBTReader reader) {
+	}
+
+	public void recvUpdateData(INBTReader reader) {
 
 	}
 

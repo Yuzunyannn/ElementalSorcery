@@ -107,7 +107,7 @@ public class FCMAttack extends FairyCubeModule {
 		float damage = 1 + (float) Math.pow(level * 0.75, 1.2);
 
 		if (status == 2) damage = damage * 3;
-		DamageSource ds = DamageHelper.getMagicDamageSource(master, fairyCube.asEntity());
+		DamageSource ds = DamageHelper.getMagicDamageSource(master, fairyCube.toEntity());
 		damage = (float) fairyCube.getAttribute("attack:damage", damage);
 		double range = fairyCube.getAttribute("attack:range");
 

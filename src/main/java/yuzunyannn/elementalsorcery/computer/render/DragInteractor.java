@@ -37,6 +37,9 @@ public class DragInteractor implements IGInteractor {
 
 		Vec3d dVec = worldPos.subtract(lastVec);
 		lastVec = worldPos;
+
+		if (moveNode == null) return;
+		
 		node = moveNode;
 		double dx = dVec.x;
 		double dy = dVec.y;

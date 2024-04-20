@@ -18,9 +18,38 @@ public class DataDetectableMonitor implements IDataDetectableMonitor {
 		public NodeA(IDataDetectable unit) {
 			this.unit = unit;
 		}
+
+		public boolean needCheck(DataDetectableMonitor self, NodeB nodeB) {
+			return true;
+		}
 	}
 
-	protected static class NodeB implements IDataRef {
+	protected static class NodeADirty extends NodeA {
+
+		public NodeADirty(IDataDetectable unit) {
+			super(unit);
+		}
+
+		public boolean needCheck(DataDetectableMonitor self, NodeB nodeB) {
+			return nodeB.dirtyVer != this.dirtyVer;
+		}
+	}
+
+	protected static class NodeATick extends NodeA {
+
+		public final int dTick;
+
+		public NodeATick(IDataDetectable unit, int tick) {
+			super(unit);
+			this.dTick = tick;
+		}
+
+		public boolean needCheck(DataDetectableMonitor self, NodeB nodeB) {
+			return self.tick % this.dTick == 0 || nodeB.dirtyVer != this.dirtyVer;
+		}
+	}
+
+	protected static final class NodeB implements IDataRef {
 		int dirtyVer = 0;
 		Object obj;
 
@@ -40,6 +69,7 @@ public class DataDetectableMonitor implements IDataDetectableMonitor {
 	}
 
 	protected Map<String, NodeA> map = new HashMap<>();
+	protected int tick;
 	public final String detectKey;
 
 	public DataDetectableMonitor(String detectKey) {
@@ -52,9 +82,13 @@ public class DataDetectableMonitor implements IDataDetectableMonitor {
 	}
 
 	public void add(String key, IDataDetectable unit, boolean always) {
-		NodeA a = new NodeA(unit);
-		map.put(key, a);
-		if (always) a.dirtyVer = -1;
+		if (always) map.put(key, new NodeA(unit));
+		else map.put(key, new NodeADirty(unit));
+	}
+
+	public void add(String key, IDataDetectable unit, int interval) {
+		if (interval > 0) map.put(key, new NodeATick(unit, interval));
+		else add(key, unit, true);
 	}
 
 	@Override
@@ -72,6 +106,7 @@ public class DataDetectableMonitor implements IDataDetectableMonitor {
 
 	@Override
 	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
+		tick++;
 		DetectDataset dataset = watcher.getOrCreateDetectObject(detectKey, DetectDataset.class, FACTORY);
 		NBTTagCompound changes = null;
 		Iterator<Entry<String, NodeA>> iter = map.entrySet().iterator();
@@ -80,7 +115,7 @@ public class DataDetectableMonitor implements IDataDetectableMonitor {
 			NodeA nodeA = entry.getValue();
 			NodeB nodeB = dataset.map.get(entry.getKey());
 			if (nodeB == null) dataset.map.put(entry.getKey(), nodeB = new NodeB());
-			if (nodeA.dirtyVer == -1 || nodeB.dirtyVer != nodeA.dirtyVer) {
+			if (nodeA.needCheck(this, nodeB)) {
 				nodeB.dirtyVer = nodeA.dirtyVer;
 				NBTBase change = nodeA.unit.detectChanges(nodeB);
 				if (change != null) {

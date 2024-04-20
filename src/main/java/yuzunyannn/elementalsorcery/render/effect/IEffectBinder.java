@@ -43,7 +43,7 @@ public interface IEffectBinder {
 
 		@Override
 		public Vec3d getDirection() {
-			Entity entity = wo.asEntity();
+			Entity entity = wo.toEntity();
 			if (entity == null) return new Vec3d(0, 1, 0);
 			else return entity.getLookVec();
 		}

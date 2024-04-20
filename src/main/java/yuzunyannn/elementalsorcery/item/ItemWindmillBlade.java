@@ -247,7 +247,7 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
 		for (EntityLivingBase entity : entities) {
 			if (attacker != null && EntityHelper.isSameTeam(attacker, entity)) continue;
-			DamageSource ds = DamageSource.causeThrownDamage(eBlate.asEntity(), attacker);
+			DamageSource ds = DamageSource.causeThrownDamage(eBlate.toEntity(), attacker);
 			pitchDoAttackEntity(entity, vec, ds, bladeDamage * (1 + eBlate.getAmplifier() * 0.1f));
 		}
 	}

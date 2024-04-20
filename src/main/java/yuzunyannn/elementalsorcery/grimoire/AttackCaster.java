@@ -133,7 +133,7 @@ public class AttackCaster implements ICaster, ICasterObject {
 
 	@Override
 	public DamageSource iWantDamageSource(ElementStack element) {
-		return DamageHelper.getDamageSource(element, attacker, this.asEntity());
+		return DamageHelper.getDamageSource(element, attacker, this.toEntity());
 	}
 
 	@Override
@@ -161,12 +161,17 @@ public class AttackCaster implements ICaster, ICasterObject {
 	}
 
 	@Override
-	public TileEntity asTileEntity() {
+	public boolean isAlive() {
+		return true;
+	}
+
+	@Override
+	public TileEntity toTileEntity() {
 		return null;
 	}
 
 	@Override
-	public Entity asEntity() {
+	public Entity toEntity() {
 		return null;
 	}
 

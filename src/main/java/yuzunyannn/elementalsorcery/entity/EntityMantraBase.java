@@ -69,6 +69,11 @@ public abstract class EntityMantraBase extends Entity
 	}
 
 	@Override
+	public boolean isAlive() {
+		return !isDead;
+	}
+
+	@Override
 	public void setDead() {
 		if (!isDead) this.onDead();
 		super.setDead();
@@ -226,7 +231,7 @@ public abstract class EntityMantraBase extends Entity
 	public ElementStack iWantAnyElementSample(int seed) {
 		seed = Math.abs(seed);
 		IElementInventory eInv = this.getElementInventory();
-		Entity userEntity = getUser() != null ? getUser().asEntity() : null;
+		Entity userEntity = getUser() != null ? getUser().toEntity() : null;
 		if (eInv == null || eInv.getSlots() == 0) {
 			if (EntityHelper.isCreative(userEntity))
 				return new ElementStack(Element.getElementFromIndex(seed, true), 1000, 1000);
@@ -244,7 +249,7 @@ public abstract class EntityMantraBase extends Entity
 
 	@Override
 	public ElementStack iWantSomeElement(ElementStack need, boolean consume) {
-		Entity userEntity = getUser() != null ? getUser().asEntity() : null;
+		Entity userEntity = getUser() != null ? getUser().toEntity() : null;
 		if (EntityHelper.isCreative(userEntity)) {
 			need = need.copy();
 			need.setPower(1000);
@@ -312,7 +317,7 @@ public abstract class EntityMantraBase extends Entity
 	public BlockPos iWantFoothold() {
 		IWorldObject user = this.getUser();
 		if (user != null) {
-			EntityLivingBase entityUser = user.asEntityLivingBase();
+			EntityLivingBase entityUser = user.toEntityLiving();
 			if (entityUser != null) return CasterHelper.findFoothold(entityUser, 128);
 		}
 		BlockPos pos = this.getPosition();
@@ -328,7 +333,7 @@ public abstract class EntityMantraBase extends Entity
 	public WorldTarget iWantBlockTarget() {
 		IWorldObject user = this.getUser();
 		if (user != null) {
-			EntityLivingBase entityUser = user.asEntityLivingBase();
+			EntityLivingBase entityUser = user.toEntityLiving();
 			if (entityUser != null) return CasterHelper.findLookBlockResult(entityUser, 128, false);
 		}
 		BlockPos pos = this.getPosition();
@@ -342,7 +347,7 @@ public abstract class EntityMantraBase extends Entity
 	public <T extends Entity> WorldTarget iWantEntityTarget(Class<T> cls) {
 		IWorldObject user = this.getUser();
 		if (user != null) {
-			EntityLivingBase entityUser = user.asEntityLivingBase();
+			EntityLivingBase entityUser = user.toEntityLiving();
 			if (entityUser != null) return CasterHelper.findLookTargetResult(cls, entityUser, 128);
 		}
 		final int size = 2;
@@ -359,7 +364,7 @@ public abstract class EntityMantraBase extends Entity
 	public Vec3d iWantDirection() {
 		IWorldObject user = this.getUser();
 		if (user != null) {
-			Entity entityUser = user.asEntity();
+			Entity entityUser = user.toEntity();
 			if (entityUser != null) return entityUser.getLookVec();
 		}
 		return new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).normalize();
@@ -368,7 +373,7 @@ public abstract class EntityMantraBase extends Entity
 	@Override
 	public DamageSource iWantDamageSource(ElementStack eStack) {
 		IWorldObject user = this.getUser();
-		EntityLivingBase src = user == null ? null : user.asEntityLivingBase();
+		EntityLivingBase src = user == null ? null : user.toEntityLiving();
 		return DamageHelper.getDamageSource(eStack, src == null ? this : src, this);
 	}
 
@@ -409,12 +414,12 @@ public abstract class EntityMantraBase extends Entity
 	}
 
 	@Override
-	public TileEntity asTileEntity() {
+	public TileEntity toTileEntity() {
 		return null;
 	}
 
 	@Override
-	public Entity asEntity() {
+	public Entity toEntity() {
 		return this;
 	}
 

@@ -41,7 +41,9 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
+import yuzunyannn.elementalsorcery.computer.WideNetworkCommon;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
+import yuzunyannn.elementalsorcery.computer.softs.TaskNetworkGui;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
@@ -50,6 +52,7 @@ import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
+import yuzunyannn.elementalsorcery.util.Stopwatch;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
@@ -57,6 +60,7 @@ import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 @SideOnly(Side.CLIENT)
 public class EventClient {
 
+	static public final Stopwatch bigComputeWatch = new Stopwatch();
 	static public final Random rand = new Random();
 
 	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
@@ -107,6 +111,7 @@ public class EventClient {
 	static public void onTick(TickEvent.ClientTickEvent event) {
 		if (mc.isGamePaused()) return;
 		if (event.phase == Phase.START) {
+			bigComputeWatch.clear();
 			if (!PocketWatchClient.isActive()) return;
 			PocketWatchClient.tick();
 			Effect.updateGuiEffects();
@@ -139,6 +144,7 @@ public class EventClient {
 			RenderItemElementCrack.updateRenderTextureFlag = false;
 		}
 		ComputerScreenRender.doUpdate();
+		WideNetworkCommon.instanceClient.update();
 	}
 
 	/** 获取渲染旋转角度 */
@@ -213,8 +219,11 @@ public class EventClient {
 
 	@SubscribeEvent
 	static public void playerExit(PlayerEvent.PlayerLoggedOutEvent e) {
-		renderList.clear();
-		Effect.clear();
+		Minecraft.getMinecraft().addScheduledTask(() -> {
+			renderList.clear();
+			Effect.clear();
+			TaskNetworkGui.lastCacheUDID = null;
+		});
 	}
 
 	@SubscribeEvent
@@ -254,8 +263,7 @@ public class EventClient {
 		if (!world.getWorldBorder().contains(blockpos)) return;
 
 		try {
-			((IRenderOutline<TileEntity>) renderOutline).renderTileOutline(tileEntity, event.getPlayer(), blockpos,
-					event.getPartialTicks());
+			((IRenderOutline<TileEntity>) renderOutline).renderTileOutline(tileEntity, event.getPlayer(), blockpos, event.getPartialTicks());
 			event.setCanceled(true);
 		} catch (ClassCastException e) {}
 	}
@@ -269,8 +277,7 @@ public class EventClient {
 		ItemStack stack = event.getItemStack();
 		Item item = stack.getItem();
 		// 即将删除告示
-		if (item.getClass().getAnnotation(Deprecated.class) != null
-				|| Block.getBlockFromItem(item).getClass().getAnnotation(Deprecated.class) != null) {
+		if (item.getClass().getAnnotation(Deprecated.class) != null || Block.getBlockFromItem(item).getClass().getAnnotation(Deprecated.class) != null) {
 			event.getToolTip().add(TextFormatting.GOLD + "该道具即将被移除。");
 			event.getToolTip().add(TextFormatting.GOLD + "This item will be removed soon.");
 		}
@@ -297,8 +304,8 @@ public class EventClient {
 				double f = 0;
 				for (ElementStack estack : estacks) {
 					if (estack.isEmpty()) continue;
-					String str = String.format(TextFormatting.AQUA + "%sx%s" + TextFormatting.YELLOW + " P:%d",
-							estack.getDisplayName(), String.valueOf(estack.getCount()), estack.getPower());
+					String str = String.format(TextFormatting.AQUA + "%sx%s" + TextFormatting.YELLOW
+							+ " P:%d", estack.getDisplayName(), String.valueOf(estack.getCount()), estack.getPower());
 					double fr = ElementTransition.toFragment(estack);
 					tooltip.add(str + TextFormatting.LIGHT_PURPLE + " EF:" + TextHelper.toAbbreviatedNumber(fr));
 					ElementTransition et = estack.getElement().getTransition();
@@ -317,10 +324,9 @@ public class EventClient {
 				int complex = teInfo.complex();
 				for (ElementStack estack : estacks) {
 					if (estack.isEmpty()) continue;
-					ElementStack rStack = estack.copy().onDeconstruct(Minecraft.getMinecraft().world, stack, complex,
-							Element.DP_ALTAR);
-					String str = String.format(TextFormatting.DARK_AQUA + "%sx%s" + TextFormatting.YELLOW + " P:%d",
-							rStack.getDisplayName(), String.valueOf(rStack.getCount()), rStack.getPower());
+					ElementStack rStack = estack.copy().onDeconstruct(Minecraft.getMinecraft().world, stack, complex, Element.DP_ALTAR);
+					String str = String.format(TextFormatting.DARK_AQUA + "%sx%s" + TextFormatting.YELLOW
+							+ " P:%d", rStack.getDisplayName(), String.valueOf(rStack.getCount()), rStack.getPower());
 					tooltip.add(str);
 				}
 			}

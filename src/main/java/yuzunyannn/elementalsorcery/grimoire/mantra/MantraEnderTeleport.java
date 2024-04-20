@@ -69,7 +69,7 @@ public class MantraEnderTeleport extends MantraTypeAccumulative {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		if (mdc.getProgress() < 1) return;
 
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity == null) return;
 
 		boolean needSuper = checkCanBeSuper(caster, entity);
@@ -122,7 +122,7 @@ public class MantraEnderTeleport extends MantraTypeAccumulative {
 			}
 		}
 
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity == null) return;
 
 		boolean needSuper = checkCanBeSuper(caster, entity);

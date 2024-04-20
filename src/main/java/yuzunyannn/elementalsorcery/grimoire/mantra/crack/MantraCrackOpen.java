@@ -159,7 +159,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 				return length - e.width / 2 <= nowSize;
 			});
 			for (Entity entity : entities) {
-				ItemElementCrack.crackAttack(world, entity, caster.iWantCaster().asEntity());
+				ItemElementCrack.crackAttack(world, entity, caster.iWantCaster().toEntity());
 				if (!EntityHelper.isCreative(entity)) {
 					Vec3d target = new Vec3d(center).subtract(entity.getPositionVector()).normalize();
 					entity.motionX += target.x;

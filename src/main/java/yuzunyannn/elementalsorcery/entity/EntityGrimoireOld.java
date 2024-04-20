@@ -95,6 +95,11 @@ public class EntityGrimoireOld extends Entity
 		super.setDead();
 	}
 
+	@Override
+	public boolean isAlive() {
+		return !isDead;
+	}
+
 	protected CastStatus state = CastStatus.BEFORE_SPELLING;
 	protected int tick;
 	/** 使用者，如果服务器关闭后尽可能会被还原，但是STATE_AFTER_SPELLING中可能存在为null的时候 */
@@ -540,12 +545,12 @@ public class EntityGrimoireOld extends Entity
 	}
 
 	@Override
-	public TileEntity asTileEntity() {
+	public TileEntity toTileEntity() {
 		return null;
 	}
 
 	@Override
-	public Entity asEntity() {
+	public Entity toEntity() {
 		return this;
 	}
 

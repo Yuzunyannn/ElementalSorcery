@@ -191,7 +191,7 @@ public class ItemSimpleMaterialContainer extends Item {
 			if (stack.isItemDamaged()) return false;
 			if (stack.getTagCompound() != null) return false;
 			if (stack.getMaxStackSize() < 16) return false;
-			if (JavaHelper.getFieldValue(stack, "capabilities") != null) return false;
+			//if (JavaHelper.getFieldValue(stack, "capabilities") != null) return false;
 
 			IToElementInfo info = ElementMap.instance.toElement(stack);
 			if (info == null) return false;

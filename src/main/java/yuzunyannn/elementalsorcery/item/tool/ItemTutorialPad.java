@@ -35,15 +35,14 @@ import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.computer.Computer;
+import yuzunyannn.elementalsorcery.computer.ComputerDevice;
 import yuzunyannn.elementalsorcery.computer.ComputerEnvItem;
 import yuzunyannn.elementalsorcery.computer.ComputerProviderOfItem;
-import yuzunyannn.elementalsorcery.computer.DeviceNetwork;
 import yuzunyannn.elementalsorcery.computer.DeviceNetworkLocal;
 import yuzunyannn.elementalsorcery.computer.Disk;
-import yuzunyannn.elementalsorcery.computer.WideNetwork;
-import yuzunyannn.elementalsorcery.computer.soft.AppTutorial;
 import yuzunyannn.elementalsorcery.computer.soft.AuthorityAppDisk;
 import yuzunyannn.elementalsorcery.computer.soft.EOS;
+import yuzunyannn.elementalsorcery.computer.softs.AppTutorial;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart;
@@ -53,22 +52,19 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 
-	static class TutoiralComputer extends Computer {
+	static class TutoiralComputer extends ComputerDevice {
 		IInventory inventory = null;
 
-		public TutoiralComputer() {
-			super("tutorialPad");
-		}
-
-		protected DeviceNetwork initCreateNetwork() {
-			return new DeviceNetworkLocal(this);
+		public TutoiralComputer(ItemStack stack) {
+			super("tutorialPad", stack);
+//			device.setNetwork(new DeviceNetworkLocal(device));
 		}
 
 		@Override
-		public void update(IComputEnv env) {
+		public ComputerDevice setEnv(IComputEnv env) {
 			EntityLivingBase player = env.getEntityLiving();
 			if (player instanceof EntityPlayer) inventory = ((EntityPlayer) player).inventory;
-			super.update(env);
+			return super.setEnv(env);
 		}
 
 		@Override
@@ -89,18 +85,17 @@ public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 		@Override
 		public CompletableFuture<DNResult> notice(String method, DNParams params) {
 			if ("get-inventory".equals(method)) {
+				if (env == null) return DNResult.unavailable();
 				CompletableFuture<DNResult> future = new CompletableFuture<DNResult>();
-				addUpdateFunc(env -> {
-					IInventory inventory = null;
-					EntityLivingBase player = env.getEntityLiving();
-					if (player instanceof EntityPlayer) inventory = ((EntityPlayer) player).inventory;
-					if (inventory == null) future.complete(DNResult.of(DNResultCode.FAIL));
-					else {
-						DNResult result = DNResult.of(DNResultCode.SUCCESS);
-						result.set("inventory", inventory);
-						future.complete(result);
-					}
-				});
+				IInventory inventory = null;
+				EntityLivingBase player = env.getEntityLiving();
+				if (player instanceof EntityPlayer) inventory = ((EntityPlayer) player).inventory;
+				if (inventory == null) future.complete(DNResult.of(DNResultCode.FAIL));
+				else {
+					DNResult result = DNResult.of(DNResultCode.SUCCESS);
+					result.set("inventory", inventory);
+					future.complete(result);
+				}
 				return future;
 			}
 			return super.notice(method, params);
@@ -132,7 +127,7 @@ public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-		ComputerProviderOfItem provider = new ComputerProviderOfItem(stack, new TutoiralComputer());
+		ComputerProviderOfItem provider = new ComputerProviderOfItem(stack, new TutoiralComputer(stack));
 		Computer computer = provider.getComputer();
 		Disk disk = new Disk();
 		disk.set(EOS.BOOT, APP_ID.toString());
@@ -173,29 +168,22 @@ public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 		if (worldIn.isRemote) return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 
 		BlockPos pos = playerIn.getPosition();
-		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_COMPUTER_ITEM, worldIn, pos.getX(), pos.getY(),
-				pos.getZ());
+		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_COMPUTER_ITEM, worldIn, pos.getX(), pos.getY(), pos.getZ());
 
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
-		ComputerEnvItem env = new ComputerEnvItem(entityItem);
-		IComputer computer = entityItem.getItem().getCapability(Computer.COMPUTER_CAPABILITY, null);
-		computer.update(env);
-		if (entityItem.ticksExisted % WideNetwork.SAY_HELLO_INTERVAL == 0) WideNetwork.instance.sayHello(computer, env);
+		ComputerDevice computer = (ComputerDevice) entityItem.getItem().getCapability(Computer.COMPUTER_CAPABILITY, null);
+		computer.setEnv(new ComputerEnvItem(entityItem)).update();
 		return super.onEntityItemUpdate(entityItem);
 	}
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		ComputerEnvItem env = new ComputerEnvItem(entityIn, stack, itemSlot);
-		IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
-		computer.update(env);
-		if (entityIn.ticksExisted % WideNetwork.SAY_HELLO_INTERVAL == 0) {
-			if (entityIn instanceof EntityPlayer) WideNetwork.instance.sayHello(computer, env);
-		}
+		ComputerDevice computer = (ComputerDevice) stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
+		computer.setEnv(new ComputerEnvItem(entityIn, stack, itemSlot)).update();
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 

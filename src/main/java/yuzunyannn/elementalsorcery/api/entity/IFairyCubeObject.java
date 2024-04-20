@@ -17,7 +17,7 @@ public interface IFairyCubeObject extends IWorldObject, IHasMaster {
 
 	@Nonnull
 	@Override
-	Entity asEntity();
+	Entity toEntity();
 
 	/**
 	 * 发送的数据将会通过{@see FairyCubeModule#onRecv(NBTTagCompound)}来接受

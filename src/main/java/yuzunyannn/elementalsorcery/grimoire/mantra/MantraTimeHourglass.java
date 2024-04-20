@@ -113,7 +113,7 @@ public class MantraTimeHourglass extends MantraTypeAccumulative {
 		if (star.getCount() >= 200 && potent >= TIME_STOP_MIN_POTENT) {
 			if (world.isRemote) return;
 			float sec = Math.min(star.getPower() / 12f, 30) * (1 + potent - 0.7f);
-			PocketWatch.stopWorld(world, (int) (sec * 20), caster.iWantCaster().asEntityLivingBase());
+			PocketWatch.stopWorld(world, (int) (sec * 20), caster.iWantCaster().toEntityLiving());
 			return;
 		}
 

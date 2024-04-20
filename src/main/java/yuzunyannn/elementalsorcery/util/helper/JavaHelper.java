@@ -5,9 +5,7 @@ import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 
 public class JavaHelper {
@@ -43,7 +41,16 @@ public class JavaHelper {
 		return new AbstractMap.SimpleEntry<T, U>(t, u);
 	}
 
-//
+	public static void write(byte[] bytes, int offset, long l) {
+		for (int i = 0; i < 8; i++) bytes[offset + i] = (byte) (l >> i * 8);
+	}
+
+	public static long readLong(byte[] bytes, int offset) {
+		long l = 0;
+		for (int i = 0; i < 8; i++) l |= (long) (bytes[offset + i] & 0xFF) << i * 8;
+		return l;
+	}
+
 //	public static <T, U> T[] toArray(Collection<U> list, Function<U, T> func) {
 //		T[] array = (T[]) Array.newInstance(Object.class, list.size());
 //		if (list.isEmpty()) return array;

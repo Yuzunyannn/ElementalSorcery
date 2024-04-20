@@ -146,7 +146,7 @@ public class MantraElementWhirl extends MantraTypeAccumulative {
 		if (block instanceof BlockElementContainer) {
 			IElementInventory eInv = BlockHelper.getElementInventory(world, at, null);
 			world.destroyBlock(at, false);
-			BlockElementContainer.doExploded(world, at, eInv, caster.iWantCaster().asEntityLivingBase());
+			BlockElementContainer.doExploded(world, at, eInv, caster.iWantCaster().toEntityLiving());
 		}
 		if (world.rand.nextFloat() < 0.25)
 			ItemHelper.dropItem(world, at, new ItemStack(ESObjects.ITEMS.MATERIAL_DEBRIS));
@@ -180,7 +180,7 @@ public class MantraElementWhirl extends MantraTypeAccumulative {
 		if (item == ESObjects.ITEMS.MATERIAL_DEBRIS) return;
 		IElementInventory eInv = ElementHelper.getElementInventory(stack);
 		BlockElementContainer.doExploded(world, entityItem.getPosition(), eInv,
-				caster.iWantCaster().asEntityLivingBase());
+				caster.iWantCaster().toEntityLiving());
 		entityItem.setDead();
 	}
 

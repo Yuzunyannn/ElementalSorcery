@@ -1,6 +1,8 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,21 +18,26 @@ import org.lwjgl.input.Mouse;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
+import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreen;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
 import yuzunyannn.elementalsorcery.container.ContainerComputer;
@@ -60,8 +67,8 @@ public abstract class GuiComputerBase extends GuiContainer {
 	protected float screenFrontAppear = 1;
 	protected boolean isPowerOn;
 
-	protected APP currApp;
-	protected APP currTask;
+	protected App currApp;
+	protected App currTask;
 	protected ISoftGui appGUI;
 	protected ISoftGui taskGUI;
 
@@ -103,6 +110,11 @@ public abstract class GuiComputerBase extends GuiContainer {
 		}
 
 		@Override
+		public BlockPos getPosition() {
+			return containerComputer.getCurrPosition();
+		}
+
+		@Override
 		public int getWidth() {
 			return screenFront.getWidth();
 		}
@@ -126,6 +138,14 @@ public abstract class GuiComputerBase extends GuiContainer {
 		public void sendOperation(NBTTagCompound nbt) {
 			if (pid == -1) return;
 			nbt.setInteger("_op_", pid);
+			containerComputer.sendToServer(nbt);
+		}
+
+		@Override
+		public void sendNotice(String str, NBTTagCompound nbt) {
+			if (pid == -1) return;
+			nbt.setString("_nt_", str);
+			nbt.setInteger("pid", pid);
 			containerComputer.sendToServer(nbt);
 		}
 
@@ -155,7 +175,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 			if (err instanceof IComputerException) exception = (IComputerException) err;
 			else {
 				ESAPI.logger.warn("render error", err);
-				exception = IComputerException.easy("render error " + err);
+				exception = IComputerException.easy("render error ", err);
 			}
 		}
 
@@ -185,7 +205,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
-		screenFront = ComputerScreenRender.apply();
+		if (screenFront == null) screenFront = ComputerScreenRender.apply();
 		screenFront.setAPPGui(appGUI);
 		screenFront.setTaskAppGui(taskGUI);
 	}
@@ -237,6 +257,41 @@ public abstract class GuiComputerBase extends GuiContainer {
 		GlStateManager.pushMatrix();
 		this.scene.draw(partialTicks);
 		GlStateManager.popMatrix();
+
+		if (exception != null) {
+			int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
+			offsetX = offsetX + computerX;
+			offsetY = offsetY + computerY;
+
+			GlStateManager.disableTexture2D();
+			int r = 3, g = 56, b = 122;
+			Tessellator tessellator = Tessellator.getInstance();
+			BufferBuilder bufferbuilder = tessellator.getBuffer();
+			bufferbuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+			bufferbuilder.pos(offsetX, offsetY, 0.0D).color(r, g, b, 255).endVertex();
+			bufferbuilder.pos(offsetX, offsetY + computerHeight, 0.0D).color(r, g, b, 255).endVertex();
+			bufferbuilder.pos(offsetX + computerWidth, offsetY + computerHeight, 0.0D).color(r, g, b, 255).endVertex();
+			bufferbuilder.pos(offsetX + computerWidth, offsetY, 0.0D).color(r, g, b, 255).endVertex();
+			tessellator.draw();
+			GlStateManager.enableTexture2D();
+
+			String str = exception.toString();
+			Throwable origin = exception.getOrigin();
+			if (origin != null) {
+				if (origin instanceof ComputerException) {
+
+				} else {
+					StringWriter sw = new StringWriter();
+					PrintWriter pw = new PrintWriter(sw);
+					origin.printStackTrace(pw);
+					str = sw.toString();
+					if (str.length() > 512) str = str.substring(0, 512);
+				}
+			}
+
+			fontRenderer.drawSplitString(str, offsetX + 1, offsetY, computerWidth - 1, 0xffffffff);
+			return;
+		}
 
 		if (isPowerOn) {
 			GlStateManager.pushMatrix();
@@ -330,15 +385,15 @@ public abstract class GuiComputerBase extends GuiContainer {
 
 		try {
 			IOS ios = computer.getSystem();
-			APP app = ios.getAppInst(ios.getForeground());
+			App app = ios.getAppInst(ios.getForeground());
 			if (app != currApp) {
-				APP oldApp = currApp;
+				App oldApp = currApp;
 				currApp = app;
 				onCurrAppChange(oldApp);
 			}
 			int topTask = ios.getTopTask();
 			if (topTask > 0) {
-				APP task = ios.getAppInst(topTask);
+				App task = ios.getAppInst(topTask);
 				if (currTask != task) {
 					taskGUI = task.createGUIRender();
 					taskGUI.init(taskRuntime = new APPGuiRuntime(task.getPid()));
@@ -353,17 +408,17 @@ public abstract class GuiComputerBase extends GuiContainer {
 			if (e instanceof IComputerException) this.exception = (IComputerException) e;
 			else {
 				ESAPI.logger.warn("update error", e);
-				exception = IComputerException.easy("update error " + e);
+				exception = IComputerException.easy("update error ", e);
 			}
 		}
 	}
 
-	protected void onCurrAppChange(APP old) {
+	protected void onCurrAppChange(App old) {
 		appGUI = null;
 		screenFront.setAPPGui(null);
 		runtime = null;
 
-		APP app = this.currApp;
+		App app = this.currApp;
 		if (app == null) return;
 
 		runtime = new APPGuiRuntime(currApp.getPid());
@@ -392,7 +447,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 			this.screenFront.onMouseEvent(new Vec3d(emouseX, emouseY, 0));
 		} catch (Exception e) {
 			ESAPI.logger.warn("click error", e);
-			this.exception = IComputerException.easy("click error " + e);
+			this.exception = IComputerException.easy("click error ", e);
 		}
 	}
 
@@ -419,8 +474,8 @@ public abstract class GuiComputerBase extends GuiContainer {
 
 	protected void closeOpenScene() {
 		openImage.runAction(new GActionEaseInBack(new GActionScaleBy(8, new Vec3d(-1, -1, 0))));
-		openImage.runAction(
-				new GActionSequence(new GActionFadeTo(12, 0), new GActionFunction((e) -> e.removeFromParent())));
+		openImage.runAction(new GActionSequence(new GActionFadeTo(12, 0),
+				new GActionFunction((e) -> e.removeFromParent())));
 	}
 
 	protected void createWaitingOpenScene() {

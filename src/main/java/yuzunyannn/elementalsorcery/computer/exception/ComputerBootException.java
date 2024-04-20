@@ -1,15 +1,15 @@
 package yuzunyannn.elementalsorcery.computer.exception;
 
-import yuzunyannn.elementalsorcery.api.computer.IDevice;
+import yuzunyannn.elementalsorcery.api.computer.ICalculatorObject;
 
 @SuppressWarnings("serial")
 public class ComputerBootException extends ComputerException {
 
-	public ComputerBootException(IDevice device) {
+	public ComputerBootException(ICalculatorObject device) {
 		super(device);
 	}
 
-	public ComputerBootException(IDevice device, String msg) {
+	public ComputerBootException(ICalculatorObject device, String msg) {
 		super(device, msg);
 	}
 

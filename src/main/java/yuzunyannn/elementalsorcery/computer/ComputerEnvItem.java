@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 import yuzunyannn.elementalsorcery.network.MessageComputerEntity;
 
@@ -52,10 +53,15 @@ public class ComputerEnvItem implements IComputEnv {
 
 	@Override
 	public CapabilityObjectRef createRef() {
-		if (entity instanceof EntityItem) return CapabilityObjectRef.of((EntityItem) entity);
-		else if (entity instanceof EntityItemGoods) return CapabilityObjectRef.of((EntityItemGoods) entity);
-		else if (entity instanceof EntityPlayer) return CapabilityObjectRef.of((EntityPlayer) entity, itemSlot);
-		return CapabilityObjectRef.of();
+		if (entity instanceof EntityItem) return CapabilityObjectRef.iof((EntityItem) entity);
+		else if (entity instanceof EntityItemGoods) return CapabilityObjectRef.iof((EntityItemGoods) entity);
+		else if (entity instanceof EntityPlayer) return CapabilityObjectRef.iof((EntityPlayer) entity, itemSlot);
+		return CapabilityObjectRef.INVALID;
+	}
+
+	@Override
+	public IWorldObject createWorldObj() {
+		return IWorldObject.of(entity);
 	}
 
 	@Override

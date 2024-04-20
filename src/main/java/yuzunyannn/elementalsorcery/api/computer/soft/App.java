@@ -9,60 +9,33 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.ESImpClassRegister;
 import yuzunyannn.elementalsorcery.api.util.ESImpClassRegister.EasyImp;
-import yuzunyannn.elementalsorcery.api.util.detecter.DataDetectableMonitor;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 
-public class APP extends EasyImp<APP> implements ISoft, INBTSerializable<NBTTagCompound> {
+public class App extends EasyImp<App> implements ISyncDetectable<NBTTagCompound>, INBTSerializable<NBTTagCompound> {
 
-	public static final ESImpClassRegister<APP> REGISTRY = new ESImpClassRegister();
+	public static final ESImpClassRegister<App> REGISTRY = new ESImpClassRegister();
 
 	private final int pid;
 	private final IOS os;
 	private boolean isTask;
 	private boolean closing;
 
-	public APP(IOS os, int pid) {
+	public App(IOS os, int pid) {
 		this.pid = pid;
 		this.os = os;
 	}
 
-	public int getPid() {
+	public final int getPid() {
 		return pid;
 	}
 
-	@Override
-	public IOS getOS() {
+	public final IOS getOS() {
 		return os;
 	}
 
-	public ResourceLocation getAppId() {
+	public final ResourceLocation getAppId() {
 		return getRegistryName();
-	}
-
-	public void bindDevice(UUID uuid) {
-
-	}
-
-	public void setTask(boolean isTask) {
-		this.isTask = isTask;
-	}
-
-	public boolean isTask() {
-		return isTask;
-	}
-
-	public void onDiskChange() {
-
-	}
-
-	@Override
-	public void handleOperation(NBTTagCompound nbt) {
-
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void onRecvMessage(NBTTagCompound nbt) {
-
 	}
 
 	@Override
@@ -75,16 +48,56 @@ public class APP extends EasyImp<APP> implements ISoft, INBTSerializable<NBTTagC
 		return new NBTTagCompound();
 	}
 
-	protected DataDetectableMonitor detecter = new DataDetectableMonitor("inst$app");
+	public void setTask(boolean isTask) {
+		this.isTask = isTask;
+	}
+
+	public boolean isTask() {
+		return isTask;
+	}
+
+	public void bindDevice(UUID uuid) {
+
+	}
+
+	public void onDiskChange() {
+
+	}
+
+	public void handleOperation(NBTTagCompound nbt) {
+
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void onRecvMessage(NBTTagCompound nbt) {
+
+	}
+
+	public void onStartup() {
+	}
+
+	public void onUpdate() {
+	}
+
+	public void onAbort() {
+	}
+
+	public void onExit() {
+	}
+
+	@SideOnly(Side.CLIENT)
+	public ISoftGui createGUIRender() {
+		return null;
+	}
 
 	@Override
 	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
-		return detecter.detectChanges(watcher);
+		return null;
 	}
 
 	@Override
 	public void mergeChanges(NBTTagCompound nbt) {
-		detecter.mergeChanges(nbt);
+
 	}
 
 	public boolean isClosing() {

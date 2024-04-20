@@ -64,6 +64,10 @@ public class GNode {
 		return name;
 	}
 
+	public boolean hasParent() {
+		return parent != null;
+	}
+
 	public void setVisible(boolean visible) {
 		this.visible = visible;
 	}
@@ -277,9 +281,12 @@ public class GNode {
 
 	public void addChild(GNode node) {
 		node.removeFromParent();
-		int i = MathSupporter.binarySearch(children, (s) -> node.z - s.z);
-		if (i < 0) i = -i - 1;
-		children.add(i, node);
+		if (children.isEmpty() || children.get(children.size() - 1).z == node.z) children.add(node);
+		else {
+			int i = MathSupporter.binarySearch(children, (s) -> node.z - s.z);
+			if (i < 0) i = -i - 1;
+			children.add(i, node);
+		}
 		node.parent = this;
 		onChildAdded(node);
 		if (this.isInScene()) node.onEnterScene(scene);
@@ -477,23 +484,50 @@ public class GNode {
 			rY = RenderFriend.getPartialTicks(y, prevY, partialTicks);
 			rZ = RenderFriend.getPartialTicks(z, prevZ, partialTicks);
 			if (hasRotation) rRotationZ = RenderFriend.getPartialTicks(rotationZ, prevRotationZ, partialTicks);
+			else rRotationZ = rotationZ;
 			if (hasScale) {
 				rScaleX = RenderFriend.getPartialTicks(scaleX, prevScaleX, partialTicks);
 				rScaleY = RenderFriend.getPartialTicks(scaleY, prevScaleY, partialTicks);
 				rScaleZ = RenderFriend.getPartialTicks(scaleZ, prevScaleZ, partialTicks);
+			} else {
+				rScaleX = scaleX;
+				rScaleY = scaleY;
+				rScaleZ = scaleZ;
 			}
 		} else {
 			rX = x;
 			rY = y;
 			rZ = z;
-
-			if (hasRotation) rRotationZ = this.rotationZ;
-			if (hasScale) {
-				rScaleX = scaleX;
-				rScaleY = scaleY;
-				rScaleZ = scaleZ;
-			}
+			rRotationZ = this.rotationZ;
+			rScaleX = scaleX;
+			rScaleY = scaleY;
+			rScaleZ = scaleZ;
 		}
+	}
+
+	protected void extendRenderProps() {
+		if (this.parent == null) return;
+
+		Vec3d myPos = new Vec3d(rX * parent.rScaleX, rY * parent.rScaleY, rZ * parent.rScaleZ);
+		if (parent.rRotationZ != 0) myPos = MathSupporter.rotation(myPos, AXIS_Z, parent.rRotationZ / 180 * 3.1415926);
+
+		rX = parent.rX + myPos.x;
+		rY = parent.rY + myPos.y;
+		rZ = parent.rZ + myPos.z;
+
+		if (hasScale) {
+			rScaleX = parent.rScaleX * rScaleX;
+			rScaleY = parent.rScaleY * rScaleY;
+			rScaleZ = parent.rScaleZ * rScaleZ;
+		} else {
+			rScaleX = parent.rScaleX;
+			rScaleY = parent.rScaleY;
+			rScaleZ = parent.rScaleZ;
+		}
+
+		if (rScaleX != 1 || rScaleY != 1 || rScaleZ != 1) hasScale = true;
+
+		rRotationZ = parent.rRotationZ + rRotationZ;
 	}
 
 	public void draw(float partialTicks) {
@@ -503,7 +537,7 @@ public class GNode {
 		GlStateManager.translate(rX, rY, rZ);
 		if (hasScale) GlStateManager.scale(rScaleX, rScaleY, rScaleZ);
 		if (hasRotation) GlStateManager.rotate(rRotationZ, 0, 0, 1);
-		this.render(partialTicks);
+		render(partialTicks);
 		for (GNode node : this.children) node.draw(partialTicks);
 		if (hasRotation) GlStateManager.rotate(-rRotationZ, 0, 0, 1);
 		if (hasScale) GlStateManager.scale(1 / rScaleX, 1 / rScaleY, 1 / rScaleZ);
@@ -512,7 +546,9 @@ public class GNode {
 
 	protected void draw(BufferBuilder bufferbuilder, float partialTicks) {
 		updateRenderProps(partialTicks);
+		extendRenderProps();
 		render(bufferbuilder, partialTicks);
+		for (GNode node : this.children) node.draw(bufferbuilder, partialTicks);
 	}
 
 	protected void render(float partialTicks) {

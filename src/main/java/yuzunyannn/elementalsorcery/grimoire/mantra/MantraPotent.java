@@ -53,7 +53,7 @@ public class MantraPotent extends MantraCommon {
 		float potent = caster.iWantBePotent(2f, false);
 		doPotentAttackEffect(world, caster, target);
 
-		EntityLivingBase player = caster.iWantCaster().asEntityLivingBase();
+		EntityLivingBase player = caster.iWantCaster().toEntityLiving();
 		float damage = DamageHelper.getNormalAttackDamage(player, target) + 1;
 
 		// 非玩家boss生命值下限秒杀
@@ -77,7 +77,7 @@ public class MantraPotent extends MantraCommon {
 		MantraDataCommon data = (MantraDataCommon) mData;
 		data.markContinue(true);
 
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity != null) data.markContinue(entity.onGround);
 	}
 

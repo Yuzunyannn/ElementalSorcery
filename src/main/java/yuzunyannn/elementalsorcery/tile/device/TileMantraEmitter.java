@@ -2,18 +2,88 @@ package yuzunyannn.elementalsorcery.tile.device;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.computer.DeviceInfoTile;
 import yuzunyannn.elementalsorcery.nodegui.GActionEaseInOutBack;
+import yuzunyannn.elementalsorcery.util.helper.INBTReader;
+import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
+import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
 public class TileMantraEmitter extends TileDevice implements ITickable {
 
 	protected EnumFacing facing = EnumFacing.NORTH;
 
+	public TileMantraEmitter() {
+		DeviceInfoTile info = (DeviceInfoTile) device.getInfo();
+		info.setManufacturer(TextFormatting.OBFUSCATED + "mantragic");
+	}
+
+	@Override
+	public void writeSaveData(INBTWriter writer) {
+		super.writeSaveData(writer);
+		writer.write("facing", facing);
+	}
+
+	@Override
+	public void readSaveData(INBTReader reader) {
+		super.readSaveData(reader);
+		facing = reader.facing("facing");
+	}
+
+	@Override
+	public void writeUpdateData(INBTWriter writer) {
+		super.writeUpdateData(writer);
+		writer.write("facing", facing);
+	}
+
+	@Override
+	public void readUpdateData(INBTReader reader) {
+		super.readUpdateData(reader);
+		facing = reader.facing("facing");
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void recvUpdateData(INBTReader reader) {
+		if (reader.has("fc")) this.setFacing(reader.facing("fc"));
+	}
+
+	@DeviceFeature(id = "facing")
+	public void setFacing(EnumFacing facing) {
+		if (world.isRemote) {
+			updateClientFacing(facing, 20);
+			return;
+		}
+
+		if (this.facing == facing) {
+			process.log("facing unchange");
+			return;
+		}
+
+		NBTSender sender = new NBTSender();
+		sender.write("fc", facing);
+		this.updateToClient(sender.tag());
+		this.markDirty();
+		process.log("set facing to " + facing);
+	}
+
+	@DeviceFeature(id = "facing")
+	public EnumFacing getFacing() {
+		return this.facing;
+	}
+
 	@Override
 	public void update() {
 		super.update();
-		if (world.isRemote) updateClient();
+		if (world.isRemote) {
+			updateClient();
+			return;
+		}
+//		notice("facing", DNParams.empty()).thenAccept(reulst -> {
+////			System.out.println(reulst.getReturn(EnumFacing.class));
+//		});
 	}
 
 	@SideOnly(Side.CLIENT)

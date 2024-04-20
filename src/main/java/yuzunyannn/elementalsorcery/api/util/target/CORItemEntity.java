@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.api.util.target;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
@@ -9,12 +10,28 @@ import yuzunyannn.elementalsorcery.api.IGetItemStack;
 
 public class CORItemEntity extends COREntity {
 
+	public static class Storage implements ICapabilityRefStorage<CORItemEntity> {
+		@Override
+		public void write(ByteBuf buf, CORItemEntity obj) {
+			buf.writeInt(obj.id);
+		}
+
+		@Override
+		public CORItemEntity read(ByteBuf buf) {
+			return new CORItemEntity(buf.readInt());
+		}
+	}
+
 	public CORItemEntity(EntityItem itemEntity) {
 		super(itemEntity);
 	}
 
 	public <T extends Entity & IGetItemStack> CORItemEntity(T entity) {
 		super(entity);
+	}
+
+	protected CORItemEntity(int id) {
+		super(id);
 	}
 
 	@Override

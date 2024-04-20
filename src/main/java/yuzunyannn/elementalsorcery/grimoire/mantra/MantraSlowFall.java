@@ -31,7 +31,7 @@ public class MantraSlowFall extends MantraTypePersistent {
 
 	@Override
 	protected void onUpdate(World world, IMantraData data, ICaster caster) {
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity == null) return;
 
 		float potent = caster.iWantBePotent(0.025f, true);

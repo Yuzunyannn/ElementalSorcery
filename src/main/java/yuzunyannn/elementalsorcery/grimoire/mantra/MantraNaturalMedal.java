@@ -42,7 +42,7 @@ public class MantraNaturalMedal extends MantraTypeAccumulative {
 		MantraDataCommon mData = (MantraDataCommon) data;
 		ElementStack eStack = mData.get(ESObjects.ELEMENTS.WOOD);
 		EntityLivingBase entity = (EntityLivingBase) caster.iWantEntityTarget(EntityLivingBase.class).getEntity();
-		if (entity == null) entity = caster.iWantCaster().asEntityLivingBase();
+		if (entity == null) entity = caster.iWantCaster().toEntityLiving();
 		if (entity == null) return;
 		if (world.isRemote) {
 			Effects.spawnTreatEntity(entity, new int[] { 0x63b91e });

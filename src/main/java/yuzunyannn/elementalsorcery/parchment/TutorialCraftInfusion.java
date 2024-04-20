@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
-import yuzunyannn.elementalsorcery.computer.soft.AppTutorialGui;
+import yuzunyannn.elementalsorcery.computer.softs.AppTutorialGui;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;

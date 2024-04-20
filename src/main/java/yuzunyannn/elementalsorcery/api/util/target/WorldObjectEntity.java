@@ -27,18 +27,23 @@ public class WorldObjectEntity implements IWorldObject {
 	}
 
 	@Override
-	public TileEntity asTileEntity() {
+	public TileEntity toTileEntity() {
 		return null;
 	}
 
 	@Override
-	public Entity asEntity() {
+	public Entity toEntity() {
 		return entity;
 	}
 
 	@Override
 	public World getWorld() {
 		return entity.world;
+	}
+
+	@Override
+	public boolean isAlive() {
+		return !entity.isDead;
 	}
 
 	@Override

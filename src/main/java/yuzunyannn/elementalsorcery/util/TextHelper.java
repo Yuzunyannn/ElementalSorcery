@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -56,6 +57,20 @@ public class TextHelper {
 			if (i < strs.length - 1) builder.append(" ");
 		}
 		return builder.toString();
+	}
+
+	static public String[] splitCapital(String str) {
+		List<String> strs = new ArrayList<>();
+		int j = 0;
+		for (int i = 0; i < str.length(); i++) {
+			char ch = str.charAt(i);
+			if (ch >= 0x41 && ch <= 0x5a) {
+				strs.add(str.substring(j, i - 1));
+				j = i;
+			}
+		}
+		strs.add(str.substring(j));
+		return strs.toArray(new String[strs.size()]);
 	}
 
 	static public String castToCamel(String str) {

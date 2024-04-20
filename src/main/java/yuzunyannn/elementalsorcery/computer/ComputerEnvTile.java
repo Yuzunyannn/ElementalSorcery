@@ -9,6 +9,7 @@ import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 
 public class ComputerEnvTile implements IComputEnv {
 
@@ -43,6 +44,11 @@ public class ComputerEnvTile implements IComputEnv {
 	@Override
 	public CapabilityObjectRef createRef() {
 		return CapabilityObjectRef.of(tile);
+	}
+
+	@Override
+	public IWorldObject createWorldObj() {
+		return IWorldObject.of(tile);
 	}
 
 	@Override

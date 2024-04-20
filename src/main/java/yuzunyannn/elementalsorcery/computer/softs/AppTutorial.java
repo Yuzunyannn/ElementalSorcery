@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.computer.soft;
+package yuzunyannn.elementalsorcery.computer.softs;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +10,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
@@ -21,12 +20,16 @@ import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingInherent;
+import yuzunyannn.elementalsorcery.computer.soft.AppBase;
 import yuzunyannn.elementalsorcery.parchment.Tutorial;
 import yuzunyannn.elementalsorcery.parchment.TutorialBuilding;
 import yuzunyannn.elementalsorcery.parchment.Tutorials;
 import yuzunyannn.elementalsorcery.parchment.Tutorials.TutorialLevelInfo;
+import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
+import yuzunyannn.elementalsorcery.util.helper.INBTReader;
+import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 
-public class AppTutorial extends APP {
+public class AppTutorial extends AppBase {
 
 //	public static final Variable<Byte> INDEX = new Variable<>("si", VariableSet.BYTE);
 	public static final Variable<Float> POGRESS = new Variable<>("pg", VariableSet.FLOAT);
@@ -93,16 +96,13 @@ public class AppTutorial extends APP {
 	}
 
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = super.serializeNBT();
-		nbt.setFloat("pg", progress);
-		return nbt;
+	public void writeSaveData(INBTWriter writer) {
+		writer.write("pg", progress);
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		super.deserializeNBT(nbt);
-		progress = nbt.getFloat("pg");
+	public void readSaveData(INBTReader reader) {
+		progress = reader.nfloat("pg");
 	}
 
 	public boolean isPartLocked(int index) {
@@ -118,16 +118,8 @@ public class AppTutorial extends APP {
 		return new AppTutorialGui(this);
 	}
 
-	@Override
-	public void handleOperation(NBTTagCompound nbt) {
-		super.handleOperation(nbt);
-		if (nbt.hasKey("ptbd")) {
-			String id = nbt.getString("ptbd");
-			printBuilding(id);
-		}
-	}
-
-	protected void printBuilding(String id) {
+	@DeviceFeature(id = "ptbd")
+	public void printBuilding(String id) {
 		Tutorial tutorial = Tutorials.getTutorial(id);
 		TutorialBuilding building = tutorial == null ? null : tutorial.getBuilding();
 		if (building == null) return;

@@ -1,12 +1,11 @@
-package yuzunyannn.elementalsorcery.computer.soft;
+package yuzunyannn.elementalsorcery.computer.softs;
 
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.computer.render.AppGuiCommon;
 
 public class AppCommandGui extends AppGuiCommon {
 
-	public AppCommandGui(APP appInst) {
+	public AppCommandGui(AppCommand appInst) {
 		super(appInst);
 	}
 

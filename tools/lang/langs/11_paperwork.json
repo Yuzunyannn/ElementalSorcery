@@ -1176,6 +1176,14 @@
 			"zh_CN": "古代的知识可以帮助你开始你的魔法之旅，不过你先要去地下寻找一些“封藏石”，古代用来保存东西的一种石头，打碎后，可以掉出一些东西来。其中有一些古代的文献，似乎有着一些的价值，但是这并不是目前的主要任务，主要任务是从中找到能获取古代知识的道具。\\n(作者：感谢您游玩这个mod)",
 			"en_US": "Ancient knowledge can help you start your magical journey, but first you need to search underground for some 'Seal Stone', a stone used to preserve items in ancient. Breaking it, some items will drop. There are some ancient documents, which seem to have some value, but this is not the first task at present. The first task is to find the props needed to access ancient knowledge from them.\\n(Author: Thank you for playing)",
 			"ja_JP": "古代の知識はあなたの魔法の旅を始めるのに役立ちますが、まず地下に行って「封蔵石」を探してみてください。古代に物を保存するために使われていた石の一種で、割ったら、何かを落とすことができます。その中にはいくつかの古代の文献があり、いくつかの価値があるようだが、これは現在の主要な任務ではなく、その中から古代の知識を得るための道具を見つけることが主要な任務である。\\n（作者：このmodを遊んでくれてありがとうございます）"
+		},
+		"es.page.blessingJade": {
+			"zh_CN": "祝福之玉碎片",
+			"en_US": "Blessing Jade Fragment"
+		},
+		"es.page.blessingJade.ct": {
+			"zh_CN": "\\n不同的碎片获取的方式不尽相同，这里有一些线索：\\n1:封藏石\\n2:噬魂\\n3:商人\\n4:钓鱼\\n5:熔炼\\n6:研究\\n7:烧制\\n8:委托",
+			"en_US": "The methods to obtain different fragments vary. Here are some clues:\\n1: Seal Stone\\n2: Soul Killer\\n3: Merchant\\n4: Fishing\\n5: Smelting\\n6: Research\\n7: Smelting\\n8: Quest"
 		}
 	}
 }

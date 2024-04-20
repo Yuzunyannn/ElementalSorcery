@@ -27,18 +27,24 @@ public class WorldObjectBlock implements IWorldObject {
 	}
 
 	@Override
-	public TileEntity asTileEntity() {
+	public TileEntity toTileEntity() {
 		return this.tile;
 	}
 
 	@Override
-	public Entity asEntity() {
+	public Entity toEntity() {
 		return null;
 	}
 
 	@Override
 	public Vec3d getObjectPosition() {
 		return new Vec3d(getPosition()).add(0.5, 0, 0.5);
+	}
+
+	@Override
+	public boolean isAlive() {
+		if (tile == null) return true;
+		return !tile.isInvalid();
 	}
 
 	@Override

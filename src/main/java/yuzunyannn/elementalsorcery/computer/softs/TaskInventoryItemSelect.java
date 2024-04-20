@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.computer.soft;
+package yuzunyannn.elementalsorcery.computer.softs;
 
 import java.util.UUID;
 
@@ -11,7 +11,6 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.util.MatchHelper;
@@ -20,9 +19,13 @@ import yuzunyannn.elementalsorcery.api.util.detecter.DDItemHandler;
 import yuzunyannn.elementalsorcery.api.util.detecter.DDItemStack;
 import yuzunyannn.elementalsorcery.api.util.detecter.DDString;
 import yuzunyannn.elementalsorcery.api.util.target.IObjectGetter;
+import yuzunyannn.elementalsorcery.computer.soft.TaskBase;
+import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
+import yuzunyannn.elementalsorcery.util.helper.INBTReader;
+import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class TaskInventoryItemSelect extends APP {
+public class TaskInventoryItemSelect extends TaskBase {
 
 	public static final String ID = "#PIIS";
 
@@ -40,7 +43,6 @@ public class TaskInventoryItemSelect extends APP {
 
 	public TaskInventoryItemSelect(IOS os, int pid) {
 		super(os, pid);
-		this.setTask(true);
 		this.detecter.add("code", new DDByte(c -> code = c, () -> code));
 		this.ddItemHandler = new DDItemHandler(n -> handler = new ItemStackHandler(n), () -> handler);
 		this.detecter.add("itms", this.ddItemHandler, true);
@@ -54,23 +56,20 @@ public class TaskInventoryItemSelect extends APP {
 	}
 
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = super.serializeNBT();
-		if (itemWriterDevice != null) nbt.setUniqueId("iwd", itemWriterDevice);
-		if (!enabledStack.isEmpty()) nbt.setTag("estk", enabledStack.serializeNBT());
-		if (tagTanslateKey != null && !tagTanslateKey.isEmpty()) nbt.setString("tk", tagTanslateKey);
-		if (writeData != null) nbt.setTag("write", writeData);
-		return nbt;
+	public void writeSaveData(INBTWriter writer) {
+		if (itemWriterDevice != null) writer.write("iwd", itemWriterDevice);
+		if (!enabledStack.isEmpty()) writer.write("estk", enabledStack);
+		if (tagTanslateKey != null && !tagTanslateKey.isEmpty()) writer.write("tk", tagTanslateKey);
+		if (writeData != null) writer.write("write", writeData);
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		if (nbt.hasUniqueId("iwd")) itemWriterDevice = nbt.getUniqueId("iwd");
-		enabledStack = new ItemStack(nbt.getCompoundTag("estk"));
-		tagTanslateKey = nbt.getString("tk");
-		writeData = nbt.getCompoundTag("write");
+	public void readSaveData(INBTReader reader) {
+		if (reader.has("iwd")) itemWriterDevice = reader.uuid("iwd");
+		enabledStack = reader.itemStack("estk");
+		tagTanslateKey = reader.string("tk");
+		writeData = reader.compoundTag("write");
 		handlerGetter = IObjectGetter.EMPTY;
-		super.deserializeNBT(nbt);
 	}
 
 	public void setEnabledStack(ItemStack enabledStack) {
@@ -108,16 +107,6 @@ public class TaskInventoryItemSelect extends APP {
 		return code;
 	}
 
-	@Override
-	public void handleOperation(NBTTagCompound nbt) {
-		super.handleOperation(nbt);
-		if (nbt.hasKey("slot")) {
-			if (isWriting) return;
-			isWriting = true;
-			writeData(nbt.getShort("slot"));
-		}
-	}
-
 	public void setWriteData(NBTTagCompound writeData) {
 		this.writeData = writeData == null ? this.writeData : writeData;
 	}
@@ -126,6 +115,13 @@ public class TaskInventoryItemSelect extends APP {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setByte("code", (byte) code);
 		getOS().message(this, nbt);
+	}
+
+	@DeviceFeature(id = "wd")
+	public void doWriteData(int slot) {
+		if (isWriting) return;
+		isWriting = true;
+		writeData(slot);
 	}
 
 	protected void writeData(int slot) {

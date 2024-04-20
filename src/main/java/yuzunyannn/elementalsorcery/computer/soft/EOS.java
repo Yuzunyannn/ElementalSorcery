@@ -21,9 +21,10 @@ import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
+import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
@@ -87,6 +88,11 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
+	public UUID getDeviceUUID() {
+		return computer.device().getUDID();
+	}
+
+	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		if (!isRunning) return nbt;
@@ -129,7 +135,7 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
-	public IDeviceStorage getDisk(APP app, AppDiskType type) {
+	public IDeviceStorage getDisk(App app, AppDiskType type) {
 		String appId = app.getAppId().toString();
 		String key = appId + "_" + type.key;
 		if (appDiskCacheMap.containsKey(key)) return appDiskCacheMap.get(key);
@@ -141,7 +147,7 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
-	public int exec(APP parent, String appId) {
+	public int exec(App parent, String appId) {
 		if (processTree.map.size() > 8)
 			throw new ComputerNewProcessException(computer, "new process " + appId + " over max limit");
 		int id = processTree.newProcess(appId, parent.getPid());
@@ -160,7 +166,7 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
-	public void message(APP app, NBTTagCompound nbt) {
+	public void message(App app, NBTTagCompound nbt) {
 		DNParams params = new DNParams();
 		params.set("pid", app.getPid());
 		params.set("data", nbt);
@@ -177,7 +183,7 @@ public abstract class EOS implements IOS {
 	@Override
 	public int setForeground(int pid) {
 		if (!processTree.hasProcess(pid)) return -1;
-		APP app = processTree.getAppCache(this, pid);
+		App app = processTree.getAppCache(this, pid);
 		if (app == null || app.isTask()) return -1;
 		processTree.setForeground(pid);
 		monitor.markDirty(PROCESS);
@@ -190,10 +196,10 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
-	public APP getAppInst(int pid) {
+	public App getAppInst(int pid) {
 		if (!processTree.hasProcess(pid))
 			throw new ComputerProcessNotExistException(this.computer, String.valueOf(pid));
-		APP app = processTree.getAppCache(this, pid);
+		App app = processTree.getAppCache(this, pid);
 		if (app == null)
 			throw new ComputerAppDamagedException(this.computer, String.valueOf(processTree.getProcessId(pid)));
 		return app;
@@ -231,7 +237,7 @@ public abstract class EOS implements IOS {
 		each(app -> app.onUpdate());
 	}
 
-	protected void single(int pid, Consumer<APP> func) {
+	protected void single(int pid, Consumer<App> func) {
 		try {
 			func.accept(processTree.getAppCache(this, pid));
 		} catch (Exception e) {
@@ -241,14 +247,14 @@ public abstract class EOS implements IOS {
 		}
 	}
 
-	protected void each(Consumer<APP> func) {
+	protected void each(Consumer<App> func) {
 		Iterator<Entry<Integer, ProcessNode>> iter = processTree.getIterator();
 		List<Entry<Integer, IComputerException>> abortList = new LinkedList<>();
 		List<Integer> closingList = new LinkedList<>();
 		while (iter.hasNext()) {
 			Entry<Integer, ProcessNode> entry = iter.next();
 			try {
-				APP app = processTree.getAppCache(this, entry.getKey());
+				App app = processTree.getAppCache(this, entry.getKey());
 				if (app.isClosing()) {
 					closingList.add(app.getPid());
 					continue;
@@ -265,11 +271,11 @@ public abstract class EOS implements IOS {
 		for (Integer pid : closingList) exit(pid);
 	}
 
-	protected void onAppStartup(ProcessTree tree, APP app) {
+	protected void onAppStartup(ProcessTree tree, App app) {
 		app.onStartup();
 	}
 
-	protected void remove(ProcessTree tree, int rpid, Consumer<APP> func) {
+	protected void remove(ProcessTree tree, int rpid, Consumer<App> func) {
 		Collection<Integer> children = tree.findAllChildren(rpid);
 		for (Integer pid : children) {
 			try {
@@ -316,7 +322,7 @@ public abstract class EOS implements IOS {
 	@Override
 	public List<UUID> filterLinkedDevice(Capability<?> capability, Object key) {
 		List<UUID> finded = new ArrayList<>();
-		Collection<IDeviceLinker> linkers = computer.getNetwork().getLinkers();
+		Collection<IDeviceLinker> linkers = computer.device().getNetwork().getLinkers();
 		for (IDeviceLinker linker : linkers) {
 			IDevice device = linker.getRemoteDevice();
 			if (device == null) continue;
@@ -326,16 +332,21 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
-	public CompletableFuture<DNResult> notice(UUID uuid, String method, DNParams params) {
-		IDeviceLinker linker = computer.getNetwork().getLinker(uuid);
+	public CompletableFuture<DNResult> notice(UUID udid, String method, DNParams params) {
+		if (udid == null) return computer.notice(method, params);
+		IDeviceNetwork network = computer.device().getNetwork();
+		IDeviceLinker linker = network.getLinker(udid);
 		if (linker == null) return DNResult.invalid();
 		if (!linker.isConnecting()) return DNResult.unavailable();
+		params.setSrcDevice(computer.device());
 		return linker.getRemoteDevice().notice(method, params);
 	}
 
 	@Override
-	public <T> IObjectGetter<T> askCapability(UUID uuid, Capability<T> capability, Object key) {
-		IDeviceLinker linker = computer.getNetwork().getLinker(uuid);
+	public <T> IObjectGetter<T> askCapability(UUID udid, Capability<T> capability, Object key) {
+		if (udid == null) udid = getDeviceUUID();
+		IDeviceNetwork network = computer.device().getNetwork();
+		IDeviceLinker linker = network.getLinker(udid);
 		if (linker == null) return IObjectGetter.EMPTY;
 		return new CapabilityGetter(linker, capability, key);
 	}

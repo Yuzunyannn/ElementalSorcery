@@ -25,6 +25,18 @@ import yuzunyannn.elementalsorcery.api.util.NBTTag;
 
 public class NBTHelper {
 
+	public static NBTTagCompound pair(String key, int val) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger(key, val);
+		return nbt;
+	}
+	
+	public static NBTTagCompound pair(String key, byte val) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setByte(key, val);
+		return nbt;
+	}
+
 	public static NBTTagCompound getStackTag(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());

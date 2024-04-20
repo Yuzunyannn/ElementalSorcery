@@ -101,7 +101,7 @@ public class MantraLaser extends MantraCommon {
 		set.set(ELEMENT, stack);
 		set.set(Variables.sUUID, target.getUniqueID());
 		set.set(Variables.getElementVar(preGet.getElement()), preGet);
-		MantraCommon.fireMantra(world, this, caster.iWantCaster().asEntity(), set);
+		MantraCommon.fireMantra(world, this, caster.iWantCaster().toEntity(), set);
 	}
 
 	@Override

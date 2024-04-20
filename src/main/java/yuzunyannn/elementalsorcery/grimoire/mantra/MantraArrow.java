@@ -110,7 +110,7 @@ public class MantraArrow extends MantraTypeAccumulative {
 		boolean infinite = false;
 		ItemStack arrow = ItemStack.EMPTY;
 
-		EntityLivingBase entity = co.asEntityLivingBase();
+		EntityLivingBase entity = co.toEntityLiving();
 		if (entity == null) {
 			entity = ESFakePlayer.get((WorldServer) world);
 			entity.setPosition(vec.x, vec.y - entity.getEyeHeight() + 0.1, vec.z);

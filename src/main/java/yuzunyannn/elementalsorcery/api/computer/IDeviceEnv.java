@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 
 public interface IDeviceEnv {
 
@@ -21,6 +22,9 @@ public interface IDeviceEnv {
 
 	@Nonnull
 	CapabilityObjectRef createRef();
+
+	@Nonnull
+	IWorldObject createWorldObj();
 
 	boolean isRemote();
 

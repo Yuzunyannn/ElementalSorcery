@@ -107,7 +107,7 @@ public class MantraLaunch extends MantraCommon {
 
 		if (world.isRemote) return;
 
-		EntityPlayer player = caster.iWantCaster().asPlayer();
+		EntityPlayer player = caster.iWantCaster().toEntityPlayer();
 
 		if (!tile.canCrafting(type, player)) {
 			world.createExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1.0f, false);

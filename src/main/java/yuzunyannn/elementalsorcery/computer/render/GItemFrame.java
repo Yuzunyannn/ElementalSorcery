@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
-import yuzunyannn.elementalsorcery.computer.soft.AppTutorialGui;
+import yuzunyannn.elementalsorcery.computer.softs.AppTutorialGui;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GItemStack;
 import yuzunyannn.elementalsorcery.nodegui.GNode;

@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.util;
 
 import yuzunyannn.elementalsorcery.api.ESAPI;
 
-public class Stopwatch {
+public final class Stopwatch {
 
 	protected long nano;
 	protected long cumulative;
@@ -30,8 +30,14 @@ public class Stopwatch {
 		return cumulative;
 	}
 
-	public boolean msLessThan(double ms) {
-		return getCumulative() < (ms * 1000 * 1000);
+	public boolean msBiggerThan(double ms) {
+		return getCumulative() > (ms * 1000 * 1000);
+	}
+
+	public boolean msLessThan(double ms, double cms) {
+		if (msBiggerThan(ms)) return true;
+		if (!inRecord) return false;
+		return System.nanoTime() - nano > (cms * 1000 * 1000);
 	}
 
 }

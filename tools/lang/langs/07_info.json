@@ -1308,6 +1308,66 @@
             "zh_CN": "写入成功",
             "en_US": "Write Success",
             "ja_JP": "書き込み成功"
+        },
+        "es.app.scanFail": {
+            "zh_CN": "扫描失败",
+            "en_US": "Scan Failed",
+            "ja_JP": "スキャン失敗"
+        },
+        "es.app.status": {
+            "zh_CN": "状态：%s",
+            "en_US": "Status: %s",
+            "ja_JP": "状態：%s"
+        },
+        "es.app.status.linked": {
+            "zh_CN": "已连接",
+            "en_US": "Connected",
+            "ja_JP": "接続済み"
+        },
+        "es.app.status.relinked": {
+            "zh_CN": "重连中",
+            "en_US": "Reconnecting",
+            "ja_JP": "再接続しています"
+        },
+        "es.app.status.waitLinked": {
+            "zh_CN": "正在链接",
+            "en_US": "Connecting",
+            "ja_JP": "接続しています"
+        },
+        "es.app.status.disconnecting": {
+            "zh_CN": "正在断开",
+            "en_US": "Disconnecting",
+            "ja_JP": "切断しています"
+        },
+        "es.app.status.unlinked": {
+            "zh_CN": "-",
+            "en_US": "-",
+            "ja_JP": "-"
+        },
+        "es.app.connect": {
+            "zh_CN": "链接",
+            "en_US": "Connect",
+            "ja_JP": "接続します"
+        },
+        "es.app.disconnect": {
+            "zh_CN": "断开",
+            "en_US": "Disconnect",
+            "ja_JP": "切断"
+        },
+        "es.app.connect.fail": {
+            "zh_CN": "链接失败：",
+            "en_US": "Connect Fail",
+            "ja_JP": "接続に失敗しました"
+        },
+        "es.app.id.device": {
+            "zh_CN": "设备ID:",
+            "en_US": "UDID:",
+            "ja_JP": "デバイスID:"
+        },
+        "es.app.manufacturer": {
+            "zh_CN": "制造商:",
+            "en_US": "Manufacturer:",
+            "ja_JP": "会社:"
         }
     }
 }

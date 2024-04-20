@@ -12,6 +12,7 @@ public class GNodeAppBar extends GNode {
 	protected GImage batteryInner;
 	protected GImage closeBtn;
 	protected GImage shutDownBtn;
+	protected GImage linkBtn;
 
 	public GNodeAppBar(SoftGuiCommon gui, int width) {
 		GImage image = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(0, 0, 256, 10, 256, 256));
@@ -37,11 +38,17 @@ public class GNodeAppBar extends GNode {
 		this.addChild(batteryInner);
 		this.addChild(batteryOuter);
 
-		GImage link = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(12, 11, 11, 7, 256, 256));
-		link.setPosition(width - 25, 0.5, 1);
-		link.setColorRef(color1);
-		link.setSize(11, 7);
-		this.addChild(link);
+		linkBtn = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(12, 11, 11, 7, 256, 256));
+		linkBtn.setPosition(width - 25, 0.5, 1);
+		linkBtn.setColorRef(color1);
+		linkBtn.setSize(11, 7);
+		this.addChild(linkBtn);
+		linkBtn.setInteractor(new BtnColorInteractor(color1, color2) {
+			@Override
+			public void onClick() {
+				gui.onOpenLinkTask();
+			}
+		});
 
 		closeBtn = new GImage(SoftGuiCommon.TEXTURE_1, SoftGuiCommon.FRAME_CLOSE);
 		closeBtn.setColorRef(color1);

@@ -19,12 +19,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
 
-public interface IWorldObject extends ICapabilityProvider {
+public interface IWorldObject extends ICapabilityProvider, IAliveStatusable {
 
 	public static IWorldObject of(IBlockAccess world, BlockPos pos) {
 		if (world instanceof World) return new WorldObjectBlock((World) world, pos);
 		return null;
+	}
+
+	public static IWorldObject of(TileEntity tile) {
+		return new WorldObjectBlock(tile.getWorld(), tile.getPos());
 	}
 
 	public static IWorldObject of(World world, BlockPos pos) {
@@ -43,25 +48,25 @@ public interface IWorldObject extends ICapabilityProvider {
 
 	/** as Tile */
 	@Nullable
-	TileEntity asTileEntity();
+	TileEntity toTileEntity();
 
 	/** as Entity */
 	@Nullable
-	Entity asEntity();
+	Entity toEntity();
 
 	/** as BlockState */
-	default IBlockState asBlockState() {
+	default IBlockState toBlockState() {
 		return getWorld().getBlockState(getPosition());
 	}
 
 	default Random getRNG() {
-		EntityLivingBase living = asEntityLivingBase();
+		EntityLivingBase living = toEntityLiving();
 		if (living != null) return living.getRNG();
 		return new Random(getWorld().getWorldTime() * getObjectPosition().hashCode());
 	}
 
 	default Vec3d getEyePosition() {
-		Entity entity = asEntity();
+		Entity entity = toEntity();
 		if (entity == null) return getObjectPosition().add(0.5, 0.5, 0.5);
 		else return entity.getPositionVector().add(0, entity.getEyeHeight(), 0);
 	}
@@ -70,37 +75,37 @@ public interface IWorldObject extends ICapabilityProvider {
 		return new BlockPos(getObjectPosition());
 	}
 
-	default EntityLivingBase asEntityLivingBase() {
-		Entity entity = asEntity();
+	default EntityLivingBase toEntityLiving() {
+		Entity entity = toEntity();
 		if (entity instanceof EntityLivingBase) return (EntityLivingBase) entity;
 		return null;
 	}
 
-	default EntityPlayer asPlayer() {
-		Entity entity = asEntity();
+	default EntityPlayer toEntityPlayer() {
+		Entity entity = toEntity();
 		if (entity instanceof EntityPlayer) return (EntityPlayer) entity;
 		return null;
 	}
 
 	default boolean isCreative() {
-		EntityPlayer player = asPlayer();
+		EntityPlayer player = toEntityPlayer();
 		return player == null ? false : player.isCreative();
 	}
 
 	@SideOnly(Side.CLIENT)
 	default boolean isClientPlayer() {
-		return asEntity() == Minecraft.getMinecraft().player;
+		return toEntity() == Minecraft.getMinecraft().player;
 	}
 
 	default void markDirty() {
-		TileEntity tile = this.asTileEntity();
+		TileEntity tile = this.toTileEntity();
 		if (tile != null) tile.markDirty();
 	}
 
 	static public void writeSendToBuf(ByteBuf buf, IWorldObject caster) {
-		if (caster.asEntity() != null) {
+		if (caster.toEntity() != null) {
 			buf.writeByte((byte) 2);
-			buf.writeInt(caster.asEntity().getEntityId());
+			buf.writeInt(caster.toEntity().getEntityId());
 		} else if (caster.getPosition() != null) {
 			BlockPos pos = caster.getPosition();
 			buf.writeByte((byte) 1);

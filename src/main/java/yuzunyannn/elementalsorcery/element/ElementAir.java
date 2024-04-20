@@ -101,7 +101,7 @@ public class ElementAir extends ElementCommon {
 		Vec3d casterVec = caster.getEyePosition();
 		Entity entity = target.getEntity();
 		float ratio = Math.max(MathHelper.sqrt(storage.getPower()) / 100f, 0.05f);
-		EntityLivingBase casterEntity = caster.asEntityLivingBase();
+		EntityLivingBase casterEntity = caster.toEntityLiving();
 		Vec3d tar = target.getHitVec().subtract(casterVec).normalize().scale(ratio);
 		if (ratio > 0.5f) ratio = 0.5f;
 		if (casterEntity != null && casterEntity.isSneaking()) {

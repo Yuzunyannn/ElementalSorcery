@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -23,14 +24,25 @@ import yuzunyannn.elementalsorcery.computer.exception.ComputerConnectException;
 public class DeviceNetwork
 		implements IDeviceNetwork, ISyncDetectable<NBTTagCompound>, INBTSerializable<NBTTagCompound> {
 
+	public static int MAX_CONNECT_COUNT = 16;
+
 	protected Map<UUID, IDeviceLinker> linkerMap = new HashMap<>();
 	protected IDevice mySelf;
 	protected IDeviceLinker selfLinker;
+	protected WeakHashMap<UUID, Boolean> helplessMap = new WeakHashMap();
 	protected int tick;
 
 	public DeviceNetwork(IDevice device) {
 		this.mySelf = device;
 		setSelfLinker(new DeviceLinkerSelf(this));
+	}
+
+	protected void init(Collection<UUID> uuids) {
+		linkerMap.clear();
+		if (uuids != null) {
+			for (UUID udid : uuids) linkerMap.put(udid, new DeviceLinker(this, udid));
+		}
+		if (this.selfLinker != null) linkerMap.put(selfLinker.getRemoteUUID(), selfLinker);
 	}
 
 	public void setSelfLinker(IDeviceLinker selfLinker) {
@@ -45,11 +57,14 @@ public class DeviceNetwork
 	}
 
 	@Override
-	public boolean handshake(IDeviceLinker other) throws ComputerConnectException {
-		UUID uuid = other.getRemoteUUID();
-		IDeviceLinker linker = linkerMap.get(uuid);
+	public boolean handshake(IDevice other, IDeviceEnv otherEnv, boolean simulate) throws ComputerConnectException {
+		if (linkerMap.size() > MAX_CONNECT_COUNT) return false;
+		if (simulate) return true;
+		UUID udid = other.getUDID();
+		helplessMap.remove(udid);
+		IDeviceLinker linker = linkerMap.get(udid);
 		if (linker != null && !linker.isClose()) return true;
-		linkerMap.put(uuid, linker);
+		linkerMap.put(udid, linker = new DeviceLinker(this, otherEnv.createRef()));
 		return true;
 	}
 
@@ -69,7 +84,12 @@ public class DeviceNetwork
 	}
 
 	public void update(IDeviceEnv env) {
-		if (tick++ % 20 != 0) return;
+		tick++;
+
+		if (tick % WideNetwork.SAY_HELLO_INTERVAL == 0) WideNetwork.instance.helloWorld(mySelf, env);
+		if (env.isRemote()) return;
+
+		if (tick % 20 != 0) return;
 
 		Iterator<Entry<UUID, IDeviceLinker>> iter = linkerMap.entrySet().iterator();
 		while (iter.hasNext()) {
@@ -82,19 +102,28 @@ public class DeviceNetwork
 			boolean isRemoved = false;
 			try {
 				if (!linker.isConnecting()) {
-					boolean isContinue = linker.disconnectTick(env, 20);
+					boolean isContinue = linker.onDisconnectTick(env, 20);
 					if (!isContinue) isRemoved = true;
-				} else linker.connectTick(env, 20);
+				} else linker.onConnectTick(env, 20);
 			} catch (ComputerConnectException e) {
 				if (ESAPI.isDevelop) ESAPI.logger.warn("device connect warn", e);
 				isRemoved = true;
 			}
 			if (isRemoved) {
+				helplessMap.put(linker.getRemoteUUID(), true);
 				linker.close();
+				iter.remove();
+				continue;
+			} else if (linker.isClose()) {
 				iter.remove();
 				continue;
 			}
 		}
+	}
+
+	@Override
+	public boolean isHelpless(UUID udid) {
+		return helplessMap.containsKey(udid);
 	}
 
 	@Override
@@ -125,7 +154,7 @@ public class DeviceNetwork
 		linkerMap.clear();
 		NBTTagList list = nbt.getTagList("linkers", NBTTag.TAG_COMPOUND);
 		for (int i = 0; i < list.tagCount(); i++) {
-			IDeviceLinker linker = new DeviceLinker(this, nbt);
+			IDeviceLinker linker = new DeviceLinker(this, list.getCompoundTagAt(i));
 			linkerMap.put(linker.getRemoteUUID(), linker);
 		}
 		if (this.selfLinker != null) linkerMap.put(selfLinker.getRemoteUUID(), selfLinker);

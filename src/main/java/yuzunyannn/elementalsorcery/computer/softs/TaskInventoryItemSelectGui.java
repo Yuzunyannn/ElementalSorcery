@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.computer.soft;
+package yuzunyannn.elementalsorcery.computer.softs;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
@@ -34,45 +34,32 @@ public class TaskInventoryItemSelectGui extends TaskGuiCommon {
 	protected GLabel title;
 	protected boolean isTagHover;
 	protected int selectedSlot = -1;
-	protected double cWidth, cHeight;
 	protected double lWidth;
 
 	@Override
 	protected void onInit(ISoftGuiRuntime runtime) {
 		super.onInit(runtime);
 
-		Color color1 = this.getThemeColor(SoftGuiThemePart.BACKGROUND_1);
 		Color color2 = this.getThemeColor(SoftGuiThemePart.BACKGROUND_2);
 		Color colorObj1 = this.getThemeColor(SoftGuiThemePart.OBJECT_1);
 		Color colorObj2 = this.getThemeColor(SoftGuiThemePart.OBJECT_2);
 
-		double width = (int) (runtime.getWidth() * 0.975);
-		double height = (int) (runtime.getHeight() * 0.975);
-		cWidth = width;
-		cHeight = height;
 		lWidth = 40;
 
-		GImage bg = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_P1);
-		bg.setColorRef(color1);
-		bg.setSplit9();
-		bg.setSize(width, height);
-		bg.setPosition((runtime.getWidth() - width) / 2, (runtime.getHeight() - height) / 2, 0);
-		scene.addChild(bg);
-
-		GImage input = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_P2);
+		GImage input = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_P2_LEFT);
 		input.setColorRef(color2);
 		input.setSplit9();
-		input.setSize(lWidth, height);
+		input.setSize(lWidth, cHeight);
 		bg.addChild(input);
 
 		GStringBtn btnClose = new GStringBtn(() -> onCloseCurrAPP(), color2, colorObj2);
 		btnClose.setTranslateKey("es.app.cancel");
-		btnClose.setPosition((lWidth - btnClose.getWidth()) / 2, height - 10, 10);
+		btnClose.setPosition((lWidth - btnClose.getWidth()) / 2, cHeight - 10, 10);
 		input.addChild(btnClose);
 
 		btnConfirm = new GStringBtn(() -> onConfirm(), color2, colorObj2);
 		btnConfirm.setTranslateKey("es.app.confirm");
-		btnConfirm.setPosition((lWidth - btnClose.getWidth()) / 2, height - 24, 10);
+		btnConfirm.setPosition((lWidth - btnClose.getWidth()) / 2, cHeight - 24, 10);
 		btnConfirm.setClickEnabled(false);
 		input.addChild(btnConfirm);
 
@@ -194,7 +181,8 @@ public class TaskInventoryItemSelectGui extends TaskGuiCommon {
 	protected void onConfirm() {
 		if (selectedSlot < 0) return;
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setShort("slot", (short) selectedSlot);
+		nbt.setString(":m", "wd");
+		nbt.setShort("1", (short) selectedSlot);
 		runtime.sendOperation(nbt);
 	}
 

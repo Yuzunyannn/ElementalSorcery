@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.nodegui;
 
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -43,8 +44,14 @@ public class GLabel extends GNode {
 		int a = ((int) Math.max(5, this.rAlpha * 255)) << 24;
 		int x = -(int) (this.width * this.anchorX);
 		int y = -(int) (this.height * this.anchorY);
-		if (wrapWidth > 0) mc.fontRenderer.drawSplitString(text, x, y, wrapWidth, this.color.toInt() | a);
-		else mc.fontRenderer.drawString(text, x, y, this.color.toInt() | a);
+		if (wrapWidth > 0) {
+			FontRenderer fontRenderer = mc.fontRenderer;
+			int color = this.color.toInt() | a;
+			for (String s : fontRenderer.listFormattedStringToWidth(text, wrapWidth)) {
+				fontRenderer.drawString(s, x, y, color);
+				y += fontRenderer.FONT_HEIGHT;
+			}
+		} else mc.fontRenderer.drawString(text, x, y, this.color.toInt() | a);
 	}
 
 }

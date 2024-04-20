@@ -7,6 +7,7 @@ import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
 public class DeviceLinkerSelf implements IDeviceLinker {
 
@@ -16,6 +17,11 @@ public class DeviceLinkerSelf implements IDeviceLinker {
 	public DeviceLinkerSelf(IDeviceNetwork network) {
 		this.network = network;
 		this.device = network.getDevice();
+	}
+
+	@Override
+	public boolean isLocal() {
+		return true;
 	}
 
 	@Override
@@ -40,6 +46,12 @@ public class DeviceLinkerSelf implements IDeviceLinker {
 	@Override
 	public IDevice getRemoteDevice() {
 		return device;
+	}
+
+	@Override
+	public CapabilityObjectRef getRemoteRef() {
+		IDeviceEnv env = device.getEnv();
+		return env == null ? CapabilityObjectRef.INVALID : env.createRef();
 	}
 
 	@Override

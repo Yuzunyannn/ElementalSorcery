@@ -1,0 +1,21 @@
+package yuzunyannn.elementalsorcery.computer;
+
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class DeviceInfoItem extends DeviceInfo {
+
+	public final ItemStack stack;
+
+	public DeviceInfoItem(ItemStack stack) {
+		this.stack = stack;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public String getDisplayWorkName() {
+		return stack.getDisplayName();
+	}
+
+}

@@ -37,7 +37,7 @@ public abstract class MantraCrackCommon extends MantraCommon {
 	@Override
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 		caster.iWantBePotent(0.2f, false);
-		ItemElementCrack.crackAttack(world, target, caster.iWantCaster().asEntityLivingBase());
+		ItemElementCrack.crackAttack(world, target, caster.iWantCaster().toEntityLiving());
 	}
 
 	@Override

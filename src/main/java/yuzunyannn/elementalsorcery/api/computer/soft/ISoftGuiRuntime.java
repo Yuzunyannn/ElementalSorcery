@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,9 +34,13 @@ public interface ISoftGuiRuntime {
 
 	void sendNotice(String str);
 
+	void sendNotice(String str, NBTTagCompound nbt);
+
 	void setTooltip(String key, Vec3d vec, int duration, Supplier<List<String>> factory);
 
 	void exception(Throwable err);
+
+	BlockPos getPosition();
 
 	default void setTooltip(String key, Vec3d vec, int duration, String str) {
 		setTooltip(key, vec, duration, () -> {

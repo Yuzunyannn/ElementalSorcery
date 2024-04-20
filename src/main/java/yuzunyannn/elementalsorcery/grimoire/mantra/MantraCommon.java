@@ -133,7 +133,7 @@ public class MantraCommon extends Mantra {
 
 	public Entity directLaunchMantra(World world, Vec3d vec, @Nullable IWorldObject caster, VariableSet params,
 			NBTTagCompound meta) {
-		EntityGrimoire grimoire = new EntityGrimoire(world, caster == null ? null : caster.asEntityLivingBase(), this,
+		EntityGrimoire grimoire = new EntityGrimoire(world, caster == null ? null : caster.toEntityLiving(), this,
 				meta, CastStatus.AFTER_SPELLING);
 		IMantraData mantraData = grimoire.getMantraData();
 		try {
@@ -208,7 +208,7 @@ public class MantraCommon extends Mantra {
 
 	@Override
 	public boolean canPotentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
-		EntityLivingBase player = caster.iWantCaster().asEntityLivingBase();
+		EntityLivingBase player = caster.iWantCaster().toEntityLiving();
 		if (player == null) return false;
 		if (!target.canBeAttackedWithItem()) return false;
 		if (target.hitByEntity(player)) return false;
@@ -221,7 +221,7 @@ public class MantraCommon extends Mantra {
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 		float potent = caster.iWantBePotent(0.2f, false);
 
-		EntityLivingBase player = caster.iWantCaster().asEntityLivingBase();
+		EntityLivingBase player = caster.iWantCaster().toEntityLiving();
 		doPotentAttackEffect(world, caster, target);
 
 		float damage = DamageHelper.getNormalAttackDamage(player, target);
@@ -233,7 +233,7 @@ public class MantraCommon extends Mantra {
 	}
 
 	public void doPotentAttackEffect(World world, ICaster caster, Entity target) {
-		EntityLivingBase player = caster.iWantCaster().asEntityLivingBase();
+		EntityLivingBase player = caster.iWantCaster().toEntityLiving();
 		if (world.isRemote) onPotentAttackEffect(world, caster, target);
 		world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_NOTE_CHIME,
 				player.getSoundCategory(), 1.0F, 0F);
@@ -435,7 +435,7 @@ public class MantraCommon extends Mantra {
 
 	public boolean isCasterFriend(ICaster caster, Entity entity) {
 		IWorldObject wo = caster.iWantCaster();
-		return EntityHelper.isSameTeam(wo.asEntity(), entity);
+		return EntityHelper.isSameTeam(wo.toEntity(), entity);
 	}
 
 	public static ElementStack getElement(ICaster caster, Element element, int size, int power) {

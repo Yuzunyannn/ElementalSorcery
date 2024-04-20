@@ -48,7 +48,7 @@ public class MantraPuppetArea extends MantraTypeSquareArea {
 		AxisAlignedBB aabb = new AxisAlignedBB(originPos.getX() - size, originPos.getY(), originPos.getZ() - size,
 				originPos.getX() + size, originPos.getY() + hight, originPos.getZ() + size);
 
-		EntityLivingBase casterEntity = caster.iWantCaster().asEntityLivingBase();
+		EntityLivingBase casterEntity = caster.iWantCaster().toEntityLiving();
 
 		float potent = data.get(POTENT_POWER);
 		float pDamage = 0.01f + potent / 50f;

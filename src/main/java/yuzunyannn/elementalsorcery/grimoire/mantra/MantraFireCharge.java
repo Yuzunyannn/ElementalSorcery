@@ -73,7 +73,7 @@ public class MantraFireCharge extends MantraTypeAccumulative {
 
 		world.playSound(null, eyePos.x, eyePos.y, eyePos.z, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.BLOCKS, 1, 1);
 		EntityFireball ball = new EntitySmallFireball(world, eyePos.x, eyePos.y, eyePos.z, tar.x, tar.y, tar.z);
-		ball.shootingEntity = caster.iWantRealCaster().asEntityLivingBase();
+		ball.shootingEntity = caster.iWantRealCaster().toEntityLiving();
 		world.spawnEntity(ball);
 
 		return true;

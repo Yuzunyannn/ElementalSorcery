@@ -179,6 +179,11 @@ public class EntityFairyCube extends EntityLivingBase
 		this.setHealth(0);
 	}
 
+	@Override
+	public boolean isAlive() {
+		return !isDead;
+	}
+
 	@SideOnly(Side.CLIENT)
 	public void dispearEffect() {
 		Vec3d pos = this.getObjectPosition();
@@ -553,16 +558,16 @@ public class EntityFairyCube extends EntityLivingBase
 		Entity entity = source.getTrueSource();
 		if (entity == this.getMaster()) {
 			if (this.world.isRemote) return false;
-			
+
 			Vec3d vec = entity.getPositionEyes(1);
 			Vec3d look = entity.getLookVec();
-			look = new Vec3d(look.x ,0, look.z).normalize().scale(-2);
+			look = new Vec3d(look.x, 0, look.z).normalize().scale(-2);
 			vec = vec.add(look);
 			Vec3d at = new Vec3d(posX, posY + 0.4, posZ);
 			Vec3d dir = vec.subtract(at);
 			this.setEntityBoundingBox(this.getEntityBoundingBox().offset(dir));
 			this.resetPositionToBB();
-			
+
 			return false;
 		}
 		return super.attackEntityFrom(source, amount);
@@ -900,12 +905,12 @@ public class EntityFairyCube extends EntityLivingBase
 	}
 
 	@Override
-	public TileEntity asTileEntity() {
+	public TileEntity toTileEntity() {
 		return null;
 	}
 
 	@Override
-	public Entity asEntity() {
+	public Entity toEntity() {
 		return this;
 	}
 

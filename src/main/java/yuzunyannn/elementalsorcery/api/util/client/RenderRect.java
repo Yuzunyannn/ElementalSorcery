@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.api.util.client;
 
 public class RenderRect {
 
+	public static final RenderRect ZERO = new RenderRect(0, 0, 0, 0);
+
 	public final float top;
 	public final float bottom;
 	public final float left;
@@ -13,7 +15,7 @@ public class RenderRect {
 		this.left = left;
 		this.right = right;
 	}
-	
+
 	public RenderRect(double top, double bottom, double left, double right) {
 		this.top = (float) top;
 		this.bottom = (float) bottom;
@@ -24,7 +26,7 @@ public class RenderRect {
 	public RenderRect move(float x, float y) {
 		return new RenderRect(top + y, bottom + y, left + x, right + x);
 	}
-	
+
 	public RenderRect move(double x, double y) {
 		return new RenderRect(top + y, bottom + y, left + x, right + x);
 	}

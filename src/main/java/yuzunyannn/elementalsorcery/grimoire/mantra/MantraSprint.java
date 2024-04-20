@@ -63,7 +63,7 @@ public class MantraSprint extends MantraCommon {
 		ElementStack need = new ElementStack(ESObjects.ELEMENTS.AIR, 4, 30);
 		ElementStack get = caster.iWantSomeElement(need, true);
 		if (get.isEmpty()) return;
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity == null) return;
 		dataCommon.markContinue(true);
 		int power = get.getPower();
@@ -89,7 +89,7 @@ public class MantraSprint extends MantraCommon {
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataCommon = (MantraDataCommon) data;
 		if (!dataCommon.isMarkContinue()) return;
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity == null) return;
 		entity.motionY = 0;
 		entity.fallDistance = 0;

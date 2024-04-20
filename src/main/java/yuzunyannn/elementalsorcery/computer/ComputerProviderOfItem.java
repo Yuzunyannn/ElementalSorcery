@@ -8,13 +8,13 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class ComputerProviderOfItem implements ICapabilitySerializable<NBTTagCompound> {
 
-	protected Computer computer;
+	protected ComputerDevice computer;
 
 	public ComputerProviderOfItem(ItemStack stack, String appearance) {
-		computer = new Computer(appearance);
+		computer = new ComputerDevice(appearance);
 	}
 
-	public ComputerProviderOfItem(ItemStack stack, Computer computer) {
+	public ComputerProviderOfItem(ItemStack stack, ComputerDevice computer) {
 		this.computer = computer;
 	}
 
@@ -30,7 +30,7 @@ public class ComputerProviderOfItem implements ICapabilitySerializable<NBTTagCom
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (Computer.COMPUTER_CAPABILITY.equals(capability)) return (T) computer;
-		if (Computer.DEVICE_CAPABILITY.equals(capability)) return (T) computer;
+		if (Computer.DEVICE_CAPABILITY.equals(capability)) return (T) computer.device();
 		return null;
 	}
 

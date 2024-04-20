@@ -21,13 +21,15 @@ import yuzunyannn.elementalsorcery.api.util.target.IObjectGetter;
 
 public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<NBTTagCompound> {
 
+	UUID getDeviceUUID();
+
 	List<IDisk> getDisks();
 
-	IDeviceStorage getDisk(APP app, AppDiskType type);
+	IDeviceStorage getDisk(App app, AppDiskType type);
 
 	boolean isRunning();
 
-	int exec(APP parent, String appId);
+	int exec(App parent, String appId);
 
 	int setForeground(int pid);
 
@@ -38,9 +40,9 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 	boolean exit(int pid);
 
 	@Nullable
-	APP getAppInst(int pid);
+	App getAppInst(int pid);
 
-	void message(APP app, NBTTagCompound nbt);
+	void message(App app, NBTTagCompound nbt);
 
 	@Nonnull
 	List<UUID> filterLinkedDevice(@Nonnull Capability<?> capability, @Nullable Object key);
@@ -50,9 +52,9 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 	}
 
 	@Nonnull
-	<T> IObjectGetter<T> askCapability(UUID uuid, @Nonnull Capability<T> capability, @Nullable Object key);
+	<T> IObjectGetter<T> askCapability(@Nullable UUID udid, @Nonnull Capability<T> capability, @Nullable Object key);
 
-	CompletableFuture<DNResult> notice(UUID uuid, String method, DNParams params);
+	CompletableFuture<DNResult> notice(@Nullable UUID udid, String method, DNParams params);
 
 	default void onDiskChange(boolean onlyData) {
 	};

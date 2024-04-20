@@ -98,7 +98,7 @@ public class MantraBlockCrash extends MantraTypeAccumulative {
 			for (int j = 0; j < 6 && !PotionPoundWalker.canPound(world.getBlockState(randomPos)); j++)
 				randomPos = randomPos.down();
 			float amplifier = 2 + MathHelper.sqrt(eStack.getPower()) * 1f;
-			PotionPoundWalker.pound(world, randomPos, amplifier, caster.iWantCaster().asEntityLivingBase());
+			PotionPoundWalker.pound(world, randomPos, amplifier, caster.iWantCaster().toEntityLiving());
 		}
 		return true;
 	}

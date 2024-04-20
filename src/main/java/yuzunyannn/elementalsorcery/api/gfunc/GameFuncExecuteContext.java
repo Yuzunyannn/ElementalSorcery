@@ -62,7 +62,7 @@ public class GameFuncExecuteContext {
 
 	@Nullable
 	public Entity getEntity() {
-		return srcObj.asEntity();
+		return srcObj.toEntity();
 	}
 
 	@Nonnull

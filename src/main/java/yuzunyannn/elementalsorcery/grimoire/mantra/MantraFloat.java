@@ -44,7 +44,7 @@ public class MantraFloat extends MantraTypePersistent {
 
 	@Override
 	protected void onUpdate(World world, IMantraData data, ICaster caster) {
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity == null) return;
 		entity.motionY = 0.15;
 		entity.fallDistance = 0;

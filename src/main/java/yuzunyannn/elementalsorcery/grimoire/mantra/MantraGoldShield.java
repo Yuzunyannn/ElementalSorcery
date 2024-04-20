@@ -54,7 +54,7 @@ public class MantraGoldShield extends MantraTypePersistent {
 	@Override
 	protected void onUpdate(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mData = (MantraDataCommon) data;
-		EntityLivingBase entity = caster.iWantRealCaster().asEntityLivingBase();
+		EntityLivingBase entity = caster.iWantRealCaster().toEntityLiving();
 		if (entity == null) return;
 
 		PotionEffect effct = entity.getActivePotionEffect(ESObjects.POTIONS.GOLD_SHIELD);
@@ -77,7 +77,7 @@ public class MantraGoldShield extends MantraTypePersistent {
 
 	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
-		EntityLivingBase entity = caster.iWantRealCaster().asEntityLivingBase();
+		EntityLivingBase entity = caster.iWantRealCaster().toEntityLiving();
 		if (entity == null) return;
 		float r = Math.min(1, caster.iWantKnowCastTick() / 160f);
 		float potent = caster.iWantBePotent(1, true);

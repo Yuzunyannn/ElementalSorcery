@@ -8,15 +8,19 @@ import javax.annotation.Nullable;
 
 public interface IDeviceNetwork {
 
-	public boolean handshake(IDeviceLinker other);
+	public boolean handshake(IDevice other, IDeviceEnv otherEnv, boolean simulate);
 
 	public Collection<IDeviceLinker> getLinkers();
 
 	@Nullable
-	public IDeviceLinker getLinker(UUID uuid);
+	public IDeviceLinker getLinker(UUID udid);
 
 	@Nonnull
 	public IDevice getDevice();
 
 	public boolean isDiscoverable();
+
+	default public boolean isHelpless(UUID udid) {
+		return false;
+	}
 }

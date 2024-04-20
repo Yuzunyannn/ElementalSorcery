@@ -130,31 +130,31 @@ public class ESJEIPlugin implements IModPlugin {
 		final ESObjects.Blocks BLOCKS = ESObjects.BLOCKS;
 		final ESObjects.Items ITEMS = ESObjects.ITEMS;
 		List<DescribeRecipeWrapper.Describe> describes = new ArrayList<>();
-		describes.add(new DescribeRecipeWrapper.Describe("page.starSand", "page.starSand.ct", BLOCKS.STAR_SAND,
+		describes.add(new DescribeRecipeWrapper.Describe("es.tutorial.1_2_0.title", "es.tutorial.1_2_0.describe", BLOCKS.STAR_SAND,
 				BLOCKS.STAR_STONE, BLOCKS.STAR_SAND));
 //		describes.add(new DescribeRecipeWrapper.Describe("page.astone", "page.astone.ct.sec",
 //				new ItemStack(BLOCKS.ASTONE), ItemHelper.toList(ITEMS.MAGIC_STONE, ITEMS.KYANITE, Blocks.COBBLESTONE),
 //				ItemHelper.toList(new ItemStack(BLOCKS.ASTONE, 1, 1), new ItemStack(BLOCKS.ASTONE, 1, 0))));
-		describes.add(new DescribeRecipeWrapper.Describe("page.enchantingBook", "page.enchantingBook.ct",
+		describes.add(new DescribeRecipeWrapper.Describe("es.tutorial.3_8_0.title", "es.tutorial.3_8_0.describe",
 				new ItemStack(Blocks.ENCHANTING_TABLE),
 				ItemHelper.toList(ITEMS.SPELLBOOK_ENCHANTMENT, Blocks.ENCHANTING_TABLE),
 				ItemHelper.toList(BLOCKS.INVALID_ENCHANTMENT_TABLE)));
-		describes.add(new DescribeRecipeWrapper.Describe("page.azureCrystal", "page.azureCrystal.ct",
+		describes.add(new DescribeRecipeWrapper.Describe("es.tutorial.3_2_0.title", "es.tutorial.3_2_0.describe",
 				new ItemStack(ITEMS.AZURE_CRYSTAL),
 				ItemHelper.toList(ITEMS.MAGIC_CRYSTAL, new ItemStack(Items.DYE, 1, 4)),
 				ItemHelper.toList(ITEMS.AZURE_CRYSTAL)));
 		describes.add(
-				new DescribeRecipeWrapper.Describe("page.quills", "page.quills.ct", new ItemStack(ITEMS.QUILL, 1, 1),
+				new DescribeRecipeWrapper.Describe("es.tutorial.2_5_0.title", "es.tutorial.2_5_0.describe", new ItemStack(ITEMS.QUILL, 1, 1),
 						ItemHelper.toList(ITEMS.QUILL, 1, 1), ItemHelper.toList(ITEMS.QUILL, 1, 2, ITEMS.QUILL, 1, 3)));
-		describes.add(new DescribeRecipeWrapper.Describe("page.lifeLeather", "page.lifeLeather.ct",
+		describes.add(new DescribeRecipeWrapper.Describe("es.tutorial.3_0_2.title", "es.tutorial.3_0_2.describe",
 				new ItemStack(ITEMS.LIFE_LEATHER, 1, 1), ItemHelper.toList(Items.LEATHER, ITEMS.SOUL_FRAGMENT),
 				ItemHelper.toList(ITEMS.LIFE_LEATHER, 1, 0, ITEMS.LIFE_LEATHER, 1, 1)));
-		describes.add(new DescribeRecipeWrapper.Describe("page.mantraPaper", "page.mantraPaper.ct",
+		describes.add(new DescribeRecipeWrapper.Describe("es.tutorial.5_5_1.title", "es.tutorial.5_5_1.describe",
 				new ItemStack(ITEMS.MAGIC_PAPER, 1, 3), ItemHelper.toList(ITEMS.MAGIC_PAPER, 1, 2),
 				ItemHelper.toList(ITEMS.MAGIC_PAPER, 1, 3)));
 		List<ItemStack> blessingJadePieces = new ArrayList<>();
 		for (int i = 0; i < 8; i++) blessingJadePieces.add(ItemBlessingJadePiece.createPiece(i));
-		describes.add(new DescribeRecipeWrapper.Describe("page.blessingJade", "page.blessingJade.ct.sec",
+		describes.add(new DescribeRecipeWrapper.Describe("es.page.blessingJade", "es.page.blessingJade.ct",
 				new ItemStack(ITEMS.BLESSING_JADE), blessingJadePieces, blessingJadePieces));
 
 		return describes;

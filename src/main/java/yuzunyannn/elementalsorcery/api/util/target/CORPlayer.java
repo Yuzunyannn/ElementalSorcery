@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.api.util.target;
 import java.lang.ref.WeakReference;
 import java.util.UUID;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +15,19 @@ import net.minecraftforge.common.capabilities.Capability;
 
 public class CORPlayer extends CapabilityObjectRef {
 
+	public static class Storage implements ICapabilityRefStorage<CORPlayer> {
+		@Override
+		public void write(ByteBuf buf, CORPlayer obj) {
+			buf.writeLong(obj.playerUUID.getMostSignificantBits());
+			buf.writeLong(obj.playerUUID.getLeastSignificantBits());
+		}
+
+		@Override
+		public CORPlayer read(ByteBuf buf) {
+			return new CORPlayer(new UUID(buf.readLong(), buf.readLong()));
+		}
+	}
+
 	protected UUID playerUUID;
 
 	protected WeakReference<EntityPlayer> ref;
@@ -22,6 +36,15 @@ public class CORPlayer extends CapabilityObjectRef {
 		playerUUID = player.getUniqueID();
 		ref = new WeakReference(player);
 		worldId = player.world.provider.getDimension();
+	}
+
+	protected CORPlayer(UUID playerUUID) {
+		this.playerUUID = playerUUID;
+	}
+
+	@Override
+	public boolean equals(CapabilityObjectRef other) {
+		return playerUUID.equals(((CORPlayer) other).playerUUID);
 	}
 
 	@Override
@@ -40,7 +63,7 @@ public class CORPlayer extends CapabilityObjectRef {
 	}
 
 	@Override
-	public boolean isValid() {
+	public boolean checkReference() {
 		if (_isValid()) return true;
 		ref = null;
 		return false;
@@ -56,6 +79,12 @@ public class CORPlayer extends CapabilityObjectRef {
 	@Override
 	public int tagId() {
 		return TAG_PLAYER;
+	}
+
+	@Override
+	public IWorldObject toWorldObject() {
+		EntityPlayer player = toEntityPlayer();
+		return player == null ? null : IWorldObject.of(player);
 	}
 
 	@Override

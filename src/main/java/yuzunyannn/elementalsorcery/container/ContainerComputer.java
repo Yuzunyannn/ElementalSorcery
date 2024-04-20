@@ -12,6 +12,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.api.computer.DNNBTParams;
 import yuzunyannn.elementalsorcery.api.computer.DNParams;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
@@ -23,6 +24,7 @@ import yuzunyannn.elementalsorcery.computer.ComputerEnvItem;
 import yuzunyannn.elementalsorcery.computer.ComputerEnvTile;
 import yuzunyannn.elementalsorcery.computer.WatcherConatiner;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
+import yuzunyannn.elementalsorcery.util.black.RecvLimit;
 
 public class ContainerComputer extends Container implements IContainerNetwork, IDeviceListener {
 
@@ -60,10 +62,8 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 			}
 			cEnv = new ComputerEnvItem(player, stack, slot);
 			this.computer.onPlayerInteraction(player, cEnv);
-			if (!world.isRemote) {
-				watcher = new WatcherConatiner(this);
-				this.computer.addListener(this);
-			}
+			this.computer.addListener(this);
+			if (!world.isRemote) watcher = new WatcherConatiner(this);
 		}
 	}
 
@@ -80,19 +80,30 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 		}
 	}
 
+	public BlockPos getCurrPosition() {
+		if (!stack.isEmpty()) return player.getPosition();
+		return this.pos;
+	}
+
 	@Override
-	public boolean absent() {
-		return isClosed;
+	public boolean isAlive() {
+		return !isClosed;
 	}
 
 	@Override
 	public CompletableFuture<DNResult> notice(String method, DNParams params) {
 		if ("app-message".equals(method)) {
-			int pid = params.get("pid", Integer.class);
-			NBTTagCompound data = params.get("data");
-			data.setInteger("_msg_pid_", pid);
-			this.sendToClient(data, player);
-			return DNResult.success();
+			if (world.isRemote) {
+				if (msgHook != null) msgHook.accept(params);
+				this.computer.notice(cEnv, "msg", params);
+				return DNResult.success();
+			} else {
+				int pid = params.get("pid", Integer.class);
+				NBTTagCompound data = params.get("data");
+				data.setInteger("_msg_pid_", pid);
+				this.sendToClient(data, player);
+				return DNResult.success();
+			}
 		}
 		return DNResult.invalid();
 	}
@@ -143,12 +154,15 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 		return ItemStack.EMPTY;
 	}
 
+	public final static RecvLimit RL = new RecvLimit(6, 4);
+
 	@Override
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side == Side.SERVER) {
 			if (nbt.hasKey("_nt_")) {
+				if (RL.peg(player)) return;
 				int pid = nbt.hasKey("pid") ? nbt.getInteger("pid") : -1;
-				DNParams params = new DNParams();
+				DNParams params = new DNNBTParams(nbt);
 				params.set("pid", pid);
 				this.computer.notice(cEnv, nbt.getString("_nt_"), params);
 				return;

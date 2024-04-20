@@ -2,31 +2,45 @@ package yuzunyannn.elementalsorcery.api.computer;
 
 import javax.annotation.Nullable;
 
-public class DNParams extends DNBase {
+import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.GameCast;
+import yuzunyannn.elementalsorcery.api.util.ICastEnv;
 
-	public static final DNParams EMPTY = new DNParams(null) {
-		@Override
-		public <T> void set(String key, T obj) {
-		}
+public class DNParams extends DNBase implements ICastEnv {
 
-		@Override
-		public <T> T get(String key, Class<T> cls) {
-			return null;
-		}
-	};
+	public static DNParams empty() {
+		return new DNParams();
+	}
 
 	protected IDevice src;
+	protected World world;
 
 	public DNParams() {
 	}
 
-	public DNParams(IDevice from) {
-		this.src = from;
+	public void setWorld(World world) {
+		this.world = world;
+	}
+
+	@Override
+	public World getWorld() {
+		return world;
 	}
 
 	@Nullable
 	public IDevice getSrcDevice() {
 		return src;
+	}
+
+	public void setSrcDevice(IDevice from) {
+		src = from;
+	}
+
+	public <T> T ask(String key, Class<T> cls) {
+		Object obj = objMap.get(key);
+		if (obj == null) return null;
+		if (cls.isAssignableFrom(obj.getClass())) return (T) obj;
+		return GameCast.cast(this, obj, cls);
 	}
 
 }

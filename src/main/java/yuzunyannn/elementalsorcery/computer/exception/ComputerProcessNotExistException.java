@@ -1,15 +1,15 @@
 package yuzunyannn.elementalsorcery.computer.exception;
 
-import yuzunyannn.elementalsorcery.api.computer.IDevice;
+import yuzunyannn.elementalsorcery.api.computer.ICalculatorObject;
 
 @SuppressWarnings("serial")
 public class ComputerProcessNotExistException extends ComputerException {
 
-	public ComputerProcessNotExistException(IDevice device) {
+	public ComputerProcessNotExistException(ICalculatorObject device) {
 		super(device);
 	}
 
-	public ComputerProcessNotExistException(IDevice device, String msg) {
+	public ComputerProcessNotExistException(ICalculatorObject device, String msg) {
 		super(device, msg);
 	}
 

@@ -395,17 +395,17 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 			return;
 		}
 		IWorldObject wobj = faceBeamHandlerSites[index];
-		if (wobj.asTileEntity() != null) {
+		if (wobj.toTileEntity() != null) {
 			if (isForce) {
 				Vec3d myPos = new Vec3d(getPos()).add(0.5, 0.5, 0.5);
-				Vec3d targetPos = new Vec3d(wobj.asTileEntity().getPos()).add(0.5, 0.5, 0.5);
+				Vec3d targetPos = new Vec3d(wobj.toTileEntity().getPos()).add(0.5, 0.5, 0.5);
 				Vec3d tar = targetPos.subtract(myPos).normalize();
 				myPos = myPos.add(tar.scale(0.6));
 				targetPos = targetPos.add(tar.scale(-0.5));
 				fad.effectLaser.setPosition(myPos);
 				fad.effectLaser.setTargetPosition(targetPos);
 			}
-		} else if (wobj.asEntity() != null) {
+		} else if (wobj.toEntity() != null) {
 			Vec3d myPos = new Vec3d(getPos()).add(0.5, 0.5, 0.5);
 			Vec3d targetPos = wobj.getObjectPosition();
 			Vec3d tar = targetPos.subtract(myPos).normalize();

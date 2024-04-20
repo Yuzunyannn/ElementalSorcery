@@ -54,7 +54,13 @@ public class GImage extends GNode {
 	}
 
 	public void setFrame(RenderTexutreFrame frame) {
+		setFrame(frame, false);
+	}
+
+	public void setFrame(RenderTexutreFrame frame, boolean updateSize) {
 		this.frame = frame == null ? RenderTexutreFrame.FULL_FRAME : frame;
+		if (!updateSize) return;
+		this.setSize(frame.width * frame.texWidth, frame.height * frame.texHeight);
 	}
 
 	public void setSplit9(RenderRect rect) {
@@ -93,11 +99,59 @@ public class GImage extends GNode {
 	protected void render9(float partialTicks) {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		render9(bufferbuilder, false);
+		tessellator.draw();
+	}
+
+	protected void pushBatch9BufferBuilder(BufferBuilder bufferbuilder, double ox, double oy, double cx, double cy,
+			double cw, double ch, double tcx, double tcy, double tcw, double tch) {
+
+		if (hasScale) {
+			cx *= rScaleX;
+			cy *= rScaleY;
+			cw *= rScaleX;
+			ch *= rScaleY;
+		}
+
+		float r = color.r, g = color.g, b = color.b, a = rAlpha;
+
+		if (rRotationZ != 0) {
+			Vec3d vec1 = new Vec3d(cx, cy, 0);
+			Vec3d vec2 = new Vec3d(cx, cy + ch, 0);
+			Vec3d vec3 = new Vec3d(cx + cw, cy + ch, 0);
+			Vec3d vec4 = new Vec3d(cx + cw, cy, 0);
+
+			double rotationZ = this.rRotationZ / 180 * 3.1415926;
+			vec1 = MathSupporter.rotation(vec1, AXIS_Z, rotationZ);
+			vec2 = MathSupporter.rotation(vec2, AXIS_Z, rotationZ);
+			vec3 = MathSupporter.rotation(vec3, AXIS_Z, rotationZ);
+			vec4 = MathSupporter.rotation(vec4, AXIS_Z, rotationZ);
+
+			bufferbuilder.pos(ox + vec1.x, oy + vec1.y, rZ).tex(tcx, tcy).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(ox + vec2.x, oy + vec2.y, rZ).tex(tcx, tcy + tch).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(ox + vec3.x, oy + vec3.y, rZ).tex(tcx + tcw, tcy + tch).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(ox + vec4.x, oy + vec4.y, rZ).tex(tcx + tcw, tcy).color(r, g, b, a).endVertex();
+		} else {
+			bufferbuilder.pos(ox + cx, oy + cy, rZ).tex(tcx, tcy).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(ox + cx, oy + cy + ch, rZ).tex(tcx, tcy + tch).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(ox + cx + cw, oy + cy + ch, rZ).tex(tcx + tcw, tcy + tch).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(ox + cx + cw, oy + cy, rZ).tex(tcx + tcw, tcy).color(r, g, b, a).endVertex();
+		}
+	}
+
+	protected void render9(BufferBuilder bufferbuilder, boolean isBatch) {
 
 		double cw, ch, cx, cy;
 		double tcw, tch, tcx, tcy;
+		double ox, oy;
+		double width = this.width;
+		double height = this.height;
 
-		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		if (isBatch) {
+			ox = rX;
+			oy = rY;
+		} else ox = oy = 0;
 
 		// left top
 		cx = -width * anchorX;
@@ -110,10 +164,13 @@ public class GImage extends GNode {
 		tcw = split9Rect.left * frame.width;
 		tch = split9Rect.top * frame.height;
 
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 
 		// left
 		cy = cy + ch;
@@ -121,10 +178,13 @@ public class GImage extends GNode {
 		tcy = tcy + tch;
 		tch = (split9Rect.bottom - split9Rect.top) * frame.height;
 
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 
 		// left bottom
 		cy = cy + ch;
@@ -132,10 +192,13 @@ public class GImage extends GNode {
 		tcy = tcy + tch;
 		tch = (1 - split9Rect.bottom) * frame.height;
 
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 
 		// bottom
 		cx = cx + cw;
@@ -143,10 +206,13 @@ public class GImage extends GNode {
 		tcx = tcx + tcw;
 		tcw = (split9Rect.right - split9Rect.left) * frame.width;
 
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 
 		// right bottom
 		cx = cx + cw;
@@ -154,10 +220,13 @@ public class GImage extends GNode {
 		tcx = tcx + tcw;
 		tcw = (1 - split9Rect.right) * frame.width;
 
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 
 		// right
 		ch = height - ch * 2;
@@ -165,10 +234,13 @@ public class GImage extends GNode {
 		tch = (split9Rect.bottom - split9Rect.top) * frame.height;
 		tcy = tcy - tch;
 
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 
 		// right top
 		ch = (height - ch) / 2;
@@ -176,20 +248,26 @@ public class GImage extends GNode {
 		tch = split9Rect.top * frame.height;
 		tcy = tcy - tch;
 
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 
 		// top
 		cw = width - cw * 2;
 		cx = cx - cw;
 		tcw = (split9Rect.right - split9Rect.left) * frame.width;
 		tcx = tcx - tcw;
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 
 		// center
 		cy = cy + ch;
@@ -197,41 +275,56 @@ public class GImage extends GNode {
 		tcy = tcy + tch;
 		tch = (split9Rect.bottom - split9Rect.top) * frame.height;
 
-		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
-		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
-		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
-
-		tessellator.draw();
+		if (isBatch) pushBatch9BufferBuilder(bufferbuilder, ox, oy, cx, cy, cw, ch, tcx, tcy, tcw, tch);
+		else {
+			bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+			bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+			bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+		}
 	}
 
 	@Override
 	protected void render(BufferBuilder bufferbuilder, float partialTicks) {
+		if (this.split9Rect != null) {
+			this.render9(bufferbuilder, true);
+			return;
+		}
+
 		double aw = width * anchorX;
 		double bw = width - aw;
-		double ah = height * anchorY;
+		double ah = height * (1 - anchorY);
 		double bh = height - ah;
+		float r = color.r, g = color.g, b = color.b, a = rAlpha;
 
-		if (hasRotation) {
-			Vec3d vec1 = new Vec3d(rX - aw, rY + ah, rZ);
-			Vec3d vec2 = new Vec3d(rX + bw, rY + ah, rZ);
-			Vec3d vec3 = new Vec3d(rX + bw, rY - bh, rZ);
-			Vec3d vec4 = new Vec3d(rX - aw, rY - bh, rZ);
+		if (hasScale) {
+			aw = aw * rScaleX;
+			bw = bw * rScaleX;
+			ah = ah * rScaleY;
+			bh = bh * rScaleY;
+		}
 
+		if (rRotationZ != 0) {
+			Vec3d vec1 = new Vec3d(-aw, +ah, rZ);
+			Vec3d vec2 = new Vec3d(+bw, +ah, rZ);
+			Vec3d vec3 = new Vec3d(+bw, -bh, rZ);
+			Vec3d vec4 = new Vec3d(-aw, -bh, rZ);
+
+			double rotationZ = this.rRotationZ / 180 * 3.1415926;
 			vec1 = MathSupporter.rotation(vec1, AXIS_Z, rotationZ);
 			vec2 = MathSupporter.rotation(vec2, AXIS_Z, rotationZ);
 			vec3 = MathSupporter.rotation(vec3, AXIS_Z, rotationZ);
 			vec4 = MathSupporter.rotation(vec4, AXIS_Z, rotationZ);
 
-			bufferbuilder.pos(vec1.x, vec1.y, vec1.z).tex(frame.x, frame.y + frame.height).endVertex();
-			bufferbuilder.pos(vec2.x, vec2.y, vec2.z).tex(frame.x + frame.width, frame.y + frame.height).endVertex();
-			bufferbuilder.pos(vec3.x, vec3.y, vec3.z).tex(frame.x + frame.width, frame.y).endVertex();
-			bufferbuilder.pos(vec4.x, vec4.y, vec4.z).tex(frame.x, frame.y).endVertex();
+			bufferbuilder.pos(rX + vec1.x, rY + vec1.y, vec1.z).tex(frame.x, frame.y + frame.height).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(rX + vec2.x, rY + vec2.y, vec2.z).tex(frame.x + frame.width, frame.y + frame.height).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(rX + vec3.x, rY + vec3.y, vec3.z).tex(frame.x + frame.width, frame.y).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(rX + vec4.x, rY + vec4.y, vec4.z).tex(frame.x, frame.y).color(r, g, b, a).endVertex();
 		} else {
-			bufferbuilder.pos(rX - aw, rY + ah, rZ).tex(frame.x, frame.y + frame.height).endVertex();
-			bufferbuilder.pos(rX + bw, rY + ah, rZ).tex(frame.x + frame.width, frame.y + frame.height).endVertex();
-			bufferbuilder.pos(rX + bw, rY - bh, rZ).tex(frame.x + frame.width, frame.y).endVertex();
-			bufferbuilder.pos(rX - aw, rY - bh, rZ).tex(frame.x, frame.y).endVertex();
+			bufferbuilder.pos(rX - aw, rY + ah, rZ).tex(frame.x, frame.y + frame.height).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(rX + bw, rY + ah, rZ).tex(frame.x + frame.width, frame.y + frame.height).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(rX + bw, rY - bh, rZ).tex(frame.x + frame.width, frame.y).color(r, g, b, a).endVertex();
+			bufferbuilder.pos(rX - aw, rY - bh, rZ).tex(frame.x, frame.y).color(r, g, b, a).endVertex();
 		}
 	}
 

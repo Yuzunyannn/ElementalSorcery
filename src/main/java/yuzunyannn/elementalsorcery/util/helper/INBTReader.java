@@ -4,22 +4,51 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
 public interface INBTReader {
 
-	UUID uuid(String key);
+	boolean has(String key);
+
+	float nfloat(String key);
+
+	double ndouble(String key);
+
+	byte nbyte(String key);
+
+	short nshort(String key);
+
+	int nint(String key);
+
+	long nlong(String key);
 	
-	String string(String string);
-	
+	boolean nboolean(String key);
+
 	<U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, T serializable);
 
-	<U extends NBTBase, T extends INBTSerializable<U>> T read(String key, Function<U, T> factory);
+	<U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Function<U, T> factory);
 
-	<U extends NBTBase, T extends INBTSerializable<U>> List<T> readList(String key, List<T> list);
+	<U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, List<T> list);
 
 	<U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, Function<U, T> factory);
 
+	UUID uuid(String key);
+	
+	List<UUID> uuids(String key);
+
+	String string(String key);
+
+	EnumFacing facing(String key);
+
+	ItemStack itemStack(String key);
+
+	NBTTagCompound compoundTag(String key);
+
+	CapabilityObjectRef capabilityObjectRef(String key);
 
 }

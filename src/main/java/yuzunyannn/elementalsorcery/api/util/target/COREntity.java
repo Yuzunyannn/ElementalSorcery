@@ -2,12 +2,25 @@ package yuzunyannn.elementalsorcery.api.util.target;
 
 import java.lang.ref.WeakReference;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
 public class COREntity extends CapabilityObjectRef {
+
+	public static class Storage implements ICapabilityRefStorage<COREntity> {
+		@Override
+		public void write(ByteBuf buf, COREntity obj) {
+			buf.writeInt(obj.id);
+		}
+
+		@Override
+		public COREntity read(ByteBuf buf) {
+			return new COREntity(buf.readInt());
+		}
+	}
 
 	protected int id;
 
@@ -17,6 +30,15 @@ public class COREntity extends CapabilityObjectRef {
 		id = entity.getEntityId();
 		ref = new WeakReference(entity);
 		worldId = entity.world.provider.getDimension();
+	}
+
+	protected COREntity(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public boolean equals(CapabilityObjectRef other) {
+		return id == ((COREntity) other).id;
 	}
 
 	@Override
@@ -29,7 +51,7 @@ public class COREntity extends CapabilityObjectRef {
 	}
 
 	@Override
-	public boolean isValid() {
+	public boolean checkReference() {
 		if (_isValid()) return true;
 		ref = null;
 		return false;
@@ -45,6 +67,12 @@ public class COREntity extends CapabilityObjectRef {
 	@Override
 	public int tagId() {
 		return TAG_ENTITY;
+	}
+
+	@Override
+	public IWorldObject toWorldObject() {
+		Entity entity = toEntity();
+		return entity == null ? null : IWorldObject.of(entity);
 	}
 
 	@Override

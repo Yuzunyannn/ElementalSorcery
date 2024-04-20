@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.computer.render;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.computer.soft.AppTutorialGui;
+import yuzunyannn.elementalsorcery.computer.softs.AppTutorialGui;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
 import yuzunyannn.elementalsorcery.nodegui.GNode;

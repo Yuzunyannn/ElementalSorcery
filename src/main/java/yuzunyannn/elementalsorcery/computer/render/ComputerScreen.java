@@ -102,7 +102,7 @@ public class ComputerScreen {
 				renderGUI(currTaskGui, partialTicks);
 			}
 		} catch (Exception e) {
-			this.exception = IComputerException.easy(e.getMessage());
+			this.exception = IComputerException.easy(e);
 			ESAPI.logger.warn("computer render crash!", e);
 		}
 

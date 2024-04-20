@@ -67,18 +67,23 @@ public abstract class EntityObject extends Entity implements IWorldObject {
 	}
 
 	@Override
-	public TileEntity asTileEntity() {
+	public TileEntity toTileEntity() {
 		return null;
 	}
 
 	@Override
-	public Entity asEntity() {
+	public Entity toEntity() {
 		return this;
 	}
 
 	@Override
 	public Vec3d getObjectPosition() {
 		return this.getPositionVector();
+	}
+
+	@Override
+	public boolean isAlive() {
+		return !isDead;
 	}
 
 }

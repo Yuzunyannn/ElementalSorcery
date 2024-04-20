@@ -5,14 +5,18 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
 public class NBTSaver implements INBTReader, INBTWriter {
 
-	public final NBTTagCompound nbt;
+	protected NBTTagCompound nbt;
 
 	public boolean isEmpty() {
 		return nbt.isEmpty();
@@ -20,6 +24,13 @@ public class NBTSaver implements INBTReader, INBTWriter {
 
 	public NBTTagCompound tag() {
 		return nbt;
+	}
+
+	public NBTTagCompound spitOut() {
+		if (nbt.isEmpty()) return null;
+		NBTTagCompound out = nbt;
+		nbt = new NBTTagCompound();
+		return out;
 	}
 
 	public NBTSaver() {
@@ -31,14 +42,65 @@ public class NBTSaver implements INBTReader, INBTWriter {
 	}
 
 	@Override
+	public boolean has(String key) {
+		return nbt.hasKey(key);
+	}
+
+	@Override
 	public void write(String key, UUID uuid) {
-		nbt.setLong(key + "M", uuid.getMostSignificantBits());
-		nbt.setLong(key + "L", uuid.getLeastSignificantBits());
+		byte[] bytes = new byte[16];
+		long mostSignificantBits = uuid.getMostSignificantBits();
+		long leastSignificantBits = uuid.getLeastSignificantBits();
+		for (int i = 0; i < 8; i++) {
+			bytes[i] = (byte) (mostSignificantBits >> (8 * (7 - i)));
+			bytes[i + 8] = (byte) (leastSignificantBits >> (8 * (7 - i)));
+		}
+		nbt.setByteArray(key, bytes);
 	}
 
 	@Override
 	public UUID uuid(String key) {
-		return new UUID(nbt.getLong(key + "M"), nbt.getLong(key + "L"));
+		try {
+			byte[] bytes = nbt.getByteArray(key);
+			long mostSignificantBits = 0;
+			long leastSignificantBits = 0;
+			for (int i = 0; i < 8; i++) {
+				mostSignificantBits |= (long) (bytes[i] & 0xFF) << ((7 - i) * 8);
+				leastSignificantBits |= (long) (bytes[i + 8] & 0xFF) << ((7 - i) * 8);
+			}
+			return new UUID(mostSignificantBits, leastSignificantBits);
+		} catch (Exception e) {
+			return UUID.randomUUID();
+		}
+	}
+
+	@Override
+	public void writeUUIDs(String key, List<UUID> uuids) {
+		byte[] bytes = new byte[16 * uuids.size()];
+		int index = 0;
+		for (UUID uuid : uuids) {
+			JavaHelper.write(bytes, index * 16, uuid.getMostSignificantBits());
+			JavaHelper.write(bytes, index * 16 + 8, uuid.getLeastSignificantBits());
+			index++;
+		}
+		nbt.setByteArray(key, bytes);
+	}
+
+	@Override
+	public List<UUID> uuids(String key) {
+		try {
+			byte[] bytes = nbt.getByteArray(key);
+			int count = bytes.length / 16;
+			List<UUID> list = new ArrayList<>(count);
+			for (int i = 0; i < count; i++) {
+				long mostSignificantBits = JavaHelper.readLong(bytes, i * 16);
+				long leastSignificantBits = JavaHelper.readLong(bytes, i * 16 + 8);
+				list.add(new UUID(mostSignificantBits, leastSignificantBits));
+			}
+			return list;
+		} catch (Exception e) {
+			return new ArrayList<>();
+		}
 	}
 
 	@Override
@@ -64,7 +126,7 @@ public class NBTSaver implements INBTReader, INBTWriter {
 		return serializable;
 	}
 
-	public <U extends NBTBase, T extends INBTSerializable<U>> T read(String key, Function<U, T> factory) {
+	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Function<U, T> factory) {
 		return factory.apply((U) nbt.getTag(key));
 	}
 
@@ -76,7 +138,7 @@ public class NBTSaver implements INBTReader, INBTWriter {
 	}
 
 	@Override
-	public <U extends NBTBase, T extends INBTSerializable<U>> List<T> readList(String key, List<T> list) {
+	public <U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, List<T> list) {
 		try {
 			NBTTagList tagList = (NBTTagList) nbt.getTag(key);
 			int length = Math.min(list.size(), tagList.tagCount());
@@ -94,4 +156,116 @@ public class NBTSaver implements INBTReader, INBTWriter {
 		} catch (Exception e) {}
 		return list;
 	}
+
+	@Override
+	public void write(String key, EnumFacing facing) {
+		nbt.setByte(key, (byte) facing.getIndex());
+	}
+
+	@Override
+	public EnumFacing facing(String key) {
+		return EnumFacing.byIndex(nbt.getByte(key));
+	}
+
+	@Override
+	public void write(String key, ItemStack stack) {
+		nbt.setTag(key, stack.serializeNBT());
+	}
+
+	@Override
+	public ItemStack itemStack(String key) {
+		return new ItemStack(nbt.getCompoundTag(key));
+	}
+
+	@Override
+	public void write(String key, float val) {
+		nbt.setFloat(key, val);
+	}
+
+	@Override
+	public void write(String key, double val) {
+		nbt.setDouble(key, val);
+	}
+
+	@Override
+	public void write(String key, byte val) {
+		nbt.setByte(key, val);
+	}
+
+	@Override
+	public void write(String key, short val) {
+		nbt.setShort(key, val);
+	}
+
+	@Override
+	public void write(String key, int val) {
+		nbt.setInteger(key, val);
+	}
+
+	@Override
+	public void write(String key, long val) {
+		nbt.setLong(key, val);
+	}
+
+	@Override
+	public float nfloat(String key) {
+		return nbt.getFloat(key);
+	}
+
+	@Override
+	public double ndouble(String key) {
+		return nbt.getDouble(key);
+	}
+
+	@Override
+	public byte nbyte(String key) {
+		return nbt.getByte(key);
+	}
+
+	@Override
+	public short nshort(String key) {
+		return nbt.getShort(key);
+	}
+
+	@Override
+	public int nint(String key) {
+		return nbt.getInteger(key);
+	}
+
+	@Override
+	public long nlong(String key) {
+		return nbt.getLong(key);
+	}
+
+	@Override
+	public void write(String key, boolean val) {
+		nbt.setBoolean(key, val);
+	}
+
+	@Override
+	public boolean nboolean(String key) {
+		return nbt.getBoolean(key);
+	}
+
+	@Override
+	public void write(String key, NBTBase base) {
+		nbt.setTag(key, base);
+	}
+
+	@Override
+	public NBTTagCompound compoundTag(String key) {
+		return nbt.getCompoundTag(key);
+	}
+
+	@Override
+	public void write(String key, CapabilityObjectRef ref) {
+		nbt.setByteArray(key, CapabilityObjectRef.write(ref));
+	}
+
+	@Override
+	public CapabilityObjectRef capabilityObjectRef(String key) {
+		if (nbt.hasKey(key, NBTTag.TAG_BYTE_ARRAY)) return CapabilityObjectRef.read(nbt.getByteArray(key));
+		return CapabilityObjectRef.INVALID;
+	}
+
 }

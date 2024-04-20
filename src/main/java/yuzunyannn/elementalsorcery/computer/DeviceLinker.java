@@ -9,6 +9,7 @@ import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
+import yuzunyannn.elementalsorcery.api.util.target.WorldLocation;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerConnectException;
 
 public class DeviceLinker implements IDeviceLinker {
@@ -16,7 +17,7 @@ public class DeviceLinker implements IDeviceLinker {
 	protected boolean isClose;
 	protected final UUID remoteUUID;
 	protected final IDeviceNetwork network;
-	protected DeviceLinkerFinder finder;
+	protected DeviceFinder finder;
 	protected CapabilityObjectRef ref;
 
 	protected boolean badRef;
@@ -25,6 +26,13 @@ public class DeviceLinker implements IDeviceLinker {
 	protected int lastTimeoutCheck;
 	protected int cCheck, lastCCheck;
 
+	
+	protected DeviceLinker(IDeviceNetwork network, UUID udid) {
+		this.network = network;
+		this.remoteUUID = udid;
+		this.ref = CapabilityObjectRef.INVALID;
+	}
+	
 	protected DeviceLinker(IDeviceNetwork network, CapabilityObjectRef ref) {
 		this.network = network;
 		this.remoteUUID = ref.getCapability(Computer.DEVICE_CAPABILITY, null).getUDID();
@@ -35,7 +43,7 @@ public class DeviceLinker implements IDeviceLinker {
 		this.network = network;
 		this.remoteUUID = nbt.getUniqueId("uuid");
 		this.isClose = nbt.getBoolean("cls");
-		this.ref = CapabilityObjectRef.of();
+		this.ref = CapabilityObjectRef.read(nbt.getByteArray("ref"));
 	}
 
 	@Override
@@ -43,29 +51,13 @@ public class DeviceLinker implements IDeviceLinker {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setUniqueId("uuid", remoteUUID);
 		nbt.setBoolean("cls", isClose);
+		nbt.setByteArray("ref", CapabilityObjectRef.write(ref));
 		return nbt;
 	}
 
 	@Override
-	public boolean disconnectTick(IDeviceEnv env, int dtick) {
-		if ((timeout += dtick) > 20 * 30) return false;
-		if (this.finder != null) {
-			int check = timeout / 5;
-			if (lastTimeoutCheck != check) {
-				lastTimeoutCheck = check;
-				this.finder.update(env);
-				if (this.finder == null) return true;
-				if (this.finder.isClose()) return false;
-			}
-		} else {
-			int check = timeout / 30;
-			if (lastTimeoutCheck != check) {
-				lastTimeoutCheck = check;
-				reconnect(env);
-				if (isClose) return false;
-			}
-		}
-		return true;
+	public boolean isLocal() {
+		return false;
 	}
 
 	@Override
@@ -79,28 +71,19 @@ public class DeviceLinker implements IDeviceLinker {
 	}
 
 	@Override
+	public CapabilityObjectRef getRemoteRef() {
+		return ref;
+	}
+
+	@Override
 	public boolean isConnecting() {
 		if (badRef) return false;
 		if (isClose) return false;
-		if (!ref.isValid()) return false;
+		if (!ref.checkReference()) return false;
 		IDevice device = ref.getCapability(Computer.DEVICE_CAPABILITY, null);
 		if (device == null) badRef = true;
 		else if (!device.getUDID().equals(remoteUUID)) badRef = true;
 		return !badRef;
-	}
-
-	protected boolean afterReconnect() {
-		IDevice deviceRemote = getRemoteDevice();
-		IDeviceNetwork networkRemote = deviceRemote.getNetwork();
-		IDeviceLinker linker = networkRemote.getLinker(getRemoteUUID());
-		if (linker == null || linker.isClose()) {
-			onClose();
-			return false;
-		}
-		badRef = false;
-		lastTimeoutCheck = timeout = 0;
-		this.finder = null;
-		return true;
 	}
 
 	@Override
@@ -117,15 +100,43 @@ public class DeviceLinker implements IDeviceLinker {
 		return afterReconnect();
 	}
 
+	protected boolean afterReconnect() {
+		badRef = false;
+		lastTimeoutCheck = timeout = 0;
+		this.finder = null;
+		return true;
+	}
+
 	@Override
-	public void connectTick(IDeviceEnv env, int dtick) {
+	public boolean onDisconnectTick(IDeviceEnv env, int dtick) {
+		if ((timeout += dtick) > 20 * 30) return false;
+		if (this.finder != null) {
+			if (this.finder.isClose()) return false;
+		} else {
+			int check = timeout / 30;
+			if (lastTimeoutCheck != check) {
+				lastTimeoutCheck = check;
+				reconnect(env);
+				if (isClose) return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public void onConnectTick(IDeviceEnv env, int dtick) {
 		cCheck += dtick;
 		if (cCheck - lastCCheck >= 20) {
 			lastCCheck = cCheck;
+			UUID udid = network.getDevice().getUDID();
 			IDevice remoteDevice = getRemoteDevice();
 			IDeviceNetwork remoteNetwork = remoteDevice.getNetwork();
-			IDeviceLinker remoteLinker = remoteNetwork.getLinker(getRemoteUUID());
-			if (remoteLinker.getRemoteDevice() != network.getDevice()) {
+			IDeviceLinker remoteLinker = remoteNetwork.getLinker(udid);
+			if (remoteLinker == null || remoteLinker.isClose()) {
+				boolean accpet = false;
+				if (remoteNetwork.isHelpless(udid)) accpet = remoteNetwork.handshake(network.getDevice(), env, false);
+				if (!accpet) close();
+			} else if (remoteLinker.getRemoteDevice() != network.getDevice()) {
 				if (ESAPI.isDevelop) {
 					if (remoteLinker.isConnecting()) ESAPI.logger.warn("异常的linker链接，A和B的device不一致，但A认为链接正常，引用异常！");
 				}
@@ -157,12 +168,50 @@ public class DeviceLinker implements IDeviceLinker {
 	}
 
 	protected boolean restore(IDeviceEnv env) {
-		this.ref.restore(env.getWorld());
-		if (this.ref.isValid()) {
+		if (!this.ref.isInvalid()) {
+			this.ref.restore(env.getWorld());
 			if (this.isConnecting()) return true;
 		}
-		this.finder = WideNetwork.instance.apply(this, env);
-		this.ref = CapabilityObjectRef.of();
+		badRef = true;
+		WideNetwork.instance.helloWorld(network.getDevice(), env);
+		this.finder = WideNetwork.instance.applyFinder(env.getWorld(), new Asker(env));
+		this.ref = CapabilityObjectRef.INVALID;
 		return false;
 	}
+
+	protected class Asker implements IDeviceAsker {
+
+		final WorldLocation wl;
+
+		public Asker(IDeviceEnv env) {
+			this.wl = new WorldLocation(env.getWorld(), env.getBlockPos());
+		}
+
+		@Override
+		public WorldLocation where() {
+			return wl;
+		}
+
+		@Override
+		public void onFind(IDeviceEnv findedEnv) {
+			reconnectByOther(findedEnv);
+		}
+
+		@Override
+		public void onFindFailed() {
+
+		}
+
+		@Override
+		public boolean isUnconcerned() {
+			return !badRef || isClose;
+		}
+
+		@Override
+		public UUID lookFor() {
+			return getRemoteUUID();
+		}
+
+	}
+
 }

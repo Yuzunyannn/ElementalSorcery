@@ -102,7 +102,7 @@ public class MantraLush extends MantraTypeAccumulative {
 			magicEffectAt(world, pos, caster);
 			return;
 		}
-		magicToBlock(world, pos, state, power, caster.iWantCaster().asEntity());
+		magicToBlock(world, pos, state, power, caster.iWantCaster().toEntity());
 	}
 
 	public static void magicToBlock(World world, BlockPos pos, IBlockState state, float power,

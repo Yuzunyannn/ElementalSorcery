@@ -123,8 +123,8 @@ public class SummonDungeonRoom extends SummonCommon {
 
 	protected boolean fin(double ms) {
 		if (ms < 0) return true;
-		if (EventServer.bigComputeWatch.msLessThan(ms)) return true;
-		return false;
+		if (EventServer.bigComputeWatch.msBiggerThan(ms)) return false;
+		return true;
 	}
 
 	public void updateBuildCore() {

@@ -80,7 +80,7 @@ public class MantraMagicStrafe extends MantraTypePersistent {
 		BlockPos pos = result.getPos();
 		if (pos == null) {
 			Random rand = world.rand;
-			Entity entity = caster.iWantCaster().asEntity();
+			Entity entity = caster.iWantCaster().toEntity();
 			Vec3d vec;
 			if (entity == null) {
 				vec = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian())

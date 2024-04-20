@@ -63,7 +63,7 @@ public class MantraIceCrystalBomb extends MantraTypeAccumulative {
 			return;
 		}
 
-		EntityLivingBase player = caster.iWantCaster().asEntityLivingBase();
+		EntityLivingBase player = caster.iWantCaster().toEntityLiving();
 		float damage = DamageHelper.getNormalAttackDamage(player, target);
 
 		potent = caster.iWantBePotent(0.4f, false);
@@ -221,7 +221,7 @@ public class MantraIceCrystalBomb extends MantraTypeAccumulative {
 		EffectIceCrystalBomb ems = new EffectIceCrystalBomb(casterObject.getWorld(), casterObject);
 		ems.setCondition(MantraEffectMap.condition(caster, mData, CastStatus.AFTER_SPELLING));
 		mData.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, ems);
-		if (caster.iWantCaster().asPlayer() != null) ems.passHidePlayer = caster.iWantCaster().asPlayer().getUniqueID();
+		if (caster.iWantCaster().toEntityPlayer() != null) ems.passHidePlayer = caster.iWantCaster().toEntityPlayer().getUniqueID();
 		ems.isSuper = mData.get(POWERF) > 0.25f;
 	}
 

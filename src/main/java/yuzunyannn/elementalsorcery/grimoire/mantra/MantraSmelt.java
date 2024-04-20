@@ -245,7 +245,7 @@ public class MantraSmelt extends MantraTypeSquareArea {
 		if (elementMap.containsKey(ESObjects.ELEMENTS.ENDER)) {
 			ElementStack ender = elementMap.get(ESObjects.ELEMENTS.ENDER);
 			if (ender.getPower() > 20 && ender.getCount() > 2) {
-				EntityPlayer player = caster.iWantRealCaster().asPlayer();
+				EntityPlayer player = caster.iWantRealCaster().toEntityPlayer();
 				if (player != null) {
 					ender.shrink(2);
 					ItemHelper.addItemStackToPlayer(player, stack);

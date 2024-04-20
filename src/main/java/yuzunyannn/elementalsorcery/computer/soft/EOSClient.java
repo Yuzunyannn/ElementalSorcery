@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
+import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerHardwareMissingException;
 
@@ -35,12 +35,12 @@ public class EOSClient extends EOS {
 	}
 
 	@Override
-	public IDeviceStorage getDisk(APP app, AppDiskType type) {
+	public IDeviceStorage getDisk(App app, AppDiskType type) {
 		throw new ComputerHardwareMissingException(this.computer, "disk is in the cloud");
 	}
 
 	@Override
-	public APP getAppInst(int pid) {
+	public App getAppInst(int pid) {
 		return processTree.getAppCache(this, pid);
 	}
 
@@ -68,7 +68,7 @@ public class EOSClient extends EOS {
 	protected int checkHasTask(Collection<Integer> children) {
 		if (children == null) return -1;
 		for (int pid : children) {
-			APP app = processTree.getAppCache(this, pid);
+			App app = processTree.getAppCache(this, pid);
 			if (app == null) continue;
 			if (app.isTask()) return pid;
 		}
@@ -76,8 +76,8 @@ public class EOSClient extends EOS {
 	}
 
 	@Override
-	public void message(APP app, NBTTagCompound nbt) {
-		app.onRecvMessage(nbt);
+	public void message(App app, NBTTagCompound nbt) {
+		super.message(app, nbt);
 	}
 
 }

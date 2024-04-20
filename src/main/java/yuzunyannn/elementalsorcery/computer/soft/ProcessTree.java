@@ -18,7 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
+import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
@@ -50,7 +50,7 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 		public final int parentPid;
 		public final List<Integer> children = new ArrayList<>();
 
-		public APP appInst;
+		public App appInst;
 
 		protected ProcessNode(ResourceLocation appId, int pid, int parentPid) {
 			this.appId = appId;
@@ -86,7 +86,7 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 		}
 
 		ResourceLocation appIdRes = TextHelper.toESResourceLocation(appId);
-		Class<?> appClazz = APP.REGISTRY.getValue(appIdRes);
+		Class<?> appClazz = App.REGISTRY.getValue(appIdRes);
 		if (appClazz == null) return -1;
 
 		pidCounter = pidCounter + 1;
@@ -167,10 +167,10 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 
 	public final static Class<?>[] BUILD_TPTES = new Class[] { IOS.class, int.class };
 
-	public APP getAppCache(IOS os, int pid) {
+	public App getAppCache(IOS os, int pid) {
 		ProcessNode node = map.get(pid);
 		if (node == null) return null;
-		if (node.appInst == null) node.appInst = APP.REGISTRY.newInstance(node.appId, BUILD_TPTES, os, pid);
+		if (node.appInst == null) node.appInst = App.REGISTRY.newInstance(node.appId, BUILD_TPTES, os, pid);
 		return node.appInst;
 	}
 

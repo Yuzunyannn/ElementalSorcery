@@ -48,7 +48,7 @@ public class FairyCubeMaster implements IFairyCubeMaster, INBTSerializable<NBTTa
 
 	protected IFairyCubeObject getLastMarkLivingServant() {
 		IFairyCubeObject fairyCube = servant == null ? null : servant.get();
-		if (fairyCube != null && fairyCube.asEntity().isDead) {
+		if (fairyCube != null && fairyCube.toEntity().isDead) {
 			servant = null;
 			fairyCube = null;
 		}

@@ -118,7 +118,7 @@ public class MantraSummon extends MantraCommon {
 	public void startSpelling(World world, IMantraData mData, ICaster caster) {
 		Data data = (Data) mData;
 		data.markContinue(false);
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity == null) return;
 		// 寻找召唤任务
 		if (entity instanceof EntityLivingBase) {
@@ -183,7 +183,7 @@ public class MantraSummon extends MantraCommon {
 		// 重置位置
 		caster.iWantDirectCaster().setPositionVector(new Vec3d(data.pos));
 		// 消耗灵魂
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity entity = caster.iWantCaster().toEntity();
 		if (entity instanceof EntityPlayer && !((EntityPlayer) entity).isCreative()) {
 			int cost = data.summonRecipe.getSoulCost(data.keepsake, world, data.pos);
 			ItemStack stack = findSoulTool((EntityPlayer) entity, cost);

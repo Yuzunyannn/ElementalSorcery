@@ -91,7 +91,7 @@ public class MantraFireBall extends MantraTypeAccumulative {
 		ElementStack knowledge = getElement(caster, ESObjects.ELEMENTS.KNOWLEDGE, 2, 50);
 
 		int power = 3 + Math.min(stack.getPower() / 200, 4);
-		MantraFireBall.fire(world, caster.iWantCaster().asEntityLivingBase(), power, !knowledge.isEmpty());
+		MantraFireBall.fire(world, caster.iWantCaster().toEntityLiving(), power, !knowledge.isEmpty());
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class MantraFireBall extends MantraTypeAccumulative {
 		double x = bPos.getX() + 0.5;
 		double y = bPos.getY() + 0.5;
 		double z = bPos.getZ() + 0.5;
-		Entity casterEntity = caster.iWantCaster().asEntity();
+		Entity casterEntity = caster.iWantCaster().toEntity();
 
 		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y - size, z - size, x + size, y + size, z + size);
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb, (living) -> {

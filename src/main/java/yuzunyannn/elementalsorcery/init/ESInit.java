@@ -55,7 +55,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
+import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
@@ -162,9 +162,10 @@ import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerCapStorage;
 import yuzunyannn.elementalsorcery.computer.DeviceCapStorage;
-import yuzunyannn.elementalsorcery.computer.soft.AppCommand;
-import yuzunyannn.elementalsorcery.computer.soft.AppTutorial;
-import yuzunyannn.elementalsorcery.computer.soft.TaskInventoryItemSelect;
+import yuzunyannn.elementalsorcery.computer.softs.AppCommand;
+import yuzunyannn.elementalsorcery.computer.softs.AppTutorial;
+import yuzunyannn.elementalsorcery.computer.softs.TaskInventoryItemSelect;
+import yuzunyannn.elementalsorcery.computer.softs.TaskNetwork;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
@@ -1141,6 +1142,7 @@ public class ESInit {
 		registerAPP(AppCommand.class, "command");
 		registerAPP(AppTutorial.class, "tutorial");
 		registerAPP(TaskInventoryItemSelect.class, TaskInventoryItemSelect.ID);
+		registerAPP(TaskNetwork.class, TaskNetwork.ID);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -1437,7 +1439,7 @@ public class ESInit {
 				new RenderTileDungeonMagicCircleA());
 		registerRender(BLOCKS.STONE_DECORATION, TileStoneDecoration.class, new RenderTileStoneDecoration());
 		registerRender(BLOCKS.MANTRA_EMITTER, TileMantraEmitter.class, new RenderTileMantraEmitter());
-		
+
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
@@ -1492,8 +1494,8 @@ public class ESInit {
 		ES_TILE_ENTITY.add(tileEntityClass);
 	}
 
-	private static void registerAPP(Class<? extends APP> appClass, String id) {
-		APP.REGISTRY.register(new ResourceLocation(ESAPI.MODID, id), appClass);
+	private static void registerAPP(Class<? extends App> appClass, String id) {
+		App.REGISTRY.register(new ResourceLocation(ESAPI.MODID, id), appClass);
 	}
 
 	private static void register(Potion potion) {

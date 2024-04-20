@@ -79,7 +79,7 @@ public class DungeonFuncMantra extends GameFuncTimes {
 		Vec3d vec = context.getSrcObj().getObjectPosition();
 		World world = context.getWorld();
 
-		EntityLivingBase caster = context.getSrcObj().asEntityLivingBase();
+		EntityLivingBase caster = context.getSrcObj().toEntityLiving();
 		int duration = this.duration.getInteger(rand.nextInt());
 		Vec3d orient = this.orient;
 		Vec3d castVec = vec.add(offset);
