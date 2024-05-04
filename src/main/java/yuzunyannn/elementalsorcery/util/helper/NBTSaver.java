@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
+import io.netty.buffer.Unpooled;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
@@ -119,15 +123,24 @@ public class NBTSaver implements INBTReader, INBTWriter {
 	}
 
 	@Override
-	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, T serializable) {
+	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, T obj) {
 		try {
-			serializable.deserializeNBT((U) nbt.getTag(key));
+			obj.deserializeNBT((U) nbt.getTag(key));
 		} catch (Exception e) {}
-		return serializable;
+		return obj;
 	}
 
 	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Function<U, T> factory) {
 		return factory.apply((U) nbt.getTag(key));
+	}
+
+	@Override
+	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Supplier<T> factory) {
+		T obj = factory.get();
+		try {
+			obj.deserializeNBT((U) nbt.getTag(key));
+		} catch (Exception e) {}
+		return obj;
 	}
 
 	@Override
@@ -153,6 +166,20 @@ public class NBTSaver implements INBTReader, INBTWriter {
 		try {
 			NBTTagList tagList = (NBTTagList) nbt.getTag(key);
 			for (int i = 0; i < tagList.tagCount(); i++) list.add(factory.apply((U) tagList.get(i)));
+		} catch (Exception e) {}
+		return list;
+	}
+
+	@Override
+	public <U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, Supplier<T> factory) {
+		List<T> list = new ArrayList<>();
+		try {
+			NBTTagList tagList = (NBTTagList) nbt.getTag(key);
+			for (int i = 0; i < tagList.tagCount(); i++) {
+				T obj = factory.get();
+				obj.deserializeNBT((U) tagList.get(i));
+				list.add(obj);
+			}
 		} catch (Exception e) {}
 		return list;
 	}
@@ -266,6 +293,25 @@ public class NBTSaver implements INBTReader, INBTWriter {
 	public CapabilityObjectRef capabilityObjectRef(String key) {
 		if (nbt.hasKey(key, NBTTag.TAG_BYTE_ARRAY)) return CapabilityObjectRef.read(nbt.getByteArray(key));
 		return CapabilityObjectRef.INVALID;
+	}
+
+	@Override
+	public void writeDisplay(String key, Object displayObject) {
+		PacketBuffer buf = new PacketBuffer(Unpooled.buffer());
+		GameDisplayCast.write(buf, displayObject);
+		byte[] bytes = new byte[buf.writerIndex()];
+		buf.getBytes(0, bytes);
+		nbt.setByteArray(key, bytes);
+	}
+
+	@Override
+	public Object display(String key) {
+		try {
+			PacketBuffer buf = new PacketBuffer(Unpooled.wrappedBuffer(nbt.getByteArray(key)));
+			return GameDisplayCast.read(buf);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

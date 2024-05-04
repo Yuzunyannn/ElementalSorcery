@@ -1,8 +1,9 @@
 package yuzunyannn.elementalsorcery.api.computer;
 
-import java.util.concurrent.CompletableFuture;
+import javax.annotation.Nonnull;
 
 public interface IDeviceNoticeable {
 
-	public CompletableFuture<DNResult> notice(String method, DNParams params);
+	@Nonnull
+	public DNResult notice(String method, DNRequest params);
 }

@@ -11,7 +11,7 @@ public class ComputerProviderOfItem implements ICapabilitySerializable<NBTTagCom
 	protected ComputerDevice computer;
 
 	public ComputerProviderOfItem(ItemStack stack, String appearance) {
-		computer = new ComputerDevice(appearance);
+		computer = new ComputerDevice(appearance, stack);
 	}
 
 	public ComputerProviderOfItem(ItemStack stack, ComputerDevice computer) {

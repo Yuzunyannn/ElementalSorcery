@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.computer;
 
+import java.util.Collection;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -8,7 +9,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
@@ -26,6 +27,7 @@ import yuzunyannn.elementalsorcery.tile.device.DeviceFeatureMap;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTSS;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
+import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
 public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCompound>, INBTSS {
@@ -75,21 +77,23 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	}
 
 	@Override
-	public CompletableFuture<DNResult> notice(String method, DNParams params) {
+	public DNResult notice(String method, DNRequest params) {
 		if (this.env == null) return DNResult.unavailable();
 
 		DeviceFeatureMap feature = this.feature;
+		Object self = this.target;
 
 		if (!feature.has(method)) {
 			if (!dfeature.has(method)) return DNResult.invalid();
 			feature = dfeature;
+			self = this;
 		}
 
-		DNParams originParams = process.currParams;
+		DNRequest originParams = process.currParams;
 		process.currParams = params;
 
 		params.setWorld(this.env.getWorld());
-		Object ret = feature.invoke(this, method, params);
+		Object ret = feature.invoke(self, method, params);
 
 		process.currParams = originParams;
 
@@ -261,11 +265,9 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	}
 
 	@DeviceFeature(id = "network-conntect")
-	public Object networkConntect(UUID uuid) {
+	public void networkConntect(UUID uuid) {
 		Asker asker = (Asker) networkFind(uuid);
-		CompletableFuture<DNResultCode> ret = new CompletableFuture();
-		asker.thenAccept(ref -> ret.complete(networkHandshake(ref)));
-		return ret;
+		asker.thenAccept(ref -> networkHandshake(ref));
 	}
 
 	@DeviceFeature(id = "network-handshake")
@@ -300,5 +302,23 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		IDeviceLinker linker = network.getLinker(udid);
 		if (linker != null) linker.close();
 		return DNResultCode.SUCCESS;
+	}
+
+	@DeviceFeature(id = "network-ls")
+	public Object networkList(String type) {
+		Collection<IDeviceLinker> linkers = getNetwork().getLinkers();
+		switch (type.toLowerCase()) {
+		case "uuid":
+			return JavaHelper.toList(linkers, liner -> liner.getRemoteUUID());
+		case "*":
+			return JavaHelper.toList(linkers, liner -> liner.getRemoteUUID());
+		default:
+			return DNResultCode.REFUSE;
+		}
+	}
+
+	@DeviceFeature(id = "network-ls")
+	public Object networkList() {
+		return this.networkList("*");
 	}
 }

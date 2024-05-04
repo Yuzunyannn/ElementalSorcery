@@ -41,6 +41,8 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.util.GameCast;
+import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
@@ -117,6 +119,9 @@ public class CommandESDebug {
 				sender.sendMessage(new TextComponentString("地牢Func刷新成功!"));
 				TutorialCraft.init();
 				sender.sendMessage(new TextComponentString("TutorialCraft刷新成功!"));
+				GameCast.init();
+				GameDisplayCast.init();
+				sender.sendMessage(new TextComponentString("GameCast刷新成功!"));
 			} catch (Exception e) {
 				ESAPI.logger.warn("刷新数据出现异常！", e);
 				sender.sendMessage(new TextComponentString("刷新数据出现异常！Refresh data exception!"));
@@ -505,8 +510,7 @@ public class CommandESDebug {
 			BlockPos pos1 = ItemMagicRuler.getRulerPos(ruler, true);
 			BlockPos pos2 = ItemMagicRuler.getRulerPos(ruler, false);
 			if (pos1 == null || pos2 == null) throw new WrongUsageException("commands.es.building.recordFail");
-			Building building = Building.createBuilding(player.getEntityWorld(),
-					player.getHorizontalFacing().getOpposite(), pos1, pos2, true);
+			Building building = Building.createBuilding(player.getEntityWorld(), player.getHorizontalFacing().getOpposite(), pos1, pos2, true);
 			building.setAuthor("yuzunyannn");
 			building.setName(TextHelper.castToCamel(name));
 			BuildingLib.instance.releaseAllSaveData();

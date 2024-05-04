@@ -227,8 +227,7 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 
 	@Override
 	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
-		DetectDataset dataset = watcher.getOrCreateDetectObject(">process", DetectDataset.class,
-				() -> new DetectDataset());
+		DetectDataset dataset = watcher.getOrCreateDetectObject(">process", DetectDataset.class, () -> new DetectDataset());
 
 		NBTTagCompound changes = null;
 
@@ -240,9 +239,11 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 
 		NBTTagList nbtList = new NBTTagList();
 
-		for (Integer i : dataset.set) {
+		Iterator<Integer> iter = dataset.set.iterator();
+		while (iter.hasNext()) {
+			int i = iter.next();
 			if (!map.containsKey(i)) {
-				dataset.set.remove(i);
+				iter.remove();
 				NBTTagCompound dat = new NBTTagCompound();
 				dat.setInteger("dpid", i);
 				nbtList.appendTag(dat);

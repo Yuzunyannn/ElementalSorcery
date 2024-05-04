@@ -15,9 +15,9 @@ public class ComputerDevice extends Computer implements ICapabilityProvider {
 	protected final Device device;
 	protected IComputEnv env;
 
-	public ComputerDevice(String appearance) {
+	public ComputerDevice(String appearance, DeviceInfo info) {
 		super(appearance);
-		device = new Device(this, new DeviceInfo());
+		device = new Device(this, info);
 	}
 
 	public ComputerDevice(String appearance, ItemStack stack) {

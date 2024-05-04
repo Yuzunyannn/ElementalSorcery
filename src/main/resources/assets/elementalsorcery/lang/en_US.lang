@@ -157,6 +157,7 @@ item.millHammer.name=Mill Hammer
 item.padEasy.unknow.name=Unknown Component
 item.fluorescentParticle.name=Fluorescent Particle
 item.controlCircuit.name=Control Circuit
+item.cloverPad.name=Dungeon Terminal
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -696,6 +697,7 @@ es.app.disconnect=Disconnect
 es.app.connect.fail=Connect Fail
 es.app.id.device=UDID:
 es.app.manufacturer=Manufacturer:
+es.app.cannotFind=Can't find %s
 
 elf.time.year=%d Year 
 elf.time.mon.0=Spring 

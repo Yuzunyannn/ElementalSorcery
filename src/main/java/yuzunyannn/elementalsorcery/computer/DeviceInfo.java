@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 
-public class DeviceInfo implements IDeviceInfo, INBTSerializable<NBTTagCompound> {
+public abstract class DeviceInfo implements IDeviceInfo, INBTSerializable<NBTTagCompound> {
 
 	protected String name = "";
 	protected String manufacturer;

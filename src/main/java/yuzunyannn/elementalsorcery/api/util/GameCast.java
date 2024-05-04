@@ -7,6 +7,7 @@ import java.util.UUID;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.EnumFacing;
 
 public class GameCast {
 
@@ -23,6 +24,10 @@ public class GameCast {
 	}
 
 	static {
+		init();
+	}
+
+	public static void init() {
 		CAST_MAP.put(boolean.class, new CastBoolean());
 		CAST_MAP.put(Boolean.class, CAST_MAP.get(boolean.class));
 		CAST_MAP.put(float.class, new CastFloat());
@@ -39,6 +44,17 @@ public class GameCast {
 		CAST_MAP.put(Byte.class, CAST_MAP.get(byte.class));
 		CAST_MAP.put(String.class, new CastString());
 		CAST_MAP.put(UUID.class, new CastUUID());
+		CAST_MAP.put(EnumFacing.class, new CastEnumFacing());
+	}
+
+	public static class CastEnumFacing implements ICastable<EnumFacing> {
+		@Override
+		public EnumFacing cast(Object obj, ICastEnv env) {
+			if (obj instanceof NBTPrimitive) return EnumFacing.byIndex(((NBTPrimitive) obj).getInt());
+			if (obj instanceof Number) return EnumFacing.byIndex(((Number) obj).intValue());
+			if (obj instanceof String) return EnumFacing.byName(obj.toString());
+			return null;
+		}
 	}
 
 	public static class CastUUID implements ICastable<UUID> {
@@ -58,7 +74,11 @@ public class GameCast {
 					return null;
 				}
 			}
-			if (obj instanceof String) return UUID.fromString(obj.toString());
+			if (obj instanceof String) {
+				UUID uuid = env.find(obj.toString(), UUID.class);
+				if (uuid != null) return uuid;
+				return UUID.fromString(obj.toString());
+			}
 			return null;
 		}
 	}

@@ -11,6 +11,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.computer.soft.AppTask;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.util.MatchHelper;
@@ -25,6 +26,7 @@ import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
+@AppTask
 public class TaskInventoryItemSelect extends TaskBase {
 
 	public static final String ID = "#PIIS";
@@ -88,8 +90,8 @@ public class TaskInventoryItemSelect extends TaskBase {
 		boolean isRemote = getOS().isRemote();
 		if (isRemote) return;
 		if (itemWriterDevice == null) return;
-		if (handlerGetter == IObjectGetter.EMPTY) handlerGetter = getOS().askCapability(itemWriterDevice,
-				CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		if (handlerGetter == IObjectGetter.EMPTY)
+			handlerGetter = getOS().askCapability(itemWriterDevice, CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		ddItemHandler.setCheckHandler(handlerGetter.softGet());
 	}
 

@@ -16,6 +16,11 @@ public class DeviceInfoTile extends DeviceInfo {
 	}
 
 	@Override
+	public boolean isMobile() {
+		return false;
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public String getDisplayWorkName() {
 		if (typeName == null) {

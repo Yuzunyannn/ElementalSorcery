@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.container;
 
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.computer.DNNBTParams;
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
@@ -37,7 +36,7 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 	public IComputEnv cEnv;
 	public ItemStack stack = ItemStack.EMPTY;
 	public int slot = -1;
-	public Consumer<DNParams> msgHook;
+	public Consumer<DNRequest> msgHook;
 	protected IComputerWatcher watcher;
 	protected boolean lastComputerIsOpen = false;
 
@@ -60,10 +59,9 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 					break;
 				}
 			}
-			cEnv = new ComputerEnvItem(player, stack, slot);
-			this.computer.onPlayerInteraction(player, cEnv);
-			this.computer.addListener(this);
-			if (!world.isRemote) watcher = new WatcherConatiner(this);
+			cEnv = this.computer.getEnv();
+			if (cEnv == null) cEnv = new ComputerEnvItem(player, stack, slot);
+			init();
 		}
 	}
 
@@ -75,9 +73,16 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 		this.computer = Computer.from(tile);
 
 		if (this.computer != null) {
-			cEnv = new ComputerEnvTile(tile);
-			this.computer.onPlayerInteraction(player, cEnv);
+			cEnv = this.computer.getEnv();
+			if (cEnv == null) cEnv = new ComputerEnvTile(tile);
+			init();
 		}
+	}
+
+	protected void init() {
+		this.computer.onPlayerInteraction(player, cEnv);
+		this.computer.addListener(this);
+		if (!world.isRemote) watcher = new WatcherConatiner(this);
 	}
 
 	public BlockPos getCurrPosition() {
@@ -91,7 +96,7 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 	}
 
 	@Override
-	public CompletableFuture<DNResult> notice(String method, DNParams params) {
+	public DNResult notice(String method, DNRequest params) {
 		if ("app-message".equals(method)) {
 			if (world.isRemote) {
 				if (msgHook != null) msgHook.accept(params);
@@ -162,14 +167,14 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 			if (nbt.hasKey("_nt_")) {
 				if (RL.peg(player)) return;
 				int pid = nbt.hasKey("pid") ? nbt.getInteger("pid") : -1;
-				DNParams params = new DNNBTParams(nbt);
+				DNRequest params = new DNNBTParams(nbt);
 				params.set("pid", pid);
 				this.computer.notice(cEnv, nbt.getString("_nt_"), params);
 				return;
 			}
 			if (nbt.hasKey("_op_")) {
 				int pid = nbt.getInteger("_op_");
-				DNParams params = new DNParams();
+				DNRequest params = new DNRequest();
 				params.set("pid", pid);
 				params.set("data", nbt);
 				this.computer.notice(cEnv, "op", params);
@@ -177,7 +182,7 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 		} else if (side == Side.CLIENT) {
 			if (nbt.hasKey("_msg_pid_")) {
 				int pid = nbt.getInteger("_msg_pid_");
-				DNParams params = new DNParams();
+				DNRequest params = new DNRequest();
 				params.set("pid", pid);
 				params.set("data", nbt);
 				if (msgHook != null) msgHook.accept(params);

@@ -62,6 +62,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable {
 			return;
 		}
 
+		this.facing = facing;
 		NBTSender sender = new NBTSender();
 		sender.write("fc", facing);
 		this.updateToClient(sender.tag());

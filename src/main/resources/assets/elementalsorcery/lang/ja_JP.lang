@@ -157,6 +157,7 @@ item.millHammer.name=臼のハンマ
 item.padEasy.unknow.name=不明な部品
 item.fluorescentParticle.name=蛍光粒子
 item.controlCircuit.name=制御回路
+item.cloverPad.name=ダンジョン端末
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -696,6 +697,7 @@ es.app.disconnect=切断
 es.app.connect.fail=接続に失敗しました
 es.app.id.device=デバイスID:
 es.app.manufacturer=会社:
+es.app.cannotFind=%sを見つからない
 
 elf.time.year=%d年
 elf.time.mon.0=春

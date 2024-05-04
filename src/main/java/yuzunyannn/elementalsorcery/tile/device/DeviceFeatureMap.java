@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.tile.device;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 
 public class DeviceFeatureMap {
@@ -42,7 +43,7 @@ public class DeviceFeatureMap {
 			return methods.length == 0;
 		}
 
-		public Object invoke(Object self, DNParams params) throws ReflectiveOperationException {
+		public Object invoke(Object self, DNRequest params) throws ReflectiveOperationException {
 			for (Method method : methods) {
 				Object[] args = checkAndGetMeetParams(method, params);
 				if (args != null) {
@@ -56,11 +57,15 @@ public class DeviceFeatureMap {
 
 		public final static Object[] EMPTY = new Object[0];
 
-		public Object[] checkAndGetMeetParams(Method method, DNParams params) {
+		public Object[] checkAndGetMeetParams(Method method, DNRequest params) {
 			int paramterCount = method.getParameterCount();
 			if (paramterCount == 0) return EMPTY;
 			if (paramterCount > params.size()) return null;
 			Parameter[] paramaters = method.getParameters();
+
+			if (paramterCount == 1 && paramaters[0].getType().isAssignableFrom(DNRequest.class))
+				return new Object[] { params };
+
 			Object[] objs = new Object[paramterCount];
 			for (int i = 0; i < paramterCount; i++) {
 				Parameter paramater = paramaters[i];
@@ -110,15 +115,19 @@ public class DeviceFeatureMap {
 		return callMap.containsKey(id);
 	}
 
-	public Object invoke(Object self, String id, DNParams params) {
+	public Object invoke(Object self, String id, DNRequest params) {
 		Call call = callMap.get(id);
 		if (call == null) return DNResultCode.INVALID;
 		try {
 			return call.invoke(self, params);
-		} catch (Exception e) {
+		} catch (InvocationTargetException e) {
+			throw new RuntimeException(e.getTargetException());
+		} catch (ReflectiveOperationException e) {
 			callMap.remove(id);
-			ESAPI.logger.warn("invoke err!", e);
+			ESAPI.logger.error("invoke err!", e);
 			return DNResultCode.FAIL;
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 

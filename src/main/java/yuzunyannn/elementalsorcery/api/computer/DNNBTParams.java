@@ -5,7 +5,7 @@ import yuzunyannn.elementalsorcery.api.util.GameCast;
 import yuzunyannn.elementalsorcery.api.util.var.IVariableType;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
-public class DNNBTParams extends DNParams {
+public class DNNBTParams extends DNRequest {
 
 	protected NBTTagCompound nbt;
 

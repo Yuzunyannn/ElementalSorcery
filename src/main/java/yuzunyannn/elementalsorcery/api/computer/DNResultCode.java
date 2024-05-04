@@ -10,5 +10,13 @@ public enum DNResultCode {
 	// handled fail
 	FAIL,
 	// now is invalid maybe valid in furture
-	UNAVAILABLE,
+	UNAVAILABLE;
+
+	public static DNResultCode fromMeta(int meta) {
+		return DNResultCode.values()[meta % DNResultCode.values().length];
+	}
+
+	public int getMeta() {
+		return ordinal();
+	}
 }

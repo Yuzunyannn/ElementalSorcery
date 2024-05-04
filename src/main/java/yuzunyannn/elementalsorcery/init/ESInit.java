@@ -303,6 +303,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemVoidContainerElement;
 import yuzunyannn.elementalsorcery.item.prop.ItemVoidFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemVortex;
 import yuzunyannn.elementalsorcery.item.prop.ItemWindmillBladeFrame;
+import yuzunyannn.elementalsorcery.item.tool.ItemCloverPad;
 import yuzunyannn.elementalsorcery.item.tool.ItemCollapseWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemCubeDemarcator;
 import yuzunyannn.elementalsorcery.item.tool.ItemDragonBreathPickaxe;
@@ -744,7 +745,8 @@ public class ESInit {
 		ESObjects.ITEMS.TUTORIAL_PAD = new ItemTutorialPad();
 		ESObjects.ITEMS.MILL_HAMMER = new ItemMillHammer();
 		ESObjects.ITEMS.PAD_EASY_PART = new ItemPadEasyPart();
-
+		ESObjects.ITEMS.CLOVER_PAD = new ItemCloverPad();
+		
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
 		ESObjects.ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();
@@ -852,8 +854,8 @@ public class ESInit {
 		ESObjects.POTIONS.METEORITE_DISEASE = new PotionMeteoriteDisease();
 		ESObjects.POTIONS.DUNGEON_NIGHTMARE = new PotionDungeonNightmare();
 
-		ESObjects.POTION_TYPES.SILENT = PotionTypeES.create("silent",
-				new PotionEffect(ESObjects.POTIONS.SILENT, 20 * 16));
+		ESObjects.POTION_TYPES.SILENT = PotionTypeES.create("silent", new PotionEffect(ESObjects.POTIONS.SILENT,
+				20 * 16));
 
 		{
 			Class<?> cls = ESObjects.POTIONS.getClass();
@@ -1139,7 +1141,7 @@ public class ESInit {
 	}
 
 	static void registerAllApps() throws IllegalArgumentException, IllegalAccessException {
-		registerAPP(AppCommand.class, "command");
+		registerAPP(AppCommand.class, AppCommand.ID);
 		registerAPP(AppTutorial.class, "tutorial");
 		registerAPP(TaskInventoryItemSelect.class, TaskInventoryItemSelect.ID);
 		registerAPP(TaskNetwork.class, TaskNetwork.ID);
@@ -1287,6 +1289,7 @@ public class ESInit {
 		registerRender(ITEMS.LIFTING_STONE);
 		registerRender(ITEMS.TUTORIAL_PAD);
 		registerRender(ITEMS.MILL_HAMMER, new RenderItemMillHammer());
+		registerRender(ITEMS.CLOVER_PAD);
 
 		for (ItemMagicPaper.EnumType type : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, type.getMeta(), type.getName() + "_paper");
@@ -1332,8 +1335,7 @@ public class ESInit {
 		registerRender(BLOCKS.STAR_SAND);
 		registerRender(BLOCKS.ELF_LOG);
 		registerRender(BLOCKS.ELF_LEAF);
-		registerStateMapper(BLOCKS.ELF_LEAF,
-				new StateMap.Builder().ignore(BlockElfLeaf.CHECK_DECAY, BlockElfLeaf.DECAYABLE).build());
+		registerStateMapper(BLOCKS.ELF_LEAF, new StateMap.Builder().ignore(BlockElfLeaf.CHECK_DECAY, BlockElfLeaf.DECAYABLE).build());
 		registerRender(BLOCKS.ELF_SAPLING);
 		registerStateMapper(BLOCKS.ELF_FRUIT, new StateMap.Builder().ignore(BlockElfFruit.STAGE).build());
 		registerRender(BLOCKS.ELF_FRUIT, 0);
@@ -1394,12 +1396,11 @@ public class ESInit {
 
 		registerRender(BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class, new RenderTileElementalCube());
 		registerRender(BLOCKS.MAGIC_DESK, TileMagicDesk.class, new RenderTileMagicDesk());
-		registerRender(BLOCKS.ELEMENT_CRAFTING_TABLE, TileElementCraftingTable.class,
-				new RenderTileElementCraftingTable());
-		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE, TileDeconstructAltarTable.class,
-				new RenderTileDeconstructAltarTable(false));
-		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE_ADV, TileDeconstructAltarTableAdv.class,
-				new RenderTileDeconstructAltarTable(true));
+		registerRender(BLOCKS.ELEMENT_CRAFTING_TABLE, TileElementCraftingTable.class, new RenderTileElementCraftingTable());
+		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE, TileDeconstructAltarTable.class, new RenderTileDeconstructAltarTable(
+				false));
+		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE_ADV, TileDeconstructAltarTableAdv.class, new RenderTileDeconstructAltarTable(
+				true));
 		registerRender(BLOCKS.RITE_TABLE, TileRiteTable.class, new RenderTileRiteTable());
 		registerRender(BLOCKS.LANTERN, TileLantern.class, new RenderTileLantern());
 		registerRender(BLOCKS.BUILDING_ALTAR, TileBuildingAltar.class, new RenderTileBuildingAltar());
@@ -1416,8 +1417,7 @@ public class ESInit {
 		registerRender(BLOCKS.MD_ABSORB_BOX, TileMDAbsorbBox.class, new RenderTileMDAbsorbBox());
 		registerRender(BLOCKS.MD_MAGICLIZATION, TileMDMagiclization.class, new RenderTileMDMagiclization());
 		registerRender(BLOCKS.MD_DECONSTRUCT_BOX, TileMDDeconstructBox.class, new RenderTileMDDeconstructBox());
-		registerRender(BLOCKS.MD_RESONANT_INCUBATOR, TileMDResonantIncubator.class,
-				new RenderTileMDResonantIncubator());
+		registerRender(BLOCKS.MD_RESONANT_INCUBATOR, TileMDResonantIncubator.class, new RenderTileMDResonantIncubator());
 		registerRender(BLOCKS.MD_FREQUENCY_MAPPING, TileMDFrequencyMapping.class, new RenderTileMDFrequencyMapping());
 		registerRender(BLOCKS.MD_LIQUIDIZER, TileMDLiquidizer.class, new RenderTileMDLiquidizer());
 		registerRender(BLOCKS.ELF_TREE_CORE, TileElfTreeCore.class, new RenderTileElfTreeCore());
@@ -1435,8 +1435,7 @@ public class ESInit {
 		registerRender(BLOCKS.IS_CRAFT_CC, TileItemStructureCraftCC.class, new RenderTileItemStructureCraftCC());
 		registerRender(BLOCKS.INSTANT_CONSTITUTE, TileInstantConstitute.class, new RenderTileInstantConstitute());
 		registerRender(BLOCKS.DUNGEON_HAYSTACK, TileDungeonHaystack.class, new RenderTileDungeonHaystack());
-		registerRender(BLOCKS.DUNGEON_MAGIC_CIRCLE_A, TileDungeonMagicCircleA.class,
-				new RenderTileDungeonMagicCircleA());
+		registerRender(BLOCKS.DUNGEON_MAGIC_CIRCLE_A, TileDungeonMagicCircleA.class, new RenderTileDungeonMagicCircleA());
 		registerRender(BLOCKS.STONE_DECORATION, TileStoneDecoration.class, new RenderTileStoneDecoration());
 		registerRender(BLOCKS.MANTRA_EMITTER, TileMantraEmitter.class, new RenderTileMantraEmitter());
 
@@ -1566,8 +1565,7 @@ public class ESInit {
 		registerRender(block, blockColor);
 		registerRender(block, new IItemColor() {
 			public int colorMultiplier(ItemStack stack, int tintIndex) {
-				IBlockState iblockstate = ((ItemBlock) stack.getItem()).getBlock()
-						.getStateFromMeta(stack.getMetadata());
+				IBlockState iblockstate = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
 				return blockColor.colorMultiplier(iblockstate, (IBlockAccess) null, (BlockPos) null, tintIndex);
 			}
 		});
@@ -1626,8 +1624,8 @@ public class ESInit {
 		for (Field field : fields) {
 			Object obj = field.get(cls);
 			if (obj instanceof IForgeRegistryEntry) {
-				((IForgeRegistryEntry) obj)
-						.setRegistryName(new ResourceLocation(ESAPI.MODID, field.getName().toLowerCase()));
+				((IForgeRegistryEntry) obj).setRegistryName(new ResourceLocation(ESAPI.MODID,
+						field.getName().toLowerCase()));
 			}
 			if (obj instanceof Item) {
 				((Item) obj).setCreativeTab(tab);

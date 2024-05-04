@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +18,7 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
@@ -35,6 +34,8 @@ import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.soft.EOSClient;
 import yuzunyannn.elementalsorcery.computer.soft.EOSServer;
+import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
+import yuzunyannn.elementalsorcery.tile.device.DeviceFeatureMap;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
@@ -70,6 +71,8 @@ public abstract class Computer implements IComputer {
 	@CapabilityInject(IDevice.class)
 	public static Capability<IDevice> DEVICE_CAPABILITY;
 
+	public final static DeviceFeatureMap cfeature = DeviceFeatureMap.getOrCreate(Computer.class);
+
 	protected IOS os;
 	protected List<Disk> disks = new ArrayList<>();
 	protected boolean inRunning = false;
@@ -100,7 +103,7 @@ public abstract class Computer implements IComputer {
 		listeners.add(listener);
 	}
 
-	public void noticeAllListener(String method, DNParams params) {
+	public void noticeAllListener(String method, DNRequest params) {
 		Iterator<IDeviceListener> iter = listeners.iterator();
 		while (iter.hasNext()) {
 			IDeviceListener listener = iter.next();
@@ -157,32 +160,14 @@ public abstract class Computer implements IComputer {
 	}
 
 	@Override
-	public CompletableFuture<DNResult> notice(String method, DNParams params) {
+	public DNResult notice(String method, DNRequest params) {
 		if (!inRunning) return DNResult.refuse();
 
-		if ("power-off".equals(method)) {
-			closeFlag = true;
-			return DNResult.success();
-		} else if ("exit".equals(method)) {
-			Integer pid = params.get("pid", Integer.class);
-			if (pid == null || pid < 0) return DNResult.refuse();
-			if (pid == 0) return DNResult.refuse();
-			App app = os.getAppInst(pid);
-			if (app == null) return DNResult.fail();
-			app.exit();
-			return DNResult.success();
-		} else if ("op".equals(method)) {
-			try {
-				int pid = params.get("pid", Integer.class);
-				NBTTagCompound data = params.get("data");
-				operations.add(new AppData(pid, data));
-			} catch (Exception e) {
-				return DNResult.fail();
-			}
-			return DNResult.success();
-		} else if ("app-message".equals(method)) {
-			this.noticeAllListener(method, params);
-			return DNResult.success();
+		if (cfeature.has(method)) {
+			IComputEnv env = getEnv();
+			if (env != null) params.setWorld(env.getWorld());
+			Object obj = cfeature.invoke(this, method, params);
+			return DNResult.byRet(obj);
 		}
 
 		if (device() != this) return device().notice(method, params);
@@ -190,7 +175,7 @@ public abstract class Computer implements IComputer {
 	}
 
 	@Override
-	public void notice(IComputEnv env, String method, DNParams params) {
+	public void notice(IComputEnv env, String method, DNRequest params) {
 
 		if (!inRunning) {
 			if ("power-on".equals(method)) {
@@ -216,6 +201,40 @@ public abstract class Computer implements IComputer {
 		notice(method, params);
 	}
 
+	@DeviceFeature(id = "power-off")
+	public void setPowerFlag() {
+		closeFlag = true;
+	}
+
+	@DeviceFeature(id = "exit")
+	public DNResult exitApp(DNRequest params) {
+		Integer pid = params.get("pid", Integer.class);
+		if (pid == null || pid < 0) return DNResult.refuse();
+		if (pid == 0) return DNResult.refuse();
+		App app = os.getAppInst(pid);
+		if (app == null) return DNResult.fail();
+		app.exit();
+		return DNResult.success();
+	}
+
+	@DeviceFeature(id = "op")
+	public DNResult execAppOp(DNRequest params) {
+		try {
+			int pid = params.get("pid", Integer.class);
+			NBTTagCompound data = params.get("data");
+			operations.add(new AppData(pid, data));
+		} catch (Exception e) {
+			return DNResult.fail();
+		}
+		return DNResult.success();
+	}
+
+	@DeviceFeature(id = "app-message")
+	public DNResult execAppMessage(DNRequest params) {
+		this.noticeAllListener("app-message", params);
+		return DNResult.success();
+	}
+
 	@Override
 	public void powerOn() {
 		if (inRunning) return;
@@ -224,7 +243,11 @@ public abstract class Computer implements IComputer {
 		closeFlag = false;
 		inRunning = true;
 		if (env.isRemote()) return;
-		os.onStarting();
+		try {
+			os.onStarting();
+		} catch (Exception e) {
+			abort(e);
+		}
 	}
 
 	@Override
@@ -326,13 +349,12 @@ public abstract class Computer implements IComputer {
 		try {
 			doUpdate(env);
 		} catch (Exception e) {
-			ESAPI.logger.warn("系統崩潰", e);
-			notice("power-off", DNParams.empty());
+			abort(e);
 			return;
 		}
 
 		if (!os.isRunning()) {
-			notice("power-off", DNParams.empty());
+			notice("power-off", DNRequest.empty());
 			//
 			/*
 			 * 数据错的原因是 创造模式的背包会从client回传数据到server，server使用client的数据，GG 还没有找到任何的介入点，内发修，GG*2
@@ -363,6 +385,11 @@ public abstract class Computer implements IComputer {
 			ESAPI.logger.warn("系統崩潰client", e);
 			return;
 		}
+	}
+
+	protected void abort(Throwable err) {
+		ESAPI.logger.warn("系統崩潰", err);
+		notice("power-off", DNRequest.empty());
 	}
 
 	protected void doUpdate(IComputEnv env) {

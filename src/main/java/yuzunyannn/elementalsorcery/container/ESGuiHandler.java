@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
+import yuzunyannn.elementalsorcery.container.gui.GuiComputerCloverPad;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.container.gui.GuiDevolveCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiDungeonMap;
@@ -279,8 +280,7 @@ public class ESGuiHandler implements IGuiHandler {
 		}
 	}
 
-	public static final ResourceLocation TEXTURE_CRAFTING_TABLE = TextHelper
-			.toESResourceLocation("textures/gui/container/crafting_table_altar.png");
+	public static final ResourceLocation TEXTURE_CRAFTING_TABLE = TextHelper.toESResourceLocation("textures/gui/container/crafting_table_altar.png");
 
 	public static Object createComputerGUI(ContainerComputer containerComputer) {
 		IComputer computer = containerComputer.getComputer();
@@ -288,6 +288,8 @@ public class ESGuiHandler implements IGuiHandler {
 		switch (appearance) {
 		case "tutorialPad":
 			return new GuiComputerTutorialPad(containerComputer);
+		case "cloverPad":
+			return new GuiComputerCloverPad(containerComputer);
 		default:
 			return new GuiComputerTutorialPad(containerComputer);
 		}

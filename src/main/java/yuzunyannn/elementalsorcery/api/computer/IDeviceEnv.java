@@ -28,4 +28,6 @@ public interface IDeviceEnv {
 
 	boolean isRemote();
 
+	void markDirty();
+
 }

@@ -157,6 +157,7 @@ item.millHammer.name=捣粉锤
 item.padEasy.unknow.name=未知元件
 item.fluorescentParticle.name=荧光颗粒
 item.controlCircuit.name=控制纹路
+item.cloverPad.name=地牢终端
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -696,6 +697,7 @@ es.app.disconnect=断开
 es.app.connect.fail=链接失败：
 es.app.id.device=设备ID:
 es.app.manufacturer=制造商:
+es.app.cannotFind=找不到%s
 
 elf.time.year=%d年
 elf.time.mon.0=春

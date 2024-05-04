@@ -8,6 +8,11 @@ public class DeviceInfoItem extends DeviceInfo {
 
 	public final ItemStack stack;
 
+	@Override
+	public boolean isMobile() {
+		return true;
+	}
+
 	public DeviceInfoItem(ItemStack stack) {
 		this.stack = stack;
 	}

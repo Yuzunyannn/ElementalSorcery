@@ -30,6 +30,14 @@ public class EOSClient extends EOS {
 	}
 
 	@Override
+	public void markDirty(App app) {
+	}
+
+	@Override
+	public void markDirty() {
+	}
+
+	@Override
 	public List<IDisk> getDisks() {
 		return Collections.EMPTY_LIST;
 	}

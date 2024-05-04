@@ -11,6 +11,8 @@ public interface IDeviceInfo {
 
 	String getName();
 
+	boolean isMobile();
+
 	@Nonnull
 	@SideOnly(Side.CLIENT)
 	String getDisplayWorkName();

@@ -85,5 +85,10 @@ public class ComputerEnvItem implements IComputEnv {
 		MessageComputerEntity msg = new MessageComputerEntity(entity, data, itemSlot);
 		watcher.sendMessageToClient(msg);
 	}
+	
+	@Override
+	public void markDirty() {
+		
+	}
 
 }

@@ -14,7 +14,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
+import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
@@ -25,7 +26,7 @@ import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.computer.DeviceScanner;
 import yuzunyannn.elementalsorcery.computer.render.GCloseBtn;
 import yuzunyannn.elementalsorcery.computer.render.GDragContainer;
-import yuzunyannn.elementalsorcery.computer.render.GEayLayoutContainer;
+import yuzunyannn.elementalsorcery.computer.render.GEasyLayoutContainer;
 import yuzunyannn.elementalsorcery.computer.render.GImgBtn;
 import yuzunyannn.elementalsorcery.computer.render.GLabelHover;
 import yuzunyannn.elementalsorcery.computer.render.GRefreshBtn;
@@ -48,12 +49,12 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 	public static TaskNetwork.ScanCache globalCache = new TaskNetwork.ScanCache();
 
 	protected double lWidth = 60;
-	protected GEayLayoutContainer linkersContainer;
-	protected GEayLayoutContainer lcLinked;
-	protected GEayLayoutContainer lcOther;
+	protected GEasyLayoutContainer linkersContainer;
+	protected GEasyLayoutContainer lcLinked;
+	protected GEasyLayoutContainer lcOther;
 	protected GImageBatch screenBatch;
 	protected double screenScale = 2;
-	protected GEayLayoutContainer detailContainer;
+	protected GEasyLayoutContainer detailContainer;
 	protected GRefreshBtn refreshBtn;
 	protected final Map<UUID, TaskNetworkGLinkerInfo> linkerNodeMap = new HashMap<>();
 	protected final TaskNetwork.ScanCache cache;
@@ -113,7 +114,7 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 		rightBar.addChild(infoScorll);
 		infoScorll.setPosition(2, 1);
 
-		detailContainer = new GEayLayoutContainer();
+		detailContainer = new GEasyLayoutContainer();
 		detailContainer.setMaxWidth(infoScorll.getWidth());
 		detailContainer.setMargin(new RenderRect(2, 0, 0, 0));
 		infoScorll.addContainer(detailContainer);
@@ -143,12 +144,12 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 		line.setColorRef(color2);
 		linkScorll.addChild(line);
 
-		linkersContainer = new GEayLayoutContainer();
+		linkersContainer = new GEasyLayoutContainer();
 		linkersContainer.setMaxWidth(linkScorll.getWidth());
 		linkScorll.addContainer(linkersContainer);
 
-		lcLinked = new GEayLayoutContainer();
-		lcOther = new GEayLayoutContainer();
+		lcLinked = new GEasyLayoutContainer();
+		lcOther = new GEasyLayoutContainer();
 		lcLinked.setMaxWidth(linkScorll.getWidth());
 		lcOther.setMaxWidth(linkScorll.getWidth());
 		lcLinked.setMargin(new RenderRect(2, 0, 0, 0));
@@ -209,22 +210,23 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 		refreshBtn.setRefreshing(true);
 
 		IOS os = appInst.getOS();
-		os.notice(null, "network-scan", DNParams.empty()).thenAccept(result -> {
-			refreshBtn.setRefreshing(false);
-			if (!result.isSuccess()) {
-				tip("es.app.scanFail");
-				return;
-			}
-			DeviceScanner scanner = cache.getScanner();
-			if (scanner != null) scanner.close();
-			scanner = result.getReturn(DeviceScanner.class);
-			if (scanner == null) {
-				tip("es.app.scanFail");
-				return;
-			}
-			cache.setScanner(scanner);
-			scanner.addListener((ref, d) -> onScannerNewRef(ref, d));
-		});
+		DNResult result = os.notice(null, "network-scan", DNRequest.empty());
+		
+		refreshBtn.setRefreshing(false);
+		if (!result.isSuccess()) {
+			tip("es.app.scanFail");
+			return;
+		}
+		DeviceScanner scanner = cache.getScanner();
+		if (scanner != null) scanner.close();
+		scanner = result.getReturn(DeviceScanner.class);
+		if (scanner == null) {
+			tip("es.app.scanFail");
+			return;
+		}
+		
+		cache.setScanner(scanner);
+		scanner.addListener((ref, d) -> onScannerNewRef(ref, d));
 	}
 
 	protected void onScannerNewRef(CapabilityObjectRef ref, IDevice device) {

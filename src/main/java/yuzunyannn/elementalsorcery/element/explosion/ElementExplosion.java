@@ -121,7 +121,7 @@ public class ElementExplosion implements IExplosionExecutor {
 	protected Vec3d position;
 	protected SeedRandom rand = new SeedRandom(0);
 	protected EntityLivingBase attacker;
-
+	protected boolean damagesTerrain = true;
 	protected boolean passExplosionBlock = false;
 	protected boolean passClientExplosionEntity = false;
 
@@ -246,8 +246,7 @@ public class ElementExplosion implements IExplosionExecutor {
 
 	@SideOnly(Side.CLIENT)
 	protected void doExplosionBlockEffect() {
-		world.playSound(position.x, position.y, position.z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS,
-				4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F, true);
+		world.playSound(position.x, position.y, position.z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F, true);
 //		if (this.size >= 2.0F)
 //			world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, position.x, position.y, position.z, 1.0D, 0.0D, 0.0D);
 //		else world.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, position.x, position.y, position.z, 1.0D, 0.0D,
@@ -259,8 +258,7 @@ public class ElementExplosion implements IExplosionExecutor {
 			};
 			Vec3d color = ColorHelper.color(eStack.getColor());
 			float colorRate = this.rand.nextFloat() * 0.6F + 0.4F;
-			particle.setRBGColorF((float) color.x * colorRate, (float) color.y * colorRate,
-					(float) color.z * colorRate);
+			particle.setRBGColorF((float) color.x * colorRate, (float) color.y * colorRate, (float) color.z * colorRate);
 			Effect.mc.effectRenderer.addEffect(particle);
 			return null;
 		};
@@ -286,6 +284,7 @@ public class ElementExplosion implements IExplosionExecutor {
 
 	protected void doExplosionBlockAt(BlockPos pos) {
 		if (world.isRemote) return;
+		if (!damagesTerrain) return;
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (state.getMaterial() == Material.AIR) return;
@@ -344,8 +343,7 @@ public class ElementExplosion implements IExplosionExecutor {
 		particle.setRBGColorF((float) color.x * colorRate, (float) color.y * colorRate, (float) color.z * colorRate);
 		Effect.mc.effectRenderer.addEffect(particle);
 
-		this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, randPos.x, randPos.y, randPos.z, orient.x, orient.y,
-				orient.z);
+		this.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, randPos.x, randPos.y, randPos.z, orient.x, orient.y, orient.z);
 	}
 
 	@SideOnly(Side.CLIENT)

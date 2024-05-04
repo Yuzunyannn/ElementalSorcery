@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class DNBase {
 
+	// start with 1
 	public static String args(int n) {
 		return String.valueOf(n);
 	}

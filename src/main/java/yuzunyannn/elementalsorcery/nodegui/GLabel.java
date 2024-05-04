@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.nodegui;
 
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,6 +17,32 @@ public class GLabel extends GNode {
 
 	public GLabel(String text) {
 		this.setString(text);
+	}
+
+	public Vec3d getCharPosition(int i) {
+		int x = -(int) (this.width * this.anchorX);
+		int y = -(int) (this.height * this.anchorY);
+		if (i <= 0) return new Vec3d(x, y, 0);
+		if (wrapWidth > 0) {
+			return new Vec3d(x, y, 0);
+		} else {
+			if (i >= text.length()) return new Vec3d(x + this.width, y, 0);
+			double width = mc.fontRenderer.getStringWidth(text.substring(0, i));
+			return new Vec3d(x + width, y, 0);
+		}
+	}
+
+	public int getCharIndex(Vec3d vec) {
+		int x = -(int) (this.width * this.anchorX);
+		int y = -(int) (this.height * this.anchorY);
+		if (wrapWidth > 0) {
+			return 0;
+		} else return mc.fontRenderer.trimStringToWidth(text, (int) (vec.x - x)).length();
+
+	}
+
+	public String getString() {
+		return text;
 	}
 
 	public void setString(String text) {

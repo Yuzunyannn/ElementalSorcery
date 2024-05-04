@@ -6,21 +6,28 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.IGNodeLayoutable;
 
-public class GEayLayoutContainer extends GNode implements IGNodeLayoutable {
+public class GEasyLayoutContainer extends GNode implements IGNodeLayoutable {
 
 	protected double maxWidth = 720;
 	protected RenderRect margin = RenderRect.ZERO;
+	protected boolean everyLine = false;
 
+	@Override
 	public void setMaxWidth(double maxWidth) {
 		this.maxWidth = maxWidth;
 	}
-	
+
+	@Override
 	public double getMaxWidth() {
 		return maxWidth;
 	}
 
 	public void setMargin(RenderRect margin) {
 		this.margin = margin;
+	}
+
+	public void setEveryLine(boolean everyLine) {
+		this.everyLine = everyLine;
 	}
 
 	@Override
@@ -31,8 +38,14 @@ public class GEayLayoutContainer extends GNode implements IGNodeLayoutable {
 		double lineMaxHeight = 0;
 		List<GNode> list = this.getChildren();
 		for (GNode node : list) {
-			if (node instanceof IGNodeLayoutable) ((IGNodeLayoutable) node).layout();
-			if (xoffset > 0 && xoffset + node.getWidth() + margin.left > maxWidth) {
+			if (node instanceof IGNodeLayoutable) {
+				IGNodeLayoutable layoutable = (IGNodeLayoutable) node;
+				layoutable.setMaxWidth(maxWidth);
+				if (everyLine) layoutable.setResidueWidth(maxWidth - margin.left);
+				else layoutable.setResidueWidth(maxWidth - xoffset - margin.left);
+				layoutable.layout();
+			}
+			if (xoffset > 0 && (xoffset + node.getWidth() + margin.left > maxWidth || everyLine)) {
 				xoffset = 0;
 				yoffset = yoffset + margin.bottom + margin.top + lineMaxHeight;
 				lineMaxHeight = 0;

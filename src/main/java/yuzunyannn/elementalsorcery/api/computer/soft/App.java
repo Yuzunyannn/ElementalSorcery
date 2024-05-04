@@ -16,14 +16,19 @@ public class App extends EasyImp<App> implements ISyncDetectable<NBTTagCompound>
 
 	public static final ESImpClassRegister<App> REGISTRY = new ESImpClassRegister();
 
+	public static boolean isTask(Class<? extends App> cls) {
+		return cls.getAnnotation(AppTask.class) != null;
+	}
+
 	private final int pid;
 	private final IOS os;
-	private boolean isTask;
+	private final boolean isTask;
 	private boolean closing;
 
 	public App(IOS os, int pid) {
 		this.pid = pid;
 		this.os = os;
+		this.isTask = isTask(this.getClass());
 	}
 
 	public final int getPid() {
@@ -32,6 +37,10 @@ public class App extends EasyImp<App> implements ISyncDetectable<NBTTagCompound>
 
 	public final IOS getOS() {
 		return os;
+	}
+
+	public void markDirty() {
+		os.markDirty(this);
 	}
 
 	public final ResourceLocation getAppId() {
@@ -46,10 +55,6 @@ public class App extends EasyImp<App> implements ISyncDetectable<NBTTagCompound>
 	@Override
 	public NBTTagCompound serializeNBT() {
 		return new NBTTagCompound();
-	}
-
-	public void setTask(boolean isTask) {
-		this.isTask = isTask;
 	}
 
 	public boolean isTask() {

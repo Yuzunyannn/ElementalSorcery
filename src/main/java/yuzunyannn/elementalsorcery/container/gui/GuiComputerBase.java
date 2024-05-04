@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import net.minecraft.client.Minecraft;
@@ -448,6 +449,20 @@ public abstract class GuiComputerBase extends GuiContainer {
 		} catch (Exception e) {
 			ESAPI.logger.warn("click error", e);
 			this.exception = IComputerException.easy("click error ", e);
+		}
+	}
+
+	@Override
+	public void handleKeyboardInput() throws IOException {
+		if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
+			super.handleKeyboardInput();
+			return;
+		}
+		try {
+			this.screenFront.onKeyboardEvent();
+		} catch (Exception e) {
+			ESAPI.logger.warn("click error", e);
+			this.exception = IComputerException.easy("keyboard error ", e);
 		}
 	}
 

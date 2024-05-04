@@ -206,6 +206,9 @@ public class VariableSet implements IVariableSet {
 	public final static IVariableType<LinkedList<Vec3d>> VEC3D_LINKED_LIST = new VTVTLinkedList<>(VEC3D);
 	public final static IVariableType<ArrayList<Vec3d>> VEC3D_ARRAY_LIST = new VTVTArrayList<>(VEC3D);
 
+	public final static IVariableType<LinkedList<String>> STRING_LINKED_LIST = new VTVTLinkedList<>(STRING);
+	public final static IVariableType<ArrayList<String>> STRING_ARRAY_LIST = new VTVTArrayList<>(STRING);
+	
 	public final static IVariableType<UUID> UUID = new VTUUID();
 
 }

@@ -87,7 +87,8 @@ public class AppTutorial extends AppBase {
 		super.onDiskChange();
 		IOS os = getOS();
 		IDeviceStorage disk = os.getDisk(this, AppDiskType.USER_DATA);
-		progress = disk.get(POGRESS);
+		if (disk == null) progress = 0;
+		else progress = disk.get(POGRESS);
 		detecter.markDirty("1");
 	}
 

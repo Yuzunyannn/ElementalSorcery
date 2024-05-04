@@ -45,7 +45,7 @@ public interface IComputer extends ISyncDetectable<NBTTagCompound>, INBTSerializ
 
 	public void recvMessage(NBTTagCompound nbt, IComputEnv env);
 
-	public void notice(IComputEnv env, String method, DNParams params);
+	public void notice(IComputEnv env, String method, DNRequest params);
 
 	public void markDiskValueDirty();
 

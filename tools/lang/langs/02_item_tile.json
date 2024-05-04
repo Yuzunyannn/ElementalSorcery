@@ -774,6 +774,11 @@
             "zh_CN": "控制纹路",
             "en_US": "Control Circuit",
             "ja_JP": "制御回路"
+        },
+        "item.cloverPad.name": {
+            "zh_CN": "地牢终端",
+            "en_US": "Dungeon Terminal",
+            "ja_JP": "ダンジョン端末"
         }
     },
     "tile": {

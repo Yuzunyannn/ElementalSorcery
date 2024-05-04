@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
@@ -26,6 +27,7 @@ public class GScene {
 	protected List<GNode> interactorList = new ArrayList<>();
 	protected LinkedList<GNode> mouseList = new LinkedList<>();
 	protected Set<GNode> hoverSet = new HashSet<>();
+	protected ArrayList<GNode> keyboardList = new ArrayList<>();
 	protected int displayWidth = 1, displayHeight = 1;
 	protected int width = 1, height = 1;
 
@@ -56,7 +58,10 @@ public class GScene {
 		root.draw(partialTicks);
 	}
 
+	public Vec3d mouseVec = Vec3d.ZERO;
+	
 	public void onMouseEvent(Vec3d worldPos) {
+		mouseVec = worldPos;
 		boolean isClick = Mouse.getEventButtonState();
 		int btnId = Mouse.getEventButton();
 		int dWheel = Mouse.getEventDWheel();
@@ -114,6 +119,19 @@ public class GScene {
 		}
 	}
 
+	public void onKeyboardEvent() {
+		boolean isPress = Keyboard.getEventKeyState();
+		char ch = Keyboard.getEventCharacter();
+		for (GNode node : keyboardList) {
+			IGInteractor interactor = node.interactor;
+			boolean isBreak = false;
+			if (isPress) isBreak = interactor.onKeyPressed(node, Keyboard.getEventKey());
+			else isBreak = interactor.onKeyRelease(node, Keyboard.getEventKey());
+			if (ch != 0) interactor.onKeyInput(node, ch);
+			if (isBreak) break;
+		}
+	}
+
 	public void addInteractNode(GNode node) {
 		if (node.interactor == null) return;
 		if (interactorMap.containsKey(node)) return;
@@ -121,6 +139,11 @@ public class GScene {
 		if (i < 0) i = -i - 1;
 		interactorList.add(i, node);
 		interactorMap.put(node, true);
+		if (node.interactor.isListenKeyboard(node)) {
+			i = MathSupporter.binarySearch(keyboardList, (s) -> s.gZ - node.gZ);
+			if (i < 0) i = -i - 1;
+			keyboardList.add(node);
+		}
 	}
 
 	public void removeInteractNode(GNode node) {
@@ -129,6 +152,7 @@ public class GScene {
 		interactorList.remove(node);
 		mouseList.remove(node);
 		hoverSet.remove(node);
+		keyboardList.remove(node);
 	}
 
 	public void clear() {

@@ -143,6 +143,11 @@ public abstract class SoftGuiCommon<T extends App> implements ISoftGui {
 	public void onMouseEvent(Vec3d vec3d) {
 		scene.onMouseEvent(vec3d);
 	}
+	
+	@Override
+	public void onKeyboardEvent() {
+		scene.onKeyboardEvent();
+	}
 
 	public int sendOperationCD = 0;
 

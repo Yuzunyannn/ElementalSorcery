@@ -12,6 +12,7 @@ import yuzunyannn.elementalsorcery.nodegui.IGInteractor;
 public class BtnBaseInteractor implements IGInteractor {
 
 	public boolean isHover = false;
+	public boolean afterSound = false;
 	protected boolean isClicking = false;
 	protected Vec3d clickVec = Vec3d.ZERO;
 
@@ -49,14 +50,18 @@ public class BtnBaseInteractor implements IGInteractor {
 	public void onMouseReleased(GNode node, Vec3d worldPos) {
 		isClicking = false;
 		double sqLen = clickVec.squareDistanceTo(worldPos);
-		if (sqLen < 16 && node.testHit(worldPos)) onClick();
+		if (sqLen < 16 && node.testHit(worldPos)) {
+			if (afterSound)
+				Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+			onClick();
+		}
 
 		onHoverChange(node);
 	}
 
 	public void onPressed(GNode node) {
-		Minecraft.getMinecraft().getSoundHandler()
-				.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+		if (afterSound) return;
+		Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 	}
 
 	public void onHoverChange(GNode node) {

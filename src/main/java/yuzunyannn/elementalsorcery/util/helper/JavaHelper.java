@@ -1,14 +1,38 @@
 package yuzunyannn.elementalsorcery.util.helper;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.lang.reflect.Field;
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 
 public class JavaHelper {
+
+	public static void clipboardWrite(String str) {
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		clipboard.setContents(new StringSelection(str), null);
+	}
+
+	public static String clipboardRead() {
+		Transferable transferable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+		try {
+			if (transferable != null && transferable.isDataFlavorSupported(DataFlavor.stringFlavor))
+				return (String) transferable.getTransferData(DataFlavor.stringFlavor);
+			return "";
+		} catch (Exception e) {
+			return "";
+		}
+	}
 
 	public static boolean isTrue(Object obj) {
 		if (obj == null) return false;
@@ -49,6 +73,15 @@ public class JavaHelper {
 		long l = 0;
 		for (int i = 0; i < 8; i++) l |= (long) (bytes[offset + i] & 0xFF) << i * 8;
 		return l;
+	}
+
+	public static <T, U> ArrayList<T> toList(Collection<U> objs, Function<U, T> mapper) {
+		ArrayList<T> list = new ArrayList<>();
+		for (U obj : objs) {
+			T ret = mapper.apply(obj);
+			if (ret != null) list.add(ret);
+		}
+		return list;
 	}
 
 //	public static <T, U> T[] toArray(Collection<U> list, Function<U, T> func) {

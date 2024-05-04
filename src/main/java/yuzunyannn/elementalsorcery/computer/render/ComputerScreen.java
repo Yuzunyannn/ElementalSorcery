@@ -177,4 +177,14 @@ public class ComputerScreen {
 		}
 	}
 
+	public void onKeyboardEvent() {
+		if (currTaskGui != null) {
+			currTaskGui.onKeyboardEvent();
+			return;
+		}
+		if (currGui != null) {
+			currGui.onKeyboardEvent();
+		}
+	}
+
 }

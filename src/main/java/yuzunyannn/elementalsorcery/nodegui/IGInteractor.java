@@ -40,4 +40,20 @@ public interface IGInteractor {
 
 	}
 
+	default public boolean isListenKeyboard(GNode node) {
+		return false;
+	}
+
+	default public void onKeyInput(GNode node, char ch) {
+
+	}
+
+	default public boolean onKeyPressed(GNode node, int keyCode) {
+		return false;
+	}
+
+	default public boolean onKeyRelease(GNode node, int keyCode) {
+		return false;
+	}
+
 }

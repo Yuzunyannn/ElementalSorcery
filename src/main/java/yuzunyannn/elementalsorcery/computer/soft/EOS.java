@@ -10,16 +10,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.capabilities.Capability;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
@@ -36,7 +37,6 @@ import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerAppDamagedException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerBootException;
-import yuzunyannn.elementalsorcery.computer.exception.ComputerHardwareMissingException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerNewProcessException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerProcessNotExistException;
 import yuzunyannn.elementalsorcery.computer.soft.ProcessTree.ProcessNode;
@@ -93,6 +93,22 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
+	public IDeviceInfo getDeviceInfo() {
+		return computer.device().getInfo();
+	}
+
+	public void markDirty() {
+		IDeviceEnv env = computer.getEnv();
+		if (env != null) env.markDirty();
+	}
+
+	@Override
+	public void markDirty(App app) {
+		IDeviceEnv env = computer.getEnv();
+		if (env != null) env.markDirty();
+	}
+
+	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		if (!isRunning) return nbt;
@@ -140,7 +156,7 @@ public abstract class EOS implements IOS {
 		String key = appId + "_" + type.key;
 		if (appDiskCacheMap.containsKey(key)) return appDiskCacheMap.get(key);
 		List<IDisk> list = getDisks();
-		if (list.isEmpty()) throw new ComputerHardwareMissingException(this.computer, "disk is missing");
+		if (list.isEmpty()) return null;
 		AuthorityAppDisk disk = new AuthorityAppDisk(computer, appId, list, type);
 		appDiskCacheMap.put(key, disk);
 		return disk;
@@ -154,6 +170,7 @@ public abstract class EOS implements IOS {
 		if (id == -1) throw new ComputerNewProcessException(computer, appId);
 		monitor.markDirty(PROCESS);
 		onAppStartup(processTree, processTree.getAppCache(this, id));
+		markDirty();
 		return id;
 	}
 
@@ -167,7 +184,7 @@ public abstract class EOS implements IOS {
 
 	@Override
 	public void message(App app, NBTTagCompound nbt) {
-		DNParams params = new DNParams();
+		DNRequest params = new DNRequest();
 		params.set("pid", app.getPid());
 		params.set("data", nbt);
 		computer.notice("app-message", params);
@@ -187,6 +204,7 @@ public abstract class EOS implements IOS {
 		if (app == null || app.isTask()) return -1;
 		processTree.setForeground(pid);
 		monitor.markDirty(PROCESS);
+		markDirty();
 		return pid;
 	}
 
@@ -225,11 +243,16 @@ public abstract class EOS implements IOS {
 
 		monitor.markDirty(PROCESS);
 		onAppStartup(processTree, processTree.getAppCache(this, id));
+		markDirty();
 	}
 
 	@Override
 	public void onClosing() {
+		try {
+			exit(0);
+		} catch (Exception e) {}
 		clearAll();
+		markDirty();
 	}
 
 	@Override
@@ -284,6 +307,9 @@ public abstract class EOS implements IOS {
 			onRemoveApp(tree, pid);
 			tree.removeProcess(pid);
 		}
+		try {
+			func.accept(tree.getAppCache(this, rpid));
+		} catch (Exception e) {}
 		onRemoveApp(tree, rpid);
 		tree.removeProcess(rpid);
 		monitor.markDirty(PROCESS);
@@ -293,6 +319,7 @@ public abstract class EOS implements IOS {
 		int parentPid = tree.getParent(pid);
 		if (parentPid == -1) parentPid = 0;
 		if (tree.getForeground() == pid) tree.setForeground(parentPid);
+		markDirty();
 	}
 
 	@Override
@@ -332,13 +359,16 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
-	public CompletableFuture<DNResult> notice(UUID udid, String method, DNParams params) {
-		if (udid == null) return computer.notice(method, params);
+	public DNResult notice(UUID udid, String method, DNRequest params) {
+		if (udid == null) {
+			params.setSrcDevice(computer.device());
+			return computer.notice(method, params);
+		}
 		IDeviceNetwork network = computer.device().getNetwork();
 		IDeviceLinker linker = network.getLinker(udid);
 		if (linker == null) return DNResult.invalid();
-		if (!linker.isConnecting()) return DNResult.unavailable();
 		params.setSrcDevice(computer.device());
+		if (!linker.isConnecting()) return DNResult.unavailable();
 		return linker.getRemoteDevice().notice(method, params);
 	}
 

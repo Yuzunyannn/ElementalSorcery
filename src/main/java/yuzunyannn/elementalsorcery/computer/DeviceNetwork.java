@@ -65,6 +65,8 @@ public class DeviceNetwork
 		IDeviceLinker linker = linkerMap.get(udid);
 		if (linker != null && !linker.isClose()) return true;
 		linkerMap.put(udid, linker = new DeviceLinker(this, otherEnv.createRef()));
+		IDeviceEnv env = mySelf.getEnv();
+		if (env != null) env.markDirty();
 		return true;
 	}
 
@@ -91,6 +93,7 @@ public class DeviceNetwork
 
 		if (tick % 20 != 0) return;
 
+		int linkerSize = linkerMap.size();
 		Iterator<Entry<UUID, IDeviceLinker>> iter = linkerMap.entrySet().iterator();
 		while (iter.hasNext()) {
 			Entry<UUID, IDeviceLinker> entry = iter.next();
@@ -119,6 +122,8 @@ public class DeviceNetwork
 				continue;
 			}
 		}
+
+		if (linkerSize != linkerMap.size()) env.markDirty();
 	}
 
 	@Override

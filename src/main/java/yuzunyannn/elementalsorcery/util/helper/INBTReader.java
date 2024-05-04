@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.util.helper;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -26,19 +27,23 @@ public interface INBTReader {
 	int nint(String key);
 
 	long nlong(String key);
-	
+
 	boolean nboolean(String key);
 
 	<U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, T serializable);
 
 	<U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Function<U, T> factory);
 
+	<U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Supplier<T> factory);
+
 	<U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, List<T> list);
 
 	<U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, Function<U, T> factory);
 
+	<U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, Supplier<T> factory);
+
 	UUID uuid(String key);
-	
+
 	List<UUID> uuids(String key);
 
 	String string(String key);
@@ -51,4 +56,5 @@ public interface INBTReader {
 
 	CapabilityObjectRef capabilityObjectRef(String key);
 
+	Object display(String key);
 }

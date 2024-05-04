@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
 public class OPSender extends NBTSender {
@@ -10,7 +10,7 @@ public class OPSender extends NBTSender {
 	}
 
 	public String args(int i) {
-		return DNParams.args(i);
+		return DNRequest.args(i);
 	}
 
 }

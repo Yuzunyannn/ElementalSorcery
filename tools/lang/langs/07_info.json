@@ -1368,6 +1368,11 @@
             "zh_CN": "制造商:",
             "en_US": "Manufacturer:",
             "ja_JP": "会社:"
+        },
+        "es.app.cannotFind": {
+            "zh_CN": "找不到%s",
+            "en_US": "Can't find %s",
+            "ja_JP": "%sを見つからない"
         }
     }
 }

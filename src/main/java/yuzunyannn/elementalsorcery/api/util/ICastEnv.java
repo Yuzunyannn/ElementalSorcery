@@ -11,4 +11,8 @@ public interface ICastEnv {
 		return null;
 	}
 
+	default <T> T find(String hint, Class<T> cls) {
+		return null;
+	}
+
 }

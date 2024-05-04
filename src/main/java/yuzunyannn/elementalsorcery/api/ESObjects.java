@@ -148,6 +148,7 @@ public class ESObjects {
 		public Item TUTORIAL_PAD;
 		public Item MILL_HAMMER;
 		public Item PAD_EASY_PART;
+		public Item CLOVER_PAD;
 	}
 
 	static public class Blocks {

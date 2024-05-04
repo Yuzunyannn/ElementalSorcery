@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.computer.soft;
 
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.DNNBTParams;
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.util.detecter.DataDetectableMonitor;
@@ -40,7 +40,7 @@ public class AppBase extends App {
 	public void handleOperation(NBTTagCompound nbt) {
 		if (nbt.hasKey(":m")) {
 			String method = nbt.getString(":m");
-			DNParams params = new DNNBTParams(nbt);
+			DNRequest params = new DNNBTParams(nbt);
 			this.feature.invoke(this, method, params);
 		}
 	}

@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.api.computer.soft;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -12,8 +11,9 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
@@ -23,11 +23,16 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 
 	UUID getDeviceUUID();
 
+	IDeviceInfo getDeviceInfo();
+
 	List<IDisk> getDisks();
 
+	@Nullable
 	IDeviceStorage getDisk(App app, AppDiskType type);
 
 	boolean isRunning();
+
+	void markDirty(App app);
 
 	int exec(App parent, String appId);
 
@@ -54,7 +59,11 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 	@Nonnull
 	<T> IObjectGetter<T> askCapability(@Nullable UUID udid, @Nonnull Capability<T> capability, @Nullable Object key);
 
-	CompletableFuture<DNResult> notice(@Nullable UUID udid, String method, DNParams params);
+	DNResult notice(@Nullable UUID udid, String method, DNRequest params);
+
+	default DNResult notice(String method, DNRequest params) {
+		return this.notice(null, method, params);
+	}
 
 	default void onDiskChange(boolean onlyData) {
 	};

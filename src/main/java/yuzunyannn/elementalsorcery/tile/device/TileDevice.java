@@ -66,4 +66,21 @@ public class TileDevice extends TileEntityNetwork {
 		ticksExisted++;
 		device.update();
 	}
+
+	@DeviceFeature(id = "self-destruct")
+	public void selfDestruct() {
+		if (world.isRemote) return;
+		doDestruct();
+	}
+
+	@DeviceFeature(id = "self-destruct")
+	public void selfDestruct(int tick) {
+		if (world.isRemote) return;
+		doDestruct();
+	}
+
+	protected void doDestruct() {
+		world.setBlockToAir(pos);
+		world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 3, true);
+	}
 }

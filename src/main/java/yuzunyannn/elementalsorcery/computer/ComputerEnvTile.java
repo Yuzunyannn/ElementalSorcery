@@ -56,4 +56,9 @@ public class ComputerEnvTile implements IComputEnv {
 
 	}
 
+	@Override
+	public void markDirty() {
+		tile.markDirty();
+	}
+
 }

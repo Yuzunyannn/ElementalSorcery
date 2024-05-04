@@ -25,13 +25,7 @@ public interface INBTWriter {
 
 	void write(String key, boolean val);
 
-	void write(String key, INBTSerializable<?> serializable);
-
-	void write(String key, List<? extends INBTSerializable<?>> list);
-
 	void write(String key, UUID uuid);
-
-	void writeUUIDs(String key, List<UUID> uuids);
 
 	void write(String key, String str);
 
@@ -42,4 +36,12 @@ public interface INBTWriter {
 	void write(String key, NBTBase base);
 
 	void write(String key, CapabilityObjectRef ref);
+
+	void write(String key, INBTSerializable<?> serializable);
+
+	void write(String key, List<? extends INBTSerializable<?>> list);
+
+	void writeUUIDs(String key, List<UUID> uuids);
+
+	void writeDisplay(String key, Object displayObject);
 }

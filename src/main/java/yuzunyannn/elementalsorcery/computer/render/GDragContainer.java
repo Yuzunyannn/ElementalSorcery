@@ -12,17 +12,17 @@ public class GDragContainer extends GNode {
 
 	public GDragContainer(RenderRect rect) {
 		addChild(scissor = new GScissor(rect));
-		
+
 		drag = new DragInteractor(null);
 		scissor.setInteractor(drag);
-		
+
 //		dragNode = new GNode();
 //		dragNode.setPositionZ(100);
 //		dragNode.setInteractor(drag);
 //		this.addChild(dragNode);
 //		dragNode.setWidth(scissor.getWidth());
 //		dragNode.setHeight(scissor.getHeight());
-		
+
 		this.setWidth(scissor.getWidth());
 		this.setHeight(scissor.getHeight());
 	}
@@ -39,6 +39,15 @@ public class GDragContainer extends GNode {
 
 	public GNode getContainer() {
 		return this.drag.moveNode;
+	}
+
+	public double getContainerToBottomY() {
+		double height = this.getHeight();
+		GNode node = this.drag.moveNode;
+		if (node == null) return 0;
+		double nodeAnchortHeight = node.getHeight() * (1 - node.getAnchor().y);
+		if (nodeAnchortHeight <= height) return 0; 
+		else return height - nodeAnchortHeight;
 	}
 
 }
