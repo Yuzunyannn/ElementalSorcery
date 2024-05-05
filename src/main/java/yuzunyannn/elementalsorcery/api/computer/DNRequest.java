@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.api.computer;
 
-import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,18 +57,12 @@ public class DNRequest extends DNBase implements ICastEnv {
 		src = from;
 	}
 
-	public void enableLog() {
-		if (logList == null) logList = new ArrayList<>();
+	public void setLogList(List<Object> logList) {
+		this.logList = logList;
 	}
 
 	public List<Object> getLogList() {
 		return logList;
-	}
-
-	public void appendLog(DNRequest subRequest) {
-		if (logList == null) return;
-		if (subRequest.logList == null) return;
-		logList.addAll(subRequest.logList);
 	}
 
 	public void log(Object obj) {

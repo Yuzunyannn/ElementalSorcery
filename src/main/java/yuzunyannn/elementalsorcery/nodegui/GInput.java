@@ -115,7 +115,12 @@ public class GInput extends GNode implements IGInteractor {
 		}
 		wordShift = null;
 		worldPos = worldPos.subtract(label.x, label.y, 0);
-		cursorAdjustIndex = selectStart = cursorStart = cursorEnd = label.getCharIndex(worldPos);
+		int currIndex = label.getCharIndex(worldPos);
+		Vec3d aVec = label.getCharPosition(currIndex + 1);
+		Vec3d bVec = label.getCharPosition(currIndex);
+		double h = (aVec.x + bVec.x) / 2;
+		if (worldPos.x <= h) currIndex = Math.max(0, currIndex - 1);
+		cursorAdjustIndex = selectStart = cursorStart = cursorEnd = currIndex;
 		updateCursor();
 		return true;
 	}
@@ -139,7 +144,9 @@ public class GInput extends GNode implements IGInteractor {
 	public void onMouseDrag(GNode node, Vec3d worldPos) {
 		if (selectStart < 0) return;
 		worldPos = worldPos.subtract(label.x, label.y, 0);
-		updateSelect(cursorAdjustIndex = label.getCharIndex(worldPos));
+		cursorAdjustIndex = label.getCharIndex(worldPos);
+		if (cursorAdjustIndex < selectStart) cursorAdjustIndex -= 1;
+		updateSelect(cursorAdjustIndex);
 	}
 
 	protected void updateSelect(int index) {
@@ -344,11 +351,11 @@ public class GInput extends GNode implements IGInteractor {
 			wordShift.selectIndex = 0;
 			return;
 		}
-		if (wordShift.selectIndex >= wordShift.alternative.size()) {
-			wordShift.selectIndex = wordShift.alternative.size() - 1;
+		if (wordShift.selectIndex >= wordShift.size()) {
+			wordShift.selectIndex = wordShift.size() - 1;
 			return;
 		}
-		String str = wordShift.alternative.get(wordShift.selectIndex);
+		String str = wordShift.get(wordShift.selectIndex);
 		cursorStart = wordShift.startIndex;
 		cursorEnd = wordShift.endIndex;
 		insert(str);
@@ -358,21 +365,21 @@ public class GInput extends GNode implements IGInteractor {
 
 	public void autoComplete() {
 		if (this.wordShift != null) {
-			doWordShift(1);
+			doWordShift(-1);
 			return;
 		}
 		GInputShift aComplete = findAutoComplete();
 		if (aComplete == null) return;
-		if (aComplete.alternative.isEmpty()) return;
+		if (aComplete.isEmpty()) return;
 		this.wordShift = aComplete;
 		aComplete.startIndex = MathHelper.clamp(aComplete.startIndex, 0, val.length());
-		aComplete.endIndex = MathHelper.clamp(aComplete.endIndex + 1, 0, val.length());
+		aComplete.endIndex = MathHelper.clamp(aComplete.endIndex, 0, val.length());
 		if (aComplete.startIndex > aComplete.endIndex) {
 			int tmp = aComplete.startIndex;
 			aComplete.startIndex = aComplete.endIndex;
 			aComplete.endIndex = tmp;
 		}
-		wordShift.selectIndex = aComplete.alternative.size();
+		wordShift.selectIndex = aComplete.size();
 		doWordShift(-1);
 	}
 

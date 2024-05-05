@@ -1,8 +1,6 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,9 +36,12 @@ import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
-import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
+import yuzunyannn.elementalsorcery.computer.render.BtnColorInteractor;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreen;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
+import yuzunyannn.elementalsorcery.computer.render.GDragContainer;
+import yuzunyannn.elementalsorcery.computer.render.GEasyLayoutContainer;
+import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
 import yuzunyannn.elementalsorcery.container.ContainerComputer;
 import yuzunyannn.elementalsorcery.container.gui.reactor.GuiElementReactor;
 import yuzunyannn.elementalsorcery.nodegui.GActionEaseInBack;
@@ -51,17 +52,22 @@ import yuzunyannn.elementalsorcery.nodegui.GActionRotateBy;
 import yuzunyannn.elementalsorcery.nodegui.GActionScaleBy;
 import yuzunyannn.elementalsorcery.nodegui.GActionSequence;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
+import yuzunyannn.elementalsorcery.nodegui.GLabel;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.GScene;
+import yuzunyannn.elementalsorcery.nodegui.GuiScene;
 import yuzunyannn.elementalsorcery.nodegui.IGInteractor;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.helper.Color;
+import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiComputerBase extends GuiContainer {
 
-	protected final GScene scene = new GScene();
+	protected final GScene scene = new GuiScene();
 	protected final ContainerComputer containerComputer;
 	protected IComputerException exception;
+	protected GNode exceptionNode;
 	protected int computerX, computerY;
 	protected int computerWidth, computerHeight;
 	protected ComputerScreen screenFront;
@@ -209,6 +215,8 @@ public abstract class GuiComputerBase extends GuiContainer {
 		if (screenFront == null) screenFront = ComputerScreenRender.apply();
 		screenFront.setAPPGui(appGUI);
 		screenFront.setTaskAppGui(taskGUI);
+		this.scene.setSize(this.width, this.height);
+		this.scene.setDisplaySize(Effect.displayWidth, Effect.displayHeight);
 	}
 
 	@Override
@@ -255,15 +263,11 @@ public abstract class GuiComputerBase extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		partialTicks = mc.getRenderPartialTicks();
-		GlStateManager.pushMatrix();
-		this.scene.draw(partialTicks);
-		GlStateManager.popMatrix();
 
-		if (exception != null) {
+		if (this.inException()) {
 			int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 			offsetX = offsetX + computerX;
 			offsetY = offsetY + computerY;
-
 			GlStateManager.disableTexture2D();
 			int r = 3, g = 56, b = 122;
 			Tessellator tessellator = Tessellator.getInstance();
@@ -275,24 +279,13 @@ public abstract class GuiComputerBase extends GuiContainer {
 			bufferbuilder.pos(offsetX + computerWidth, offsetY, 0.0D).color(r, g, b, 255).endVertex();
 			tessellator.draw();
 			GlStateManager.enableTexture2D();
-
-			String str = exception.toString();
-			Throwable origin = exception.getOrigin();
-			if (origin != null) {
-				if (origin instanceof ComputerException) {
-
-				} else {
-					StringWriter sw = new StringWriter();
-					PrintWriter pw = new PrintWriter(sw);
-					origin.printStackTrace(pw);
-					str = sw.toString();
-					if (str.length() > 512) str = str.substring(0, 512);
-				}
-			}
-
-			fontRenderer.drawSplitString(str, offsetX + 1, offsetY, computerWidth - 1, 0xffffffff);
-			return;
 		}
+
+		GlStateManager.pushMatrix();
+		this.scene.draw(partialTicks);
+		GlStateManager.popMatrix();
+
+		if (this.inException()) return;
 
 		if (isPowerOn) {
 			GlStateManager.pushMatrix();
@@ -333,6 +326,10 @@ public abstract class GuiComputerBase extends GuiContainer {
 		}
 	}
 
+	public boolean inException() {
+		return this.exception != null;
+	}
+
 	GNode openImage;
 
 	@Override
@@ -340,8 +337,24 @@ public abstract class GuiComputerBase extends GuiContainer {
 		super.updateScreen();
 		this.scene.tick();
 
-		if (exception != null) { return; }
+		if (exception != null) {
+			if (this.exceptionNode == null) initExceptionView();
+			IComputer computer = getComputer();
+			if (computer != null) {
+				if (!computer.isPowerOn()) {
+					this.exception = null;
+					isPowerOn = false;
+				}
+			}
+			return;
+		} else {
+			if (this.exceptionNode != null) {
+				this.exceptionNode.removeFromParent();
+				this.exceptionNode = null;
+			}
+		}
 
+		// tooltip
 		Iterator<Entry<String, TooltipInfo>> iter = tooltipMap.entrySet().iterator();
 		while (iter.hasNext()) {
 			Entry<String, TooltipInfo> entry = iter.next();
@@ -349,12 +362,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 			if (info.duration-- <= 0) iter.remove();
 		}
 
-//		if (ESAPI.isDevelop) {
-//			if (appGUI instanceof AppCommandGui) {
-//				((AppCommandGui) appGUI).reinit(screenFront);
-//			}
-//		}
-
+		// computer
 		IComputer computer = getComputer();
 
 		if (computer == null) {
@@ -380,6 +388,11 @@ public abstract class GuiComputerBase extends GuiContainer {
 		if (openImage != null) {
 			closeOpenScene();
 			openImage = null;
+		}
+
+		if (computer.getException() != null) {
+			this.exception = computer.getException();
+			return;
 		}
 
 		if (screenFrontAppear < 1) screenFrontAppear = Math.min(screenFrontAppear + 0.075f, 1);
@@ -414,6 +427,60 @@ public abstract class GuiComputerBase extends GuiContainer {
 		}
 	}
 
+	private void initExceptionView() {
+		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
+		offsetX = offsetX + computerX;
+		offsetY = offsetY + computerY;
+
+		GDragContainer dContainer = new GDragContainer(computerWidth, computerHeight);
+		this.scene.addChild(exceptionNode = dContainer);
+		dContainer.setPosition(offsetX, offsetY, 0);
+
+		GEasyLayoutContainer container = new GEasyLayoutContainer();
+		container.setMaxWidth(computerWidth);
+		dContainer.addContainer(container);
+
+		GNode bar = new GNode();
+		bar.setWidth(computerWidth);
+		bar.setHeight(10);
+		container.addChild(bar);
+
+		GImage shutDownBtn = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(24, 11, 7, 6, 256, 256));
+		shutDownBtn.setPosition(2, 2, 1);
+		shutDownBtn.setName("shutDownBtn");
+		bar.addChild(shutDownBtn);
+		shutDownBtn.setInteractor(new BtnColorInteractor(new Color(0xffffff), new Color(0xff0000)) {
+			@Override
+			public void onClick() {
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt.setString("_nt_", "power-off");
+				containerComputer.sendToServer(nbt);
+			}
+		});
+
+		final String originMsg = exception.toString();
+		
+		GImage copyBtn = new GImage(SoftGuiCommon.TEXTURE_1, SoftGuiCommon.FRAME_ICON_COPY);
+		copyBtn.setPosition(bar.getWidth() - copyBtn.getWidth() - 2, 2, 1);
+		copyBtn.setName("copyBtn");
+		bar.addChild(copyBtn);
+		copyBtn.setInteractor(new BtnColorInteractor(new Color(0xffffff), new Color(0x00ff00)) {
+			@Override
+			public void onClick() {
+				JavaHelper.clipboardWrite(originMsg);
+			}
+		});
+		
+		String str = originMsg;
+		str = str.replace("\t", "");
+		str = str.replace("\r", "");
+		str = str.replace("at ", "at:");
+		GLabel label = new GLabel(str);
+		label.setWrapWidth(computerWidth - 1);
+		container.addChild(label);
+		container.layout();
+	}
+
 	protected void onCurrAppChange(App old) {
 		appGUI = null;
 		screenFront.setAPPGui(null);
@@ -435,7 +502,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
 		this.scene.onMouseEvent(new Vec3d(mouseX, mouseY, 0));
 
-		if (this.exception != null) return;
+		if (this.inException()) return;
 
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		offsetX = offsetX + computerX;
@@ -458,6 +525,9 @@ public abstract class GuiComputerBase extends GuiContainer {
 			super.handleKeyboardInput();
 			return;
 		}
+
+		if (this.inException()) return;
+
 		try {
 			this.screenFront.onKeyboardEvent();
 		} catch (Exception e) {

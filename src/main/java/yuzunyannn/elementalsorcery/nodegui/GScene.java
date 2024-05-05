@@ -59,7 +59,7 @@ public class GScene {
 	}
 
 	public Vec3d mouseVec = Vec3d.ZERO;
-	
+
 	public void onMouseEvent(Vec3d worldPos) {
 		mouseVec = worldPos;
 		boolean isClick = Mouse.getEventButtonState();

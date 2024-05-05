@@ -14,14 +14,16 @@ import yuzunyannn.elementalsorcery.computer.render.GDragContainer;
 import yuzunyannn.elementalsorcery.computer.render.GEasyLayoutContainer;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiThemePart;
+import yuzunyannn.elementalsorcery.computer.soft.CommandParser;
 import yuzunyannn.elementalsorcery.computer.soft.OPSender;
 import yuzunyannn.elementalsorcery.computer.softs.AppCommand.CMDRecord;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GInput;
 import yuzunyannn.elementalsorcery.nodegui.GInputShift;
+import yuzunyannn.elementalsorcery.nodegui.IAutoCompletable;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 
-public class AppCommandGui extends AppGuiCommon<AppCommand> {
+public class AppCommandGui extends AppGuiCommon<AppCommand> implements IAutoCompletable {
 
 	protected GInput input;
 	protected GDragContainer dragContainer;
@@ -53,7 +55,8 @@ public class AppCommandGui extends AppGuiCommon<AppCommand> {
 		input.setSize(inputBG.getWidth() - 10, inputBG.getHeight());
 		input.setColorRef(color1);
 		input.setPublisher(str -> enter(str));
-		input.setHistorian(() -> new GInputShift(history));
+		input.setHistorian(() -> new GInputShift.Fast(history, true));
+		input.setCompleter(this);
 		input.setForce(true);
 
 		dragContainer = new GDragContainer(runtime.getWidth(),
@@ -139,6 +142,34 @@ public class AppCommandGui extends AppGuiCommon<AppCommand> {
 			container.addChild(node);
 			node.refresh(record);
 		}
+	}
+
+	@Override
+	public GInputShift tryComplete(String str, int cursor) {
+		CommandParser parser = new CommandParser(str);
+		CommandParser.Element element = parser.findElement(cursor);
+		if (element == null) return null;
+		if (element.getParent() == null) return null;
+		if (!element.isArgs()) return null;
+
+		int wordIndex = element.getArgsIndex();
+		boolean isNext = element.isCommand() ? element.getEndIndex() <= cursor - 1 : element.getEndIndex() < cursor - 1;
+
+		GInputShift.Fast shift = new GInputShift.Fast();
+		shift.alternative.add("network");
+		shift.alternative.add("network-ls");
+
+		if (isNext) {
+			if (element.isCommand()) shift.prefix = " ";
+			shift.startIndex = shift.endIndex = cursor;
+		} else {
+			shift.startIndex = element.getStartIndex();
+			shift.endIndex = element.getEndIndex() + 1;
+		}
+
+//		System.out.println(element.getEndIndex() + ":" + cursor);
+//		return shift;
+		return null;
 	}
 
 }

@@ -1,8 +1,36 @@
 package yuzunyannn.elementalsorcery.api.computer.soft;
 
-import javax.annotation.Nullable;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 
 public interface IComputerException {
+
+	static public NBTTagCompound serialize(IComputerException exception) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		if (exception instanceof ComputerExceptionOnlyMsg) {
+			nbt.setByte("type", (byte) 0);
+			nbt.setString("msg", exception.toString());
+		} else if (exception instanceof ComputerExceptionJavaTransparent) {
+			nbt.setByte("type", (byte) 0);
+			nbt.setString("msg", exception.toString());
+		} else {
+			nbt.setByte("type", (byte) 0);
+			nbt.setString("msg", exception.toString());
+		}
+		return nbt;
+	}
+
+	static public IComputerException deserialize(NBTTagCompound tag) {
+		if (tag.hasKey("type", NBTTag.TAG_NUMBER)) {
+			int type = tag.getInteger("type");
+			if (type == 0) return IComputerException.easy(tag.getString("msg"));
+		}
+		if (tag.isEmpty()) return null;
+		return IComputerException.easy(tag.toString());
+	}
 
 	static IComputerException easy(String msg) {
 		return new ComputerExceptionOnlyMsg(msg);
@@ -17,7 +45,15 @@ public interface IComputerException {
 	}
 
 	static class ComputerExceptionOnlyMsg implements IComputerException {
+		final String msg;
+
 		public ComputerExceptionOnlyMsg(String msg) {
+			this.msg = msg;
+		}
+
+		@Override
+		public String toString() {
+			return this.msg;
 		}
 	}
 
@@ -29,14 +65,12 @@ public interface IComputerException {
 		}
 
 		@Override
-		public Throwable getOrigin() {
-			return this.e;
+		public String toString() {
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw);
+			return sw.toString();
 		}
-	}
-
-	@Nullable
-	default public Throwable getOrigin() {
-		return null;
 	}
 
 }

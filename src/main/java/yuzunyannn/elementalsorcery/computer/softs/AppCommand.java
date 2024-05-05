@@ -6,20 +6,19 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
+import yuzunyannn.elementalsorcery.api.computer.soft.DeviceShellBadInvoke;
+import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShellExecutor;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
@@ -28,6 +27,8 @@ import yuzunyannn.elementalsorcery.api.util.detecter.IDataRef;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.computer.soft.AppBase;
+import yuzunyannn.elementalsorcery.computer.soft.CommandParser;
+import yuzunyannn.elementalsorcery.computer.soft.DeviceCommand;
 import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTSS;
@@ -244,93 +245,32 @@ public class AppCommand extends AppBase {
 		return new AppCommandGui(this);
 	}
 
-	@SuppressWarnings("serial")
-	protected class NeedUsage extends Throwable {
-		public NeedUsage(String translateKey) {
-
-		}
-	}
-
 	@DeviceFeature(id = "exec")
 	public void exec(String cmd) {
 		CMDRecord record = new CMDRecord(cmd);
 		CommandParser parser = new CommandParser(cmd);
-		CommandParser.Element cmdElement = parser.getRoot();
-		DNRequest request = new DNRequest();
-		DNResult result = this.exec(cmdElement, request);
-		record.code = result.code;
-		List<Object> list = request.getLogList();
-		record.displayObject = list;
-		Object retDisplayObject = GameDisplayCast.cast(result.getReturn());
-		if (retDisplayObject != null) {
-			if (list.isEmpty()) record.displayObject = retDisplayObject;
-			else list.add(retDisplayObject);
+		DeviceCommand command = new DeviceCommand(parser);
+		IDeviceShellExecutor executor = getOS().createShellExecutor();
+		executor.setLogicEnabled(true);
+		DNResult result;
+		List<Object> logs = null;
+		try {
+			command.invoke(executor);
+			result = executor.getResult();
+			logs = executor.getLogs();
+		} catch (DeviceShellBadInvoke e) {
+			result = DNResult.invalid();
+			result.setReturn(e.getMessage());
 		}
+
+		record.displayObject = GameDisplayCast.cast(result.getReturn());
+		if (logs != null) {
+			if (record.displayObject != null) logs.add(record.displayObject);
+			record.displayObject = logs;
+		}
+
+		record.code = result.code;
 		this.add(record);
 	}
 
-	protected UUID finedUUID(String hint) {
-		IOS os = this.getOS();
-		DNRequest params = new DNRequest();
-		params.set(DNRequest.args(1), "uuid");
-		DNResult result = os.notice("network-ls", params);
-		List<UUID> list = result.getReturn(List.class);
-		if (list == null) return null;
-		hint = hint.toLowerCase();
-		for (UUID uuid : list) {
-			String uStr = uuid.toString().toLowerCase();
-			if (uStr.startsWith(hint)) return uuid;
-		}
-		return null;
-	}
-
-	protected DNResult exec(CommandParser.Element cmdElement, DNRequest request) {
-		request.enableLog();
-		request.setFinder(UUID.class, hint -> finedUUID(hint));
-
-		int argsIndex = 0;
-		List<CommandParser.Element> elements = cmdElement.getElements();
-		if (elements == null || elements.isEmpty()) return DNResult.invalid();
-
-		int eIndex = 0;
-		UUID toUDID = null;
-		String method = null;
-
-		try {
-			for (; eIndex < elements.size(); eIndex++) {
-				CommandParser.Element element = elements.get(eIndex);
-				if (method == null) {
-					if (element.getType() == CommandParser.TYPE_LINK) {
-						if (toUDID != null) throw new NeedUsage("es.computer.cmd.usage.repeatUUID");
-						toUDID = finedUUID(element.getString());
-						if (toUDID == null) {
-							request.log(new TextComponentTranslation("es.app.cannotFind", element.getString()));
-							return DNResult.invalid();
-						}
-					} else if (element.getType() == CommandParser.TYPE_STR) {
-						method = element.getString();
-					} else throw new NeedUsage("es.computer.cmd.usage.cannotFindMethod");
-				} else {
-					argsIndex = argsIndex + 1;
-					if (element.isCommand()) {
-						DNRequest subRequest = new DNRequest();
-						DNResult subResult = this.exec(element, subRequest);
-						request.appendLog(subRequest);
-						if (!subResult.isSuccess()) return subResult;
-						request.set(DNRequest.args(argsIndex), subResult.getReturn());
-					} else if (element.isLink()) {
-						throw new NeedUsage("es.computer.cmd.usage.unsupport");
-					} else request.set(DNRequest.args(argsIndex), element.getString());
-				}
-			}
-
-			if (method == null) throw new NeedUsage("es.computer.cmd.usage.cannotFindMethod");
-		} catch (IndexOutOfBoundsException e) {
-			return DNResult.invalid();
-		} catch (NeedUsage e) {
-			return DNResult.invalid();
-		}
-
-		return getOS().notice(toUDID, method, request);
-	}
 }

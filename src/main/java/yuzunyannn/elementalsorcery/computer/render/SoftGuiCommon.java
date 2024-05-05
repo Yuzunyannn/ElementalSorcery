@@ -49,8 +49,9 @@ public abstract class SoftGuiCommon<T extends App> implements ISoftGui {
 	public final static RenderTexutreFrame FRAME_ARROW_1_DOWN = new RenderTexutreFrame(23, 40, 18, 9, 256, 256);
 	public final static RenderTexutreFrame FRAME_ICON_LINK = new RenderTexutreFrame(12, 11, 11, 7, 256, 256);
 	public final static RenderTexutreFrame FRAME_ICON_UNLINK = new RenderTexutreFrame(46, 11, 6, 7, 256, 256);
+	public final static RenderTexutreFrame FRAME_ICON_COPY = new RenderTexutreFrame(53, 11, 6, 7, 256, 256);
 	public final static RenderTexutreFrame FRAME_ICON_COMPASS = new RenderTexutreFrame(19, 53, 27, 27, 256, 256);
-
+	
 	public SoftGuiCommon(T appInst) {
 		this.appInst = appInst;
 		this.scene = new GScene();

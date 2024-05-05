@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.container.ContainerComputer;
@@ -22,7 +21,6 @@ public class ComputerScreen {
 	protected Framebuffer buffer;
 	protected int frameBufferWidth, frameBufferHeight;
 	protected boolean waitPoolMark;
-	protected IComputerException exception;
 	protected ContainerComputer container;
 
 	public void init() {
@@ -91,26 +89,20 @@ public class ComputerScreen {
 		GlStateManager.translate(0, frameBufferHeight, 0);
 		GlStateManager.scale(5, -5, 5);
 
-		if (exception != null) {
-
+		renderGUI(currGui, partialTicks);
+		if (currTaskGui != null) {
+			GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
+			renderGUI(currTaskGui, partialTicks);
 		}
-
-		try {
-			renderGUI(currGui, partialTicks);
-			if (currTaskGui != null) {
-				GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
-				renderGUI(currTaskGui, partialTicks);
-			}
-		} catch (Exception e) {
-			this.exception = IComputerException.easy(e);
-			ESAPI.logger.warn("computer render crash!", e);
-		}
-
 	}
 
 	protected void renderGUI(ISoftGui gui, float partialTicks) {
 		if (gui == null) return;
-		gui.render(partialTicks);
+		try {
+			gui.render(partialTicks);
+		} catch (Exception e) {
+			gui.onException(e);
+		}
 	}
 
 	public void bindTexture() {
@@ -120,7 +112,7 @@ public class ComputerScreen {
 	}
 
 	public void reuse() {
-		this.exception = null;
+		this.renderCounter = 0;
 		currGui = null;
 		currTaskGui = null;
 	}

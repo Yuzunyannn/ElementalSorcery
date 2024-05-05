@@ -8,6 +8,8 @@ import javax.annotation.Nullable;
 
 public interface IDeviceNetwork {
 
+	public DNResult notice(DeviceNetworkRoute route, String method, DNRequest request);
+
 	public boolean handshake(IDevice other, IDeviceEnv otherEnv, boolean simulate);
 
 	public Collection<IDeviceLinker> getLinkers();

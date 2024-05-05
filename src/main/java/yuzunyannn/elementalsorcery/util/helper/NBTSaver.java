@@ -3,9 +3,11 @@ package yuzunyannn.elementalsorcery.util.helper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -309,6 +311,42 @@ public class NBTSaver implements INBTReader, INBTWriter {
 		try {
 			PacketBuffer buf = new PacketBuffer(Unpooled.wrappedBuffer(nbt.getByteArray(key)));
 			return GameDisplayCast.read(buf);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public void write(String key, byte[] bytes) {
+		nbt.setByteArray(key, bytes);
+	}
+
+	@Override
+	public void write(String key, ByteBuf byteBuf) {
+		byte[] bytes = new byte[byteBuf.writerIndex()];
+		byteBuf.getBytes(0, bytes);
+		nbt.setByteArray(key, bytes);
+	}
+
+	@Override
+	public byte[] bytes(String key) {
+		return nbt.getByteArray(key);
+	}
+
+	@Override
+	public void writeStream(String key, Consumer<PacketBuffer> writer) {
+		PacketBuffer buf = new PacketBuffer(Unpooled.buffer());
+		writer.accept(buf);
+		byte[] bytes = new byte[buf.writerIndex()];
+		buf.getBytes(0, bytes);
+		nbt.setByteArray(key, bytes);
+	}
+
+	@Override
+	public <T> T sobj(String key, Function<PacketBuffer, T> reader) {
+		try {
+			PacketBuffer buf = new PacketBuffer(Unpooled.wrappedBuffer(nbt.getByteArray(key)));
+			return reader.apply(buf);
 		} catch (Exception e) {
 			return null;
 		}

@@ -5,6 +5,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.computer.DeviceInfoTile;
 import yuzunyannn.elementalsorcery.nodegui.GActionEaseInOutBack;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
@@ -51,15 +52,15 @@ public class TileMantraEmitter extends TileDevice implements ITickable {
 	}
 
 	@DeviceFeature(id = "facing")
-	public void setFacing(EnumFacing facing) {
+	public DNResultCode setFacing(EnumFacing facing) {
 		if (world.isRemote) {
 			updateClientFacing(facing, 20);
-			return;
+			return DNResultCode.SUCCESS;
 		}
 
 		if (this.facing == facing) {
 			process.log("facing unchange");
-			return;
+			return DNResultCode.REFUSE;
 		}
 
 		this.facing = facing;
@@ -68,6 +69,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable {
 		this.updateToClient(sender.tag());
 		this.markDirty();
 		process.log("set facing to " + facing);
+		return DNResultCode.SUCCESS;
 	}
 
 	@DeviceFeature(id = "facing")

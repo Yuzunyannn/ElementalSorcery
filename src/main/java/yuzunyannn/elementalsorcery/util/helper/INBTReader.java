@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
@@ -29,6 +30,10 @@ public interface INBTReader {
 	long nlong(String key);
 
 	boolean nboolean(String key);
+
+	byte[] bytes(String key);
+
+	<T> T sobj(String key, Function<PacketBuffer, T> reader);
 
 	<U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, T serializable);
 

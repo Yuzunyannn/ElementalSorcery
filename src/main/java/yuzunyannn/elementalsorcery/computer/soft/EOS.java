@@ -28,6 +28,7 @@ import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
+import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShellExecutor;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
@@ -95,6 +96,11 @@ public abstract class EOS implements IOS {
 	@Override
 	public IDeviceInfo getDeviceInfo() {
 		return computer.device().getInfo();
+	}
+
+	@Override
+	public IDeviceShellExecutor createShellExecutor() {
+		return new DeviceShellExecutor(computer.device());
 	}
 
 	public void markDirty() {

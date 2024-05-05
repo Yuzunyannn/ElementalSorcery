@@ -12,6 +12,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.computer.DNRequest;
+import yuzunyannn.elementalsorcery.api.computer.DNResult;
+import yuzunyannn.elementalsorcery.api.computer.DeviceNetworkRoute;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
@@ -68,6 +71,20 @@ public class DeviceNetwork
 		IDeviceEnv env = mySelf.getEnv();
 		if (env != null) env.markDirty();
 		return true;
+	}
+
+	@Override
+	public DNResult notice(DeviceNetworkRoute route, String method, DNRequest request) {
+		request.setSrcDevice(mySelf);
+		if (route.isLocal()) return mySelf.notice(method, request);
+		UUID uuid = route.next();
+		IDeviceLinker linker = linkerMap.get(uuid);
+		if (linker != null) {
+			if (!linker.isConnecting()) return DNResult.unavailable();
+			return linker.getRemoteDevice().getNetwork().notice(route, method, request);
+		}
+		// TODO find mod
+		return DNResult.invalid();
 	}
 
 	@Override

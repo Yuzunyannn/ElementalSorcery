@@ -70,10 +70,8 @@ public class DeviceFeatureMap {
 			for (int i = 0; i < paramterCount; i++) {
 				Parameter paramater = paramaters[i];
 				Object obj = params.ask(String.valueOf(i + 1), paramater.getType());
-				if (obj == null) {
-					obj = params.ask(paramater.getName(), paramater.getType());
-					if (obj == null) return null;
-				}
+				if (obj == null) obj = params.ask(paramater.getName(), paramater.getType());
+				if (obj == null) return null;
 				objs[i] = obj;
 			}
 			return objs;

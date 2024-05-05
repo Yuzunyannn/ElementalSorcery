@@ -82,6 +82,7 @@ public abstract class Computer implements IComputer {
 	protected boolean closeFlag = false;
 	protected boolean isInit = false;
 	protected final String appearance;
+	protected IComputerException exception;
 
 	public Computer(String appearance) {
 		os = new EOSServer(this);
@@ -91,6 +92,11 @@ public abstract class Computer implements IComputer {
 	@Override
 	public String getAppearance() {
 		return appearance;
+	}
+
+	@Override
+	public IComputerException getException() {
+		return exception;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -146,6 +152,7 @@ public abstract class Computer implements IComputer {
 		nbt.setBoolean("#R", inRunning);
 		nbt.setTag("#OS", os.serializeNBT());
 		NBTHelper.setNBTSerializableList(nbt, "#D", disks);
+		if (inRunning && exception != null) nbt.setTag("#Error", IComputerException.serialize(exception));
 		return nbt;
 	}
 
@@ -153,6 +160,7 @@ public abstract class Computer implements IComputer {
 	public void deserializeNBT(NBTTagCompound nbt) {
 		inRunning = nbt.getBoolean("#R");
 		os.deserializeNBT(nbt.getCompoundTag("#OS"));
+		if (inRunning && nbt.hasKey("#Error")) exception = IComputerException.deserialize(nbt.getCompoundTag("#Error"));
 		disks.clear();
 		NBTTagList list = nbt.getTagList("#D", NBTTag.TAG_COMPOUND);
 		for (NBTBase n : list) disks.add(new Disk(((NBTTagCompound) n).copy()));
@@ -162,15 +170,13 @@ public abstract class Computer implements IComputer {
 	@Override
 	public DNResult notice(String method, DNRequest params) {
 		if (!inRunning) return DNResult.refuse();
-
+		if (device() != this) return device().notice(method, params);
 		if (cfeature.has(method)) {
 			IComputEnv env = getEnv();
 			if (env != null) params.setWorld(env.getWorld());
 			Object obj = cfeature.invoke(this, method, params);
 			return DNResult.byRet(obj);
 		}
-
-		if (device() != this) return device().notice(method, params);
 		return DNResult.invalid();
 	}
 
@@ -240,6 +246,7 @@ public abstract class Computer implements IComputer {
 		if (inRunning) return;
 		IComputEnv env = getEnv();
 		if (env == null) return;
+		exception = null;
 		closeFlag = false;
 		inRunning = true;
 		if (env.isRemote()) return;
@@ -253,6 +260,7 @@ public abstract class Computer implements IComputer {
 	@Override
 	public void powerOff() {
 		if (!inRunning) return;
+		exception = null;
 		IComputEnv env = getEnv();
 		if (env == null) return;
 		inRunning = false;
@@ -301,6 +309,7 @@ public abstract class Computer implements IComputer {
 	public static class DetectDataset {
 		public boolean inRunning = false;
 		public boolean inInited = false;
+		public boolean hasException = false;
 	}
 
 	@Override
@@ -315,6 +324,13 @@ public abstract class Computer implements IComputer {
 			NBTSender.SHARE.write("#R", inRunning);
 		}
 
+		if (this.inRunning) {
+			if (this.exception != null && !dataset.hasException) {
+				dataset.hasException = true;
+				NBTSender.SHARE.write("#Error", IComputerException.serialize(this.exception));
+			}
+		} else dataset.hasException = false;
+
 		NBTTagCompound osChanges = os.detectChanges(watcher);
 		if (osChanges != null) NBTSender.SHARE.write("#OS", osChanges);
 
@@ -325,6 +341,8 @@ public abstract class Computer implements IComputer {
 	public void mergeChanges(NBTTagCompound nbt) {
 		if (nbt.hasKey("#R")) this.inRunning = nbt.getBoolean("#R");
 		if (nbt.hasKey("#OS")) os.mergeChanges(nbt.getCompoundTag("#OS"));
+		if (!this.inRunning) this.exception = null;
+		if (nbt.hasKey("#Error")) this.exception = IComputerException.deserialize(nbt.getCompoundTag("#Error"));
 	}
 
 	@Override
@@ -334,15 +352,17 @@ public abstract class Computer implements IComputer {
 
 		World world = env.getWorld();
 
-		if (world.isRemote) {
-			updateClient(env);
-			return;
-		}
-
 		if (!inRunning) return;
 
 		if (closeFlag) {
 			powerOff();
+			return;
+		}
+
+		if (exception != null) return;
+
+		if (world.isRemote) {
+			updateClient(env);
 			return;
 		}
 
@@ -383,13 +403,14 @@ public abstract class Computer implements IComputer {
 			doUpdate(env);
 		} catch (Exception e) {
 			ESAPI.logger.warn("系統崩潰client", e);
+			exception = IComputerException.easy(e);
 			return;
 		}
 	}
 
 	protected void abort(Throwable err) {
+		exception = IComputerException.easy(err);
 		ESAPI.logger.warn("系統崩潰", err);
-		notice("power-off", DNRequest.empty());
 	}
 
 	protected void doUpdate(IComputEnv env) {

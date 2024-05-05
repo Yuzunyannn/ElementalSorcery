@@ -27,6 +27,8 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 
 	List<IDisk> getDisks();
 
+	IDeviceShellExecutor createShellExecutor();
+
 	@Nullable
 	IDeviceStorage getDisk(App app, AppDiskType type);
 

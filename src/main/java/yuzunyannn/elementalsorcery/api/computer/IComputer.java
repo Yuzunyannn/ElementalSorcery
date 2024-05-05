@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.computer.Disk;
@@ -15,6 +16,8 @@ import yuzunyannn.elementalsorcery.computer.Disk;
 public interface IComputer extends ISyncDetectable<NBTTagCompound>, INBTSerializable<NBTTagCompound>, ICalculatorObject,
 		IDeviceNoticeable {
 
+	public IComputerException getException();
+	
 	public String getAppearance();
 
 	@Nonnull
