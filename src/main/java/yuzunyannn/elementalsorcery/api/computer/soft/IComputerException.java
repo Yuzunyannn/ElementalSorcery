@@ -4,29 +4,43 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import net.minecraft.nbt.NBTTagCompound;
-import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
+import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
 public interface IComputerException {
 
+	default boolean isGameException() {
+		return false;
+	}
+
+	default Object getGameRenderObject() {
+		return null;
+	}
+
 	static public NBTTagCompound serialize(IComputerException exception) {
-		NBTTagCompound nbt = new NBTTagCompound();
-		if (exception instanceof ComputerExceptionOnlyMsg) {
-			nbt.setByte("type", (byte) 0);
-			nbt.setString("msg", exception.toString());
+		NBTSender sender = new NBTSender();
+		if (exception.isGameException()) {
+			sender.write("type", (byte) 1);
+			sender.writeDisplay("robj", exception.getGameRenderObject());
+		} else if (exception instanceof ComputerExceptionOnlyMsg) {
+			sender.write("type", (byte) 0);
+			sender.write("msg", exception.toString());
 		} else if (exception instanceof ComputerExceptionJavaTransparent) {
-			nbt.setByte("type", (byte) 0);
-			nbt.setString("msg", exception.toString());
+			sender.write("type", (byte) 0);
+			sender.write("msg", exception.toString());
 		} else {
-			nbt.setByte("type", (byte) 0);
-			nbt.setString("msg", exception.toString());
+			sender.write("type", (byte) 0);
+			sender.write("msg", exception.toString());
 		}
-		return nbt;
+		return sender.tag();
 	}
 
 	static public IComputerException deserialize(NBTTagCompound tag) {
-		if (tag.hasKey("type", NBTTag.TAG_NUMBER)) {
-			int type = tag.getInteger("type");
-			if (type == 0) return IComputerException.easy(tag.getString("msg"));
+		NBTSender sender = new NBTSender(tag);
+		if (sender.has("type")) {
+			int type = sender.nint("type");
+			if (type == 0) return IComputerException.easy(sender.string("msg"));
+			else if (type == 1) return new ComputerExceptionRenderObject(sender.display("robj"));
 		}
 		if (tag.isEmpty()) return null;
 		return IComputerException.easy(tag.toString());
@@ -37,11 +51,36 @@ public interface IComputerException {
 	}
 
 	static IComputerException easy(Throwable e) {
+		if (e instanceof ComputerException) return (IComputerException) e;
 		return new ComputerExceptionJavaTransparent(e);
 	}
 
 	static IComputerException easy(String msg, Throwable e) {
+		if (e instanceof ComputerException) return (IComputerException) e;
 		return new ComputerExceptionJavaTransparent(e);
+	}
+
+	static class ComputerExceptionRenderObject implements IComputerException {
+		final Object renderObj;
+
+		public ComputerExceptionRenderObject(Object renderObj) {
+			this.renderObj = renderObj;
+		}
+
+		@Override
+		public String toString() {
+			return String.valueOf(renderObj);
+		}
+
+		@Override
+		public boolean isGameException() {
+			return true;
+		}
+
+		@Override
+		public Object getGameRenderObject() {
+			return renderObj;
+		}
 	}
 
 	static class ComputerExceptionOnlyMsg implements IComputerException {

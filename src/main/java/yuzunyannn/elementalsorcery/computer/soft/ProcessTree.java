@@ -18,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
@@ -90,6 +91,12 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 		if (appClazz == null) return -1;
 
 		pidCounter = pidCounter + 1;
+
+		if (map.containsKey(newPid)) {
+			if (ESAPI.isDevelop) ESAPI.logger.error("repeat pid " + newPid + " why?");
+			return -1;
+		}
+
 		ProcessNode node = new ProcessNode(appIdRes, newPid, parentPid);
 		addProcessNode(node);
 		afterProcessNodeAdded(node);
@@ -140,16 +147,17 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 
 	public Collection<Integer> findAllChildren(int pid) {
 		LinkedList<Integer> children = new LinkedList<>();
-		findAllChildren(children, pid);
+		findAllChildren(children, pid, 32);
 		return children;
 	}
 
-	private void findAllChildren(LinkedList<Integer> children, int pid) {
+	private void findAllChildren(LinkedList<Integer> children, int pid, int deep) {
+		if (deep <= 0) throw new RuntimeException("children find over deep");
 		ProcessNode node = map.get(pid);
 		if (node == null) return;
 		for (int i = node.children.size() - 1; i >= 0; i--) {
 			int childPid = node.children.get(i);
-			findAllChildren(children, childPid);
+			findAllChildren(children, childPid, deep--);
 			children.add(childPid);
 		}
 	}
@@ -281,6 +289,7 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 					ProcessNode node = deserializeNode(dat);
 					addProcessNode(node);
 					after.add(node);
+					pidCounter = Math.max(pidCounter, node.pid + 1);
 				}
 			}
 			for (ProcessNode node : after) afterProcessNodeAdded(node);

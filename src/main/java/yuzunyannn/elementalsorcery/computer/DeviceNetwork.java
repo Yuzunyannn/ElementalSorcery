@@ -45,13 +45,18 @@ public class DeviceNetwork
 		if (uuids != null) {
 			for (UUID udid : uuids) linkerMap.put(udid, new DeviceLinker(this, udid));
 		}
-		if (this.selfLinker != null) linkerMap.put(selfLinker.getRemoteUUID(), selfLinker);
+		setSelfLinker(this.selfLinker);
 	}
 
 	public void setSelfLinker(IDeviceLinker selfLinker) {
 		this.selfLinker = selfLinker;
 		if (selfLinker == null) linkerMap.remove(mySelf.getUDID());
 		else linkerMap.put(mySelf.getUDID(), selfLinker);
+	}
+
+	public void clear() {
+		linkerMap.clear();
+		setSelfLinker(this.selfLinker);
 	}
 
 	@Override

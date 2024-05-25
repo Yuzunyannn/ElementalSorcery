@@ -86,7 +86,7 @@ public abstract class DeviceStorage implements IDeviceStorage {
 
 	@Override
 	public void markDirty(StoragePath path) {
-
+		
 	}
 
 }

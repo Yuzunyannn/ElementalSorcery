@@ -69,10 +69,10 @@ public class ItemMillHammer extends Item {
 	public Multimap<String, AttributeModifier> getAttributeModifiers(EntityEquipmentSlot slot, ItemStack stack) {
 		Multimap<String, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
 		if (slot == EntityEquipmentSlot.MAINHAND) {
-			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
-					new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", -3.7, 0));
-			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
-					new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 9, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER,
+					"Weapon modifier", -3.7, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER,
+					"Weapon modifier", 9, 0));
 		}
 		return multimap;
 	}
@@ -98,8 +98,7 @@ public class ItemMillHammer extends Item {
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		if (worldIn.isRemote) return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 
-		RayTraceResult ray = WorldHelper.getLookAtEntity(worldIn, playerIn, 4,
-				e -> e.canBeCollidedWith() || ItemEntityProxy.isItemEntity(e));
+		RayTraceResult ray = WorldHelper.getLookAtEntity(worldIn, playerIn, 4, e -> e.canBeCollidedWith() || ItemEntityProxy.isItemEntity(e));
 		if (ray == null) ray = WorldHelper.getLookAtBlock(worldIn, playerIn, 4, true, false, true);
 
 		if (ray == null) return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
@@ -158,10 +157,15 @@ public class ItemMillHammer extends Item {
 		Random rand = Effect.rand;
 		for (int i = 0; i < 8; i++) {
 			Vec3d rVec = pos.add(new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).normalize());
-			Vec3d speed = new Vec3d(rand.nextGaussian(), 0, rand.nextGaussian()).normalize().scale(0.1).add(0,
-					rand.nextDouble() * 0.1, 0);
+			Vec3d speed = new Vec3d(rand.nextGaussian(), 0,
+					rand.nextGaussian()).normalize().scale(0.1).add(0, rand.nextDouble() * 0.1, 0);
 			world.spawnParticle(EnumParticleTypes.CLOUD, rVec.x, rVec.y, rVec.z, speed.x, speed.y, speed.z);
 		}
+	}
+
+	private static void registerComputerSmash(ItemStack stack) {
+		SmashRecipe.register(stack, ItemPadEasyPart.create(EnumType.FLUORESCENT_PARTICLE, 16), ItemPadEasyPart.create(EnumType.CONTROL_CIRCUIT, 3), ItemPadEasyPart.create(EnumType.ACCESS_CIRCUIT, 1), ItemPadEasyPart.create(EnumType.DISPLAY_CIRCUIT, 1), ItemPadEasyPart.create(EnumType.CALCULATE_CIRCUIT, 1), ItemPadEasyPart.create(EnumType.WIFI_CIRCUIT, 1)).setSoundEvent(SoundEvents.BLOCK_GLASS_BREAK);
+
 	}
 
 	public static void registerAll() {
@@ -175,20 +179,15 @@ public class ItemMillHammer extends Item {
 		SmashRecipe.register(ITEMS.ELF_COIN, new ItemStack(ITEMS.ELF_CRYSTAL, 1));
 		SmashRecipe.register(ITEMS.NATURE_CRYSTAL, ITEMS.NATURE_DUST).setSoundEvent(SoundEvents.BLOCK_GLASS_BREAK);
 		SmashRecipe.register(BLOCKS.ELEMENTAL_CUBE, new ItemStack(ITEMS.ELEMENT_CRYSTAL, 4));
-		SmashRecipe.register(ITEMS.MAGIC_STONE, new ItemStack(ITEMS.MAGIC_PIECE, 4))
-				.setSoundEvent(SoundEvents.BLOCK_GLASS_BREAK);
-		SmashRecipe
-				.register(new ItemStack(ITEMS.MAGIC_TERMINAL), ItemPadEasyPart.create(EnumType.FLUORESCENT_PARTICLE, 4),
-						ItemPadEasyPart.create(EnumType.CONTROL_CIRCUIT, 1))
-				.setSoundEvent(SoundEvents.BLOCK_GLASS_BREAK);
-		SmashRecipe
-				.register(new ItemStack(ITEMS.TUTORIAL_PAD), ItemPadEasyPart.create(EnumType.FLUORESCENT_PARTICLE, 16),
-						ItemPadEasyPart.create(EnumType.CONTROL_CIRCUIT, 3),
-						ItemPadEasyPart.create(EnumType.ACCESS_CIRCUIT, 1),
-						ItemPadEasyPart.create(EnumType.DISPLAY_CIRCUIT, 1),
-						ItemPadEasyPart.create(EnumType.CALCULATE_CIRCUIT, 1))
-				.setSoundEvent(SoundEvents.BLOCK_GLASS_BREAK);
-
+		SmashRecipe.register(ITEMS.MAGIC_STONE, new ItemStack(ITEMS.MAGIC_PIECE,
+				4)).setSoundEvent(SoundEvents.BLOCK_GLASS_BREAK);
+		SmashRecipe.register(new ItemStack(
+				ITEMS.MAGIC_TERMINAL), ItemPadEasyPart.create(EnumType.FLUORESCENT_PARTICLE, 4), ItemPadEasyPart.create(EnumType.CONTROL_CIRCUIT, 1)).setSoundEvent(SoundEvents.BLOCK_GLASS_BREAK);
+		SmashRecipe.register(new ItemStack(
+				ITEMS.TUTORIAL_PAD), ItemPadEasyPart.create(EnumType.FLUORESCENT_PARTICLE, 16), ItemPadEasyPart.create(EnumType.CONTROL_CIRCUIT, 3), ItemPadEasyPart.create(EnumType.ACCESS_CIRCUIT, 1), ItemPadEasyPart.create(EnumType.DISPLAY_CIRCUIT, 1), ItemPadEasyPart.create(EnumType.CALCULATE_CIRCUIT, 1)).setSoundEvent(SoundEvents.BLOCK_GLASS_BREAK);
+		registerComputerSmash(new ItemStack(ITEMS.CLOVER_PAD));
+		registerComputerSmash(new ItemStack(BLOCKS.CLOVER_COMPUTER));
+		
 		// 矿物
 		List<OreEnum> ores = OreHelper.getOreEnumList();
 		for (OreEnum ore : ores) {

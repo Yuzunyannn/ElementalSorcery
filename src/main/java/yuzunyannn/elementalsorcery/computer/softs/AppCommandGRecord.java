@@ -27,6 +27,7 @@ public class AppCommandGRecord extends GNode implements IGNodeLayoutable {
 		this.dframe.mask = this.mask;
 		this.dframe.setMargin(new RenderRect(0, 0, 5, 0));
 		this.dframe.setEveryLine(true);
+		dframe.setEnableClick(true);
 	}
 
 	public void refresh(CMDRecord record) {

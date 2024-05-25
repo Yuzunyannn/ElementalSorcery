@@ -43,8 +43,7 @@ public class GuiComputerTutorialPad extends GuiComputerBase {
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 //		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
-		RenderFriend.drawSplit9FrameInCenter(offsetX + this.xSize / 2, offsetY + this.ySize / 2, this.xSize + 16,
-				this.ySize + 9, BG_FRAME, RenderFriend.SPLIT9_AVERAGE_RECT);
+		RenderFriend.drawSplit9FrameInCenter(offsetX + this.xSize / 2, offsetY + this.ySize / 2, this.xSize + 16, this.ySize + 9, BG_FRAME, RenderFriend.SPLIT9_AVERAGE_RECT);
 		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
 	}
 

@@ -6,7 +6,6 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -31,13 +30,10 @@ import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.crack.EffectFragmentCrackMove;
-import yuzunyannn.elementalsorcery.render.model.ModelComputerA;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileStoneDecoration;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class BlockStoneDecoration extends BlockContainerNormal implements IBlockStronger {
-
-	static public final ModelBase MODEL_COMPUTER_A = new ModelComputerA();
 
 	public BlockStoneDecoration() {
 		super(Material.ROCK, "stoneDecoration", 1.75F, MapColor.QUARTZ);
@@ -181,53 +177,6 @@ public class BlockStoneDecoration extends BlockContainerNormal implements IBlock
 		}
 		return super.addDestroyEffects(world, pos, manager);
 	}
-
-//	@Override
-//	public RayTraceResult collisionRayTrace(IBlockState blockState, World worldIn, BlockPos pos, Vec3d start,
-//			Vec3d end) {
-//		if (!ESAPI.isDevelop) return super.collisionRayTrace(blockState, worldIn, pos, start, end);
-//
-//		RayTraceResult rayTrace = super.collisionRayTrace(blockState, worldIn, pos, start, end);
-//		if (rayTrace == null) return null;
-//
-//		TileEntity tile = worldIn.getTileEntity(pos);
-//		if (tile instanceof TileStoneDecoration) {
-//			EnumFacing facing = ((TileStoneDecoration) tile).getFacing();
-//
-//			Vec3d startVec = start.subtract((double) pos.getX() + 0.5, (double) pos.getY(), (double) pos.getZ() + 0.5);
-//			Vec3d endVec = end.subtract((double) pos.getX() + 0.5, (double) pos.getY(), (double) pos.getZ() + 0.5);
-//
-//			float rotation = (-facing.getHorizontalAngle() - 180) / 180 * 3.1415926f;
-//			startVec = MathSupporter.rotation(startVec, new Vec3d(0, 1, 0), -rotation);
-//			endVec = MathSupporter.rotation(endVec, new Vec3d(0, 1, 0), -rotation);
-//
-//			RayTraceResult result = CheckModelRenderer.rayTraceByModel(MODEL_COMPUTER_A, startVec, endVec, true);
-//			if (result != null) {
-//				rayTrace.subHit = result.subHit;
-//				rayTrace.hitVec = MathSupporter.rotation(result.hitVec, new Vec3d(0, 1, 0), rotation);
-//				rayTrace.sideHit = result.sideHit;
-//
-////				System.out.println("" + result.subHit);
-////				if (worldIn.isRemote) {
-////					EffectElementMove move = new EffectElementMove(worldIn, rayTrace.hitVec
-////							.add((double) pos.getX() + 0.5, (double) pos.getY(), (double) pos.getZ() + 0.5));
-////					move.xDecay = move.yDecay = move.zDecay = 0;
-////					move.setColor(0x0000ff);
-////					move.isGlow = true;
-////					move.prevScale = move.scale = 0.05f;
-////					Effect.addEffect(move);
-////				}
-//			}
-//		}
-//
-//		return rayTrace;
-//	}
-
-//	@Override
-//	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-//			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-//		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
-//	}
 
 	public static enum EnumDecType {
 		ALTERNATOR("alternator"),

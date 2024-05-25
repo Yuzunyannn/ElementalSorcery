@@ -410,12 +410,15 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		return tileSave;
 	}
 
-	private static void loadTileSave(World world, BlockPos at, NBTTagCompound tileSave) {
+	private static void loadTileSave(World world, BlockPos at, NBTTagCompound tileSave, boolean initFlag) {
 		if (tileSave == null) return;
 		TileEntity tile = world.getTileEntity(at);
 		if (tile == null) return;
-		NBTTagCompound nbt = handleTileSave(tileSave.copy(), tile);
+		tileSave = tileSave.copy();
+		if (initFlag) tileSave.setBoolean("_copy_init_", false);
+		NBTTagCompound nbt = handleTileSave(tileSave, tile);
 		tile.deserializeNBT(nbt);
+
 	}
 
 	public static ItemStack putBlock(World world, @Nullable EntityPlayer player, BlockPos to, ItemStack stack,
@@ -461,9 +464,11 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 					itemBlock.placeBlockAt(stack, player, world, to, EnumFacing.UP, 0, 0, 0, toState);
 					state = world.getBlockState(to);
 					if (state != toState && state.getBlock() == toState.getBlock()) world.setBlockState(to, toState, 2);
-				} else world.setBlockState(to, toState);
-
-				loadTileSave(world, to, tileSave);
+					loadTileSave(world, to, tileSave, player == null);
+				} else {
+					world.setBlockState(to, toState);
+					loadTileSave(world, to, tileSave, true);
+				}
 
 			}
 			return ItemStack.EMPTY;
@@ -496,7 +501,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			return ItemStack.EMPTY;
 		} else if (state != null) {
 			world.setBlockState(to, state);
-			loadTileSave(world, to, tileSave);
+			loadTileSave(world, to, tileSave, true);
 			return ItemStack.EMPTY;
 		}
 		return stack;

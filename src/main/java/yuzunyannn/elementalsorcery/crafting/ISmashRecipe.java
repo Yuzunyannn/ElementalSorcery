@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,10 +24,14 @@ public interface ISmashRecipe extends IItemSmashable {
 		IItemSmashable smashable = null;
 		if (item instanceof IItemSmashable) smashable = (IItemSmashable) item;
 		else {
-			for (ISmashRecipe recipe : recipes) {
-				if (recipe.accept(itemStack)) {
-					smashable = recipe;
-					break;
+			Block block = Block.getBlockFromItem(item);
+			if (block instanceof IItemSmashable) smashable = (IItemSmashable) block;
+			else {
+				for (ISmashRecipe recipe : recipes) {
+					if (recipe.accept(itemStack)) {
+						smashable = recipe;
+						break;
+					}
 				}
 			}
 		}

@@ -39,6 +39,7 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.BtnColorInteractor;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreen;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
+import yuzunyannn.elementalsorcery.computer.render.GDisplayObject;
 import yuzunyannn.elementalsorcery.computer.render.GDragContainer;
 import yuzunyannn.elementalsorcery.computer.render.GEasyLayoutContainer;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
@@ -282,6 +283,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 		}
 
 		GlStateManager.pushMatrix();
+		GlStateManager.enableBlend();
 		this.scene.draw(partialTicks);
 		GlStateManager.popMatrix();
 
@@ -412,7 +414,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 					taskGUI = task.createGUIRender();
 					taskGUI.init(taskRuntime = new APPGuiRuntime(task.getPid()));
 					currTask = task;
-					screenFront.setTaskAppGui(taskGUI);
+					screenFront.setTaskAppGui(taskGUI); 
 				}
 			} else if (currTask != null) {
 				currTask = null;
@@ -458,26 +460,34 @@ public abstract class GuiComputerBase extends GuiContainer {
 			}
 		});
 
-		final String originMsg = exception.toString();
-		
-		GImage copyBtn = new GImage(SoftGuiCommon.TEXTURE_1, SoftGuiCommon.FRAME_ICON_COPY);
-		copyBtn.setPosition(bar.getWidth() - copyBtn.getWidth() - 2, 2, 1);
-		copyBtn.setName("copyBtn");
-		bar.addChild(copyBtn);
-		copyBtn.setInteractor(new BtnColorInteractor(new Color(0xffffff), new Color(0x00ff00)) {
-			@Override
-			public void onClick() {
-				JavaHelper.clipboardWrite(originMsg);
-			}
-		});
-		
-		String str = originMsg;
-		str = str.replace("\t", "");
-		str = str.replace("\r", "");
-		str = str.replace("at ", "at:");
-		GLabel label = new GLabel(str);
-		label.setWrapWidth(computerWidth - 1);
-		container.addChild(label);
+		if (exception.isGameException()) {
+			GDisplayObject node = new GDisplayObject();
+			node.setEveryLine(true);
+			node.setDisplayObject(exception.getGameRenderObject());
+			container.addChild(node);
+		} else {
+			final String originMsg = exception.toString();
+
+			GImage copyBtn = new GImage(SoftGuiCommon.TEXTURE_1, SoftGuiCommon.FRAME_ICON_COPY);
+			copyBtn.setPosition(bar.getWidth() - copyBtn.getWidth() - 2, 2, 1);
+			copyBtn.setName("copyBtn");
+			bar.addChild(copyBtn);
+			copyBtn.setInteractor(new BtnColorInteractor(new Color(0xffffff), new Color(0x00ff00)) {
+				@Override
+				public void onClick() {
+					JavaHelper.clipboardWrite(originMsg);
+				}
+			});
+
+			String str = originMsg;
+			str = str.replace("\t", "");
+			str = str.replace("\r", "");
+			str = str.replace("at ", "at:");
+			GLabel label = new GLabel(str);
+			label.setWrapWidth(computerWidth - 1);
+			container.addChild(label);
+		}
+
 		container.layout();
 	}
 
@@ -558,7 +568,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 	}
 
 	protected void closeOpenScene() {
-		openImage.runAction(new GActionEaseInBack(new GActionScaleBy(8, new Vec3d(-1, -1, 0))));
+		openImage.runAction(new GActionEaseInBack(new GActionScaleBy(8, new Vec3d(-0.95, -0.95, 0))));
 		openImage.runAction(new GActionSequence(new GActionFadeTo(12, 0),
 				new GActionFunction((e) -> e.removeFromParent())));
 	}

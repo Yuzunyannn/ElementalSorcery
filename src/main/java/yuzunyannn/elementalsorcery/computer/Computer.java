@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.computer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,9 +9,7 @@ import java.util.function.Consumer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -22,21 +21,19 @@ import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
-import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceListener;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
-import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
+import yuzunyannn.elementalsorcery.computer.exception.ComputerProcessNotExistException;
 import yuzunyannn.elementalsorcery.computer.soft.EOSClient;
 import yuzunyannn.elementalsorcery.computer.soft.EOSServer;
 import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
 import yuzunyannn.elementalsorcery.tile.device.DeviceFeatureMap;
-import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
 public abstract class Computer implements IComputer {
@@ -74,7 +71,7 @@ public abstract class Computer implements IComputer {
 	public final static DeviceFeatureMap cfeature = DeviceFeatureMap.getOrCreate(Computer.class);
 
 	protected IOS os;
-	protected List<Disk> disks = new ArrayList<>();
+	protected List<IDisk> disks = new ArrayList<>();
 	protected boolean inRunning = false;
 
 	protected final LinkedList<AppData> operations = new LinkedList<>();
@@ -125,20 +122,16 @@ public abstract class Computer implements IComputer {
 
 	@Override
 	public List<IDisk> getDisks() {
-		return (List<IDisk>) ((Object) disks);
+		return Collections.unmodifiableList(disks);
 	}
 
 	@Override
-	public void addDisk(Disk disk) {
-		disks.add(disk);
-		os.onDiskChange(false);
+	public void markDiskValueDirty() {
+		osRun(os -> os.onDiskChange(true));
 	}
 
-	@Override
-	public IDisk removeDisk(int index) {
-		IDisk disk = disks.remove(index);
-		if (disk != null) os.onDiskChange(false);
-		return disk;
+	public void markDiskValueDirty(boolean onlyData) {
+		osRun(os -> os.onDiskChange(onlyData));
 	}
 
 	@Override
@@ -151,7 +144,6 @@ public abstract class Computer implements IComputer {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setBoolean("#R", inRunning);
 		nbt.setTag("#OS", os.serializeNBT());
-		NBTHelper.setNBTSerializableList(nbt, "#D", disks);
 		if (inRunning && exception != null) nbt.setTag("#Error", IComputerException.serialize(exception));
 		return nbt;
 	}
@@ -161,22 +153,18 @@ public abstract class Computer implements IComputer {
 		inRunning = nbt.getBoolean("#R");
 		os.deserializeNBT(nbt.getCompoundTag("#OS"));
 		if (inRunning && nbt.hasKey("#Error")) exception = IComputerException.deserialize(nbt.getCompoundTag("#Error"));
-		disks.clear();
-		NBTTagList list = nbt.getTagList("#D", NBTTag.TAG_COMPOUND);
-		for (NBTBase n : list) disks.add(new Disk(((NBTTagCompound) n).copy()));
-		os.onDiskChange(false);
 	}
 
 	@Override
 	public DNResult notice(String method, DNRequest params) {
 		if (!inRunning) return DNResult.refuse();
-		if (device() != this) return device().notice(method, params);
 		if (cfeature.has(method)) {
 			IComputEnv env = getEnv();
 			if (env != null) params.setWorld(env.getWorld());
 			Object obj = cfeature.invoke(this, method, params);
 			return DNResult.byRet(obj);
 		}
+		if (device() != this) return device().notice(method, params);
 		return DNResult.invalid();
 	}
 
@@ -190,21 +178,25 @@ public abstract class Computer implements IComputer {
 			}
 		}
 
-		if ("msg".equals(method)) {
-			if (env.isRemote()) {
-				try {
-					int pid = params.get("pid", Integer.class);
-					NBTTagCompound data = params.get("data");
-					App app = os.getAppInst(pid);
-					app.onRecvMessage(data);
-				} catch (Exception e) {
-					ESAPI.logger.warn("client msg error", e);
+		try {
+			if ("msg".equals(method)) {
+				if (env.isRemote()) {
+					try {
+						int pid = params.get("pid", Integer.class);
+						NBTTagCompound data = params.get("data");
+						App app = os.getAppInst(pid);
+						app.onRecvMessage(data);
+					} catch (Exception e) {
+						ESAPI.logger.warn("client msg error", e);
+					}
 				}
+				return;
 			}
-			return;
-		}
 
-		notice(method, params);
+			notice(method, params);
+		} catch (Exception e) {
+			abort(e);
+		}
 	}
 
 	@DeviceFeature(id = "power-off")
@@ -217,8 +209,13 @@ public abstract class Computer implements IComputer {
 		Integer pid = params.get("pid", Integer.class);
 		if (pid == null || pid < 0) return DNResult.refuse();
 		if (pid == 0) return DNResult.refuse();
-		App app = os.getAppInst(pid);
-		if (app == null) return DNResult.fail();
+		App app;
+		try {
+			app = os.getAppInst(pid);
+			if (app == null) return DNResult.fail();
+		} catch (ComputerProcessNotExistException e) {
+			return DNResult.fail();
+		}
 		app.exit();
 		return DNResult.success();
 	}
@@ -300,11 +297,11 @@ public abstract class Computer implements IComputer {
 		}
 	}
 
-	public void detectChangesAndSend(IComputerWatcher watcher, IComputEnv env) {
-		if (watcher.isLeave()) return;
-		NBTTagCompound nbt = detectChanges(watcher);
-		if (nbt != null) env.sendMessageToClient(watcher, nbt);
-	}
+//	public void detectChangesAndSend(IComputerWatcher watcher, IComputEnv env) {
+//		if (watcher.isLeave()) return;
+//		NBTTagCompound nbt = detectChanges(watcher);
+//		if (nbt != null) env.sendMessageToClient(watcher, nbt);
+//	}
 
 	public static class DetectDataset {
 		public boolean inRunning = false;
@@ -317,6 +314,7 @@ public abstract class Computer implements IComputer {
 		DetectDataset dataset = watcher.getOrCreateDetectObject(">computer", DetectDataset.class, () -> new DetectDataset());
 
 		if (!dataset.inInited) {
+			dataset.inInited = true;
 			dataset.inRunning = this.inRunning;
 			NBTSender.SHARE.write("#R", inRunning);
 		} else if (dataset.inRunning != this.inRunning) {
@@ -331,8 +329,15 @@ public abstract class Computer implements IComputer {
 			}
 		} else dataset.hasException = false;
 
-		NBTTagCompound osChanges = os.detectChanges(watcher);
-		if (osChanges != null) NBTSender.SHARE.write("#OS", osChanges);
+		try {
+			if (dataset.hasException) return NBTSender.SHARE.spitOut();
+			NBTTagCompound osChanges = os.detectChanges(watcher);
+			if (osChanges != null) NBTSender.SHARE.write("#OS", osChanges);
+		} catch (Exception e) {
+			abort(e);
+			NBTSender.SHARE.spitOut();
+			return null;
+		}
 
 		return NBTSender.SHARE.spitOut();
 	}
@@ -378,6 +383,8 @@ public abstract class Computer implements IComputer {
 			//
 			/*
 			 * 数据错的原因是 创造模式的背包会从client回传数据到server，server使用client的数据，GG 还没有找到任何的介入点，内发修，GG*2
+			 * NetHandlerPlayServer.processCreativeInventoryAction
+			 * 
 			 * at net.minecraft.network.play.client.CPacketCreativeInventoryAction.<init>(
 			 * CPacketCreativeInventoryActio at
 			 * net.minecraft.client.multiplayer.PlayerControllerMP.sendSlotPacket(
@@ -409,6 +416,18 @@ public abstract class Computer implements IComputer {
 	}
 
 	protected void abort(Throwable err) {
+		if (err instanceof ComputerException) {
+			if (ESAPI.isDevelop) ESAPI.logger.info("有异常~~~~|" + err.getMessage());
+			exception = IComputerException.easy(err);
+			return;
+		} else if (err instanceof RuntimeException) {
+			Throwable cause = err.getCause();
+			if (cause instanceof ComputerException) {
+				if (ESAPI.isDevelop) ESAPI.logger.info("有异常~~~~|" + err.getMessage());
+				exception = IComputerException.easy(cause);
+				return;
+			}
+		}
 		exception = IComputerException.easy(err);
 		ESAPI.logger.warn("系統崩潰", err);
 	}
@@ -425,11 +444,6 @@ public abstract class Computer implements IComputer {
 		} catch (Exception e) {
 			ESAPI.logger.warn("系統崩潰", e);
 		}
-	}
-
-	@Override
-	public void markDiskValueDirty() {
-		osRun(os -> os.onDiskChange(true));
 	}
 
 	protected void updateOS() {

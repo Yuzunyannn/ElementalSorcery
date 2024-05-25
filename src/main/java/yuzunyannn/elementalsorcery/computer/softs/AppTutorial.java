@@ -86,6 +86,7 @@ public class AppTutorial extends AppBase {
 	public void onDiskChange() {
 		super.onDiskChange();
 		IOS os = getOS();
+//		if (os.isRemote()) return;
 		IDeviceStorage disk = os.getDisk(this, AppDiskType.USER_DATA);
 		if (disk == null) progress = 0;
 		else progress = disk.get(POGRESS);

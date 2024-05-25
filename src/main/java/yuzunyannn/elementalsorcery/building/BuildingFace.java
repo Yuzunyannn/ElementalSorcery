@@ -9,6 +9,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.block.env.BlockStoneDecoration;
 
 public class BuildingFace {
@@ -174,6 +175,10 @@ public class BuildingFace {
 			if (needCopy) save = save.copy();
 			EnumFacing myFacing = EnumFacing.byHorizontalIndex(save.getInteger("facing"));
 			save.setByte("facing", (byte) face(myFacing, facing).getHorizontalIndex());
+		} else if (save.hasKey("facing", NBTTag.TAG_NUMBER)) {
+			if (needCopy) save = save.copy();
+			EnumFacing myFacing = EnumFacing.byIndex(save.getInteger("facing"));
+			save.setByte("facing", (byte) face(myFacing, facing).getIndex());
 		}
 		return save;
 	}

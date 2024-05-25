@@ -144,6 +144,8 @@ public abstract class EOS implements IOS {
 	protected void clearAll() {
 		isRunning = false;
 		processTree.reset();
+		appDiskCacheMap.clear();
+		disksCache = null;
 	}
 
 	@Override
@@ -239,13 +241,13 @@ public abstract class EOS implements IOS {
 				break;
 			}
 		}
-		if (boot == null) throw new ComputerBootException(computer, "cannot find boot");
+		if (boot == null) throw new ComputerBootException(computer, "es.app.err.boot.cannotFind");
 
 		clearAll();
 		isRunning = true;
 
 		int id = processTree.newProcess(boot, -1);
-		if (id == -1) throw new ComputerBootException(computer, "root process fail");
+		if (id == -1) throw new ComputerBootException(computer, "es.app.err.boot.fail", String.valueOf(boot));
 
 		monitor.markDirty(PROCESS);
 		onAppStartup(processTree, processTree.getAppCache(this, id));
@@ -256,7 +258,10 @@ public abstract class EOS implements IOS {
 	public void onClosing() {
 		try {
 			exit(0);
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			if (e instanceof IComputerException);
+			else ESAPI.logger.warn("close error", e);
+		}
 		clearAll();
 		markDirty();
 	}
@@ -344,6 +349,7 @@ public abstract class EOS implements IOS {
 
 	@Override
 	public void mergeChanges(NBTTagCompound nbt) {
+		this.isRunning = computer.isPowerOn();
 		monitor.mergeChanges(nbt);
 	}
 

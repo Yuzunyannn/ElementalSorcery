@@ -125,6 +125,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockResearcher;
 import yuzunyannn.elementalsorcery.block.container.BlockRiteTable;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
+import yuzunyannn.elementalsorcery.block.device.BlockCloverComputer;
 import yuzunyannn.elementalsorcery.block.device.BlockMantraEmitter;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonActinicGlass;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonBarrier;
@@ -263,6 +264,8 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
+import yuzunyannn.elementalsorcery.item.device.ItemCloverPad;
+import yuzunyannn.elementalsorcery.item.device.ItemDisk;
 import yuzunyannn.elementalsorcery.item.prop.ItemArrogantWool;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJade;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
@@ -303,7 +306,6 @@ import yuzunyannn.elementalsorcery.item.prop.ItemVoidContainerElement;
 import yuzunyannn.elementalsorcery.item.prop.ItemVoidFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemVortex;
 import yuzunyannn.elementalsorcery.item.prop.ItemWindmillBladeFrame;
-import yuzunyannn.elementalsorcery.item.tool.ItemCloverPad;
 import yuzunyannn.elementalsorcery.item.tool.ItemCollapseWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemCubeDemarcator;
 import yuzunyannn.elementalsorcery.item.tool.ItemDragonBreathPickaxe;
@@ -377,6 +379,7 @@ import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileCloverComputer;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructWindmill;
@@ -457,6 +460,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
+import yuzunyannn.elementalsorcery.tile.device.TileCloverComputer;
 import yuzunyannn.elementalsorcery.tile.device.TileMantraEmitter;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonFunction;
@@ -615,6 +619,7 @@ public class ESInit {
 		ESObjects.BLOCKS.DUNGEON_FILTER_GLASS = new BlockDungeonFilterGlass();
 		ESObjects.BLOCKS.STONE_DECORATION = new BlockStoneDecoration();
 		ESObjects.BLOCKS.MANTRA_EMITTER = new BlockMantraEmitter();
+		ESObjects.BLOCKS.CLOVER_COMPUTER = new BlockCloverComputer();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -746,7 +751,8 @@ public class ESInit {
 		ESObjects.ITEMS.MILL_HAMMER = new ItemMillHammer();
 		ESObjects.ITEMS.PAD_EASY_PART = new ItemPadEasyPart();
 		ESObjects.ITEMS.CLOVER_PAD = new ItemCloverPad();
-		
+		ESObjects.ITEMS.DISK = new ItemDisk();
+
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
 		ESObjects.ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();
@@ -1127,6 +1133,7 @@ public class ESInit {
 		register(TileDungeonMagicCircleA.class, "DungeonMCA");
 		register(TileStoneDecoration.class, "StoneDec");
 		register(TileMantraEmitter.class, "MantraEmitter");
+		register(TileCloverComputer.class, "CloverPC");
 	}
 
 	static void registerAllCapability() {
@@ -1290,6 +1297,7 @@ public class ESInit {
 		registerRender(ITEMS.TUTORIAL_PAD);
 		registerRender(ITEMS.MILL_HAMMER, new RenderItemMillHammer());
 		registerRender(ITEMS.CLOVER_PAD);
+		registerRender(ITEMS.DISK);
 
 		for (ItemMagicPaper.EnumType type : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, type.getMeta(), type.getName() + "_paper");
@@ -1438,6 +1446,7 @@ public class ESInit {
 		registerRender(BLOCKS.DUNGEON_MAGIC_CIRCLE_A, TileDungeonMagicCircleA.class, new RenderTileDungeonMagicCircleA());
 		registerRender(BLOCKS.STONE_DECORATION, TileStoneDecoration.class, new RenderTileStoneDecoration());
 		registerRender(BLOCKS.MANTRA_EMITTER, TileMantraEmitter.class, new RenderTileMantraEmitter());
+		registerRender(BLOCKS.CLOVER_COMPUTER, TileCloverComputer.class, new RenderTileCloverComputer());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

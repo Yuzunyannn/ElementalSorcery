@@ -158,6 +158,7 @@ item.padEasy.unknow.name=Unknown Component
 item.fluorescentParticle.name=Fluorescent Particle
 item.controlCircuit.name=Control Circuit
 item.cloverPad.name=Dungeon Terminal
+item.disk.name=Dungeon Card
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -273,6 +274,7 @@ tile.stoneDecoration.computer.name=Dungeon Terminal
 tile.stoneDecoration.starCPU.name=Starry CPU
 tile.stoneDecoration.dungeonReactor.name=Strange Reactor
 tile.mantraEmitter.name=Mantra Emitter
+tile.cloverComputer.name=Dungeon Terminal
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -698,6 +700,9 @@ es.app.connect.fail=Connect Fail
 es.app.id.device=UDID:
 es.app.manufacturer=Manufacturer:
 es.app.cannotFind=Can't find %s
+es.app.err.boot.cannotFind=Can't find bootable device
+es.app.err.boot.fail=Boot failure: %s
+es.app.errCmdFormat=Incorrect instruction format
 
 elf.time.year=%d Year 
 elf.time.mon.0=Spring 

@@ -9,7 +9,8 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
-import yuzunyannn.elementalsorcery.container.gui.GuiComputerCloverPad;
+import yuzunyannn.elementalsorcery.container.gui.GuiComputerClover;
+import yuzunyannn.elementalsorcery.container.gui.GuiComputerEditor;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.container.gui.GuiDevolveCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiDungeonMap;
@@ -92,6 +93,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_DUNGEON_MAP = 51;
 	public static final int GUI_COMPUTER_ITEM = 52;
 	public static final int GUI_COMPUTER_TILE = 53;
+	public static final int GUI_COMPUTER_EDITOR = 54;
 
 	// 切换只有客户端存在
 	public static final int GUI_MANTRA_SHITF = 60;
@@ -176,6 +178,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerComputer(player, pos);
 			case GUI_COMPUTER_TILE:
 				return new ContainerComputer(player, world.getTileEntity(pos));
+			case GUI_COMPUTER_EDITOR:
+				return new ContainerComputerEditor(player, world.getTileEntity(pos));
 			default:
 				return null;
 			}
@@ -271,6 +275,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return createComputerGUI(new ContainerComputer(player, pos));
 			case GUI_COMPUTER_TILE:
 				return createComputerGUI(new ContainerComputer(player, world.getTileEntity(pos)));
+			case GUI_COMPUTER_EDITOR:
+				return new GuiComputerEditor(new ContainerComputerEditor(player, world.getTileEntity(pos)));
 			default:
 				return null;
 			}
@@ -289,7 +295,8 @@ public class ESGuiHandler implements IGuiHandler {
 		case "tutorialPad":
 			return new GuiComputerTutorialPad(containerComputer);
 		case "cloverPad":
-			return new GuiComputerCloverPad(containerComputer);
+		case "cloverComputer":
+			return new GuiComputerClover(containerComputer, appearance);
 		default:
 			return new GuiComputerTutorialPad(containerComputer);
 		}

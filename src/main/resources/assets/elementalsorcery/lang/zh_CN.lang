@@ -158,6 +158,7 @@ item.padEasy.unknow.name=未知元件
 item.fluorescentParticle.name=荧光颗粒
 item.controlCircuit.name=控制纹路
 item.cloverPad.name=地牢终端
+item.disk.name=地牢卡片
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -273,6 +274,7 @@ tile.stoneDecoration.computer.name=地牢终端
 tile.stoneDecoration.starCPU.name=星空计算核心
 tile.stoneDecoration.dungeonReactor.name=异常的反应堆
 tile.mantraEmitter.name=咒文发射器
+tile.cloverComputer.name=地牢终端
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -698,6 +700,9 @@ es.app.connect.fail=链接失败：
 es.app.id.device=设备ID:
 es.app.manufacturer=制造商:
 es.app.cannotFind=找不到%s
+es.app.err.boot.cannotFind=找不到启动引导
+es.app.err.boot.fail=启动%s失败
+es.app.errCmdFormat=错误的指令格式
 
 elf.time.year=%d年
 elf.time.mon.0=春

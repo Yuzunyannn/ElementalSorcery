@@ -13,8 +13,10 @@ import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.block.device.BlockCloverComputer;
 import yuzunyannn.elementalsorcery.block.env.BlockStoneDecoration;
 import yuzunyannn.elementalsorcery.logics.EventClient;
+import yuzunyannn.elementalsorcery.render.model.ModelCloverComputer;
 import yuzunyannn.elementalsorcery.render.model.ModelMagicAlternator;
 import yuzunyannn.elementalsorcery.render.model.ModelStarCPU;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileStoneDecoration;
@@ -26,7 +28,7 @@ public class RenderTileStoneDecoration extends TileEntitySpecialRenderer<TileSto
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/a_common_128x128.png");
 	static public final ModelBase MODEL_ALTERNATOR = new ModelMagicAlternator();
-	static public final ModelBase MODEL_COMPUTER_A = BlockStoneDecoration.MODEL_COMPUTER_A;
+	static public final ModelCloverComputer MODEL_COMPUTER_A = BlockCloverComputer.MODEL_COMPUTER_A;
 	static public final ModelBase MODEL_STAR_CPU = new ModelStarCPU();
 
 	@Override
@@ -49,6 +51,7 @@ public class RenderTileStoneDecoration extends TileEntitySpecialRenderer<TileSto
 			RenderFriend.startTileEntitySpecialRenderForReverseModel(x + 0.5, y, z + 0.5, alpha);
 			GlStateManager.rotate(facing.getHorizontalAngle(), 0, 1, 0);
 			MODEL_COMPUTER_A.render(null, 0, 0, 0, 0, 0, 1);
+			MODEL_COMPUTER_A.renderIndicatorLight(0, 1);
 			RenderFriend.endTileEntitySpecialRenderForReverseModel();
 			RenderFriend.bindDestoryTextureEnd(destroyStage);
 			break;
@@ -61,8 +64,7 @@ public class RenderTileStoneDecoration extends TileEntitySpecialRenderer<TileSto
 			RenderFriend.bindDestoryTextureEnd(destroyStage);
 			break;
 		case DUNGEON_REACTOR:
-			RenderFriend.bindDestoryTexture(RenderTileElementReactor.TEXTURE, destroyStage, rendererDispatcher,
-					DESTROY_STAGES);
+			RenderFriend.bindDestoryTexture(RenderTileElementReactor.TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 			RenderFriend.startTileEntitySpecialRender(x + 0.5, y + 0.5, z + 0.5, 0.5f, alpha);
 			GlStateManager.disableCull();
 			GlStateManager.color(0.25f, 0.1f, 0.5f, alpha);
@@ -110,8 +112,7 @@ public class RenderTileStoneDecoration extends TileEntitySpecialRenderer<TileSto
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		BlockStoneDecoration.EnumDecType enumType = BlockStoneDecoration.EnumDecType
-				.fromMeta(ItemHelper.getOrCreateTagCompound(stack).getInteger("tId"));
+		BlockStoneDecoration.EnumDecType enumType = BlockStoneDecoration.EnumDecType.fromMeta(ItemHelper.getOrCreateTagCompound(stack).getInteger("tId"));
 		GlStateManager.disableCull();
 		switch (enumType) {
 		case ALTERNATOR:
@@ -126,8 +127,7 @@ public class RenderTileStoneDecoration extends TileEntitySpecialRenderer<TileSto
 		case DUNGEON_REACTOR:
 			GlStateManager.disableCull();
 			GlStateManager.color(0.25f, 0.1f, 0.5f);
-			RenderFriend.renderSpecialItem(stack, RenderTileElementReactor.TEXTURE, RenderTileElementReactor.MODEL,
-					true, 0.4, 0.175, 0.3, 0.15);
+			RenderFriend.renderSpecialItem(stack, RenderTileElementReactor.TEXTURE, RenderTileElementReactor.MODEL, true, 0.4, 0.175, 0.3, 0.15);
 			GlStateManager.enableCull();
 			break;
 		}

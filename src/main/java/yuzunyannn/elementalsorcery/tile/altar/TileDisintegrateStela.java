@@ -49,18 +49,15 @@ import yuzunyannn.elementalsorcery.util.LambdaReference;
 import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemHandlerAdapter;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerAdapter;
 
 public class TileDisintegrateStela extends TileStaticMultiBlock implements ITickable, IGetItemStack {
 
 	/** 仓库的处理马甲 */
-	protected IItemHandler invVest = new ItemHandlerAdapter() {
+	protected IItemHandler invVest = new ItemStackHandlerAdapter() {
 
-		public int getSlots() {
-			return 1;
-		};
-
+		@Override
 		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 			if (disintegrate(stack, simulate)) return ItemStack.EMPTY;
 			return stack;
@@ -109,12 +106,12 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		structure.addSpecialBlock(new BlockPos(-10, 1, 10));
 		structure.addSpecialBlock(new BlockPos(-10, 1, -10));
 		structure.addSpecialBlock(new BlockPos(10, 1, -10));
-		
+
 		structure.addSpecialBlock(new BlockPos(10, 1, 0));
 		structure.addSpecialBlock(new BlockPos(0, 1, 10));
 		structure.addSpecialBlock(new BlockPos(-10, 1, 0));
 		structure.addSpecialBlock(new BlockPos(0, 1, -10));
-		
+
 		structure.addSpecialBlock(new BlockPos(0, 1, 10));
 		structure.addSpecialBlock(new BlockPos(10, 1, 0));
 		structure.addSpecialBlock(new BlockPos(0, 1, -10));
@@ -259,15 +256,14 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 				Element element = elements.get(this.index++);
 				if (element == ESObjects.ELEMENTS.WATER) return ITickTask.SUCCESS;
 				if (element == ESObjects.ELEMENTS.FIRE) return ITickTask.SUCCESS;
-				BlockPos at = pos.add(RandomHelper.rand.nextGaussian() * 4, RandomHelper.rand.nextGaussian() * 4,
-						RandomHelper.rand.nextGaussian() * 4);
+				BlockPos at = pos.add(RandomHelper.rand.nextGaussian() * 4, RandomHelper.rand.nextGaussian() * 4, RandomHelper.rand.nextGaussian() * 4);
 				ElementExplosion.doExplosion(world, at, new ElementStack(element, 5000, 5000), null);
 				return this.index >= elements.size() ? ITickTask.END : ITickTask.SUCCESS;
 			}
 		});
 
-		EntityItem entityitem = ItemHelper.dropItem(world, new Vec3d(pos).add(0.5, 0.5, 0.5),
-				new ItemStack(ESObjects.ITEMS.COLLAPSE));
+		EntityItem entityitem = ItemHelper.dropItem(world, new Vec3d(pos).add(0.5, 0.5, 0.5), new ItemStack(
+				ESObjects.ITEMS.COLLAPSE));
 		entityitem.motionX = entityitem.motionY = entityitem.motionZ = 0;
 		entityitem.velocityChanged = true;
 		entityitem.setNoDespawn();
@@ -541,9 +537,8 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			targetVec = new Vec3d(5.5, -3, 5.5);
 			break;
 		}
-		Vec3d pos = new Vec3d(this.pos)
-				.add(Effect.rand.nextGaussian() * range + 0.5, 0.5, Effect.rand.nextGaussian() * range + 0.5)
-				.add(targetVec);
+		Vec3d pos = new Vec3d(
+				this.pos).add(Effect.rand.nextGaussian() * range + 0.5, 0.5, Effect.rand.nextGaussian() * range + 0.5).add(targetVec);
 		EffectElementMove effect = new EffectElementMove(world, pos);
 		final int[] COLORS = new int[] { 0x1b6eb8, 0x196ab5, 0x458ed1, 0x86c0f6 };
 		final int[] OVERLOAD_COLORS = new int[] { 0x992500, 0xc22f00, 0xca4619, 0xdc663e };
@@ -577,10 +572,10 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		if (isGet) refPos = new Vec3d(to).add(0.5, 0.5, 0.5);
 		else refPos = new Vec3d(from).add(0.5, 0.5, 0.5);
 		if (altarWake == null) {
-			if (isGet) TileElementalCube.giveParticleElementTo(world, estack.getColor(),
-					new Vec3d(from).add(0.5, 0.5, 0.5), refPos, 1);
-			else TileElementalCube.giveParticleElementTo(world, estack.getColor(), refPos,
-					new Vec3d(to).add(0.5, 0.5, 0.5), 1);
+			if (isGet) TileElementalCube.giveParticleElementTo(world, estack.getColor(), new Vec3d(
+					from).add(0.5, 0.5, 0.5), refPos, 1);
+			else TileElementalCube.giveParticleElementTo(world, estack.getColor(), refPos, new Vec3d(
+					to).add(0.5, 0.5, 0.5), 1);
 		} else altarWake.updateEffect(world, isGet ? IAltarWake.SEND : IAltarWake.OBTAIN, estack, refPos);
 	}
 

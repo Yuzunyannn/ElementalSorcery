@@ -53,8 +53,8 @@ public class ESNetwork {
 	}
 
 	public static void sendMessage(IMessage msg, World world, BlockPos pos) {
-		sendMessage(msg, world.provider.getDimension(),
-				new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
+		sendMessage(msg, world.provider.getDimension(), new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5,
+				pos.getZ() + 0.5));
 	}
 
 	public static void sendMessage(IMessage msg, int dim, Vec3d vec) {

@@ -535,7 +535,13 @@ public class GNode {
 		updateRenderProps(partialTicks);
 		GlStateManager.color(color.r, color.g, color.b, rAlpha);
 		GlStateManager.translate(rX, rY, rZ);
-		if (hasScale) GlStateManager.scale(rScaleX, rScaleY, rScaleZ);
+		if (hasScale) {
+			if (rScaleX == 0 || rScaleY == 0) {
+				GlStateManager.translate(-rX, -rY, -rZ);
+				return;
+			}
+			GlStateManager.scale(rScaleX, rScaleY, rScaleZ);
+		}
 		if (hasRotation) GlStateManager.rotate(rRotationZ, 0, 0, 1);
 		render(partialTicks);
 		for (GNode node : this.children) node.draw(partialTicks);

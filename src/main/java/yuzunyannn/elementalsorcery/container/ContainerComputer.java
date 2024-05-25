@@ -124,11 +124,11 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 			if (computer.isPowerOn()) watcher.clearDetectObjects();
 		}
 
-		if (computer instanceof Computer) ((Computer) computer).detectChangesAndSend(watcher, cEnv);
-		else {
-			NBTTagCompound nbt = computer.detectChanges(watcher);
-			if (nbt != null) this.sendToClient(nbt, player);
-		}
+//		if (computer instanceof Computer) ((Computer) computer).detectChangesAndSend(watcher, cEnv);
+//		else {
+		NBTTagCompound nbt = computer.detectChanges(watcher);
+		if (nbt != null) this.sendToClient(nbt, player);
+//		}
 	}
 
 	public IComputer getComputer() {

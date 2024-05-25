@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
@@ -37,10 +38,13 @@ import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.item.ESItemStorageEnum;
 import yuzunyannn.elementalsorcery.computer.Computer;
+import yuzunyannn.elementalsorcery.computer.DiskItem;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.soft.AuthorityAppDisk;
 import yuzunyannn.elementalsorcery.computer.softs.AppTutorial;
@@ -203,8 +207,8 @@ public class TileRiteTable extends TileEntityNetworkOld {
 			if (summonRecipe.isDropKeepsake()) Block.spawnAsEntity(world, pos.up(), specialItem);
 			this.updateToClient();
 			this.markDirty();
-			NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.1f, new int[] { 0x3ad2f2, 0x7ef5ff },
-					new int[] { 0xe0ffff });
+			NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.1f, new int[] { 0x3ad2f2, 0x7ef5ff }, new int[] {
+					0xe0ffff });
 			Effects.spawnEffect(world, Effects.FIREWROK, new Vec3d(pos.up()).add(0.5, 0, 0.5), nbt);
 			return true;
 		}
@@ -246,24 +250,36 @@ public class TileRiteTable extends TileEntityNetworkOld {
 		if (!rets.isEmpty()) {
 			ItemStack spItem = specialItem = rets.get(0, ItemStack.class);
 			IComputer computer = rets.get(1, IComputer.class);
-			List<IDisk> disks = computer.getDisks();
-			runner = (power) -> {
-				AuthorityAppDisk disk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(), disks,
-						AppDiskType.USER_DATA);
-				try {
-					TutorialLevelInfo info = Tutorials.tryGetTutorialInfoBiggerOrEqualLevel(this.level + 1);
-					float grow = Math.max(1, power / 75f);
-					if (ESAPI.isDevelop) grow = 9999;
-					float progress = disk.get(AppTutorial.POGRESS) + grow;
-					if (info != null) progress = Math.min(progress, info.getAccTotalUnlock());
-					disk.set(AppTutorial.POGRESS, progress);
-					Block.spawnAsEntity(world, pos.up(), spItem);
-					computer.getSystem().onDiskChange(true);
-					EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
-							pos.getZ() + 0.5f, true);
-					world.addWeatherEffect(lightning);
-				} catch (ComputerException e) {}
+			BiConsumer<IDeviceStorage, Integer> growProgress = (disk, power) -> {
+				TutorialLevelInfo info = Tutorials.tryGetTutorialInfoBiggerOrEqualLevel(this.level + 1);
+				float grow = Math.max(1, power / 75f);
+				if (ESAPI.isDevelop) grow = 9999;
+				float progress = disk.get(AppTutorial.POGRESS) + grow;
+				if (info != null) progress = Math.min(progress, info.getAccTotalUnlock());
+				disk.set(AppTutorial.POGRESS, progress);
+				EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
+						pos.getZ() + 0.5f, true);
+				world.addWeatherEffect(lightning);
 			};
+
+			if (computer == null) {
+				DiskItem disk = new DiskItem(spItem);
+				runner = power -> {
+					growProgress.accept(disk, power);
+					Block.spawnAsEntity(world, pos.up(), disk.toItemStack());
+				};
+			} else {
+				List<IDisk> disks = computer.getDisks();
+				runner = (power) -> {
+					try {
+						AuthorityAppDisk disk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(), disks,
+								AppDiskType.USER_DATA);
+						growProgress.accept(disk, power);
+						computer.getSystem().onDiskChange(true);
+					} catch (ComputerException e) {}
+					Block.spawnAsEntity(world, pos.up(), spItem);
+				};
+			}
 		}
 
 		// seek rite
@@ -305,8 +321,8 @@ public class TileRiteTable extends TileEntityNetworkOld {
 				ItemSoulWoodSword.addSoul(tool, -cost);
 				MantraSummon.summon(world, pos.down(), entity, spItem.copy(), recipe);
 				if (recipe.isDropKeepsake()) Block.spawnAsEntity(world, pos.up(), spItem);
-				NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.1f, new int[] { 0x3ad2f2, 0x7ef5ff },
-						new int[] { 0xe0ffff });
+				NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.1f, new int[] { 0x3ad2f2, 0x7ef5ff }, new int[] {
+						0xe0ffff });
 				Effects.spawnEffect(world, Effects.FIREWROK, new Vec3d(pos.up()).add(0.5, 0, 0.5), nbt);
 			};
 		}
@@ -358,6 +374,8 @@ public class TileRiteTable extends TileEntityNetworkOld {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
+			if (stack.getSubCompound(ESItemStorageEnum.DISK_DATA) != null || stack.getItem() == ESObjects.ITEMS.DISK)
+				return MultiRets.ret(stack);
 			IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
 			if (computer == null) continue;
 			return MultiRets.ret(stack, computer);
@@ -416,8 +434,7 @@ public class TileRiteTable extends TileEntityNetworkOld {
 			}
 		}
 		// 爆炸
-		world.createExplosion(null, entity.posX, entity.posY, entity.posZ, 0.15f * this.level * this.level + 0.2f,
-				false);
+		world.createExplosion(null, entity.posX, entity.posY, entity.posZ, 0.15f * this.level * this.level + 0.2f, false);
 		// 雷劈
 		if (this.level > 0) {
 			EntityLightningBolt lightning = new EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ, true);
@@ -785,8 +802,8 @@ public class TileRiteTable extends TileEntityNetworkOld {
 			return 1;
 		});
 		addRecipe(new ItemStack(ESObjects.ITEMS.ELF_COIN), new ItemStack(ESObjects.ITEMS.ELF_PURSE), 120, 0);
-		addRecipe(new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 1), new ItemStack(ESObjects.ITEMS.UNSCRAMBLE_NOTE),
-				120, 2);
+		addRecipe(new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1,
+				1), new ItemStack(ESObjects.ITEMS.UNSCRAMBLE_NOTE), 120, 2);
 		addRecipe(new ItemStack(Blocks.RAIL), new ItemStack(Items.MINECART), 80, 0);
 	}
 }

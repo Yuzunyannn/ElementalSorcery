@@ -28,7 +28,8 @@ import yuzunyannn.elementalsorcery.computer.Disk;
 import yuzunyannn.elementalsorcery.computer.soft.AuthorityAppDisk;
 import yuzunyannn.elementalsorcery.computer.soft.EOS;
 import yuzunyannn.elementalsorcery.computer.softs.AppTutorial;
-import yuzunyannn.elementalsorcery.util.item.ItemHandlerVest;
+import yuzunyannn.elementalsorcery.item.device.ItemPad;
+import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerVest;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemTutorialPad extends ItemPad {
@@ -60,7 +61,7 @@ public class ItemTutorialPad extends ItemPad {
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 			if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
 				if (inventory == null) return null;
-				return (T) new ItemHandlerVest(inventory);
+				return (T) new ItemStackHandlerVest(inventory);
 			}
 			return super.getCapability(capability, facing);
 		}
@@ -104,7 +105,7 @@ public class ItemTutorialPad extends ItemPad {
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
 		ComputerProviderOfItem provider = new ComputerProviderOfItem(stack, new TutoiralComputer(stack));
-		Computer computer = provider.getComputer();
+		TutoiralComputer computer = (TutoiralComputer) provider.getComputer();
 		Disk disk = new Disk();
 		disk.set(EOS.BOOT, APP_ID.toString());
 		computer.addDisk(disk);

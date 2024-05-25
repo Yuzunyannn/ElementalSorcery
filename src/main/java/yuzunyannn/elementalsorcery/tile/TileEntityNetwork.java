@@ -109,6 +109,7 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 
 	public void updateToClient(NBTTagCompound custom) {
 		if (world.isRemote) return;
+		if (custom == null) return;
 		custom.setBoolean("~)", true);
 		updateToClient(new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), custom));
 	}

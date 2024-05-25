@@ -5,7 +5,6 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -48,8 +47,6 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		this.feature = DeviceFeatureMap.getOrCreate(target.getClass());
 		if (target instanceof ICapabilityProvider) capabilityProvider = (ICapabilityProvider) target;
 		else capabilityProvider = null;
-		if (target instanceof IDeviceEnv) this.env = (IDeviceEnv) target;
-		else if (target instanceof TileEntity) this.env = new ComputerEnvTile((TileEntity) target);
 	}
 
 	@Override
@@ -156,6 +153,11 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		udid = reader.uuid("uuid");
 		network = reader.obj("network", network);
 		info = reader.obj("info", info);
+		if (reader.has("_copy_init_")) {
+			udid = UUID.randomUUID();
+			network.clear();
+		}
+
 	}
 
 	public void writeUpdateData(INBTWriter writer) {

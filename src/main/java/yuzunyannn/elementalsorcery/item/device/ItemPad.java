@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item.tool;
+package yuzunyannn.elementalsorcery.item.device;
 
 import java.util.List;
 import java.util.Random;
@@ -45,14 +45,18 @@ public class ItemPad extends Item implements IItemSmashable {
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		ComputerDevice computer = (ComputerDevice) entityItem.getItem().getCapability(Computer.COMPUTER_CAPABILITY, null);
-		computer.setEnv(new ComputerEnvItem(entityItem)).update();
+		computer.setEnv(new ComputerEnvItem(entityItem));
+		computer.device().update();
+		computer.update();
 		return super.onEntityItemUpdate(entityItem);
 	}
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		ComputerDevice computer = (ComputerDevice) stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
-		computer.setEnv(new ComputerEnvItem(entityIn, stack, itemSlot)).update();
+		computer.setEnv(new ComputerEnvItem(entityIn, stack, itemSlot));
+		computer.device().update();
+		computer.update();
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 

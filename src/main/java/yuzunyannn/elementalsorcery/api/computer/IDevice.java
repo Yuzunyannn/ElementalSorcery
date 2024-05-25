@@ -20,5 +20,4 @@ public interface IDevice extends ICalculatorObject, IDeviceNoticeable, ICapabili
 
 	@Nullable
 	IDeviceEnv getEnv();
-
 }

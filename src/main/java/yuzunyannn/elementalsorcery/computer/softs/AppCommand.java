@@ -10,6 +10,7 @@ import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
@@ -248,28 +249,33 @@ public class AppCommand extends AppBase {
 	@DeviceFeature(id = "exec")
 	public void exec(String cmd) {
 		CMDRecord record = new CMDRecord(cmd);
-		CommandParser parser = new CommandParser(cmd);
-		DeviceCommand command = new DeviceCommand(parser);
-		IDeviceShellExecutor executor = getOS().createShellExecutor();
-		executor.setLogicEnabled(true);
-		DNResult result;
-		List<Object> logs = null;
 		try {
-			command.invoke(executor);
-			result = executor.getResult();
-			logs = executor.getLogs();
-		} catch (DeviceShellBadInvoke e) {
-			result = DNResult.invalid();
-			result.setReturn(e.getMessage());
+			CommandParser parser = new CommandParser(cmd);
+			DeviceCommand command = new DeviceCommand(parser);
+			IDeviceShellExecutor executor = getOS().createShellExecutor();
+			executor.setLogicEnabled(true);
+			DNResult result;
+			List<Object> logs = null;
+			try {
+				command.invoke(executor);
+				result = executor.getResult();
+				logs = executor.getLogs();
+			} catch (DeviceShellBadInvoke e) {
+				result = DNResult.invalid();
+				result.setReturn(e.getMessage());
+			}
+			record.displayObject = GameDisplayCast.cast(result.getReturn());
+			if (logs != null) {
+				if (record.displayObject != null) logs.add(record.displayObject);
+				record.displayObject = logs;
+			}
+
+			record.code = result.code;
+		} catch (IllegalArgumentException e) {
+			record.code = DNResultCode.FAIL;
+			record.displayObject = new TextComponentTranslation("es.app.errCmdFormat");
 		}
 
-		record.displayObject = GameDisplayCast.cast(result.getReturn());
-		if (logs != null) {
-			if (record.displayObject != null) logs.add(record.displayObject);
-			record.displayObject = logs;
-		}
-
-		record.code = result.code;
 		this.add(record);
 	}
 

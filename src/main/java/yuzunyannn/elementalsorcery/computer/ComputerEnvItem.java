@@ -5,15 +5,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
-import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
-import yuzunyannn.elementalsorcery.network.MessageComputerEntity;
 
 public class ComputerEnvItem implements IComputEnv {
 
@@ -79,13 +76,13 @@ public class ComputerEnvItem implements IComputEnv {
 		return this.world.isRemote;
 	}
 
-	@Override
-	public void sendMessageToClient(IComputerWatcher watcher, NBTTagCompound data) {
-		if (this.world.isRemote) return;
-		MessageComputerEntity msg = new MessageComputerEntity(entity, data, itemSlot);
-		watcher.sendMessageToClient(msg);
-	}
-	
+//	@Override
+//	public void sendMessageToClient(IComputerWatcher watcher, NBTTagCompound data) {
+//		if (this.world.isRemote) return;
+//		MessageComputerEntity msg = new MessageComputerEntity(entity, data, itemSlot);
+//		watcher.sendMessageToClient(msg);
+//	}
+//	
 	@Override
 	public void markDirty() {
 		

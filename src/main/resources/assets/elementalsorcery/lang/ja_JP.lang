@@ -158,6 +158,7 @@ item.padEasy.unknow.name=不明な部品
 item.fluorescentParticle.name=蛍光粒子
 item.controlCircuit.name=制御回路
 item.cloverPad.name=ダンジョン端末
+item.disk.name=ダンジョンカード
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -273,6 +274,7 @@ tile.stoneDecoration.computer.name=ダンジョン端末
 tile.stoneDecoration.starCPU.name=星空中央処理装置
 tile.stoneDecoration.dungeonReactor.name=異常な炉
 tile.mantraEmitter.name=呪文エミッタ
+tile.cloverComputer.name=ダンジョン端末
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -698,6 +700,9 @@ es.app.connect.fail=接続に失敗しました
 es.app.id.device=デバイスID:
 es.app.manufacturer=会社:
 es.app.cannotFind=%sを見つからない
+es.app.err.boot.cannotFind=起動ブートが見つかりません
+es.app.err.boot.fail=%sを起動失敗
+es.app.errCmdFormat=命令フォーマットが不正です
 
 elf.time.year=%d年
 elf.time.mon.0=春

@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiElementWorkbench extends GuiNormal {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation("minecraft",
+	public static final ResourceLocation TEXTURE = new ResourceLocation("minecraft",
 			"textures/gui/container/crafting_table.png");
 
 	public GuiElementWorkbench(Container inventorySlotsIn, InventoryPlayer playerInv) {

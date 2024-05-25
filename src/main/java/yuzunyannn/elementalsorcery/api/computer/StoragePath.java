@@ -43,6 +43,15 @@ public class StoragePath {
 		return of(JavaHelper.concat(strs, paths));
 	}
 
+	public StoragePath append(String... strs) {
+		return of(JavaHelper.concat(paths, strs));
+	}
+	
+	@Override
+	public String toString() {
+		return this.full;
+	}
+
 	@Override
 	public int hashCode() {
 		return this.full.hashCode();

@@ -1,9 +1,8 @@
-package yuzunyannn.elementalsorcery.item.tool;
+package yuzunyannn.elementalsorcery.item.device;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerDevice;
 import yuzunyannn.elementalsorcery.computer.ComputerProviderOfItem;
 import yuzunyannn.elementalsorcery.computer.Disk;
@@ -19,7 +18,7 @@ public class ItemCloverPad extends ItemPad {
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
 		ComputerProviderOfItem provider = new ComputerProviderOfItem(stack, new ComputerDevice("cloverPad", stack));
-		Computer computer = provider.getComputer();
+		ComputerDevice computer = (ComputerDevice) provider.getComputer();
 		Disk disk = new Disk();
 		disk.set(EOS.BOOT, AppCommand.ID.toString());
 		computer.addDisk(disk);

@@ -210,12 +210,9 @@ public class RenderFriend {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos((double) x, (double) (y + height), 0.0D)
-				.tex((double) (u * f), (double) ((v + (float) height) * f1)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + height), 0.0D)
-				.tex((double) ((u + (float) width) * f), (double) ((v + (float) height) * f1)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) y, 0.0D)
-				.tex((double) ((u + (float) width) * f), (double) (v * f1)).endVertex();
+		bufferbuilder.pos((double) x, (double) (y + height), 0.0D).tex((double) (u * f), (double) ((v + (float) height) * f1)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), 0.0D).tex((double) ((u + (float) width) * f), (double) ((v + (float) height) * f1)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) y, 0.0D).tex((double) ((u + (float) width) * f), (double) (v * f1)).endVertex();
 		bufferbuilder.pos((double) x, (double) y, 0.0D).tex((double) (u * f), (double) (v * f1)).endVertex();
 		tessellator.draw();
 	}
@@ -286,6 +283,8 @@ public class RenderFriend {
 		double hh = height / 2;
 		double cw, ch, cx, cy;
 		double tcw, tch, tcx, tcy;
+		double top = 1 - splitRect.top;
+		double bottom = 1 - splitRect.bottom;
 
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
 
@@ -293,11 +292,11 @@ public class RenderFriend {
 		cx = x - hw;
 		cy = y - hh;
 		cw = splitRect.left * frame.width * frame.texWidth;
-		ch = splitRect.top * frame.height * frame.texHeight;
+		ch = top * frame.height * frame.texHeight;
 		tcx = frame.x;
 		tcy = frame.y;
 		tcw = splitRect.left * frame.width;
-		tch = splitRect.top * frame.height;
+		tch = top * frame.height;
 
 		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
 		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
@@ -308,7 +307,7 @@ public class RenderFriend {
 		cy = cy + ch;
 		ch = height - ch * 2;
 		tcy = tcy + tch;
-		tch = (splitRect.bottom - splitRect.top) * frame.height;
+		tch = (bottom - top) * frame.height;
 
 		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
 		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
@@ -319,7 +318,7 @@ public class RenderFriend {
 		cy = cy + ch;
 		ch = (height - ch) / 2;
 		tcy = tcy + tch;
-		tch = (1 - splitRect.bottom) * frame.height;
+		tch = (1 - bottom) * frame.height;
 
 		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
 		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
@@ -351,7 +350,7 @@ public class RenderFriend {
 		// right
 		ch = height - ch * 2;
 		cy = cy - ch;
-		tch = (splitRect.bottom - splitRect.top) * frame.height;
+		tch = (bottom - top) * frame.height;
 		tcy = tcy - tch;
 
 		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
@@ -362,7 +361,7 @@ public class RenderFriend {
 		// right top
 		ch = (height - ch) / 2;
 		cy = cy - ch;
-		tch = splitRect.top * frame.height;
+		tch = top * frame.height;
 		tcy = tcy - tch;
 
 		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
@@ -384,7 +383,7 @@ public class RenderFriend {
 		cy = cy + ch;
 		ch = height - ch * 2;
 		tcy = tcy + tch;
-		tch = (splitRect.bottom - splitRect.top) * frame.height;
+		tch = (bottom - top) * frame.height;
 
 		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
 		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
@@ -410,8 +409,7 @@ public class RenderFriend {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(modelRenderer.offsetX, modelRenderer.offsetY, modelRenderer.offsetZ);
 
-		GlStateManager.translate(modelRenderer.rotationPointX / 16.0, modelRenderer.rotationPointY / 16.0,
-				modelRenderer.rotationPointZ / 16.0);
+		GlStateManager.translate(modelRenderer.rotationPointX / 16.0, modelRenderer.rotationPointY / 16.0, modelRenderer.rotationPointZ / 16.0);
 		if (modelRenderer.rotateAngleZ != 0.0F)
 			GlStateManager.rotate(modelRenderer.rotateAngleZ * (180F / (float) Math.PI), 0.0F, 0.0F, 1.0F);
 		if (modelRenderer.rotateAngleY != 0.0F)
@@ -441,9 +439,7 @@ public class RenderFriend {
 	public static void renderOutlineByModel(ModelBase model, EntityPlayer player, BlockPos pos, float partialTicks,
 			boolean fullRender, RenderCallbacks callback) {
 		GlStateManager.enableBlend();
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-				GlStateManager.DestFactor.ZERO);
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		GlStateManager.glLineWidth(2.0F);
 		GlStateManager.disableTexture2D();
 		GlStateManager.depthMask(false);

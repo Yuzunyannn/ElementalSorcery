@@ -36,7 +36,8 @@ public class AuthorityStorage implements IDeviceStorage {
 
 	@Override
 	public void markDirty(StoragePath path) {
-
+		if (paths == null) this.storage.markDirty(path);
+		else this.storage.markDirty(path.addFront(paths));
 	}
 
 	protected void onSet(String name, Object obj) {

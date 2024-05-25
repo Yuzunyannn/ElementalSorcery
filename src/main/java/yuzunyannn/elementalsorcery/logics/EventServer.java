@@ -733,8 +733,8 @@ public class EventServer {
 					AxisAlignedBB aabb = room.getBox();
 					if (aabb.contains(targetVec)) break toNext;
 				}
-				player.sendMessage(new TextComponentTranslation("info.dungeon.cannot.teleport")
-						.setStyle(new Style().setColor(TextFormatting.DARK_PURPLE)));
+				player.sendMessage(new TextComponentTranslation(
+						"info.dungeon.cannot.teleport").setStyle(new Style().setColor(TextFormatting.DARK_PURPLE)));
 				event.setResult(Result.DENY);
 				event.setCanceled(true);
 				return;
@@ -742,8 +742,8 @@ public class EventServer {
 				room = dw.getAreaRoom(new BlockPos(targetVec));
 				inRoom = room != null && room.isBuild();
 				if (inRoom) {
-					player.sendMessage(new TextComponentTranslation("info.dungeon.cannot.teleport")
-							.setStyle(new Style().setColor(TextFormatting.DARK_PURPLE)));
+					player.sendMessage(new TextComponentTranslation(
+							"info.dungeon.cannot.teleport").setStyle(new Style().setColor(TextFormatting.DARK_PURPLE)));
 					event.setResult(Result.DENY);
 					event.setCanceled(true);
 					return;
@@ -849,8 +849,8 @@ public class EventServer {
 			BlockPos currPos = player.getBedLocation();
 			BlockPos bedPos = event.getPos();
 			if (bedPos == null || !bedPos.equals(currPos)) {
-				((EntityPlayerMP) (player)).sendMessage(new TextComponentTranslation("info.dungeon.setSpawn")
-						.setStyle(new Style().setColor(TextFormatting.YELLOW)));
+				((EntityPlayerMP) (player)).sendMessage(new TextComponentTranslation(
+						"info.dungeon.setSpawn").setStyle(new Style().setColor(TextFormatting.YELLOW)));
 			}
 		}
 	}

@@ -4,11 +4,11 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 
-public class ItemHandlerVest implements IItemHandler {
+public class ItemStackHandlerVest implements IItemHandler {
 
 	IInventory inventory;
 
-	public ItemHandlerVest(IInventory inventory) {
+	public ItemStackHandlerVest(IInventory inventory) {
 		this.inventory = inventory;
 	}
 

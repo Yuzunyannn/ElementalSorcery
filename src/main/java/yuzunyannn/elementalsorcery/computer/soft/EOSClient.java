@@ -38,6 +38,13 @@ public class EOSClient extends EOS {
 	}
 
 	@Override
+	public void onDiskChange(boolean onlyData) {
+		if (onlyData) return;
+		disksCache = null;
+		appDiskCacheMap.clear();
+	}
+
+	@Override
 	public List<IDisk> getDisks() {
 		return Collections.EMPTY_LIST;
 	}

@@ -1373,6 +1373,21 @@
             "zh_CN": "找不到%s",
             "en_US": "Can't find %s",
             "ja_JP": "%sを見つからない"
+        },
+        "es.app.err.boot.cannotFind": {
+            "zh_CN": "找不到启动引导",
+            "en_US": "Can't find bootable device",
+            "ja_JP": "起動ブートが見つかりません"
+        },
+        "es.app.err.boot.fail": {
+            "zh_CN": "启动%s失败",
+            "en_US": "Boot failure: %s",
+            "ja_JP": "%sを起動失敗"
+        },
+        "es.app.errCmdFormat": {
+            "zh_CN": "错误的指令格式",
+            "en_US": "Incorrect instruction format",
+            "ja_JP": "命令フォーマットが不正です"
         }
     }
 }

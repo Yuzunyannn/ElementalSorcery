@@ -8,7 +8,9 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.block.device.BlockCloverComputer;
 import yuzunyannn.elementalsorcery.block.device.BlockMantraEmitter;
+import yuzunyannn.elementalsorcery.item.device.ItemDisk;
 import yuzunyannn.elementalsorcery.item.tool.ItemMillHammer;
 
 public class ESObjects {
@@ -149,6 +151,7 @@ public class ESObjects {
 		public Item MILL_HAMMER;
 		public Item PAD_EASY_PART;
 		public Item CLOVER_PAD;
+		public Item DISK;
 	}
 
 	static public class Blocks {
@@ -249,6 +252,7 @@ public class ESObjects {
 		public Block STRANGE_EGG_DEAD;
 		public Block STONE_DECORATION;
 		public Block MANTRA_EMITTER;
+		public Block CLOVER_COMPUTER;
 	}
 
 	static public class Elements {

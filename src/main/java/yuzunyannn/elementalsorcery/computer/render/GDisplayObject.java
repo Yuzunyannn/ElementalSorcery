@@ -11,9 +11,14 @@ public class GDisplayObject extends GEasyLayoutContainer {
 
 	protected Object displayObject;
 	public GNode mask;
-	
+	public boolean enableClick = false;
+
 	public GDisplayObject() {
 
+	}
+
+	public void setEnableClick(boolean enableClick) {
+		this.enableClick = enableClick;
 	}
 
 	public void setDisplayObject(Object displayObject) {
@@ -45,7 +50,7 @@ public class GDisplayObject extends GEasyLayoutContainer {
 
 	private GLabel createLabel(String str) {
 		GClickLabel label = new GClickLabel(str);
-		label.enableClick(null, mask);
+		if (enableClick) label.enableClick(null, mask);
 		label.setColorRef(color);
 		return label;
 	}

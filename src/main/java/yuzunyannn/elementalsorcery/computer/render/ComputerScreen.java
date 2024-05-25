@@ -112,6 +112,7 @@ public class ComputerScreen {
 	}
 
 	public void reuse() {
+		this.waitPoolMark = false;
 		this.renderCounter = 0;
 		currGui = null;
 		currTaskGui = null;

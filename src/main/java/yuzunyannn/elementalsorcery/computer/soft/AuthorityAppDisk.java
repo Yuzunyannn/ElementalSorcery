@@ -62,7 +62,6 @@ public class AuthorityAppDisk implements IDeviceStorage {
 				break;
 			}
 		}
-
 		this.coreStorage = coreStorage;
 	}
 
@@ -146,7 +145,8 @@ public class AuthorityAppDisk implements IDeviceStorage {
 
 	@Override
 	public void markDirty(StoragePath path) {
-
+		for (AuthorityStorage storage : storages) storage.markDirty(path);
+		coreStorage.markDirty(path);
 	}
 
 }

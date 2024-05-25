@@ -779,6 +779,11 @@
             "zh_CN": "地牢终端",
             "en_US": "Dungeon Terminal",
             "ja_JP": "ダンジョン端末"
+        },
+        "item.disk.name": {
+            "zh_CN": "地牢卡片",
+            "en_US": "Dungeon Card",
+            "ja_JP": "ダンジョンカード"
         }
     },
     "tile": {
@@ -1351,6 +1356,11 @@
             "zh_CN": "咒文发射器",
             "en_US": "Mantra Emitter",
             "ja_JP": "呪文エミッタ"
+        },
+        "tile.cloverComputer.name": {
+            "zh_CN": "地牢终端",
+            "en_US": "Dungeon Terminal",
+            "ja_JP": "ダンジョン端末"
         }
     }
 }
