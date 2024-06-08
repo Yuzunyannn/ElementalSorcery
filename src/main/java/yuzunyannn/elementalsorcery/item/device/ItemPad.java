@@ -9,6 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -19,9 +21,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.computer.IComputer;
+import yuzunyannn.elementalsorcery.api.computer.IDisk;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerDevice;
 import yuzunyannn.elementalsorcery.computer.ComputerEnvItem;
+import yuzunyannn.elementalsorcery.computer.Disk;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart;
@@ -86,5 +92,40 @@ public class ItemPad extends Item implements IItemSmashable {
 
 		stack.shrink(1);
 		world.playSound(null, vec.x, vec.y, vec.z, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 1, 1);
+	}
+
+	@Override
+	public NBTTagCompound getNBTShareTag(ItemStack stack) {
+		NBTTagCompound nbt = super.getNBTShareTag(stack);
+		if (nbt == null) nbt = new NBTTagCompound();
+		try {
+			IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
+			List<IDisk> disks = computer.getDisks();
+			NBTTagList tagList = new NBTTagList();
+			for (IDisk disk : disks) {
+				if (disk instanceof Disk) tagList.appendTag(disk.serializeNBT());
+				tagList.appendTag(new NBTTagCompound());
+			}
+			nbt.setTag("disks", tagList);
+		} catch (Exception e) {}
+		return nbt;
+	}
+
+	@Override
+	public void readNBTShareTag(ItemStack stack, NBTTagCompound nbt) {
+		super.readNBTShareTag(stack, nbt);
+		try {
+			if (nbt != null && nbt.hasKey("disks")) {
+				NBTTagList list = nbt.getTagList("disks", NBTTag.TAG_COMPOUND);
+				IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
+				List<IDisk> disks = computer.getDisks();
+				for (int i = 0; i < disks.size(); i++) {
+					if (i >= list.tagCount()) break;
+					IDisk disk = disks.get(i);
+					if (disk instanceof Disk) disk.deserializeNBT(list.getCompoundTagAt(i));
+				}
+				computer.markDiskValueDirty();
+			}
+		} catch (Exception e) {}
 	}
 }

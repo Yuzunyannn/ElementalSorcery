@@ -44,7 +44,7 @@ public class ComputerException extends RuntimeException implements IComputerExce
 	}
 
 	@Override
-	public Object getGameRenderObject() {
+	public Object toDisplayObject() {
 		List<Object> list = new ArrayList<>();
 		UUID udid = null;
 		if (device instanceof IDevice) udid = ((IDevice) device).getUDID();
@@ -54,7 +54,7 @@ public class ComputerException extends RuntimeException implements IComputerExce
 		return list;
 	}
 
-	//need override
+	// need override
 	protected void addRenderObject(List<Object> list) {
 		list.add("error");
 	}

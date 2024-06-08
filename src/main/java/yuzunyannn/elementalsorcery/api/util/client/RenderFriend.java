@@ -27,6 +27,7 @@ import net.minecraft.item.ItemBed;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 
@@ -52,6 +53,31 @@ public class RenderFriend {
 
 	static public float getPartialTicks(float n, float prevN, float partialTicks) {
 		return prevN + (n - prevN) * partialTicks;
+	}
+
+	static public void renderItemLayout(ItemStack stack, double x, double y, double z) {
+		renderItemLayout(stack, x, y, z, 0);
+	}
+
+	static public void renderItemLayout(ItemStack stack, double x, double y, double z, float rotation) {
+		if (stack.isEmpty()) return;
+		int n = MathHelper.ceil(MathHelper.sqrt(stack.getCount()) / 2);
+		GlStateManager.pushMatrix();
+		if (n > 1) {
+			if (rotation != 0) GlStateManager.rotate(rotation, 0, 1, 0);
+			layItemPositionFix(stack);
+			for (int i = 0; i < n; i++) {
+				if (rotation > 0) GlStateManager.rotate(rotation, 0, 1, 0);
+				Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
+				GlStateManager.translate(0.05, 0.005, 0.05);
+			}
+		} else {
+			GlStateManager.translate(x, y, z);
+			if (rotation != 0) GlStateManager.rotate(rotation, 0, 1, 0);
+			layItemPositionFix(stack);
+			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
+		}
+		GlStateManager.popMatrix();
 	}
 
 	static public void renderSpecialItem(ItemStack stack, TextureBinder texture, ModelBase MODEL,

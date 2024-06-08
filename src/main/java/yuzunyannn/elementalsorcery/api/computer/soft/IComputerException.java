@@ -4,16 +4,17 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.api.util.IDisplayable;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
-public interface IComputerException {
+public interface IComputerException extends IDisplayable {
 
 	default boolean isGameException() {
 		return false;
 	}
 
-	default Object getGameRenderObject() {
+	default Object toDisplayObject() {
 		return null;
 	}
 
@@ -21,7 +22,7 @@ public interface IComputerException {
 		NBTSender sender = new NBTSender();
 		if (exception.isGameException()) {
 			sender.write("type", (byte) 1);
-			sender.writeDisplay("robj", exception.getGameRenderObject());
+			sender.writeDisplay("robj", exception.toDisplayObject());
 		} else if (exception instanceof ComputerExceptionOnlyMsg) {
 			sender.write("type", (byte) 0);
 			sender.write("msg", exception.toString());
@@ -78,9 +79,10 @@ public interface IComputerException {
 		}
 
 		@Override
-		public Object getGameRenderObject() {
+		public Object toDisplayObject() {
 			return renderObj;
 		}
+
 	}
 
 	static class ComputerExceptionOnlyMsg implements IComputerException {

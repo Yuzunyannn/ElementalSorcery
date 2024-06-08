@@ -7,14 +7,10 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiContainerCreative;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,7 +21,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogColors;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
@@ -50,7 +45,6 @@ import yuzunyannn.elementalsorcery.computer.WideNetworkCommon;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
 import yuzunyannn.elementalsorcery.computer.softs.TaskNetworkGui;
 import yuzunyannn.elementalsorcery.config.ESConfig;
-import yuzunyannn.elementalsorcery.container.gui.GuiDisableCreativeSyncSlot;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.init.TileOutlineRenderRegistries;
@@ -109,12 +103,15 @@ public class EventClient {
 	public static int tickRender = 0;
 	// 全局随机的，隔一段时间随机的一个整数
 	public static int randInt = rand.nextInt();
+	// 全局标注是否为一个tick状态的帧，渲染直接使用
+	public static boolean canTickInRender = false;
 	// 客户端的mc指针
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	static public void onTick(TickEvent.ClientTickEvent event) {
+		canTickInRender = true;
 		if (mc.isGamePaused()) return;
 		if (event.phase == Phase.START) {
 			bigComputeWatch.clear();
@@ -206,6 +203,8 @@ public class EventClient {
 
 		ComputerScreenRender.doRenderUpdate(e.getPartialTicks());
 		if (RenderItemElementCrack.updateRenderTextureFlag) RenderItemElementCrack.updateRenderTexture(partialTicks);
+
+		canTickInRender = false;
 	}
 
 	@SubscribeEvent

@@ -1,8 +1,5 @@
 package yuzunyannn.elementalsorcery.render.tile;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,13 +33,7 @@ public class RenderTileElementPlatform extends TileEntitySpecialRenderer<TileEle
 		RenderFriend.endTileEntitySpecialRender();
 		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
-		ItemStack stack = tile.getStack();
-		if (stack.isEmpty()) return;
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(x + 0.5, y + 0.55, z + 0.5);
-		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
-		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
-		GlStateManager.popMatrix();
+		RenderFriend.renderItemLayout(tile.getStack(), x + 0.5, y + 0.55, z + 0.5);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
@@ -21,7 +22,7 @@ import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
 public class GameDisplayCast {
 
-	public final static Map<Class, ICastable> CAST_MAP = new IdentityHashMap<>();
+	public final static Map<Class, ICastHandler> CAST_MAP = new IdentityHashMap<>();
 	public final static Object OBJ = new Object();
 
 	/**
@@ -30,9 +31,10 @@ public class GameDisplayCast {
 	 */
 	public static Object cast(Object obj, ICastEnv env) {
 		if (obj == null) return null;
-		if (obj instanceof IHasGameDisplay) return ((IHasGameDisplay) obj).toDisplayObject();
+		if (obj instanceof IDisplayable) return ((IDisplayable) obj).toDisplayObject();
 		if (obj instanceof List) return JavaHelper.toList((List<Object>) obj, o -> cast(o, env));
-		ICastable castable = CAST_MAP.get(obj.getClass());
+		if (JavaHelper.isArray(obj)) return castArray((Object[]) obj, env);
+		ICastHandler castable = CAST_MAP.get(obj.getClass());
 		if (castable == null) return OBJ;
 		try {
 			obj = castable.cast(obj, env);
@@ -50,6 +52,7 @@ public class GameDisplayCast {
 	public static final byte TAG_TEXT_LIST = 2;
 	public static final byte TAG_TEXT_OBJ = 3;
 	public static final byte TAG_TEXT_NULL = 4;
+	public static final byte TAG_TEXT_ARRAY = 5;
 
 	// after cast
 	public static void write(PacketBuffer buf, Object displayObject) {
@@ -63,6 +66,11 @@ public class GameDisplayCast {
 			buf.writeByte(TAG_TEXT_LIST);
 			buf.writeShort(list.size());
 			for (Object obj : list) write(buf, obj);
+		} else if (JavaHelper.isArray(displayObject)) {
+			Object[] array = (Object[]) displayObject;
+			buf.writeByte(TAG_TEXT_ARRAY);
+			buf.writeShort(array.length);
+			for (Object obj : array) write(buf, obj);
 		} else if (displayObject instanceof String) {
 			buf.writeByte(TAG_STRING);
 			buf.writeString(displayObject.toString());
@@ -83,11 +91,18 @@ public class GameDisplayCast {
 				ESAPI.logger.warn("TextComponent Read Error", e);
 				return TextFormatting.RED + "<error>";
 			}
-		case TAG_TEXT_LIST:
+		case TAG_TEXT_LIST: {
 			int elementCount = buf.readShort();
 			List<Object> list = new ArrayList<>(elementCount);
 			for (int i = 0; i < elementCount; i++) list.add(read(buf));
 			return list;
+		}
+		case TAG_TEXT_ARRAY: {
+			int elementCount = buf.readShort();
+			Object[] array = new Object[elementCount];
+			for (int i = 0; i < elementCount; i++) array[i] = read(buf);
+			return array;
+		}
 		default:
 			return buf.readString(32767);
 		}
@@ -98,8 +113,8 @@ public class GameDisplayCast {
 	}
 
 	public static void init() {
-		ICastable toString = new CastToString();
-		ICastable noCast = new CastDirectRet();
+		ICastHandler toString = new CastToString();
+		ICastHandler noCast = new CastDirectRet();
 		CAST_MAP.put(boolean.class, toString);
 		CAST_MAP.put(Boolean.class, toString);
 		CAST_MAP.put(float.class, toString);
@@ -122,20 +137,35 @@ public class GameDisplayCast {
 		CAST_MAP.put(TextComponentScore.class, noCast);
 		CAST_MAP.put(TextComponentSelector.class, noCast);
 		CAST_MAP.put(EnumFacing.class, toString);
+		CAST_MAP.put(ItemStack.class, new ItemStackCast());
 	}
 
-	public static class CastDirectRet implements ICastable<Object> {
+	private static Object[] castArray(Object[] objs, ICastEnv env) {
+		Object[] news = new Object[objs.length];
+		for (int i = 0; i < news.length; i++) news[i] = cast(objs[i], env);
+		return news;
+	}
+
+	public static class CastDirectRet implements ICastHandler<Object> {
 		@Override
 		public Object cast(Object obj, ICastEnv env) {
 			return obj;
 		}
 	}
 
-	public static class CastToString implements ICastable<String> {
+	public static class CastToString implements ICastHandler<String> {
 		@Override
 		public String cast(Object obj, ICastEnv env) {
 			return obj.toString();
 		}
 	}
 
+	public static class ItemStackCast implements ICastHandler<Object> {
+		@Override
+		public Object cast(Object obj, ICastEnv env) {
+			ItemStack stack = (ItemStack) obj;
+			return new TextComponentString("[I]").appendSibling(new TextComponentTranslation(
+					stack.getTranslationKey() + ".name"));
+		}
+	}
 }

@@ -275,6 +275,7 @@ tile.stoneDecoration.starCPU.name=星空中央処理装置
 tile.stoneDecoration.dungeonReactor.name=異常な炉
 tile.mantraEmitter.name=呪文エミッタ
 tile.cloverComputer.name=ダンジョン端末
+tile.ringReader.name=ダンジョンリーダ
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -703,6 +704,7 @@ es.app.cannotFind=%sを見つからない
 es.app.err.boot.cannotFind=起動ブートが見つかりません
 es.app.err.boot.fail=%sを起動失敗
 es.app.errCmdFormat=命令フォーマットが不正です
+es.app.errPath=指定されたパスが見つかりません
 
 elf.time.year=%d年
 elf.time.mon.0=春

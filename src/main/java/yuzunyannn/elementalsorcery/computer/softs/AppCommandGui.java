@@ -1,9 +1,11 @@
 package yuzunyannn.elementalsorcery.computer.softs;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.Set;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,7 +18,6 @@ import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiThemePart;
 import yuzunyannn.elementalsorcery.computer.soft.CommandParser;
 import yuzunyannn.elementalsorcery.computer.soft.OPSender;
-import yuzunyannn.elementalsorcery.computer.softs.AppCommand.CMDRecord;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GInput;
 import yuzunyannn.elementalsorcery.nodegui.GInputShift;
@@ -105,7 +106,10 @@ public class AppCommandGui extends AppGuiCommon<AppCommand> implements IAutoComp
 		super.onRecvMessage(nbt);
 		int n = nbt.getInteger("update");
 		if (n > 0) updateCmdRecord(n);
-		else addAllCmdRecord();
+		else {
+			if (n == -1) refreshAllCmdRecord();
+			else addAllCmdRecord();
+		}
 	}
 
 	public void addAllCmdRecord() {
@@ -119,6 +123,38 @@ public class AppCommandGui extends AppGuiCommon<AppCommand> implements IAutoComp
 			iter.remove();
 			node.removeFromParent();
 		}
+		doLayout();
+	}
+
+	public void refreshAllCmdRecord() {
+		LinkedList<CMDRecord> records = appInst.getRecordList();
+
+		Set<Integer> idSet = new HashSet<>();
+		for (CMDRecord record : records) {
+			idSet.add(record.getId());
+			if (!nodeMap.containsKey(record.getId())) refreshCmdRecord(record);
+		}
+
+		{
+			Iterator<Integer> iter = nodeMap.keySet().iterator();
+			while (iter.hasNext()) {
+				Integer id = iter.next();
+				if (!idSet.contains(id)) {
+					nodeMap.get(id).removeFromParent();
+					iter.remove();
+				}
+			}
+		}
+
+		{
+			Iterator<AppCommandGRecord> iter = nodeMap.values().iterator();
+			if (iter.hasNext() && nodeMap.size() > 32) {
+				AppCommandGRecord node = iter.next();
+				iter.remove();
+				node.removeFromParent();
+			}
+		}
+
 		doLayout();
 	}
 

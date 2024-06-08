@@ -4,9 +4,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -34,14 +32,6 @@ public class BlockCloverComputer extends BlockComputer {
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileCloverComputer();
-	}
-
-	@Override
-	public void onTileBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack, TileEntity tile) {
-		if (tile instanceof TileCloverComputer) {
-			((TileCloverComputer) tile).setFacing(placer.getHorizontalFacing().getOpposite());
-		}
 	}
 
 	@Override

@@ -9,8 +9,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
-import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
+import yuzunyannn.elementalsorcery.api.computer.IDisk;
+import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceFile;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.util.MatchHelper;
@@ -20,7 +22,9 @@ import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingInherent;
+import yuzunyannn.elementalsorcery.computer.files.DiskDeviceFile;
 import yuzunyannn.elementalsorcery.computer.soft.AppBase;
+import yuzunyannn.elementalsorcery.computer.soft.EOS;
 import yuzunyannn.elementalsorcery.parchment.Tutorial;
 import yuzunyannn.elementalsorcery.parchment.TutorialBuilding;
 import yuzunyannn.elementalsorcery.parchment.Tutorials;
@@ -85,12 +89,27 @@ public class AppTutorial extends AppBase {
 	@Override
 	public void onDiskChange() {
 		super.onDiskChange();
+		
 		IOS os = getOS();
-//		if (os.isRemote()) return;
-		IDeviceStorage disk = os.getDisk(this, AppDiskType.USER_DATA);
-		if (disk == null) progress = 0;
-		else progress = disk.get(POGRESS);
+		if (os.isRemote()) return;
+
+//		IDeviceStorage disk = os.getDisk(this, AppDiskType.USER_DATA);
+//		if (disk == null) progress = 0;
+//		else progress = disk.get(POGRESS);
+
+		IDeviceFile file = os.ioAppData("_clover_", "data_recv");
+		IDeviceStorage stroage = file.open();
+		this.progress = 0;
+		if (stroage != null) {
+			this.progress = stroage.get(POGRESS);
+			stroage.close();
+		}
+
 		detecter.markDirty("1");
+	}
+
+	static public DiskDeviceFile getTutorialData(IDisk disk) {
+		return new DiskDeviceFile(DeviceFilePath.of(EOS.APP_FILE_BASE, "_clover_", "data_recv"), disk);
 	}
 
 	public float getProgress() {

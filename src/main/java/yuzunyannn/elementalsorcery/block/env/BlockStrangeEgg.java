@@ -239,7 +239,7 @@ public class BlockStrangeEgg extends Block {
 	}
 
 	public static void handlePoison(World world, BlockPos pos, ItemStack potion) {
-		if (world.rand.nextInt(5) != 0) return;
+		if (world.rand.nextInt(3) != 0) return;
 		for (int x = -1; x <= 0; x++) {
 			for (int z = -1; z <= 0; z++) {
 				BlockPos at = pos.add(x, 0, z);

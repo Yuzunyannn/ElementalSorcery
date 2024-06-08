@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
 public interface INBTReader {
@@ -56,6 +57,8 @@ public interface INBTReader {
 	EnumFacing facing(String key);
 
 	ItemStack itemStack(String key);
+	
+	Mantra mantra(String key);
 
 	NBTTagCompound compoundTag(String key);
 

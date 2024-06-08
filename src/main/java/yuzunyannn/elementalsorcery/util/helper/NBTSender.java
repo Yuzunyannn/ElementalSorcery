@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 
 public class NBTSender extends NBTSaver {
 
@@ -59,6 +60,16 @@ public class NBTSender extends NBTSaver {
 	@Override
 	public ItemStack itemStack(String key) {
 		return NBTHelper.deserializeItemStackFromSend(nbt.getCompoundTag(key));
+	}
+
+	@Override
+	public void write(String key, Mantra mantra) {
+		nbt.setInteger(key, mantra == null ? -1 : Mantra.REGISTRY.getId(mantra));
+	}
+
+	@Override
+	public Mantra mantra(String key) {
+		return Mantra.REGISTRY.getValue(nbt.getInteger(key));
 	}
 
 }

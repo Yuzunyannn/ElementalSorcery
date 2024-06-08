@@ -43,12 +43,14 @@ public class GNodeAppBar extends GNode {
 		linkBtn.setColorRef(color1);
 		linkBtn.setSize(11, 7);
 		this.addChild(linkBtn);
-		linkBtn.setInteractor(new BtnColorInteractor(color1, color2) {
-			@Override
-			public void onClick() {
-				gui.onOpenLinkTask();
-			}
-		});
+		if (gui.getGuiRuntime().hasFeature("network")) {
+			linkBtn.setInteractor(new BtnColorInteractor(color1, color2) {
+				@Override
+				public void onClick() {
+					gui.onOpenLinkTask();
+				}
+			});
+		} else linkBtn.setVisible(false);
 
 		closeBtn = new GImage(SoftGuiCommon.TEXTURE_1, SoftGuiCommon.FRAME_CLOSE);
 		closeBtn.setColorRef(color1);

@@ -4,7 +4,6 @@ import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
 import yuzunyannn.elementalsorcery.computer.render.GClickLabel;
 import yuzunyannn.elementalsorcery.computer.render.GDisplayObject;
-import yuzunyannn.elementalsorcery.computer.softs.AppCommand.CMDRecord;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.IGNodeLayoutable;
 

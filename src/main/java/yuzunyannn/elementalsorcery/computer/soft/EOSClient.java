@@ -1,18 +1,12 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
-import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
-import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
-import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
-import yuzunyannn.elementalsorcery.computer.exception.ComputerHardwareMissingException;
 
 @SideOnly(Side.CLIENT)
 public class EOSClient extends EOS {
@@ -40,19 +34,19 @@ public class EOSClient extends EOS {
 	@Override
 	public void onDiskChange(boolean onlyData) {
 		if (onlyData) return;
-		disksCache = null;
-		appDiskCacheMap.clear();
+//		disksCache = null;
+//		appDiskCacheMap.clear();
 	}
 
-	@Override
-	public List<IDisk> getDisks() {
-		return Collections.EMPTY_LIST;
-	}
+//	@Override
+//	public List<IDisk> getDisks() {
+//		return Collections.EMPTY_LIST;
+//	}
 
-	@Override
-	public IDeviceStorage getDisk(App app, AppDiskType type) {
-		throw new ComputerHardwareMissingException(this.computer, "disk is in the cloud");
-	}
+//	@Override
+//	public IDeviceStorage getDisk(App app, AppDiskType type) {
+//		throw new ComputerHardwareMissingException(this.computer, "disk is in the cloud");
+//	}
 
 	@Override
 	public App getAppInst(int pid) {

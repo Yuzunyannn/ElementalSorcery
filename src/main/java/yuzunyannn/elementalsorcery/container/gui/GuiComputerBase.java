@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
@@ -36,6 +37,7 @@ import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.computer.DeviceNetworkLocal;
 import yuzunyannn.elementalsorcery.computer.render.BtnColorInteractor;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreen;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
@@ -58,7 +60,6 @@ import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.GScene;
 import yuzunyannn.elementalsorcery.nodegui.GuiScene;
 import yuzunyannn.elementalsorcery.nodegui.IGInteractor;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
@@ -187,6 +188,17 @@ public abstract class GuiComputerBase extends GuiContainer {
 			}
 		}
 
+		@Override
+		public boolean hasFeature(String feature) {
+			IComputer computer = containerComputer.getComputer();
+			if (computer == null) return false;
+			if ("network".equals(feature)) {
+				IDeviceNetwork network = computer.device().getNetwork();
+				if (network instanceof DeviceNetworkLocal) return false;
+			}
+			return true;
+		}
+
 	}
 
 	protected APPGuiRuntime runtime;
@@ -217,13 +229,20 @@ public abstract class GuiComputerBase extends GuiContainer {
 		screenFront.setAPPGui(appGUI);
 		screenFront.setTaskAppGui(taskGUI);
 		this.scene.setSize(this.width, this.height);
-		this.scene.setDisplaySize(Effect.displayWidth, Effect.displayHeight);
+		this.scene.setDisplaySize(mc.displayWidth, mc.displayHeight);
+
+		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
+		offsetX = offsetX + computerX;
+		offsetY = offsetY + computerY;
+		this.scene.setRootPosition(offsetX, offsetY);
+		Keyboard.enableRepeatEvents(true);
 	}
 
 	@Override
 	public void onGuiClosed() {
 		super.onGuiClosed();
 		screenFront.release();
+		Keyboard.enableRepeatEvents(false);
 	}
 
 	@Override
@@ -414,7 +433,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 					taskGUI = task.createGUIRender();
 					taskGUI.init(taskRuntime = new APPGuiRuntime(task.getPid()));
 					currTask = task;
-					screenFront.setTaskAppGui(taskGUI); 
+					screenFront.setTaskAppGui(taskGUI);
 				}
 			} else if (currTask != null) {
 				currTask = null;
@@ -430,13 +449,9 @@ public abstract class GuiComputerBase extends GuiContainer {
 	}
 
 	private void initExceptionView() {
-		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
-		offsetX = offsetX + computerX;
-		offsetY = offsetY + computerY;
-
 		GDragContainer dContainer = new GDragContainer(computerWidth, computerHeight);
 		this.scene.addChild(exceptionNode = dContainer);
-		dContainer.setPosition(offsetX, offsetY, 0);
+		dContainer.setPositionZ(1);
 
 		GEasyLayoutContainer container = new GEasyLayoutContainer();
 		container.setMaxWidth(computerWidth);
@@ -463,7 +478,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 		if (exception.isGameException()) {
 			GDisplayObject node = new GDisplayObject();
 			node.setEveryLine(true);
-			node.setDisplayObject(exception.getGameRenderObject());
+			node.setDisplayObject(exception.toDisplayObject());
 			container.addChild(node);
 		} else {
 			final String originMsg = exception.toString();
@@ -546,19 +561,25 @@ public abstract class GuiComputerBase extends GuiContainer {
 		}
 	}
 
+	@Override
+	public void handleInput() throws IOException {
+		super.handleInput();
+//		if (Keyboard.isCreated()) {
+//			while (Keyboard.next()) {
+//				System.out.println("??w");
+//			}
+//		}
+	}
+
 	protected void updateWaitingOpenScene() {
 		if (openImage == null) return;
 
 		screenFrontAppear = 0;
 
-		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
-		offsetX = offsetX + computerX;
-		offsetY = offsetY + computerY;
-
 		int w = computerWidth / 2;
 		int h = computerHeight / 2;
 
-		openImage.setPosition(offsetX + w, offsetY + h, 0);
+		openImage.setPosition(w, h, 0);
 	}
 
 	protected void onClickOpenScene() {

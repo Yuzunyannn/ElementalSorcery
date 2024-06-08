@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.api.util;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
 import com.google.common.collect.BiMap;
@@ -82,6 +83,9 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 			if (cls == null) return null;
 			Constructor<T> constructor = (Constructor<T>) cls.getConstructor(types);
 			return constructor.newInstance(params).setRegistryName(id);
+		} catch (InvocationTargetException e) {
+			if (ESAPI.isDevelop) ESAPI.logger.warn("实例化" + id + "时，出现异常！", e.getCause());
+			return null;
 		} catch (Exception e) {
 			if (ESAPI.isDevelop) ESAPI.logger.warn("实例化" + id + "时，出现异常！", e);
 			return null;

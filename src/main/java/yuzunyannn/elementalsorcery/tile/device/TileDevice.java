@@ -52,6 +52,10 @@ public class TileDevice extends TileEntityNetwork {
 		return new TextComponentString(name);
 	}
 
+	public void setPlaceFacing(EnumFacing facing) {
+
+	}
+
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (Computer.DEVICE_CAPABILITY.equals(capability)) return true;
@@ -64,9 +68,17 @@ public class TileDevice extends TileEntityNetwork {
 		return super.getCapability(capability, facing);
 	}
 
+	public Device getDevice() {
+		return device;
+	}
+
 	public void update() {
 		ticksExisted++;
 		device.update();
+	}
+
+	public void updateByBlock() {
+
 	}
 
 	@DeviceFeature(id = "self-destruct")
@@ -75,14 +87,9 @@ public class TileDevice extends TileEntityNetwork {
 		doDestruct();
 	}
 
-	@DeviceFeature(id = "self-destruct")
-	public void selfDestruct(int tick) {
-		if (world.isRemote) return;
-		doDestruct();
-	}
-
 	protected void doDestruct() {
 		world.setBlockToAir(pos);
 		world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 3, true);
 	}
+
 }

@@ -12,4 +12,19 @@ public interface IDataRef<T> {
 		return t;
 	}
 
+	public static class Simple<T> implements IDataRef<T> {
+
+		T obj;
+
+		@Override
+		public void set(T t) {
+			this.obj = t;
+		}
+
+		@Override
+		public T get() {
+			return this.obj;
+		}
+
+	}
 }

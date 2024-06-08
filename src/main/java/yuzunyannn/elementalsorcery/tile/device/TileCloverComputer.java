@@ -41,7 +41,8 @@ public class TileCloverComputer extends TileComputer {
 		return facing;
 	}
 
-	public void setFacing(EnumFacing facing) {
+	@Override
+	public void setPlaceFacing(EnumFacing facing) {
 		this.facing = facing;
 	}
 }

@@ -9,4 +9,6 @@ public interface IDeviceShell extends INBTSerializable<NBTTagCompound> {
 
 	void invoke(IDeviceShellExecutor executor) throws DeviceShellBadInvoke;
 
+	void setArgs(Object... args);
+
 }

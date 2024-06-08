@@ -21,9 +21,7 @@ public class ItemDisk extends Item {
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		if (this.isInCreativeTab(tab)) {
 			ItemStack itemStack = new ItemStack(this);
-			DiskItem disk = new DiskItem(itemStack);
-			disk.set(EOS.BOOT, AppCommand.ID);
-			items.add(disk.toItemStack());
+			items.add(EOS.setBoot(new DiskItem(itemStack), AppCommand.ID).getItemStack());
 		}
 	}
 

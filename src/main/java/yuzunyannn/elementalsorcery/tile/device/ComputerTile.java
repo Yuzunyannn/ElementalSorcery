@@ -7,6 +7,7 @@ import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.DiskItem;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -63,7 +64,25 @@ public class ComputerTile extends Computer {
 			if (disk.isEmpty()) continue;
 			disks.add(disk);
 		}
-		this.markDiskValueDirty(false);
+	}
+
+	@Override
+	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
+		NBTTagCompound sendData = super.detectChanges(watcher);
+
+		NBTTagCompound changes = tile.device.detectChanges(watcher);
+		if (changes != null) {
+			if (sendData == null) sendData = new NBTTagCompound();
+			sendData.setTag("#DC", changes);
+		}
+
+		return sendData;
+	}
+
+	@Override
+	public void mergeChanges(NBTTagCompound nbt) {
+		super.mergeChanges(nbt);
+		if (nbt.hasKey("#DC")) tile.device.mergeChanges(nbt.getCompoundTag("#DC"));
 	}
 
 }

@@ -1,7 +1,10 @@
 package yuzunyannn.elementalsorcery.api.util;
 
-public interface ICastable<T> {
+import javax.annotation.Nullable;
 
-	T cast(Object obj, ICastEnv env);
+public interface ICastable {
+
+	@Nullable
+	<T> T cast(Class<?> to);
 
 }

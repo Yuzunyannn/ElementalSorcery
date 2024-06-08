@@ -27,9 +27,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.util.MatchHelper;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 
 public class ItemHelper {
+
+	static public boolean hasSubCompound(ItemStack stack, String key) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return false;
+		return nbt.hasKey(key, NBTTag.TAG_COMPOUND);
+	}
 
 	static public NBTTagCompound getOrCreateTagCompound(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
@@ -100,8 +107,7 @@ public class ItemHelper {
 		Block block = state.getBlock();
 		try {
 			if (block.canSilkHarvest(world, pos, state, null)) {
-				Method getSilkTouchDrop = ObfuscationReflectionHelper.findMethod(Block.class, "func_180643_i",
-						ItemStack.class, IBlockState.class);
+				Method getSilkTouchDrop = ObfuscationReflectionHelper.findMethod(Block.class, "func_180643_i", ItemStack.class, IBlockState.class);
 				list.add((ItemStack) getSilkTouchDrop.invoke(block, state));
 			}
 		} catch (Exception e) {}

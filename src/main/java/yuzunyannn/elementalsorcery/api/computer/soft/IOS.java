@@ -13,9 +13,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
-import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.api.util.target.IObjectGetter;
 
@@ -25,12 +25,18 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 
 	IDeviceInfo getDeviceInfo();
 
-	List<IDisk> getDisks();
-
 	IDeviceShellExecutor createShellExecutor();
 
-	@Nullable
-	IDeviceStorage getDisk(App app, AppDiskType type);
+//	List<IDisk> getDisks();
+
+//	@Nullable
+//	IDeviceStorage getDisk(App app, AppDiskType type);
+
+	@Nonnull
+	IDeviceFile ioAppData(String scope, String fileName);
+
+	@Nonnull
+	IDeviceFile io(DeviceFilePath path);
 
 	boolean isRunning();
 

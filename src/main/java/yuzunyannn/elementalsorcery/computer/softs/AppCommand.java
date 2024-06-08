@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -17,8 +16,8 @@ import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
-import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.DeviceShellBadInvoke;
+import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceFile;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShellExecutor;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
@@ -32,97 +31,34 @@ import yuzunyannn.elementalsorcery.computer.soft.CommandParser;
 import yuzunyannn.elementalsorcery.computer.soft.DeviceCommand;
 import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
-import yuzunyannn.elementalsorcery.util.helper.INBTSS;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
-import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
 public class AppCommand extends AppBase {
 
-	public static class CMDRecord implements INBTSS {
-		protected int id;
-		protected String cmd;
-		protected DNResultCode code;
-		protected Object displayObject;
-
-		protected CompletableFuture<CMDRecord> future = new CompletableFuture();
-
-		public CMDRecord() {
-			this.cmd = "";
-		}
-
-		public CMDRecord(String cmd) {
-			this.cmd = cmd;
-		}
-
-		public final int getId() {
-			return id;
-		}
-
-		@Override
-		public void readSaveData(INBTReader reader) {
-			id = reader.nint("id");
-			cmd = reader.string("cmd");
-			if (reader.has("code")) code = DNResultCode.fromMeta(reader.nint("code"));
-		}
-
-		@Override
-		public void writeSaveData(INBTWriter writer) {
-			writer.write("id", id);
-			writer.write("cmd", cmd);
-			if (code != null) writer.write("code", (byte) code.getMeta());
-		}
-
-		@Override
-		public void readUpdateData(INBTReader reader) {
-			readSaveData(reader);
-			if (reader.has("dpl")) displayObject = reader.display("dpl");
-			else displayObject = null;
-		}
-
-		@Override
-		public void writeUpdateData(INBTWriter writer) {
-			writeSaveData(writer);
-			if (displayObject != null) writer.writeDisplay("dpl", displayObject);
-		}
-
-		public boolean isSustaining() {
-			return false;
-		}
-
-		public CompletableFuture<CMDRecord> getSustainFuture() {
-			return future;
-		}
-
-		public Object getDisplayObject() {
-			return displayObject;
-		}
-	}
-
 	public static final String ID = "command";
-	public static final Variable<ArrayList<String>> CMD_CACHE = new Variable("cmdCache", VariableSet.STRING_ARRAY_LIST);
+	public static final Variable<ArrayList<String>> CMD_CACHE = new Variable("hls", VariableSet.STRING_ARRAY_LIST);
 	protected DDQueue<CMDRecord> ddq = new DDQueue();
 	protected LinkedList<CMDRecord> list = new LinkedList<>();
 	protected LinkedHashMap<Integer, CMDRecord> sustainMap = new LinkedHashMap<>();
 	protected int persistentSize = 0;
-	protected IDataDetectable<Map<Integer, NBTTagCompound>, NBTTagList> dds = new IDataDetectable<Map<Integer, NBTTagCompound>, NBTTagList>() {
+	protected IDataDetectable<Map<Integer, IDataRef<Object>>, NBTTagList> dds = new IDataDetectable<Map<Integer, IDataRef<Object>>, NBTTagList>() {
 
 		@Override
-		public NBTTagList detectChanges(IDataRef<Map<Integer, NBTTagCompound>> templateRef) {
-			Map<Integer, NBTTagCompound> tmp = templateRef.get();
+		public NBTTagList detectChanges(IDataRef<Map<Integer, IDataRef<Object>>> templateRef) {
+			Map<Integer, IDataRef<Object>> tmp = templateRef.get();
 			if (tmp == null) templateRef.set(tmp = new HashMap<>());
 			NBTTagList list = new NBTTagList();
 			for (CMDRecord record : sustainMap.values()) {
-				NBTTagCompound lastNBT = tmp.get(record.getId());
-				if (lastNBT == null) {
-					tmp.put(record.getId(), lastNBT);
-					continue;
+				IDataRef<Object> recordRef = tmp.get(record.getId());
+				if (recordRef == null) {
+					tmp.put(record.getId(), new IDataRef.Simple<Object>());
+					continue;// 第一次直接走，第一次走默认的ddq
 				}
-				NBTSender sender = new NBTSender();
-				record.writeUpdateData(sender);
-				if (lastNBT.equals(sender.tag())) continue;
-				tmp.put(record.getId(), sender.tag());
-				list.appendTag(sender.tag());
+				NBTTagCompound changes = record.detectChanges(recordRef);
+				if (changes == null) continue;
+				changes.setInteger("id", record.id);
+				list.appendTag(changes);
 			}
 			return list.isEmpty() ? null : list;
 		}
@@ -130,12 +66,12 @@ public class AppCommand extends AppBase {
 		@Override
 		public void mergeChanges(NBTTagList list) {
 			for (int i = 0; i < list.tagCount(); i++) {
-				NBTSender sender = new NBTSender(list.getCompoundTagAt(i));
-				int id = sender.nint("id");
+				NBTTagCompound nbt = list.getCompoundTagAt(i);
+				int id = nbt.getInteger("id");
 				CMDRecord record = sustainMap.get(id);
 				if (record == null) continue;
-				record.readUpdateData(sender);
-				onSustainRecordUpdate(record);
+				record.mergeChanges(nbt);
+				onSustainRecordUpdate(record, nbt);
 			}
 		}
 
@@ -146,6 +82,7 @@ public class AppCommand extends AppBase {
 		ddq.setPersistentSize(persistentSize);
 		ddq.setQueue(list, () -> new CMDRecord());
 		ddq.onElementAdd = rcd -> this.onRecordAdd(rcd);
+		ddq.onElementRemove = rcd -> this.onRecordRemove(rcd);
 		this.detecter.add("rcd", ddq);
 		this.detecter.add("rcds", dds, 20);
 	}
@@ -153,22 +90,26 @@ public class AppCommand extends AppBase {
 	@Override
 	public void onStartup() {
 		super.onStartup();
-		IDeviceStorage disk = getOS().getDisk(this, AppDiskType.USER_DATA);
-		if (disk != null) {
-			List<String> cmds = disk.get(CMD_CACHE);
+		IDeviceFile file = getOS().ioAppData("console", "history");
+		IDeviceStorage storage = file.open();
+		if (storage != null) {
+			List<String> cmds = storage.get(CMD_CACHE);
+			storage.close();
 			for (String str : cmds) add(new CMDRecord(str));
 			IDeviceInfo info = getOS().getDeviceInfo();
-			if (info.isMobile()) disk.remove(CMD_CACHE);
+			if (info.isMobile()) file.delete();
 		}
 	}
 
 	@Override
 	public void onExit() {
 		super.onExit();
-		IDeviceStorage disk = getOS().getDisk(this, AppDiskType.USER_DATA);
-		if (disk != null && disk.isWriteable()) {
-			disk.set(CMD_CACHE, JavaHelper.toList(list, record -> record.cmd));
-			disk.markDirty(CMD_CACHE);
+		IDeviceFile file = getOS().ioAppData("console", "history");
+		IDeviceStorage storage = file.open();
+		if (storage != null) {
+			storage.set(CMD_CACHE, JavaHelper.toList(list, record -> record.cmd));
+			storage.markDirty();
+			storage.close();
 		}
 	}
 
@@ -205,6 +146,14 @@ public class AppCommand extends AppBase {
 		sustainMap.remove(record.getId());
 	}
 
+	public void clear() {
+		this.persistentSize = 0;
+		this.list.clear();
+		this.ddq.setPersistentSize(0);
+		this.detecter.markDirty("rcd");
+		this.markDirty();
+	}
+
 	protected void onRecordAdd(CMDRecord record) {
 		addSustainMap(record);
 		if (this.list.size() > 32) pop();
@@ -216,18 +165,28 @@ public class AppCommand extends AppBase {
 		}
 	}
 
+	protected void onRecordRemove(CMDRecord record) {
+		IOS os = getOS();
+		if (os.isRemote()) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setInteger("update", -1);
+			os.message(this, nbt);
+		}
+	}
+
 	protected void addSustainMap(CMDRecord record) {
 		if (!record.isSustaining()) return;
 		sustainMap.put(record.getId(), record);
 		record.getSustainFuture().thenAccept(r -> sustainMap.remove(r.getId()));
 	}
 
-	protected void onSustainRecordUpdate(CMDRecord record) {
+	protected void onSustainRecordUpdate(CMDRecord record, NBTTagCompound lastUpdate) {
 		if (!record.isSustaining()) record.getSustainFuture().complete(record);
 		IOS os = getOS();
 		if (os.isRemote()) {
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setInteger("update", record.getId());
+			nbt.setTag("last", lastUpdate);
 			os.message(this, nbt);
 		}
 	}
@@ -252,6 +211,10 @@ public class AppCommand extends AppBase {
 		try {
 			CommandParser parser = new CommandParser(cmd);
 			DeviceCommand command = new DeviceCommand(parser);
+			if (command.isClear()) {
+				this.clear();
+				return;
+			}
 			IDeviceShellExecutor executor = getOS().createShellExecutor();
 			executor.setLogicEnabled(true);
 			DNResult result;
@@ -264,12 +227,13 @@ public class AppCommand extends AppBase {
 				result = DNResult.invalid();
 				result.setReturn(e.getMessage());
 			}
-			record.displayObject = GameDisplayCast.cast(result.getReturn());
+			Object ret = result.getReturn();
+			if (ret instanceof DNResultCode);
+			else record.displayObject = GameDisplayCast.cast(ret);
 			if (logs != null) {
 				if (record.displayObject != null) logs.add(record.displayObject);
 				record.displayObject = logs;
 			}
-
 			record.code = result.code;
 		} catch (IllegalArgumentException e) {
 			record.code = DNResultCode.FAIL;

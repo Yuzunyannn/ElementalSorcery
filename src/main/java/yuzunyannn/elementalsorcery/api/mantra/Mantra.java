@@ -22,11 +22,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.api.util.ESImplRegister;
+import yuzunyannn.elementalsorcery.api.util.IDisplayable;
 import yuzunyannn.elementalsorcery.api.util.client.ESResources;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 
-public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
+public class Mantra extends IForgeRegistryEntry.Impl<Mantra> implements IDisplayable {
 
 	public static final ESImplRegister<Mantra> REGISTRY = new ESImplRegister(Mantra.class);
 
@@ -206,10 +207,16 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	public ResourceLocation getIconResource() {
 		return ESResources.MANTRA_VOID.getResource();
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getRegistryName().toString();
+	}
+
+	@Override
+	public Object toDisplayObject() {
+		return new TextComponentString("[M]").appendSibling(new TextComponentTranslation(
+				getTranslationKey() + ".name"));
 	}
 
 }

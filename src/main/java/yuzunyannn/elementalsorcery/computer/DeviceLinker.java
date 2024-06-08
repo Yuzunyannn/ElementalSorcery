@@ -1,18 +1,23 @@
 package yuzunyannn.elementalsorcery.computer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextComponentTranslation;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
+import yuzunyannn.elementalsorcery.api.util.IDisplayable;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.WorldLocation;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerConnectException;
 
-public class DeviceLinker implements IDeviceLinker {
+public class DeviceLinker implements IDeviceLinker, IDisplayable {
 
 	protected boolean isClose;
 	protected final UUID remoteUUID;
@@ -26,13 +31,12 @@ public class DeviceLinker implements IDeviceLinker {
 	protected int lastTimeoutCheck;
 	protected int cCheck, lastCCheck;
 
-	
 	protected DeviceLinker(IDeviceNetwork network, UUID udid) {
 		this.network = network;
 		this.remoteUUID = udid;
 		this.ref = CapabilityObjectRef.INVALID;
 	}
-	
+
 	protected DeviceLinker(IDeviceNetwork network, CapabilityObjectRef ref) {
 		this.network = network;
 		this.remoteUUID = ref.getCapability(Computer.DEVICE_CAPABILITY, null).getUDID();
@@ -212,6 +216,24 @@ public class DeviceLinker implements IDeviceLinker {
 			return getRemoteUUID();
 		}
 
+	}
+
+	@Override
+	public Object toDisplayObject() {
+		List<Object> list = new ArrayList<>();
+		list.add("-------");
+		boolean isConntect = isConnecting();
+		if (isConntect) {
+			IDevice device = getRemoteDevice();
+			IDeviceInfo info = device.getInfo();
+			String name = info.getName();
+			if (name == null || name.isEmpty()) list.add(new TextComponentTranslation(info.getDisplayWorkName()));
+			else list.add(name);
+		}
+		list.add(remoteUUID.toString());
+		String conntect = isConntect ? "connecting" : "missing";
+		list.add(new TextComponentTranslation("es.app.status", conntect));
+		return list;
 	}
 
 }

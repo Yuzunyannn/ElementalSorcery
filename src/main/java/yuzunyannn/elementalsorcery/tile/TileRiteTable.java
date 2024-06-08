@@ -40,13 +40,11 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
-import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.item.ESItemStorageEnum;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.DiskItem;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
-import yuzunyannn.elementalsorcery.computer.soft.AuthorityAppDisk;
 import yuzunyannn.elementalsorcery.computer.softs.AppTutorial;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
@@ -55,7 +53,6 @@ import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
-import yuzunyannn.elementalsorcery.item.tool.ItemTutorialPad;
 import yuzunyannn.elementalsorcery.parchment.Tutorials;
 import yuzunyannn.elementalsorcery.parchment.Tutorials.TutorialLevelInfo;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
@@ -257,6 +254,7 @@ public class TileRiteTable extends TileEntityNetworkOld {
 				float progress = disk.get(AppTutorial.POGRESS) + grow;
 				if (info != null) progress = Math.min(progress, info.getAccTotalUnlock());
 				disk.set(AppTutorial.POGRESS, progress);
+				disk.markDirty().close();
 				EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
 						pos.getZ() + 0.5f, true);
 				world.addWeatherEffect(lightning);
@@ -265,17 +263,21 @@ public class TileRiteTable extends TileEntityNetworkOld {
 			if (computer == null) {
 				DiskItem disk = new DiskItem(spItem);
 				runner = power -> {
-					growProgress.accept(disk, power);
-					Block.spawnAsEntity(world, pos.up(), disk.toItemStack());
+					IDeviceStorage storage = AppTutorial.getTutorialData(disk).forceOpen();
+					growProgress.accept(storage, power);
+					Block.spawnAsEntity(world, pos.up(), disk.getItemStack());
 				};
 			} else {
 				List<IDisk> disks = computer.getDisks();
 				runner = (power) -> {
 					try {
-						AuthorityAppDisk disk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(), disks,
-								AppDiskType.USER_DATA);
-						growProgress.accept(disk, power);
-						computer.getSystem().onDiskChange(true);
+						if (disks.size() > 0) {
+//							AuthorityAppDisk disk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(), disks,
+//									AppDiskType.USER_DATA);
+							IDeviceStorage storage = AppTutorial.getTutorialData(disks.get(0)).forceOpen();
+							growProgress.accept(storage, power);
+							computer.markDiskValueDirty();
+						}
 					} catch (ComputerException e) {}
 					Block.spawnAsEntity(world, pos.up(), spItem);
 				};

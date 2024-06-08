@@ -1,15 +1,20 @@
 package yuzunyannn.elementalsorcery.computer;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.text.TextComponentTranslation;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
+import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
+import yuzunyannn.elementalsorcery.api.util.IDisplayable;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
-public class DeviceLinkerSelf implements IDeviceLinker {
+public class DeviceLinkerSelf implements IDeviceLinker, IDisplayable {
 
 	protected final IDeviceNetwork network;
 	protected final IDevice device;
@@ -69,6 +74,15 @@ public class DeviceLinkerSelf implements IDeviceLinker {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		return null;
+	}
+
+	@Override
+	public Object toDisplayObject() {
+		List<Object> list = new ArrayList<>();
+		list.add("-------");
+		list.add(device.getUDID().toString());
+		list.add(new TextComponentTranslation("es.app.status", "*"));
+		return list;
 	}
 
 }

@@ -71,7 +71,6 @@ public class ComputerDevice extends Computer implements ICapabilityProvider {
 		disks.clear();
 		NBTTagList list = nbt.getTagList("#D", NBTTag.TAG_COMPOUND);
 		for (NBTBase n : list) disks.add(new Disk(((NBTTagCompound) n).copy()));
-		this.markDiskValueDirty(false);
 	}
 
 	@Override

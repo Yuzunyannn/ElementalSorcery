@@ -18,7 +18,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import yuzunyannn.elementalsorcery.api.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.util.GameCast;
 import yuzunyannn.elementalsorcery.api.util.ICastEnv;
-import yuzunyannn.elementalsorcery.api.util.ICastable;
+import yuzunyannn.elementalsorcery.api.util.ICastHandler;
 
 public abstract class CapabilityObjectRef implements ICapabilityProvider {
 
@@ -74,7 +74,7 @@ public abstract class CapabilityObjectRef implements ICapabilityProvider {
 		GameCast.CAST_MAP.put(CapabilityObjectRef.class, new CastRef());
 	}
 
-	public static class CastRef implements ICastable<CapabilityObjectRef> {
+	public static class CastRef implements ICastHandler<CapabilityObjectRef> {
 		@Override
 		public CapabilityObjectRef cast(Object obj, ICastEnv env) {
 			if (obj instanceof NBTTagByteArray) {

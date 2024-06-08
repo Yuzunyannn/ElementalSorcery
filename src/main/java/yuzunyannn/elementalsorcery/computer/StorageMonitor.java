@@ -12,7 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
-import yuzunyannn.elementalsorcery.api.computer.StoragePath;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
@@ -21,17 +21,17 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 	protected static class Node {
 		final String key;
 		final Map<String, Node> children = new HashMap<>();
-		final StoragePath currPath;
+		final DeviceFilePath currPath;
 		Node parent;
 
 		int modifyVer = 1;
 		int dirtyVer = 1;
 
-		public StoragePath getPath() {
+		public DeviceFilePath getPath() {
 			return currPath;
 		}
 
-		Node(StoragePath currPath, Node parent) {
+		Node(DeviceFilePath currPath, Node parent) {
 			this.key = currPath.get(currPath.length() - 1);
 			this.currPath = currPath;
 			this.parent = parent;
@@ -64,17 +64,17 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 	}
 
 	protected Map<String, Node> nodeTree = new HashMap<>();
-	protected Map<StoragePath, Node> pathMap = new HashMap<>();
+	protected Map<DeviceFilePath, Node> pathMap = new HashMap<>();
 
 	@Override
-	public void add(StoragePath path) {
+	public void add(DeviceFilePath path) {
 		if (path.isEmpty()) return;
 		if (pathMap.containsKey(path)) return;
 		Node parentNode = null;
 		Map<String, Node> nodeTree = this.nodeTree;
 		for (int i = 0; i < path.length(); i++) {
 			String currKey = path.get(i);
-			StoragePath currPath = path.sub(i);
+			DeviceFilePath currPath = path.sub(i);
 			Node node = nodeTree.get(currKey);
 			if (node == null) nodeTree.put(currKey, node = new Node(currPath, parentNode));
 			parentNode = node;
@@ -84,7 +84,7 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 	}
 
 	@Override
-	public void remove(StoragePath path) {
+	public void remove(DeviceFilePath path) {
 		Node node = pathMap.get(path);
 		if (node == null) return;
 		if (node.parent != null) node.parent.children.remove(node.key);
@@ -92,7 +92,7 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 	}
 
 	@Override
-	public void markDirty(StoragePath path) {
+	public void markDirty(DeviceFilePath path) {
 		Node node = pathMap.get(path);
 		if (node == null) return;
 		node.modifyVer++;
@@ -112,7 +112,7 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		NBTTagList list = new NBTTagList();
-		for (StoragePath path : pathMap.keySet()) list.appendTag(NBTHelper.serializeStrings(path.toStrings()));
+		for (DeviceFilePath path : pathMap.keySet()) list.appendTag(NBTHelper.serializeStrings(path.toStrings()));
 		nbt.setTag("pts", list);
 		return nbt;
 	}
@@ -124,7 +124,7 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTTagList strList = (NBTTagList) list.get(i);
 			String[] strs = NBTHelper.deserializeStrings(strList);
-			this.add(StoragePath.of(strs));
+			this.add(DeviceFilePath.of(strs));
 		}
 	}
 

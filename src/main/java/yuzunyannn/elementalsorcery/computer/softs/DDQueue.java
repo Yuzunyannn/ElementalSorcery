@@ -17,6 +17,7 @@ public class DDQueue<T extends INBTSS> implements IDataDetectable<Integer, NBTTa
 	List<T> queue;
 	Supplier<T> creator;
 	public Consumer<T> onElementAdd;
+	public Consumer<T> onElementRemove;
 
 	public void setPersistentSize(int persistentSize) {
 		this.persistentSize = persistentSize;
@@ -44,6 +45,13 @@ public class DDQueue<T extends INBTSS> implements IDataDetectable<Integer, NBTTa
 			}
 			templateRef.set(persistentSize);
 			return list;
+		} else if (size > persistentSize) {
+			templateRef.set(persistentSize);
+			NBTTagList list = new NBTTagList();
+			NBTSender sender = new NBTSender();
+			sender.write("__rm_", size - persistentSize);
+			list.appendTag(sender.tag());
+			return list;
 		}
 		return null;
 	}
@@ -53,10 +61,21 @@ public class DDQueue<T extends INBTSS> implements IDataDetectable<Integer, NBTTa
 		if (queue == null) return;
 		for (int i = list.tagCount() - 1; i >= 0; i--) {
 			NBTSender sender = new NBTSender(list.getCompoundTagAt(i));
-			T obj = creator.get();
-			obj.readUpdateData(sender);
-			queue.add(obj);
-			if (onElementAdd != null) onElementAdd.accept(obj);
+			if (sender.has("__rm_")) {
+				int size = sender.nint("__rm_");
+				if (size >= queue.size()) {
+					queue.clear();
+					if (onElementRemove != null) onElementRemove.accept(null);
+				} else while (size-- > 0 && !queue.isEmpty()) {
+					T obj = queue.remove(queue.size() - 1);
+					if (onElementRemove != null && obj != null) onElementRemove.accept(obj);
+				}
+			} else {
+				T obj = creator.get();
+				obj.readUpdateData(sender);
+				queue.add(obj);
+				if (onElementAdd != null) onElementAdd.accept(obj);
+			}
 		}
 	}
 

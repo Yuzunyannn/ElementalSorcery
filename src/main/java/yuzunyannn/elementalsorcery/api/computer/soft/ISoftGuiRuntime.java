@@ -39,6 +39,8 @@ public interface ISoftGuiRuntime {
 	void setTooltip(String key, Vec3d vec, int duration, Supplier<List<String>> factory);
 
 	void exception(Throwable err);
+	
+	boolean hasFeature(String feature);
 
 	BlockPos getPosition();
 

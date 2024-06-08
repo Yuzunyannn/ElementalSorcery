@@ -1,10 +1,7 @@
 package yuzunyannn.elementalsorcery.computer;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class DeviceInfoTile extends DeviceInfo {
 
@@ -21,8 +18,7 @@ public class DeviceInfoTile extends DeviceInfo {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public String getDisplayWorkName() {
+	public String getTranslationWorkKey() {
 		if (typeName == null) {
 			try {
 				IBlockState state = tile.getWorld().getBlockState(tile.getPos());
@@ -31,7 +27,7 @@ public class DeviceInfoTile extends DeviceInfo {
 				typeName = "";
 			}
 		}
-		return I18n.format(typeName);
+		return typeName;
 	}
 
 }

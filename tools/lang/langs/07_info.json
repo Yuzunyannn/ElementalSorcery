@@ -1388,6 +1388,11 @@
             "zh_CN": "错误的指令格式",
             "en_US": "Incorrect instruction format",
             "ja_JP": "命令フォーマットが不正です"
+        },
+        "es.app.errPath": {
+            "zh_CN": "找不到指定的路径",
+            "en_US": "Cannot Find The Path Specified",
+            "ja_JP": "指定されたパスが見つかりません"
         }
     }
 }

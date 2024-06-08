@@ -38,22 +38,7 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		RenderFriend.endTileEntitySpecialRender();
 		RenderFriend.bindDestoryTextureEnd(destroyStage);
-
-		ItemStack stack = tile.getStack();
-		if (stack.isEmpty()) return;
-		GlStateManager.pushMatrix();
-
-		int n = MathHelper.ceil(MathHelper.sqrt(stack.getCount()) / 2);
-
-		GlStateManager.translate(x + 0.5 - n * 0.0125, y + 0.5, z + 0.5 - n * 0.0125);
-		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
-
-		for (int i = 0; i < n; i++) {
-			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
-			GlStateManager.translate(0.05, 0.005, 0.05);
-		}
-
-		GlStateManager.popMatrix();
+		RenderFriend.renderItemLayout(tile.getStack(), x + 0.5, y + 0.5, z + 0.5);
 	}
 
 	@Override

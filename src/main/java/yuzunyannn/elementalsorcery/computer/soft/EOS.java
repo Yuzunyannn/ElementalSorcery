@@ -3,11 +3,9 @@ package yuzunyannn.elementalsorcery.computer.soft;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -17,6 +15,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
@@ -26,8 +25,8 @@ import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
-import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
+import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceFile;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShellExecutor;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
@@ -38,20 +37,21 @@ import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerAppDamagedException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerBootException;
+import yuzunyannn.elementalsorcery.computer.exception.ComputerHardwareMissingException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerNewProcessException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerProcessNotExistException;
+import yuzunyannn.elementalsorcery.computer.files.DiskDeviceFile;
 import yuzunyannn.elementalsorcery.computer.soft.ProcessTree.ProcessNode;
 
 public abstract class EOS implements IOS {
 
-	static public final Variable<String> BOOT = new Variable("~boot", VariableSet.STRING);
+	static public final String APP_FILE_BASE = "apd";
+	static public final Variable<String> BASE = new Variable("~", VariableSet.STRING);
+	static public final DeviceFilePath BOOT_PATH = DeviceFilePath.of("boot");
 	static public final String PROCESS = "#PR";
 	static public final String APP = "#APP";
 
 	public final IComputer computer;
-	public List<AuthorityDisk> disksCache = null;
-	public Map<String, AuthorityAppDisk> appDiskCacheMap = new HashMap<>();
-
 	protected SyncDetectableMonitor monitor = new SyncDetectableMonitor(">os");
 	protected ProcessTree processTree = new ProcessTree();
 	protected boolean isRunning = false;
@@ -144,30 +144,54 @@ public abstract class EOS implements IOS {
 	protected void clearAll() {
 		isRunning = false;
 		processTree.reset();
-		appDiskCacheMap.clear();
-		disksCache = null;
+
+//		disksCache = null;
+//		appDiskCacheMap.clear();
+	}
+
+//	@Override
+//	public List<IDisk> getDisks() {
+//		if (disksCache == null) {
+//			disksCache = new ArrayList<>();
+//			List<IDisk> disks = computer.getDisks();
+//			for (IDisk disk : disks) disksCache.add(new AuthorityDisk(computer, disk, null));
+//		}
+//		return (List<IDisk>) ((Object) disksCache);
+//	}
+
+//	@Override
+//	public IDeviceStorage getDisk(App app, AppDiskType type) {
+//		String appId = app.getAppId().toString();
+//		String key = appId + "_" + type.key;
+//		if (appDiskCacheMap.containsKey(key)) return appDiskCacheMap.get(key);
+//		List<IDisk> list = getDisks();
+//		if (list.isEmpty()) return null;
+//		AuthorityAppDisk disk = new AuthorityAppDisk(computer, appId, list, type);
+//		appDiskCacheMap.put(key, disk);
+//		return disk;
+//	}
+
+	@Override
+	public IDeviceFile io(DeviceFilePath path) {
+		IDisk disk = getDisk(path);
+		if (disk == null) throw new ComputerHardwareMissingException(computer, "Disk Miss");
+		return new DiskDeviceFile(path, disk) {
+			@Override
+			public void markDirty() {
+				EOS.this.markDirty();
+			}
+		};
 	}
 
 	@Override
-	public List<IDisk> getDisks() {
-		if (disksCache == null) {
-			disksCache = new ArrayList<>();
-			List<IDisk> disks = computer.getDisks();
-			for (IDisk disk : disks) disksCache.add(new AuthorityDisk(computer, disk, null));
-		}
-		return (List<IDisk>) ((Object) disksCache);
+	public IDeviceFile ioAppData(String scope, String fileName) {
+		return io(DeviceFilePath.of(APP_FILE_BASE, scope, fileName));
 	}
 
-	@Override
-	public IDeviceStorage getDisk(App app, AppDiskType type) {
-		String appId = app.getAppId().toString();
-		String key = appId + "_" + type.key;
-		if (appDiskCacheMap.containsKey(key)) return appDiskCacheMap.get(key);
-		List<IDisk> list = getDisks();
-		if (list.isEmpty()) return null;
-		AuthorityAppDisk disk = new AuthorityAppDisk(computer, appId, list, type);
-		appDiskCacheMap.put(key, disk);
-		return disk;
+	protected IDisk getDisk(DeviceFilePath path) {
+		List<IDisk> disks = computer.getDisks();
+		if (disks.isEmpty()) return null;
+		return disks.get(0);
 	}
 
 	@Override
@@ -233,13 +257,13 @@ public abstract class EOS implements IOS {
 
 	@Override
 	public void onStarting() {
-		List<IDisk> list = this.getDisks();
+		IDeviceFile file = this.io(BOOT_PATH);
+
 		String boot = null;
-		for (IDisk disk : list) {
-			if (disk.has(BOOT)) {
-				boot = disk.get(BOOT);
-				break;
-			}
+		IDeviceStorage storage = file.open();
+		if (storage != null) {
+			if (storage.has(BASE)) boot = storage.get(BASE);
+			storage.close();
 		}
 		if (boot == null) throw new ComputerBootException(computer, "es.app.err.boot.cannotFind");
 
@@ -338,8 +362,8 @@ public abstract class EOS implements IOS {
 		each(app -> app.onDiskChange());
 		if (onlyData) return;
 
-		disksCache = null;
-		appDiskCacheMap.clear();
+//		disksCache = null;
+//		appDiskCacheMap.clear();
 	}
 
 	@Override
@@ -393,4 +417,11 @@ public abstract class EOS implements IOS {
 		return new CapabilityGetter(linker, capability, key);
 	}
 
+	static public <T extends IDisk> T setBoot(T disk, String id) {
+		DiskDeviceFile file = new DiskDeviceFile(EOS.BOOT_PATH, disk);
+		IDeviceStorage storage = file.forceOpen();
+		storage.set(EOS.BASE, id);
+		storage.markDirty().close();
+		return disk;
+	}
 }

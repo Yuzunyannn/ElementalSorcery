@@ -5,9 +5,11 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map.Entry;
@@ -75,6 +77,14 @@ public class JavaHelper {
 		return l;
 	}
 
+	public static Class<?> findCommonParent(Class<?> a, Class<?> b) {
+		if (a == b) return a;
+		if (a.isAssignableFrom(b)) return a;
+		if (b.isAssignableFrom(a)) return b;
+		while (!a.isAssignableFrom(b)) a = a.getSuperclass();
+		return a;
+	}
+
 	public static <T, U> ArrayList<T> toList(Collection<U> objs, Function<U, T> mapper) {
 		ArrayList<T> list = new ArrayList<>();
 		for (U obj : objs) {
@@ -82,6 +92,39 @@ public class JavaHelper {
 			if (ret != null) list.add(ret);
 		}
 		return list;
+	}
+
+	public static <T, U> ArrayList<T> toList(U[] objs, Function<U, T> mapper) {
+		ArrayList<T> list = new ArrayList<>();
+		for (U obj : objs) {
+			T ret = mapper.apply(obj);
+			if (ret != null) list.add(ret);
+		}
+		return list;
+	}
+
+	public static <T, U> T[] toArray(Collection<U> objs, Function<U, T> mapper) {
+		ArrayList<T> list = new ArrayList<>();
+		Class<?> ucls = null;
+		for (U obj : objs) {
+			T ret = mapper.apply(obj);
+			if (ret != null) {
+				if (ucls == null) ucls = obj.getClass();
+				else ucls = findCommonParent(ucls, obj.getClass());
+				list.add(ret);
+			}
+		}
+		if (list.isEmpty()) return (T[]) Array.newInstance(Object.class, 0);
+		return list.toArray((T[]) Array.newInstance(ucls, list.size()));
+	}
+
+	public static <T, U> T[] toArray(U[] objs, Function<U, T> mapper) {
+		return toArray(Arrays.asList(objs), mapper);
+	}
+
+	public static boolean isArray(Object obj) {
+		if (obj == null) return false;
+		return obj.getClass().isArray();
 	}
 
 //	public static <T, U> T[] toArray(Collection<U> list, Function<U, T> func) {

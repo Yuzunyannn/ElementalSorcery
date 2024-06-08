@@ -43,9 +43,14 @@ public abstract class WideNetwork {
 
 	protected abstract DeviceScanner createScanner(IWorldObject wo);
 
+	public void helloWorld(IDevice device) {
+		IDeviceEnv env = device.getEnv();
+		if (env != null) helloWorld(device, env);
+	}
+
 	public void helloWorld(IDevice device, IDeviceEnv env) {
 		UUID uuid = device.getUDID();
-		
+
 		if (finderMap.containsKey(uuid)) {
 			DeviceFinder finder = finderMap.get(uuid);
 			finder.finsh(env);

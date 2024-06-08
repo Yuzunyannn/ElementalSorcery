@@ -44,8 +44,8 @@ public class VariableSet implements IVariableSet {
 		}
 	}
 
-	private NBTTagCompound nbt;
-	private Map<String, VariableEntry> map = new HashMap<>();
+	protected NBTTagCompound nbt;
+	protected Map<String, VariableEntry> map = new HashMap<>();
 
 	@Override
 	public <T> void set(Variable<T> var, T obj) {

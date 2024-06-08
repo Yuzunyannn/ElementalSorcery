@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
@@ -350,6 +351,16 @@ public class NBTSaver implements INBTReader, INBTWriter {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	@Override
+	public void write(String key, Mantra mantra) {
+		nbt.setString(key, mantra == null ? "" : mantra.getRegistryName().toString());
+	}
+
+	@Override
+	public Mantra mantra(String key) {
+		return Mantra.REGISTRY.getValue(nbt.getString(key));
 	}
 
 }

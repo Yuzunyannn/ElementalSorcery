@@ -1,21 +1,29 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
+import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.DeviceNetworkRoute;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.soft.DeviceShellBadInvoke;
+import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceFile;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShell;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShellExecutor;
+import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
+import yuzunyannn.elementalsorcery.tile.device.DeviceFeatureMap;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTSS;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
+import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
 public class DeviceCommand implements INBTSS, IDeviceShell {
 
@@ -180,6 +188,9 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 		return node;
 	}
 
+	public final static DeviceFeatureMap dfeature = DeviceFeatureMap.getOrCreate(DeviceCommand.class);
+	protected Object[] args = new Object[0];
+
 	public DeviceCommand() {
 
 	}
@@ -190,6 +201,18 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 
 	public DeviceCommand(CommandParser paser) {
 		load(paser);
+	}
+
+	@Override
+	public void setArgs(Object... args) {
+		this.args = args;
+	}
+
+	public <T> T getArg(int index, Class<T> cls) {
+		if (index < 0 || index >= args.length) return null;
+		Object obj = this.args[index];
+		if (obj != null && cls.isAssignableFrom(obj.getClass())) return (T) obj;
+		return null;
 	}
 
 	@Override
@@ -244,6 +267,11 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 		executor.pushResult(this, result);
 	}
 
+	public boolean isClear() {
+		DeviceCommand.CMDElement cmd = (CMDElement) root;
+		return "clear".equals(cmd.method);
+	}
+
 	public static UUID finedUUID(IDevice device, String hint) {
 		DNRequest params = new DNRequest();
 		params.set(DNRequest.args(1), "uuid");
@@ -287,7 +315,49 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 		}
 
 		DeviceNetworkRoute route = new DeviceNetworkRoute(uuid);
+
+		if (dfeature.has(cmd.method)) {
+			request.setSrcDevice(device);
+			request.set("route", route);
+			request.set("executor", executor);
+			Object obj = dfeature.invoke(this, cmd.method, request);
+			return DNResult.byRet(obj);
+		}
+
 		return device.getNetwork().notice(route, cmd.method, request);
+	}
+
+	@DeviceFeature(id = "ls")
+	public Object cmd_ls(DNRequest request) {
+		DeviceFilePath path = request.ask(DNResult.args(1), DeviceFilePath.class);
+		if (path == null) path = DeviceFilePath.of();
+
+		IDevice device = request.getSrcDevice();
+		DeviceNetworkRoute route = request.get("route", DeviceNetworkRoute.class);
+		if (path == null || device == null || route == null) {
+			request.log(new TextComponentTranslation("es.app.errPath"));
+			return DNResultCode.FAIL;
+		}
+
+		DNRequest ioRequest = new DNRequest();
+		ioRequest.set(DNResult.args(1), path);
+		ioRequest.setLogList(request.getLogList());
+		DNResult result = device.getNetwork().notice(route, "io", ioRequest);
+		if (!result.isSuccess()) return result.code;
+
+		IDeviceFile file = result.getReturn(IDeviceFile.class);
+		if (!file.exists() || file == null) {
+			request.log(new TextComponentTranslation("es.app.errPath"));
+			return DNResultCode.FAIL;
+		}
+
+		Collection<IDeviceFile> files = file.list();
+		if (files == null) return DNResultCode.REFUSE;
+
+		return JavaHelper.toList(files, p -> {
+			if (p.isDirectory()) return TextFormatting.BLUE + "/" + p.getName();
+			return TextFormatting.YELLOW + p.getName();
+		});
 	}
 
 }

@@ -8,14 +8,19 @@ import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.EnumFacing;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 
 public class GameCast {
 
-	public final static Map<Class, ICastable> CAST_MAP = new IdentityHashMap<>();
+	public final static Map<Class, ICastHandler> CAST_MAP = new IdentityHashMap<>();
 
 	public static <T> T cast(ICastEnv env, Object obj, Class<?> toClazz) {
 		if (toClazz.isAssignableFrom(obj.getClass())) return (T) obj;
-		ICastable castable = CAST_MAP.get(toClazz);
+		if (obj instanceof ICastable) {
+			T to = ((ICastable) obj).cast(toClazz);
+			if (to != null) return to;
+		}
+		ICastHandler castable = CAST_MAP.get(toClazz);
 		if (castable == null) return null;
 		try {
 			return (T) castable.cast(obj, env);
@@ -45,9 +50,10 @@ public class GameCast {
 		CAST_MAP.put(String.class, new CastString());
 		CAST_MAP.put(UUID.class, new CastUUID());
 		CAST_MAP.put(EnumFacing.class, new CastEnumFacing());
+		CAST_MAP.put(DeviceFilePath.class, new DeviceFilePath.Cast());
 	}
 
-	public static class CastEnumFacing implements ICastable<EnumFacing> {
+	public static class CastEnumFacing implements ICastHandler<EnumFacing> {
 		@Override
 		public EnumFacing cast(Object obj, ICastEnv env) {
 			if (obj instanceof NBTPrimitive) return EnumFacing.byIndex(((NBTPrimitive) obj).getInt());
@@ -57,7 +63,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastUUID implements ICastable<UUID> {
+	public static class CastUUID implements ICastHandler<UUID> {
 		@Override
 		public UUID cast(Object obj, ICastEnv env) {
 			if (obj instanceof NBTTagByteArray) {
@@ -83,7 +89,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastString implements ICastable<String> {
+	public static class CastString implements ICastHandler<String> {
 		@Override
 		public String cast(Object obj, ICastEnv env) {
 			if (obj instanceof NBTTagString) return ((NBTTagString) obj).getString();
@@ -91,7 +97,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastBoolean implements ICastable<Boolean> {
+	public static class CastBoolean implements ICastHandler<Boolean> {
 		@Override
 		public Boolean cast(Object obj, ICastEnv env) {
 			if (obj instanceof Boolean) return (Boolean) obj;
@@ -101,7 +107,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastDouble implements ICastable<Double> {
+	public static class CastDouble implements ICastHandler<Double> {
 		@Override
 		public Double cast(Object obj, ICastEnv env) {
 			if (obj instanceof Number) return ((Number) obj).doubleValue();
@@ -115,7 +121,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastFloat implements ICastable<Float> {
+	public static class CastFloat implements ICastHandler<Float> {
 		@Override
 		public Float cast(Object obj, ICastEnv env) {
 			if (obj instanceof Number) return ((Number) obj).floatValue();
@@ -129,7 +135,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastLong implements ICastable<Long> {
+	public static class CastLong implements ICastHandler<Long> {
 		@Override
 		public Long cast(Object obj, ICastEnv env) {
 			if (obj instanceof Number) return ((Number) obj).longValue();
@@ -143,7 +149,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastInt implements ICastable<Integer> {
+	public static class CastInt implements ICastHandler<Integer> {
 		@Override
 		public Integer cast(Object obj, ICastEnv env) {
 			if (obj instanceof Number) return ((Number) obj).intValue();
@@ -157,7 +163,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastShort implements ICastable<Short> {
+	public static class CastShort implements ICastHandler<Short> {
 		@Override
 		public Short cast(Object obj, ICastEnv env) {
 			if (obj instanceof Number) return ((Number) obj).shortValue();
@@ -171,7 +177,7 @@ public class GameCast {
 		}
 	}
 
-	public static class CastByte implements ICastable<Byte> {
+	public static class CastByte implements ICastHandler<Byte> {
 		@Override
 		public Byte cast(Object obj, ICastEnv env) {
 			if (obj instanceof Number) return ((Number) obj).byteValue();

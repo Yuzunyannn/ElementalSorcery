@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.item.ESItemStorageEnum;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 
 public class ItemMantraGem extends Item {
@@ -23,13 +24,13 @@ public class ItemMantraGem extends Item {
 	static public Mantra getMantraFromMantraGem(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) return null;
-		return Mantra.REGISTRY.getValue(new ResourceLocation(nbt.getString("mantraGemId")));
+		return Mantra.REGISTRY.getValue(new ResourceLocation(nbt.getString(ESItemStorageEnum.MANTRA_STORAGE_ID)));
 	}
 
 	static public void setMantraToMantraGem(ItemStack stack, Mantra mantra) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
-		nbt.setString("mantraGemId", mantra.getRegistryName().toString());
+		nbt.setString(ESItemStorageEnum.MANTRA_STORAGE_ID, mantra.getRegistryName().toString());
 	}
 
 	public ItemMantraGem() {

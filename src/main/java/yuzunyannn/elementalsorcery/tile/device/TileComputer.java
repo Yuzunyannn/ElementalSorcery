@@ -26,12 +26,13 @@ public abstract class TileComputer extends TileDevice implements ITickable {
 
 	public TileComputer() {
 		this.computer = new ComputerTile(this);
+		this.device.addFeature(this.computer);
 		this.device.setEnv(myEnv = new ComputerEnvTile(this, this.computer));
 		this.linkerHandler.addLinker(() -> {
 			List<IDisk> list = computer.getDisks();
 			if (list.isEmpty()) return ItemStack.EMPTY;
 			DiskItem disk = (DiskItem) list.get(0);
-			return disk.toItemStack();
+			return disk.getItemStack();
 		}, itemStack -> {
 			List<IDisk> list = computer.getDisks();
 			if (list.isEmpty()) {

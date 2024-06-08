@@ -275,6 +275,7 @@ tile.stoneDecoration.starCPU.name=星空计算核心
 tile.stoneDecoration.dungeonReactor.name=异常的反应堆
 tile.mantraEmitter.name=咒文发射器
 tile.cloverComputer.name=地牢终端
+tile.ringReader.name=地牢读取器
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -703,6 +704,7 @@ es.app.cannotFind=找不到%s
 es.app.err.boot.cannotFind=找不到启动引导
 es.app.err.boot.fail=启动%s失败
 es.app.errCmdFormat=错误的指令格式
+es.app.errPath=找不到指定的路径
 
 elf.time.year=%d年
 elf.time.mon.0=春

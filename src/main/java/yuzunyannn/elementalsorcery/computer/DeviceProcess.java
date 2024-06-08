@@ -12,8 +12,12 @@ public class DeviceProcess {
 		this.device = device;
 	}
 
-	public void log(Object displayObj) {
-		if (currParams != null) currParams.log(displayObj);
+	public void log(Object... displayObjs) {
+		if (currParams != null) {
+			if (displayObjs.length == 0) return;
+			if (displayObjs.length == 1) currParams.log(displayObjs[0]);
+			else currParams.log(displayObjs);
+		}
 	}
 
 }

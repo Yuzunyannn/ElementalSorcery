@@ -46,6 +46,10 @@ public class GScene {
 		this.height = h;
 	}
 
+	public void setRootPosition(int x, int y) {
+		this.root.setPosition(x, y);
+	}
+
 	public void addChild(GNode node) {
 		this.root.addChild(node);
 	}

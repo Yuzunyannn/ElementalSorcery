@@ -1,6 +1,9 @@
 package yuzunyannn.elementalsorcery.computer;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -37,16 +40,20 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	protected IDeviceEnv env;
 	protected DeviceProcess process = new DeviceProcess(this);
 	public final static DeviceFeatureMap dfeature = DeviceFeatureMap.getOrCreate(Device.class);
-	protected final DeviceFeatureMap feature;
+	protected final List<Entry<DeviceFeatureMap, Object>> features = new ArrayList<>();
 	protected final U target;
 	protected final ICapabilityProvider capabilityProvider;
 
 	public Device(U target, DeviceInfo info) {
 		this.info = info;
 		this.target = target;
-		this.feature = DeviceFeatureMap.getOrCreate(target.getClass());
+		this.addFeature(target);
 		if (target instanceof ICapabilityProvider) capabilityProvider = (ICapabilityProvider) target;
 		else capabilityProvider = null;
+	}
+
+	public void addFeature(Object obj) {
+		features.add(JavaHelper.entry(DeviceFeatureMap.getOrCreate(obj.getClass()), obj));
 	}
 
 	@Override
@@ -77,10 +84,18 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	public DNResult notice(String method, DNRequest params) {
 		if (this.env == null) return DNResult.unavailable();
 
-		DeviceFeatureMap feature = this.feature;
-		Object self = this.target;
+		DeviceFeatureMap feature = null;
+		Object self = null;
 
-		if (!feature.has(method)) {
+		for (Entry<DeviceFeatureMap, Object> entry : features) {
+			feature = entry.getKey();
+			if (feature.has(method)) {
+				self = entry.getValue();
+				break;
+			}
+		}
+
+		if (self == null) {
 			if (!dfeature.has(method)) return DNResult.invalid();
 			feature = dfeature;
 			self = this;
@@ -193,7 +208,10 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	public void mergeChanges(NBTTagCompound nbt) {
 		NBTSender sender = new NBTSender(nbt);
 		if (sender.has("N")) network.mergeChanges(sender.compoundTag("N"));
-		if (sender.has("U")) this.udid = sender.uuid("U");
+		if (sender.has("U")) {
+			this.udid = sender.uuid("U");
+			this.network.resetSelfLinker();
+		}
 	}
 
 	/* ------------ ------------** >_< **------------ ------------ */
@@ -313,7 +331,7 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		case "uuid":
 			return JavaHelper.toList(linkers, liner -> liner.getRemoteUUID());
 		case "*":
-			return JavaHelper.toList(linkers, liner -> liner.getRemoteUUID());
+			return JavaHelper.toList(linkers, liner -> liner);
 		default:
 			return DNResultCode.REFUSE;
 		}

@@ -45,6 +45,10 @@ public class DeviceNetwork
 		if (uuids != null) {
 			for (UUID udid : uuids) linkerMap.put(udid, new DeviceLinker(this, udid));
 		}
+		resetSelfLinker();
+	}
+
+	public void resetSelfLinker() {
 		setSelfLinker(this.selfLinker);
 	}
 
@@ -56,7 +60,7 @@ public class DeviceNetwork
 
 	public void clear() {
 		linkerMap.clear();
-		setSelfLinker(this.selfLinker);
+		resetSelfLinker();
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class NBTHelper {
 		nbt.setInteger(key, val);
 		return nbt;
 	}
-	
+
 	public static NBTTagCompound pair(String key, byte val) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setByte(key, val);
@@ -233,6 +233,7 @@ public class NBTHelper {
 
 	public static NBTTagCompound serializeItemStackForSend(ItemStack stack) {
 		NBTTagCompound stackNBT = new NBTTagCompound();
+		if (stack.isEmpty()) return stackNBT;
 		stackNBT.setInteger("id", Item.REGISTRY.getIDForObject(stack.getItem()));
 		if (stack.getCount() != 1) stackNBT.setByte("n", (byte) stack.getCount());
 		if (stack.getItemDamage() != 0) stackNBT.setShort("d", (short) stack.getItemDamage());
@@ -246,6 +247,7 @@ public class NBTHelper {
 	}
 
 	public static ItemStack deserializeItemStackFromSend(NBTTagCompound stackNBT) {
+		if (!stackNBT.hasKey("id")) return ItemStack.EMPTY;
 		Item item = Item.REGISTRY.getObjectById(stackNBT.getInteger("id"));
 		ItemStack stack = new ItemStack(item);
 		if (stackNBT.hasKey("n", NBTTag.TAG_NUMBER)) stack.setCount(stackNBT.getInteger("n"));

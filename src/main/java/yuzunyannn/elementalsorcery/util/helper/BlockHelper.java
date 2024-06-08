@@ -78,9 +78,10 @@ public class BlockHelper {
 	public static boolean onBlockActivatedWithIGetItemStack(World worldIn, BlockPos pos, IBlockState state,
 			EntityPlayer playerIn, EnumHand hand, boolean justOne) {
 		ItemStack stack = playerIn.getHeldItem(hand);
+		IGetItemStack tile = BlockHelper.getTileEntity(worldIn, pos, IGetItemStack.class);
+		if (tile == null) return false;
 		if (stack.isEmpty()) {
 			if (hand != EnumHand.MAIN_HAND) return false;
-			IGetItemStack tile = (IGetItemStack) worldIn.getTileEntity(pos);
 			stack = tile.getStack();
 			if (stack.isEmpty()) return false;
 			if (!worldIn.isRemote) {
@@ -98,7 +99,6 @@ public class BlockHelper {
 			}
 			return true;
 		}
-		IGetItemStack tile = (IGetItemStack) worldIn.getTileEntity(pos);
 		if (!tile.canSetStack(stack)) return false;
 		if (tile.getStack().isEmpty()) {
 			if (!worldIn.isRemote) {

@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
-import yuzunyannn.elementalsorcery.api.computer.StoragePath;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.computer.IStorageMonitor;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
@@ -16,23 +16,23 @@ public class AuthorityStorageMonitor implements IStorageMonitor {
 
 	@Override
 	public void add(String... pathstrs) {
-		StoragePath path = StoragePath.of(JavaHelper.concat(this.paths, pathstrs));
+		DeviceFilePath path = DeviceFilePath.of(JavaHelper.concat(this.paths, pathstrs));
 		this.monitor.add(path);
 	}
 
 	@Override
-	public void add(StoragePath path) {
-		this.monitor.add(path.addFront(this.paths));
+	public void add(DeviceFilePath path) {
+		this.monitor.add(path.prepend(this.paths));
 	}
 
 	@Override
-	public void remove(StoragePath path) {
-		this.monitor.remove(path.addFront(this.paths));
+	public void remove(DeviceFilePath path) {
+		this.monitor.remove(path.prepend(this.paths));
 	}
 
 	@Override
-	public void markDirty(StoragePath path) {
-		this.monitor.markDirty(path.addFront(this.paths));
+	public void markDirty(DeviceFilePath path) {
+		this.monitor.markDirty(path.prepend(this.paths));
 	}
 
 }

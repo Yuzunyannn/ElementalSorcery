@@ -80,6 +80,10 @@ public class ESImplRegister<T extends IForgeRegistryEntry<T>> implements IForgeR
 		return REGISTRY.getObject(name);
 	}
 
+	public T getValue(String name) {
+		return REGISTRY.getObject(new ResourceLocation(name));
+	}
+
 	public T getValue(int id) {
 		return REGISTRY.getObjectById(id);
 	}

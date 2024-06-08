@@ -41,12 +41,6 @@ public abstract class DeviceInfo implements IDeviceInfo, INBTSerializable<NBTTag
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public String getDisplayWorkName() {
-		return "";
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
 	public void addInformation(List<String> tooltip) {
 		if (manufacturer != null) tooltip.add(I18n.format("es.app.manufacturer") + manufacturer);
 	}

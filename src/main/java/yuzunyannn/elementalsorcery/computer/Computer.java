@@ -19,6 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
@@ -202,6 +203,11 @@ public abstract class Computer implements IComputer {
 	@DeviceFeature(id = "power-off")
 	public void setPowerFlag() {
 		closeFlag = true;
+	}
+
+	@DeviceFeature(id = "io")
+	public Object io(DeviceFilePath path) {
+		return getSystem().io(path);
 	}
 
 	@DeviceFeature(id = "exit")
@@ -439,10 +445,9 @@ public abstract class Computer implements IComputer {
 	protected void osRun(Consumer<IOS> run) {
 		try {
 			run.accept(os);
-		} catch (ComputerException e) {
-			if (ESAPI.isDevelop) ESAPI.logger.warn("dev warnning", e);
 		} catch (Exception e) {
-			ESAPI.logger.warn("系統崩潰", e);
+			ESAPI.logger.warn("系統崩潰client", e);
+			exception = IComputerException.easy(e);
 		}
 	}
 

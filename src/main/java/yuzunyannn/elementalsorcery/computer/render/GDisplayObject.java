@@ -6,6 +6,7 @@ import net.minecraft.util.text.ITextComponent;
 import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
+import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
 public class GDisplayObject extends GEasyLayoutContainer {
 
@@ -39,6 +40,12 @@ public class GDisplayObject extends GEasyLayoutContainer {
 			gobj.setColorRef(color);
 			List list = (List) displayObject;
 			for (Object obj : list) gobj.addChild(createDisplayNode(obj));
+			return gobj;
+		} else if (JavaHelper.isArray(displayObject)) {
+			GDisplayObject gobj = new GDisplayObject();
+			gobj.setColorRef(color);
+			Object[] array = (Object[]) displayObject;
+			for (Object obj : array) gobj.addChild(createDisplayNode(obj));
 			return gobj;
 		} else if (displayObject instanceof ITextComponent) {
 			ITextComponent text = (ITextComponent) displayObject;

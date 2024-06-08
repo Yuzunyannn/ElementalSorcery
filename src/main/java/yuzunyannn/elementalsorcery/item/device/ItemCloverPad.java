@@ -19,9 +19,7 @@ public class ItemCloverPad extends ItemPad {
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
 		ComputerProviderOfItem provider = new ComputerProviderOfItem(stack, new ComputerDevice("cloverPad", stack));
 		ComputerDevice computer = (ComputerDevice) provider.getComputer();
-		Disk disk = new Disk();
-		disk.set(EOS.BOOT, AppCommand.ID.toString());
-		computer.addDisk(disk);
+		computer.addDisk(EOS.setBoot(new Disk(), AppCommand.ID.toString()));
 		return provider;
 	}
 

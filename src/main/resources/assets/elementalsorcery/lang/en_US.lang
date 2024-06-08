@@ -275,6 +275,7 @@ tile.stoneDecoration.starCPU.name=Starry CPU
 tile.stoneDecoration.dungeonReactor.name=Strange Reactor
 tile.mantraEmitter.name=Mantra Emitter
 tile.cloverComputer.name=Dungeon Terminal
+tile.ringReader.name=Dungeon Reader
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -703,6 +704,7 @@ es.app.cannotFind=Can't find %s
 es.app.err.boot.cannotFind=Can't find bootable device
 es.app.err.boot.fail=Boot failure: %s
 es.app.errCmdFormat=Incorrect instruction format
+es.app.errPath=Cannot Find The Path Specified
 
 elf.time.year=%d Year 
 elf.time.mon.0=Spring 

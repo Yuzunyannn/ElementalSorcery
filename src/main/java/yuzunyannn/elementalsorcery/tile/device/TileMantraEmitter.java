@@ -6,6 +6,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.computer.DeviceInfoTile;
 import yuzunyannn.elementalsorcery.nodegui.GActionEaseInOutBack;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
@@ -15,6 +16,7 @@ import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 public class TileMantraEmitter extends TileDevice implements ITickable {
 
 	protected EnumFacing facing = EnumFacing.NORTH;
+	protected Mantra mantra;
 
 	public TileMantraEmitter() {
 		DeviceInfoTile info = (DeviceInfoTile) device.getInfo();
@@ -25,12 +27,14 @@ public class TileMantraEmitter extends TileDevice implements ITickable {
 	public void writeSaveData(INBTWriter writer) {
 		super.writeSaveData(writer);
 		writer.write("facing", facing);
+		writer.write("mantra", mantra);
 	}
 
 	@Override
 	public void readSaveData(INBTReader reader) {
 		super.readSaveData(reader);
 		facing = reader.facing("facing");
+		mantra = reader.mantra("mantra");
 	}
 
 	@Override
@@ -51,7 +55,29 @@ public class TileMantraEmitter extends TileDevice implements ITickable {
 		if (reader.has("fc")) this.setFacing(reader.facing("fc"));
 	}
 
-	@DeviceFeature(id = "facing")
+	@DeviceFeature(id = "mantra-set")
+	public DNResultCode setMantra(Mantra mantra) {
+		if (world.isRemote) return DNResultCode.SUCCESS;
+
+		if (this.mantra == mantra) {
+			process.log("mantra unchange");
+			return DNResultCode.REFUSE;
+		}
+
+		this.mantra = mantra;
+		this.markDirty();
+		if (mantra == null) process.log("clear mantra");
+		else process.log("set mantra to ", mantra);
+
+		return DNResultCode.SUCCESS;
+	}
+
+	@DeviceFeature(id = "mantra-clear")
+	public void clearMantra() {
+		setMantra(null);
+	}
+
+	@DeviceFeature(id = "facing-set")
 	public DNResultCode setFacing(EnumFacing facing) {
 		if (world.isRemote) {
 			updateClientFacing(facing, 20);
@@ -70,6 +96,11 @@ public class TileMantraEmitter extends TileDevice implements ITickable {
 		this.markDirty();
 		process.log("set facing to " + facing);
 		return DNResultCode.SUCCESS;
+	}
+
+	@Override
+	public void setPlaceFacing(EnumFacing facing) {
+		this.facing = facing;
 	}
 
 	@DeviceFeature(id = "facing")

@@ -1,18 +1,18 @@
 package yuzunyannn.elementalsorcery.computer;
 
-import yuzunyannn.elementalsorcery.api.computer.StoragePath;
+import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 
 public interface IStorageMonitor {
 
-	void add(StoragePath path);
+	void add(DeviceFilePath path);
 
-	void remove(StoragePath path);
+	void remove(DeviceFilePath path);
 
-	void markDirty(StoragePath path);
+	void markDirty(DeviceFilePath path);
 
 	default void add(String... strings) {
-		add(StoragePath.of(strings));
+		add(DeviceFilePath.of(strings));
 	}
 
 	default public void add(Variable<?> var) {
@@ -20,7 +20,7 @@ public interface IStorageMonitor {
 	}
 
 	default void remove(String... strings) {
-		remove(StoragePath.of(strings));
+		remove(DeviceFilePath.of(strings));
 	}
 
 	default public void remove(Variable var) {
@@ -28,7 +28,7 @@ public interface IStorageMonitor {
 	}
 
 	default void markDirty(String... strings) {
-		markDirty(StoragePath.of(strings));
+		markDirty(DeviceFilePath.of(strings));
 	}
 
 	default public void markDirty(Variable var) {
