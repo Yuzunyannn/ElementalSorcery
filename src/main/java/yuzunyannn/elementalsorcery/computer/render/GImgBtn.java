@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.computer.render;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.util.helper.Color;

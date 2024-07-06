@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.MatchHelper;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.BtnBaseInteractor;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.computer.render.GStringBtn;

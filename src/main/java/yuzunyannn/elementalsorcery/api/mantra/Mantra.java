@@ -22,10 +22,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.api.util.ESImplRegister;
-import yuzunyannn.elementalsorcery.api.util.IDisplayable;
-import yuzunyannn.elementalsorcery.api.util.client.ESResources;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.DOMantra;
+import yuzunyannn.elementalsorcery.api.util.render.ESResources;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 
 public class Mantra extends IForgeRegistryEntry.Impl<Mantra> implements IDisplayable {
 
@@ -186,7 +187,8 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> implements IDisplay
 
 	/** 渲染该咒文切换时的图标 */
 	@SideOnly(Side.CLIENT)
-	public void renderShiftIcon(NBTTagCompound mantraData, float suggestSize, float suggestAlpha, float partialTicks) {
+	public void renderShiftIcon(@Nullable NBTTagCompound mantraData, float suggestSize, float suggestAlpha,
+			float partialTicks) {
 		ESResources.MANTRA_COMMON_CIRCLE.bind();
 		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize, suggestSize);
 		ResourceLocation res = this.getIconResource();
@@ -215,8 +217,10 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> implements IDisplay
 
 	@Override
 	public Object toDisplayObject() {
-		return new TextComponentString("[M]").appendSibling(new TextComponentTranslation(
-				getTranslationKey() + ".name"));
+		return new Object[] { new DOMantra(this).setScale(0.5f),
+				new TextComponentTranslation(getTranslationKey() + ".name")
+
+		};
 	}
 
 }

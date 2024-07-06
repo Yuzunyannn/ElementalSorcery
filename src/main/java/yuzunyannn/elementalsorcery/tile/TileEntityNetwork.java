@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.tile.ICanSync;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTSS;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;

@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;

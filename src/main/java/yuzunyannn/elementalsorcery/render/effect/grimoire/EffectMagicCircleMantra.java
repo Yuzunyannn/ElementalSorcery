@@ -7,7 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellScrew;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;

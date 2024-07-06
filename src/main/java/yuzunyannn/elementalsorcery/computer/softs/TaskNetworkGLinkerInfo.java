@@ -8,12 +8,13 @@ import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.computer.render.BtnBaseInteractor;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiThemePart;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
+import yuzunyannn.elementalsorcery.nodegui.GItemStack;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.util.helper.Color;
@@ -71,6 +72,8 @@ public class TaskNetworkGLinkerInfo extends GNode {
 
 		this.width = gui.lWidth;
 		this.height = linkIcon.getHeight() + 2;
+
+
 
 		this.setInteractor(interactor = new BtnBaseInteractor() {
 

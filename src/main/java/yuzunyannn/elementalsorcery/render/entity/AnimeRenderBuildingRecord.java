@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingBuildingRecord;
@@ -89,7 +89,7 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 			xoff = rate * xoff;
 		}
 		GlStateManager.translate((float) x + xoff, (float) y - 0.25f + high, (float) z);
-		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
+		yuzunyannn.elementalsorcery.api.util.render.RenderFriend.layItemPositionFix(stack);
 		GlStateManager.rotate(xr, 1, 0, 0);
 		GlStateManager.rotate(theta + partialTicks, 0, 1, 0);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);

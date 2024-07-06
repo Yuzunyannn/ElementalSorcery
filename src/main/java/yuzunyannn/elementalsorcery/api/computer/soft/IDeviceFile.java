@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.ICalculatorObject;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
-import yuzunyannn.elementalsorcery.api.util.IDisplayable;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 
 public interface IDeviceFile extends ICalculatorObject, IDisplayable {
 

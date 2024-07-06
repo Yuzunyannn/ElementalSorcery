@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerItemStructureCraft;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;

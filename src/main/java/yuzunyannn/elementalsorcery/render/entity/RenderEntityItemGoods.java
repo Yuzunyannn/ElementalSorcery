@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 
 public class RenderEntityItemGoods extends Render<EntityItemGoods> {

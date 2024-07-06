@@ -9,8 +9,8 @@ import javax.annotation.Nullable;
 
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.util.GameCast;
-import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
 import yuzunyannn.elementalsorcery.api.util.ICastEnv;
+import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
 
 public class DNRequest extends DNBase implements ICastEnv {
 

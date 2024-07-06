@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.util.helper.Color;

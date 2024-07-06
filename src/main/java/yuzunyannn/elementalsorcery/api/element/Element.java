@@ -16,8 +16,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.api.util.ESImplRegister;
-import yuzunyannn.elementalsorcery.api.util.client.ESResources;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.ESResources;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 
 public class Element extends IForgeRegistryEntry.Impl<Element> {
 

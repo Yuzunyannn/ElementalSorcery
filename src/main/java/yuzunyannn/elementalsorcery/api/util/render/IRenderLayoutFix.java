@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.api.util.client;
+package yuzunyannn.elementalsorcery.api.util.render;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;

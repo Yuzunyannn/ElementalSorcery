@@ -11,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
 import yuzunyannn.elementalsorcery.computer.softs.AppTutorialGui;

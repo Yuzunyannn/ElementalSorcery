@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.entity.player.InventoryPlayer;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerMDRubbleRepair;
 
 public class GuiMDRubbleRepair extends GuiMDBase<ContainerMDRubbleRepair> {

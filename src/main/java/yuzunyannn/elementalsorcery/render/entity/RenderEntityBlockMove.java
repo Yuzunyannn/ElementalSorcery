@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 
 @SideOnly(Side.CLIENT)

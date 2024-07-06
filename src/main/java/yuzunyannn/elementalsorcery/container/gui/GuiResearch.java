@@ -23,7 +23,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerResearch;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.elf.research.Topics;

@@ -10,7 +10,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDBase;
 import yuzunyannn.elementalsorcery.container.gui.GuiNormal;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;

@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceFile;
@@ -40,6 +41,7 @@ public class TileRingReader extends TileDevice implements IGetItemStack {
 	public TileRingReader() {
 		DeviceInfoTile info = (DeviceInfoTile) device.getInfo();
 		info.setManufacturer(TextFormatting.OBFUSCATED + "mantragic");
+		info.setIcon(new ItemStack(ESObjects.BLOCKS.RING_READER));
 		folder = new LogicDeviceFolder(DeviceFilePath.of());
 		folder.set("device.info", path -> new ConstDeviceFile(path, info.serializeNBT()));
 		folder.set("input.dat", path -> getStackFile(path));
@@ -62,9 +64,7 @@ public class TileRingReader extends TileDevice implements IGetItemStack {
 	}
 
 	public IDeviceFile getStackFile(DeviceFilePath path) {
-		ItemStack stack = getStack();
-		if (stack.isEmpty()) return null;
-		return ItemDeviceFile.getFile(path, stack);
+		return ItemDeviceFile.getFile(path, () -> getStack());
 	}
 
 	@Override

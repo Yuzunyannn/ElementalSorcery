@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.nodegui;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
 
 @SideOnly(Side.CLIENT)
 public class GScissor extends GNode {

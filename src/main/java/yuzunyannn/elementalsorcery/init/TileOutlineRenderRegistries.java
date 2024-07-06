@@ -4,7 +4,7 @@ import java.util.IdentityHashMap;
 import java.util.Map;
 
 import net.minecraft.tileentity.TileEntity;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderOutline;
 
 public class TileOutlineRenderRegistries {
 

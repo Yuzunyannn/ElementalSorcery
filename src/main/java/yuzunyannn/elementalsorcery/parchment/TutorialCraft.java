@@ -13,7 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;

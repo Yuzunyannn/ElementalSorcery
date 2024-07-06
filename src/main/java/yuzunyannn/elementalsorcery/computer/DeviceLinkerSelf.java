@@ -10,8 +10,8 @@ import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
-import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
-import yuzunyannn.elementalsorcery.api.util.IDisplayable;
+import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
 public class DeviceLinkerSelf implements IDeviceLinker, IDisplayable {

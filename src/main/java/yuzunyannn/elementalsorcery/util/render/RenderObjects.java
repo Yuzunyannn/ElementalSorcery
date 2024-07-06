@@ -6,7 +6,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderObjects {

@@ -12,9 +12,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.render.model.ModelStoneMill;
 import yuzunyannn.elementalsorcery.tile.TileStoneMill;
@@ -57,7 +57,7 @@ public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x + m.xoff, y + dustyYoff - ydown - 0.125f, z + m.zoff);
 			GlStateManager.rotate(m.roate, 0, 1, 0);
-			yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(m.stack);
+			yuzunyannn.elementalsorcery.api.util.render.RenderFriend.layItemPositionFix(m.stack);
 			Minecraft.getMinecraft().getRenderItem().renderItem(m.stack, ItemCameraTransforms.TransformType.FIXED);
 			GlStateManager.popMatrix();
 		}

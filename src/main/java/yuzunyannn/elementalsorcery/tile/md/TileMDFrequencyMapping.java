@@ -20,7 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;

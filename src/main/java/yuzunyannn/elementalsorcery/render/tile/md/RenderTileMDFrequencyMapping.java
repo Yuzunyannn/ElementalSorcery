@@ -5,8 +5,8 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.render.model.md.ModelMDFrequencyMapping;
 import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping;
 

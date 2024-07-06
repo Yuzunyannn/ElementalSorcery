@@ -17,8 +17,8 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
-import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
 public class NBTSaver implements INBTReader, INBTWriter {

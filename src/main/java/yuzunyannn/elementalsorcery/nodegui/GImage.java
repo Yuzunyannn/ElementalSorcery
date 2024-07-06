@@ -7,10 +7,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 

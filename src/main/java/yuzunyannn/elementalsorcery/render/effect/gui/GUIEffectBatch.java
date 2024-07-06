@@ -5,7 +5,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElement;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 

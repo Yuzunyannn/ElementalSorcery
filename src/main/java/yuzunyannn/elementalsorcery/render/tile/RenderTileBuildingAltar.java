@@ -7,9 +7,9 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelBuildingAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
@@ -36,7 +36,7 @@ public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuild
 			return;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y - 0.25, z + 0.5);
-		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
+		yuzunyannn.elementalsorcery.api.util.render.RenderFriend.layItemPositionFix(stack);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 		GlStateManager.popMatrix();
 	}

@@ -9,7 +9,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.nodegui.GActionMoveBy;
 import yuzunyannn.elementalsorcery.nodegui.GActionRemove;
 import yuzunyannn.elementalsorcery.nodegui.GActionSequence;

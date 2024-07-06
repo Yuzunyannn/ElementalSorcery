@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.container.gui.GuiDungeonMap;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;

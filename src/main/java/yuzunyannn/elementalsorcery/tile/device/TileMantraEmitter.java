@@ -1,10 +1,12 @@
 package yuzunyannn.elementalsorcery.tile.device;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.computer.DeviceInfoTile;
@@ -21,6 +23,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable {
 	public TileMantraEmitter() {
 		DeviceInfoTile info = (DeviceInfoTile) device.getInfo();
 		info.setManufacturer(TextFormatting.OBFUSCATED + "mantragic");
+		info.setIcon(new ItemStack(ESObjects.BLOCKS.MANTRA_EMITTER));
 	}
 
 	@Override

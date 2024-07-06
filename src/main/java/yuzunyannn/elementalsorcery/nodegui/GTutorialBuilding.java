@@ -28,7 +28,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.util.item.BigItemStack;

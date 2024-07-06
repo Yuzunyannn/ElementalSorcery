@@ -16,7 +16,7 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 
 @SideOnly(Side.CLIENT)

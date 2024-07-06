@@ -2,8 +2,8 @@ package yuzunyannn.elementalsorcery.render.tile.md;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.md.ModelMDMagiclization;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;

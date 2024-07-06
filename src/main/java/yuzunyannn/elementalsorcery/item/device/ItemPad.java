@@ -3,9 +3,11 @@ package yuzunyannn.elementalsorcery.item.device;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,6 +34,7 @@ import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart;
 import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart.EnumType;
+import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 
 public class ItemPad extends Item implements IItemSmashable {
 
@@ -104,7 +107,7 @@ public class ItemPad extends Item implements IItemSmashable {
 			NBTTagList tagList = new NBTTagList();
 			for (IDisk disk : disks) {
 				if (disk instanceof Disk) tagList.appendTag(disk.serializeNBT());
-				tagList.appendTag(new NBTTagCompound());
+				else tagList.appendTag(new NBTTagCompound());
 			}
 			nbt.setTag("disks", tagList);
 		} catch (Exception e) {}

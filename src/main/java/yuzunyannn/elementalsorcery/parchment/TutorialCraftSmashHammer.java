@@ -6,7 +6,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.crafting.ISmashRecipe;

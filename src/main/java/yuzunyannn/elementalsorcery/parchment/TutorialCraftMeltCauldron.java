@@ -11,7 +11,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;

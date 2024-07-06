@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;

@@ -10,7 +10,7 @@ import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
 import yuzunyannn.elementalsorcery.computer.render.AppGuiCommon;
 import yuzunyannn.elementalsorcery.computer.render.GDragContainer;
 import yuzunyannn.elementalsorcery.computer.render.GEasyLayoutContainer;

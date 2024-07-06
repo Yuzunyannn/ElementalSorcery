@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.api.util.client;
+package yuzunyannn.elementalsorcery.api.util.render;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.ItemRendererModel.ItemRendererBakedModel;
+import yuzunyannn.elementalsorcery.api.util.render.ItemRendererModel.ItemRendererBakedModel;
 
 @SideOnly(Side.CLIENT)
 public interface IRenderItem {

@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 

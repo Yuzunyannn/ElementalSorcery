@@ -18,7 +18,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleWaterBubble;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;

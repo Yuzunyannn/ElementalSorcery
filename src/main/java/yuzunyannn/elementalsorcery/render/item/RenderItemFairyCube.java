@@ -3,8 +3,8 @@ package yuzunyannn.elementalsorcery.render.item;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityFairyCube;
 import yuzunyannn.elementalsorcery.render.model.ModelFairyCube;
 

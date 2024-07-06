@@ -7,7 +7,7 @@ import mezz.jei.api.gui.IDrawable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 
 public class MDDraw implements IDrawable {
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentTranslation;
 import yuzunyannn.elementalsorcery.api.ESAPI;
@@ -12,7 +13,8 @@ import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
-import yuzunyannn.elementalsorcery.api.util.IDisplayable;
+import yuzunyannn.elementalsorcery.api.util.render.DOItem;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.WorldLocation;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerConnectException;
@@ -227,8 +229,17 @@ public class DeviceLinker implements IDeviceLinker, IDisplayable {
 			IDevice device = getRemoteDevice();
 			IDeviceInfo info = device.getInfo();
 			String name = info.getName();
-			if (name == null || name.isEmpty()) list.add(new TextComponentTranslation(info.getDisplayWorkName()));
-			else list.add(name);
+			Object nameObject;
+			if (name == null || name.isEmpty()) nameObject = new TextComponentTranslation(info.getDisplayWorkName());
+			else nameObject = name;
+			ItemStack icon = info.getIcon();
+			if (!icon.isEmpty()) {
+				Object[] objs = new Object[2];
+				objs[0] = nameObject;
+				objs[1] = new DOItem(icon).setScale(0.5f);
+				nameObject = objs;
+			}
+			list.add(nameObject);
 		}
 		list.add(remoteUUID.toString());
 		String conntect = isConntect ? "connecting" : "missing";

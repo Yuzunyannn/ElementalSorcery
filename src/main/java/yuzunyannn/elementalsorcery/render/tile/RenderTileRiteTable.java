@@ -10,9 +10,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.render.model.ModelRiteTable;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
@@ -50,7 +50,7 @@ public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable
 			ox = MathHelper.cos(i * 1.92f) * 0.6f;
 			oy = MathHelper.sin(i * 2.8f) * 0.6f;
 			GlStateManager.translate(ox, 0.67f, oy);
-			yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
+			yuzunyannn.elementalsorcery.api.util.render.RenderFriend.layItemPositionFix(stack);
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 			GlStateManager.popMatrix();
 		}

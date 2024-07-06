@@ -12,9 +12,9 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformT
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelGlassCup;
 import yuzunyannn.elementalsorcery.util.render.FrameHelper;

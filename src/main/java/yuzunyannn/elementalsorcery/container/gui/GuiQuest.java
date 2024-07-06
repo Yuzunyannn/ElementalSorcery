@@ -17,7 +17,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerQuest;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;

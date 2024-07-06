@@ -6,7 +6,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 

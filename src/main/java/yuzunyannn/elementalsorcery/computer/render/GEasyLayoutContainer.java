@@ -1,8 +1,9 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.IGNodeLayoutable;
 
@@ -37,6 +38,7 @@ public class GEasyLayoutContainer extends GNode implements IGNodeLayoutable {
 		double xoffset = 0;
 		double lineMaxHeight = 0;
 		List<GNode> list = this.getChildren();
+		List<GNode> currLineNodes = new LinkedList<>();
 		for (GNode node : list) {
 			if (node instanceof IGNodeLayoutable) {
 				IGNodeLayoutable layoutable = (IGNodeLayoutable) node;
@@ -48,13 +50,19 @@ public class GEasyLayoutContainer extends GNode implements IGNodeLayoutable {
 			if (xoffset > 0 && (xoffset + node.getWidth() + margin.left > maxWidth || everyLine)) {
 				xoffset = 0;
 				yoffset = yoffset + margin.bottom + margin.top + lineMaxHeight;
+				for (GNode n : currLineNodes) {
+					double dh = lineMaxHeight - n.getHeight();
+					n.setPosition(n.getPostionX(), n.getPostionY() + dh);
+				}
 				lineMaxHeight = 0;
+				currLineNodes.clear();
 			}
 			xoffset = xoffset + margin.left;
 			node.setPosition(xoffset, yoffset);
 			xoffset += node.getWidth() + margin.right;
 			width = Math.max(width, xoffset);
 			lineMaxHeight = Math.max(lineMaxHeight, node.getHeight());
+			currLineNodes.add(node);
 		}
 		width = Math.min(width, maxWidth);
 		height = yoffset + lineMaxHeight;

@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;

@@ -25,7 +25,7 @@ public class EffectListBufferConfusion extends EffectListBuffer {
 	@Override
 	protected void renderFrame() {
 		RenderHelper.disableStandardItemLighting();
-		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.disableLightmap(true);
+		yuzunyannn.elementalsorcery.api.util.render.RenderFriend.disableLightmap(true);
 		buffer.bindTexture();
 
 		Shaders.ErrorCode.bind();

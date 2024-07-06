@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.api.util.client;
+package yuzunyannn.elementalsorcery.api.util.render;
 
 import java.util.Collections;
 import java.util.List;

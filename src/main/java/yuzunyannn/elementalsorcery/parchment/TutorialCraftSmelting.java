@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;

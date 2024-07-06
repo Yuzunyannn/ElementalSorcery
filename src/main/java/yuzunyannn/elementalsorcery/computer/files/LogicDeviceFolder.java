@@ -37,7 +37,7 @@ public class LogicDeviceFolder extends DeviceFileAdapter {
 		LinkedList<IDeviceFile> children = new LinkedList<>();
 		for (Entry<String, Function<DeviceFilePath, IDeviceFile>> entry : folderMap.entrySet()) {
 			IDeviceFile file = entry.getValue().apply(path.append(entry.getKey()));
-			if (file != null) children.add(file);
+			if (file != null && file.exists()) children.add(file);
 		}
 		return children;
 	}

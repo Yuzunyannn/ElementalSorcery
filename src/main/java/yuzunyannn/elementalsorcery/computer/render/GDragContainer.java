@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.GScissor;
 

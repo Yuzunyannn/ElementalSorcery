@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.computer.softs;
 
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
 import yuzunyannn.elementalsorcery.computer.render.GClickLabel;
 import yuzunyannn.elementalsorcery.computer.render.GDisplayObject;
 import yuzunyannn.elementalsorcery.nodegui.GNode;

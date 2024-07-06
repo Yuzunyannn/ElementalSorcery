@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.render.effect.gui.StructElement2D;
 

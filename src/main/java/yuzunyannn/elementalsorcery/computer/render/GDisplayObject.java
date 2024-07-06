@@ -3,7 +3,9 @@ package yuzunyannn.elementalsorcery.computer.render;
 import java.util.List;
 
 import net.minecraft.util.text.ITextComponent;
-import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
+import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayObject;
+import yuzunyannn.elementalsorcery.nodegui.GDisplayAgent;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
@@ -51,6 +53,7 @@ public class GDisplayObject extends GEasyLayoutContainer {
 			ITextComponent text = (ITextComponent) displayObject;
 			return createLabel(text.getFormattedText());
 		} else if (displayObject == GameDisplayCast.OBJ) return createLabel("<object>");
+		else if (displayObject instanceof IDisplayObject) return GDisplayAgent.create((IDisplayObject) displayObject);
 		else if (displayObject == null) return createLabel("<nullptr>");
 		else return createLabel(displayObject.toString());
 	}

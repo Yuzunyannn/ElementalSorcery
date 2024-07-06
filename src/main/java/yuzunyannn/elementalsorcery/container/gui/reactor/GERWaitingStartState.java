@@ -5,7 +5,7 @@ import java.util.Random;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.reactor.GuiElementReactor.Part;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor.ReactorStatus;

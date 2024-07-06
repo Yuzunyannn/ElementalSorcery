@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderLayoutFix;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderLayoutFix;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.logics.SpellbookOpenMsg;

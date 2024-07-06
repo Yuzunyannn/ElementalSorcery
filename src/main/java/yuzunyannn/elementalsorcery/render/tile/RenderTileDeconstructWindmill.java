@@ -11,9 +11,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructWindmillBlade;
@@ -53,7 +53,7 @@ public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<Til
 			GlStateManager.pushMatrix();
 
 			GlStateManager.translate(x + 0.5, y + 0.105 + high / 16, z + 0.5);
-			yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(blade);
+			yuzunyannn.elementalsorcery.api.util.render.RenderFriend.layItemPositionFix(blade);
 			Minecraft.getMinecraft().getRenderItem().renderItem(blade, ItemCameraTransforms.TransformType.FIXED);
 
 			GlStateManager.popMatrix();

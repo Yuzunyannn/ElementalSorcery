@@ -20,7 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerDevolveCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator.GuiTextFieldOnlyNumber;
 import yuzunyannn.elementalsorcery.logics.EventClient;

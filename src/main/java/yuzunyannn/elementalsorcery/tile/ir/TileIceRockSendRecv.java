@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaser;

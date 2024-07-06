@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.container.gui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerItemStructureCraft;
 
 public class GuiItemStructureCraftNormal extends GuiItemStructureCraft {

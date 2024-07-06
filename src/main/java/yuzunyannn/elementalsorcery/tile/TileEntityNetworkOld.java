@@ -19,7 +19,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.tile.ICanSync;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 

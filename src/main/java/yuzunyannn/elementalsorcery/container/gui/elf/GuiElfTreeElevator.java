@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.logics.KeyBoard;
 import yuzunyannn.elementalsorcery.network.ESNetwork;

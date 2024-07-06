@@ -20,11 +20,12 @@ import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.computer.DeviceScanner;
 import yuzunyannn.elementalsorcery.computer.render.GCloseBtn;
+import yuzunyannn.elementalsorcery.computer.render.GDisplayObject;
 import yuzunyannn.elementalsorcery.computer.render.GDragContainer;
 import yuzunyannn.elementalsorcery.computer.render.GEasyLayoutContainer;
 import yuzunyannn.elementalsorcery.computer.render.GImgBtn;
@@ -211,7 +212,7 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 
 		IOS os = appInst.getOS();
 		DNResult result = os.notice(null, "network-scan", DNRequest.empty());
-		
+
 		refreshBtn.setRefreshing(false);
 		if (!result.isSuccess()) {
 			tip("es.app.scanFail");
@@ -224,7 +225,7 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 			tip("es.app.scanFail");
 			return;
 		}
-		
+
 		cache.setScanner(scanner);
 		scanner.addListener((ref, d) -> onScannerNewRef(ref, d));
 	}
@@ -330,7 +331,7 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 			detailContainer.addChild(label);
 		}
 
-		List<String> list = new LinkedList<>();
+		List<Object> list = new LinkedList<>();
 
 		IDevice device = currShowUnit.getDevice();
 		if (device != null) {
@@ -341,12 +342,12 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 			info.addInformation(list);
 		}
 
-		for (String s : list) {
-			GLabel label = new GLabel(s);
-			label.setWrapWidth(wrapWidth);
-			label.setColorRef(colorObj1);
-			detailContainer.addChild(label);
-		}
+		GDisplayObject gdo = new GDisplayObject();
+		gdo.setEveryLine(true);
+		gdo.setColorRef(colorObj1);
+		gdo.setDisplayObject(list);
+		gdo.setPositionZ(10);
+		detailContainer.addChild(gdo);
 
 		detailContainer.layout();
 

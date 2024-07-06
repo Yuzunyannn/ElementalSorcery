@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
+import yuzunyannn.elementalsorcery.api.util.render.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;

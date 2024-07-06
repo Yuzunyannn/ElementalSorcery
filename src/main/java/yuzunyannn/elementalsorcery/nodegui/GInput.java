@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
+import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 

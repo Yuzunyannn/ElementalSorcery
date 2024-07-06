@@ -42,7 +42,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.GameCast;
-import yuzunyannn.elementalsorcery.api.util.GameDisplayCast;
+import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;

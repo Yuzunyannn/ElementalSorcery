@@ -40,7 +40,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderOutline;
 import yuzunyannn.elementalsorcery.computer.WideNetworkCommon;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
 import yuzunyannn.elementalsorcery.computer.softs.TaskNetworkGui;

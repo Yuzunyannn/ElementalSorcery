@@ -407,7 +407,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			BuildingBlocks iter = building.getBuildingIterator();
 			// 开始
 			while (iter.next()) {
-				yuzunyannn.elementalsorcery.api.util.client.RenderFriend.disableLightmap(true);
+				yuzunyannn.elementalsorcery.api.util.render.RenderFriend.disableLightmap(true);
 				BlockPos blockpos = iter.getPos();
 				blockpos = new BlockPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 				IBlockState iblockstate = iter.getState();
@@ -438,7 +438,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			ESAPI.logger.warn("羊皮卷(" + id + ")gui:drawBuilding异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
-		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.disableLightmap(true);
+		yuzunyannn.elementalsorcery.api.util.render.RenderFriend.disableLightmap(true);
 	}
 
 }

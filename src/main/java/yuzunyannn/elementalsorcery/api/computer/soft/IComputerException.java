@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import net.minecraft.nbt.NBTTagCompound;
-import yuzunyannn.elementalsorcery.api.util.IDisplayable;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 

@@ -25,7 +25,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.api.util.client.IRenderLayoutFix;
+import yuzunyannn.elementalsorcery.api.util.render.IRenderLayoutFix;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.AttackCaster;

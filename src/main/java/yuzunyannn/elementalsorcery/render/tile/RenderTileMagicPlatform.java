@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.render.tile;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 
 @SideOnly(Side.CLIENT)

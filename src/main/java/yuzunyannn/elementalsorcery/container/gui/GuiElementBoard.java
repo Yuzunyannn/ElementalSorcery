@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerElementBoard;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 

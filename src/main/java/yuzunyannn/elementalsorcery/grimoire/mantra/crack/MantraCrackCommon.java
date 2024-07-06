@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
