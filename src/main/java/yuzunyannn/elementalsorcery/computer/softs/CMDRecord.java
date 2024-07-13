@@ -1,34 +1,41 @@
 package yuzunyannn.elementalsorcery.computer.softs;
 
-import java.util.concurrent.CompletableFuture;
-
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
-import yuzunyannn.elementalsorcery.api.util.detecter.IDataDetectable;
-import yuzunyannn.elementalsorcery.api.util.detecter.IDataRef;
+import yuzunyannn.elementalsorcery.nodegui.SustainSet;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTSS;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 
-public class CMDRecord implements INBTSS, IDataDetectable<Object, NBTTagCompound> {
-	protected int id;
+public class CMDRecord implements INBTSS {
+
+	private int id;
 	protected String path;
 	protected String cmd;
 	protected DNResultCode code;
-	protected Object displayObject;
+	private Object displayObject;
+	protected SustainSet sSet = new SustainSet();
 
-	protected CompletableFuture<CMDRecord> future = new CompletableFuture();
-
-	public CMDRecord() {
+	public CMDRecord(Side side) {
 		this.cmd = "";
+		this.sSet.setSide(side);
 	}
 
 	public CMDRecord(String cmd) {
 		this.cmd = cmd;
 	}
 
+	public final void setId(int id) {
+		this.id = id;
+		this.sSet.setId(id);
+	}
+
 	public final int getId() {
 		return id;
+	}
+
+	public SustainSet getSustainSet() {
+		return sSet;
 	}
 
 	@Override
@@ -36,6 +43,7 @@ public class CMDRecord implements INBTSS, IDataDetectable<Object, NBTTagCompound
 		id = reader.nint("id");
 		cmd = reader.string("cmd");
 		path = reader.string("pth");
+		sSet.setId(id);
 		if (reader.has("code")) code = DNResultCode.fromMeta(reader.nint("code"));
 	}
 
@@ -52,28 +60,21 @@ public class CMDRecord implements INBTSS, IDataDetectable<Object, NBTTagCompound
 		readSaveData(reader);
 		if (reader.has("dpl")) displayObject = reader.display("dpl");
 		else displayObject = null;
+		sSet.readUpdateData(reader);
+		setDisplayObject(displayObject);
 	}
 
 	@Override
 	public void writeUpdateData(INBTWriter writer) {
 		writeSaveData(writer);
+		sSet.writeUpdateData(writer);
 		if (displayObject != null) writer.writeDisplay("dpl", displayObject);
 	}
 
-	public boolean isSustaining() {
-		return false;
-	}
-
-	public NBTTagCompound detectChanges(IDataRef<Object> templateRef) {
-		return null;
-	}
-
-	public void mergeChanges(NBTTagCompound nbt) {
-
-	}
-
-	public CompletableFuture<CMDRecord> getSustainFuture() {
-		return future;
+	public void setDisplayObject(Object obj) {
+		this.displayObject = obj;
+		this.sSet.clear();
+		this.sSet.seek(obj);
 	}
 
 	public Object getDisplayObject() {

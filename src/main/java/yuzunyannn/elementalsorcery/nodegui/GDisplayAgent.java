@@ -1,9 +1,9 @@
 package yuzunyannn.elementalsorcery.nodegui;
 
-import yuzunyannn.elementalsorcery.api.util.render.IDisplayMaster;
 import yuzunyannn.elementalsorcery.api.util.render.IDisplayObject;
+import yuzunyannn.elementalsorcery.api.util.render.ITheme;
 
-public class GDisplayAgent extends GNode implements IDisplayMaster {
+public class GDisplayAgent extends GNode {
 
 	final IDisplayObject displayObject;
 
@@ -17,6 +17,10 @@ public class GDisplayAgent extends GNode implements IDisplayMaster {
 		this.reset();
 	}
 
+	public void setTheme(ITheme theme) {
+		this.displayObject.setTheme(theme);
+	}
+
 	public IDisplayObject getDisplayObject() {
 		return this.displayObject;
 	}
@@ -26,18 +30,9 @@ public class GDisplayAgent extends GNode implements IDisplayMaster {
 	}
 
 	@Override
-	public void markSizeChange() {
-		reset();
-	}
-
-	@Override
 	public void update() {
 		super.update();
-		updateDisplayObject();
-	}
-
-	protected void updateDisplayObject() {
-		this.displayObject.update(this);
+		this.displayObject.update();
 	}
 
 	@Override
@@ -53,6 +48,7 @@ public class GDisplayAgent extends GNode implements IDisplayMaster {
 		public GDisplayNodeAgent(IDisplayNode displayNode) {
 			super(displayNode);
 			this.displayNode = displayNode;
+			this.updateDisplayNode();
 		}
 
 		@Override
@@ -61,12 +57,22 @@ public class GDisplayAgent extends GNode implements IDisplayMaster {
 		}
 
 		@Override
-		public void updateDisplayObject() {
+		public void update() {
+			super.update();
+			updateDisplayNode();
+		}
+
+		protected void updateDisplayNode() {
 			GNode node = displayNode.getGNode();
 			if (node == lastNode) return;
-			lastNode.removeFromParent();
+			if (lastNode != null) lastNode.removeFromParent();
 			if (node == null) lastNode = null;
 			else this.addChild(lastNode = node);
+		}
+
+		@Override
+		protected void render(float partialTicks) {
+
 		}
 
 	}

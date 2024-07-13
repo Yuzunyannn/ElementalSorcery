@@ -181,10 +181,13 @@ public class EventServer {
 		addWorldTickTask(world, (IWorldTickTask) task);
 	}
 
+	public static int tick;
+
 	@SubscribeEvent
 	public static void serverTick(TickEvent.ServerTickEvent event) {
 
 		if (event.phase == Phase.START) {
+			tick = tick + 1;
 			chaosTimeStamp = System.currentTimeMillis();
 			bigComputeWatch.clear();
 			PocketWatch.tick();

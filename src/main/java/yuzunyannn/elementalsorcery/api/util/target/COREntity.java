@@ -93,4 +93,10 @@ public class COREntity extends CapabilityObjectRef {
 		return entity == null ? null : entity.getCapability(capability, facing);
 	}
 
+	@Override
+	public Object toDisplayObject() {
+		Entity entity = toEntity();
+		if (entity == null) return "Entity Lost";
+		return "Entity: " + entity.getName();
+	}
 }

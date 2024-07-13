@@ -9,7 +9,11 @@ import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
@@ -20,12 +24,17 @@ import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInitializable;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
+import yuzunyannn.elementalsorcery.api.util.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.WorldLocation;
+import yuzunyannn.elementalsorcery.computer.soft.display.DTCReuntime;
+import yuzunyannn.elementalsorcery.computer.soft.display.DeviceAskerDisplay;
 import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
 import yuzunyannn.elementalsorcery.tile.device.DeviceFeatureMap;
+import yuzunyannn.elementalsorcery.util.LambdaReference;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTSS;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
@@ -33,6 +42,9 @@ import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
 public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCompound>, INBTSS {
+
+	@CapabilityInject(IDevice.class)
+	public static Capability<IDevice> DEVICE_CAPABILITY;
 
 	protected UUID udid = UUID.randomUUID();
 	protected DeviceNetwork network = new DeviceNetwork(this);
@@ -218,11 +230,13 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	/* ------------ ------------** network **------------ ------------ */
 	/* ------------ ------------** >_< **------------ ------------ */
 
-	protected class Asker extends CompletableFuture<CapabilityObjectRef> implements IDeviceAsker {
+	protected class Asker extends CompletableFuture<CapabilityObjectRef>
+			implements IDeviceAsker, IDisplayable, IAliveStatusable {
 
 		public final UUID udid;
 		public WorldLocation wo;
 		public boolean isUnconcerned;
+		private boolean isEnd;
 
 		public Asker(UUID udid) {
 			IDeviceEnv env = getEnv();
@@ -248,6 +262,7 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		}
 
 		public void onEnd() {
+			isEnd = true;
 			if (asker == this) {
 				asker = null;
 				finder = null;
@@ -262,6 +277,20 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		@Override
 		public UUID lookFor() {
 			return udid;
+		}
+
+		@Override
+		public boolean isAlive() {
+			return !isEnd;
+		}
+
+		@Override
+		public Object toDisplayObject() {
+			DeviceAskerDisplay display = new DeviceAskerDisplay();
+			display.setCondition(new DTCReuntime(this));
+			display.setDigest("DS:" + System.identityHashCode(this));
+			this.thenAccept(ref -> display.onFinish(ref, null));
+			return display;
 		}
 	}
 
@@ -286,8 +315,48 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 
 	@DeviceFeature(id = "network-conntect")
 	public void networkConntect(UUID uuid) {
+
+		IDeviceNetwork network = getNetwork();
+		IDeviceLinker linker = network.getLinker(uuid);
+		if (linker != null) {
+			if (process.isLogEnabled()) {
+				DeviceAskerDisplay display = new DeviceAskerDisplay();
+				display.setDigest("DS:" + System.identityHashCode(asker));
+				display.onFinish(linker.getRemoteRef(), DNResultCode.SUCCESS);
+				process.log(display);
+			}
+			return;
+		}
+
 		Asker asker = (Asker) networkFind(uuid);
-		asker.thenAccept(ref -> networkHandshake(ref));
+		LambdaReference<DNResultCode> code = LambdaReference.of(DNResultCode.INVALID);
+		CompletableFuture<CapabilityObjectRef> feture = asker.thenApply(ref -> {
+			code.set(networkHandshake(ref));
+			return ref;
+		});
+
+		if (process.isLogEnabled()) {
+			DeviceAskerDisplay display = new DeviceAskerDisplay();
+			display.setCondition(new DTCReuntime(asker));
+			display.setDigest("DS:" + System.identityHashCode(asker));
+			feture.thenAccept(ref -> display.onFinish(ref, code.get()));
+			process.log(display);
+		}
+
+	}
+
+	@DeviceFeature(id = "network-close")
+	public DNResultCode networkHandshake(UUID udid) {
+		IDeviceNetwork network = this.getNetwork();
+		IDeviceLinker linker = network.getLinker(udid);
+		if (linker != null) {
+			linker.close();
+			if (process.isLogEnabled()) {
+				Style style = new Style().setColor(TextFormatting.YELLOW);
+				process.log(new TextComponentTranslation("es.app.disconnect").setStyle(style).appendText(":" + udid));
+			}
+		}
+		return DNResultCode.SUCCESS;
 	}
 
 	@DeviceFeature(id = "network-handshake")
@@ -313,14 +382,6 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		network.handshake(other, other.getEnv(), false);
 		otherNetwork.handshake(this, this.getEnv(), false);
 
-		return DNResultCode.SUCCESS;
-	}
-
-	@DeviceFeature(id = "network-close")
-	public DNResultCode networkHandshake(UUID udid) {
-		IDeviceNetwork network = this.getNetwork();
-		IDeviceLinker linker = network.getLinker(udid);
-		if (linker != null) linker.close();
 		return DNResultCode.SUCCESS;
 	}
 

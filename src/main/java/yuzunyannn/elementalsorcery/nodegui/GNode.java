@@ -235,6 +235,10 @@ public class GNode {
 	public void setColor(float r, float g, float b) {
 		this.color.setColor(r, g, b);
 	}
+	
+	public Color getColor() {
+		return color;
+	}
 
 	public void setAlpha(float a) {
 		this.alpha = a;

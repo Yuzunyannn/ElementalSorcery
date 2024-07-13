@@ -5,12 +5,13 @@ import java.util.List;
 import net.minecraft.util.text.ITextComponent;
 import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
 import yuzunyannn.elementalsorcery.api.util.render.IDisplayObject;
+import yuzunyannn.elementalsorcery.api.util.render.ITheme;
 import yuzunyannn.elementalsorcery.nodegui.GDisplayAgent;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
-public class GDisplayObject extends GEasyLayoutContainer {
+public class GDisplayObject extends GEasyLayoutContainer implements ITheme {
 
 	protected Object displayObject;
 	public GNode mask;
@@ -24,8 +25,8 @@ public class GDisplayObject extends GEasyLayoutContainer {
 		this.enableClick = enableClick;
 	}
 
-	public void setDisplayObject(Object displayObject) {
-		this.displayObject = displayObject;
+	public void setDisplayObject(Object advDisplayObject) {
+		this.displayObject = advDisplayObject;
 		this.removeAllChild();
 		if (displayObject == null) return;
 		if (displayObject instanceof List) {
@@ -53,7 +54,11 @@ public class GDisplayObject extends GEasyLayoutContainer {
 			ITextComponent text = (ITextComponent) displayObject;
 			return createLabel(text.getFormattedText());
 		} else if (displayObject == GameDisplayCast.OBJ) return createLabel("<object>");
-		else if (displayObject instanceof IDisplayObject) return GDisplayAgent.create((IDisplayObject) displayObject);
+		else if (displayObject instanceof IDisplayObject) {
+			GDisplayAgent agent = GDisplayAgent.create((IDisplayObject) displayObject);
+			agent.setTheme(this);
+			return agent;
+		} else if (displayObject instanceof GNode) return (GNode) displayObject;
 		else if (displayObject == null) return createLabel("<nullptr>");
 		else return createLabel(displayObject.toString());
 	}
@@ -67,6 +72,11 @@ public class GDisplayObject extends GEasyLayoutContainer {
 
 	public boolean isEmpty() {
 		return displayObject == null;
+	}
+
+	@Override
+	public int getColor(int themeIndex) {
+		return color.toInt();
 	}
 
 }

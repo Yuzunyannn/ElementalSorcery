@@ -120,36 +120,46 @@ public class NBTSaver implements INBTReader, INBTWriter {
 		return nbt.getString(string);
 	}
 
+	protected NBTBase serialize(INBTSerializable<?> serializable) {
+		return serializable.serializeNBT();
+	}
+
+	protected <U extends NBTBase, T extends INBTSerializable<U>> void deserialize(U nbt, T obj) {
+		obj.deserializeNBT(nbt);
+	}
+
 	@Override
 	public void write(String key, INBTSerializable<?> serializable) {
-		nbt.setTag(key, serializable.serializeNBT());
+		nbt.setTag(key, serialize(serializable));
 	}
 
 	@Override
 	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, T obj) {
+		if (obj == null) return null;
 		try {
-			obj.deserializeNBT((U) nbt.getTag(key));
+			deserialize((U) nbt.getTag(key), obj);
 		} catch (Exception e) {}
 		return obj;
-	}
-
-	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Function<U, T> factory) {
-		return factory.apply((U) nbt.getTag(key));
 	}
 
 	@Override
 	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Supplier<T> factory) {
 		T obj = factory.get();
 		try {
-			obj.deserializeNBT((U) nbt.getTag(key));
+			deserialize((U) nbt.getTag(key), obj);
 		} catch (Exception e) {}
 		return obj;
 	}
 
 	@Override
+	public <U extends NBTBase, T extends INBTSerializable<U>> T obj(String key, Function<U, T> factory) {
+		return factory.apply((U) nbt.getTag(key));
+	}
+
+	@Override
 	public void write(String key, List<? extends INBTSerializable<?>> list) {
 		NBTTagList tagList = new NBTTagList();
-		for (INBTSerializable<?> serializable : list) tagList.appendTag(serializable.serializeNBT());
+		for (INBTSerializable<?> serializable : list) tagList.appendTag(serialize(serializable));
 		nbt.setTag(key, tagList);
 	}
 
@@ -158,17 +168,7 @@ public class NBTSaver implements INBTReader, INBTWriter {
 		try {
 			NBTTagList tagList = (NBTTagList) nbt.getTag(key);
 			int length = Math.min(list.size(), tagList.tagCount());
-			for (int i = 0; i < length; i++) list.get(i).deserializeNBT((U) tagList.get(i));
-		} catch (Exception e) {}
-		return list;
-	}
-
-	@Override
-	public <U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, Function<U, T> factory) {
-		List<T> list = new ArrayList<>();
-		try {
-			NBTTagList tagList = (NBTTagList) nbt.getTag(key);
-			for (int i = 0; i < tagList.tagCount(); i++) list.add(factory.apply((U) tagList.get(i)));
+			for (int i = 0; i < length; i++) deserialize((U) tagList.get(i), list.get(i));
 		} catch (Exception e) {}
 		return list;
 	}
@@ -180,9 +180,34 @@ public class NBTSaver implements INBTReader, INBTWriter {
 			NBTTagList tagList = (NBTTagList) nbt.getTag(key);
 			for (int i = 0; i < tagList.tagCount(); i++) {
 				T obj = factory.get();
-				obj.deserializeNBT((U) tagList.get(i));
+				deserialize((U) tagList.get(i), obj);
 				list.add(obj);
 			}
+		} catch (Exception e) {}
+		return list;
+	}
+
+	@Override
+	public <U extends NBTBase, T extends INBTSerializable<U>, L extends List<T>> L list(String key, L list,
+			Supplier<T> factory) {
+		try {
+			list.clear();
+			NBTTagList tagList = (NBTTagList) nbt.getTag(key);
+			for (int i = 0; i < tagList.tagCount(); i++) {
+				T obj = factory.get();
+				deserialize((U) tagList.get(i), obj);
+				list.add(obj);
+			}
+		} catch (Exception e) {}
+		return list;
+	}
+
+	@Override
+	public <U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, Function<U, T> factory) {
+		List<T> list = new ArrayList<>();
+		try {
+			NBTTagList tagList = (NBTTagList) nbt.getTag(key);
+			for (int i = 0; i < tagList.tagCount(); i++) list.add(factory.apply((U) tagList.get(i)));
 		} catch (Exception e) {}
 		return list;
 	}

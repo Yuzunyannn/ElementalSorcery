@@ -470,10 +470,10 @@ public class TaskNetworkGui extends TaskGuiCommon<TaskNetwork> {
 		UUID udid = sender.uuid("udid");
 		if (code == -1) {
 			changeStatus(udid, DeviceLinkUnitInfo.STATUS_UNLINK);
-			tip(I18n.format("es.app.connect.fail") + udid.toString());
+			tip(I18n.format("es.app.connect.fail") + " " + udid.toString());
 		} else if (code == -2) {
 			changeStatus(udid, DeviceLinkUnitInfo.STATUS_CONNECT);
-			tip(I18n.format("es.app.connect.fail") + udid.toString());
+			tip(I18n.format("es.app.connect.fail") + " " + udid.toString());
 		} else if (code == 2) {
 			DeviceLinkUnitInfo info = getDeviceUnitInfo(udid);
 			if (info != null) changeStatus(info.udid, info.getStatus());

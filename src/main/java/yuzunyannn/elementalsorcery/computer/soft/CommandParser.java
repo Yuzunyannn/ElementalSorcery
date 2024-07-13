@@ -156,7 +156,10 @@ public class CommandParser {
 				break;
 			}
 			if (_curr == currElement) {
-				if (currElement.i < cursor || currElement == this.root) currElement = currElement.getElements().get(0);
+				if (currElement.i < cursor || currElement == this.root) {
+					List<Element> elements = currElement.getElements();
+					if (!elements.isEmpty()) currElement = elements.get(0);
+				}
 				break;
 			}
 		}

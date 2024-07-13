@@ -19,7 +19,7 @@ public abstract class BaseDisplayObject implements IDisplayObject {
 	}
 
 	@Override
-	public void update(IDisplayMaster master) {
+	public void update() {
 		
 	}
 

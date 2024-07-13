@@ -1,5 +1,8 @@
 package yuzunyannn.elementalsorcery.api.util.target;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -8,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.capabilities.Capability;
-import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
+import yuzunyannn.elementalsorcery.api.util.IAliveStatusable;
 
 public class CORTile extends CapabilityObjectRef {
 
@@ -101,6 +104,14 @@ public class CORTile extends CapabilityObjectRef {
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		return ref == null ? null : ref.getCapability(capability, facing);
+	}
+
+	@Override
+	public Object toDisplayObject() {
+		List<String> list = new LinkedList<>();
+		list.add(String.format("World: %d", worldId));
+		list.add("Location: " + String.format("(%d,%d,%d)", pos.getX(), pos.getY(), pos.getZ()));
+		return list;
 	}
 
 }

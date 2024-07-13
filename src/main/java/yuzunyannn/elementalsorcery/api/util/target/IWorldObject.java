@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
+import yuzunyannn.elementalsorcery.api.util.IAliveStatusable;
 
 public interface IWorldObject extends ICapabilityProvider, IAliveStatusable {
 

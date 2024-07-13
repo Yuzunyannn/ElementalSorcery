@@ -1,6 +1,8 @@
 package yuzunyannn.elementalsorcery.api.util.target;
 
 import java.lang.ref.WeakReference;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import io.netty.buffer.ByteBuf;
@@ -113,6 +115,16 @@ public class CORPlayer extends CapabilityObjectRef {
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		EntityPlayer player = toEntityPlayer();
 		return player == null ? null : player.getCapability(capability, facing);
+	}
+
+	@Override
+	public Object toDisplayObject() {
+		List<String> list = new LinkedList<>();
+		list.add(String.format("World: %d", worldId));
+		EntityPlayer player = toEntityPlayer();
+		if (player == null) list.add("Player Lost");
+		else list.add("Player: " + player.getName());
+		return list;
 	}
 
 }

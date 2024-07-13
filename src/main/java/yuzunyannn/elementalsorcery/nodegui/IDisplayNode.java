@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.nodegui;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.render.IDisplayMaster;
 import yuzunyannn.elementalsorcery.api.util.render.IDisplayObject;
 
 @SideOnly(Side.CLIENT)
@@ -19,9 +18,9 @@ public interface IDisplayNode extends IDisplayObject {
 	}
 
 	@Override
-	default void update(IDisplayMaster master) {
+	default void update() {
 		GNode node = getGNode();
-		if (node == null) return;
+		if (node == null || node.isInScene()) return;
 		node.update();
 	}
 

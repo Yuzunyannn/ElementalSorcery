@@ -12,6 +12,10 @@ public class DeviceProcess {
 		this.device = device;
 	}
 
+	public boolean isLogEnabled() {
+		return currParams != null ? currParams.getLogList() != null : false;
+	}
+
 	public void log(Object... displayObjs) {
 		if (currParams != null) {
 			if (displayObjs.length == 0) return;

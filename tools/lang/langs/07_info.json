@@ -1355,7 +1355,7 @@
             "ja_JP": "切断"
         },
         "es.app.connect.fail": {
-            "zh_CN": "链接失败：",
+            "zh_CN": "链接失败",
             "en_US": "Connect Fail",
             "ja_JP": "接続に失敗しました"
         },

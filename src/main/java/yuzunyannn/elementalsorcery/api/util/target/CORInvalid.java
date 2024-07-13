@@ -57,4 +57,8 @@ public class CORInvalid extends CapabilityObjectRef {
 		return null;
 	}
 
+	@Override
+	public Object toDisplayObject() {
+		return "Invalid";
+	}
 }

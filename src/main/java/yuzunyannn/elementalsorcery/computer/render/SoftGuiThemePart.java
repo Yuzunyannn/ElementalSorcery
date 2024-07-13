@@ -1,13 +1,13 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
-public enum SoftGuiThemePart {
+public class SoftGuiThemePart {
 
-	BACKGROUND_1,
-	BACKGROUND_2,
-	BACKGROUND_3,
+	public static final int BACKGROUND_1 = 0x01;
+	public static final int BACKGROUND_2 = 0x02;
+	public static final int BACKGROUND_3 = 0x03;
 
-	OBJECT_1,
-	OBJECT_1_ACTIVE,
-	OBJECT_2,
-	OBJECT_2_ACTIVE;
+	public static final int OBJECT_1 = 0x11;
+	public static final int OBJECT_1_ACTIVE = 0x12;
+	public static final int OBJECT_2 = 0x13;
+	public static final int OBJECT_2_ACTIVE = 0x14;
 }

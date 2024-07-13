@@ -47,7 +47,7 @@ public class AppCommandGui extends AppGuiCommon<AppCommand> implements IAutoComp
 		inputBG.setColorRef(color);
 		inputBG.setSplit9();
 		inputBG.setSize(runtime.getWidth(), Minecraft.getMinecraft().fontRenderer.FONT_HEIGHT + 4);
-		inputBG.setPosition(0, runtime.getHeight() - inputBG.getHeight());
+		inputBG.setPosition(0, runtime.getHeight() - inputBG.getHeight(), 100);
 		scene.addChild(inputBG);
 
 		input = new GInput();
@@ -166,9 +166,9 @@ public class AppCommandGui extends AppGuiCommon<AppCommand> implements IAutoComp
 	}
 
 	public void updateCmdRecord(int id) {
-		CMDRecord record = appInst.getSustainMap().get(id);
-		if (record != null) return;
-		refreshCmdRecord(record);
+//		CMDRecord record = appInst.getSustainMap().get(id);
+//		if (record != null) return;
+//		refreshCmdRecord(record);
 	}
 
 	public void refreshCmdRecord(CMDRecord record) {

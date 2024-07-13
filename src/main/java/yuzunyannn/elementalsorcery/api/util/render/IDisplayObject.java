@@ -11,11 +11,16 @@ public interface IDisplayObject extends INBTSerializable<NBTTagCompound> {
 	String getId();
 
 	@SideOnly(Side.CLIENT)
-	void update(IDisplayMaster master);
+	void update();
 
 	@SideOnly(Side.CLIENT)
 	void doRender(float partialTicks);
 
 	@SideOnly(Side.CLIENT)
 	Vec3d getSize();
+
+	@SideOnly(Side.CLIENT)
+	default void setTheme(ITheme theme) {
+
+	}
 }

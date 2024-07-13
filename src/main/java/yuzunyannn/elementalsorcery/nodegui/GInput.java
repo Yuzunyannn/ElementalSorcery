@@ -146,7 +146,7 @@ public class GInput extends GNode implements IGInteractor {
 		worldPos = worldPos.subtract(label.x, label.y, 0);
 		cursorAdjustIndex = label.getCharIndex(worldPos);
 		if (cursorAdjustIndex < selectStart) cursorAdjustIndex -= 1;
-		updateSelect(cursorAdjustIndex);
+		updateSelect(Math.max(cursorAdjustIndex, 0));
 	}
 
 	protected void updateSelect(int index) {

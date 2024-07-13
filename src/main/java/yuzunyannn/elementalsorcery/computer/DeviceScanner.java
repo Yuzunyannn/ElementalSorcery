@@ -20,13 +20,17 @@ import net.minecraft.world.chunk.Chunk;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
+import yuzunyannn.elementalsorcery.api.util.IAliveStatusable;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
+import yuzunyannn.elementalsorcery.computer.soft.display.DTCReuntime;
+import yuzunyannn.elementalsorcery.computer.soft.display.DeviceScanDisplay;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.util.Stopwatch;
 
-public class DeviceScanner {
+public class DeviceScanner implements IDisplayable, IAliveStatusable {
 
 	protected static final int MAX_SCAN_TICK = 80 + WideNetwork.SAY_HELLO_INTERVAL;
 	protected int tick;
@@ -64,6 +68,11 @@ public class DeviceScanner {
 		this.isFinish = true;
 	}
 
+	@Override
+	public boolean isAlive() {
+		return !this.isFinish;
+	}
+
 	public void helloWorld(IDeviceEnv env) {
 		BlockPos pos = env.getBlockPos();
 		World world = env.getWorld();
@@ -89,6 +98,10 @@ public class DeviceScanner {
 		tick = tick + dt;
 		for (int i = 0; i < dt; i++) onTickUpdate();
 		return tick < MAX_SCAN_TICK;
+	}
+
+	public Set<UUID> getFindedSet() {
+		return findedSet;
 	}
 
 	Iterator<TileEntity> iter;
@@ -141,5 +154,14 @@ public class DeviceScanner {
 
 //		world.getChunk(0, 0).getTileEntityMap();
 		// todo
+	}
+
+	@Override
+	public Object toDisplayObject() {
+		DeviceScanDisplay display = new DeviceScanDisplay();
+		display.setCondition(new DTCReuntime(this));
+		display.setDigest("DS:" + System.identityHashCode(this));
+		this.addListener((ref, device) -> display.onFind(ref, device));
+		return display;
 	}
 }

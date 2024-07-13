@@ -38,6 +38,7 @@ public abstract class SoftGuiCommon<T extends App> implements ISoftGui {
 	public final static RenderTexutreFrame FRAME_P1 = new RenderTexutreFrame(0, 19, 11, 11, 256, 256);
 	public final static RenderTexutreFrame FRAME_P2_LEFT = new RenderTexutreFrame(38, 19, 11, 11, 256, 256);
 	public final static RenderTexutreFrame FRAME_P2_RIGHT = new RenderTexutreFrame(49, 19, 11, 11, 256, 256);
+	public final static RenderTexutreFrame FRAME_P3 = new RenderTexutreFrame(61, 19, 11, 11, 256, 256);
 	public final static RenderTexutreFrame FRAME_L1_H = new RenderTexutreFrame(12, 19, 10, 3, 256, 256);
 	public final static RenderTexutreFrame FRAME_L1_V = new RenderTexutreFrame(23, 19, 3, 10, 256, 256);
 	public final static RenderTexutreFrame FRAME_L2_H = new RenderTexutreFrame(19, 24, 3, 27, 256, 256);
@@ -51,7 +52,7 @@ public abstract class SoftGuiCommon<T extends App> implements ISoftGui {
 	public final static RenderTexutreFrame FRAME_ICON_UNLINK = new RenderTexutreFrame(46, 11, 6, 7, 256, 256);
 	public final static RenderTexutreFrame FRAME_ICON_COPY = new RenderTexutreFrame(53, 11, 6, 7, 256, 256);
 	public final static RenderTexutreFrame FRAME_ICON_COMPASS = new RenderTexutreFrame(19, 53, 27, 27, 256, 256);
-	
+
 	public SoftGuiCommon(T appInst) {
 		this.appInst = appInst;
 		this.scene = new GScene();
@@ -104,19 +105,19 @@ public abstract class SoftGuiCommon<T extends App> implements ISoftGui {
 		return runtime;
 	}
 
-	public Color getThemeColor(SoftGuiThemePart part) {
+	public Color getThemeColor(int part) {
 		switch (part) {
-		case BACKGROUND_1:
+		case SoftGuiThemePart.BACKGROUND_1:
 			return new Color(0xf0d6ff);
-		case BACKGROUND_2:
+		case SoftGuiThemePart.BACKGROUND_2:
 			return new Color(0xda96f6);
-		case OBJECT_1:
+		case SoftGuiThemePart.OBJECT_1:
 			return new Color(0x9d43d0);
-		case OBJECT_2:
+		case SoftGuiThemePart.OBJECT_2:
 			return new Color(0x4c259b);
-		case OBJECT_1_ACTIVE:
+		case SoftGuiThemePart.OBJECT_1_ACTIVE:
 			return new Color(0xb47aff);
-		case OBJECT_2_ACTIVE:
+		case SoftGuiThemePart.OBJECT_2_ACTIVE:
 			return new Color(0x9519a6);
 		default:
 			break;
@@ -144,7 +145,7 @@ public abstract class SoftGuiCommon<T extends App> implements ISoftGui {
 	public void onMouseEvent(Vec3d vec3d) {
 		scene.onMouseEvent(vec3d);
 	}
-	
+
 	@Override
 	public void onKeyboardEvent() {
 		scene.onKeyboardEvent();

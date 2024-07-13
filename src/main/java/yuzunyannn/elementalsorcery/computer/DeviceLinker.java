@@ -230,7 +230,7 @@ public class DeviceLinker implements IDeviceLinker, IDisplayable {
 			IDeviceInfo info = device.getInfo();
 			String name = info.getName();
 			Object nameObject;
-			if (name == null || name.isEmpty()) nameObject = new TextComponentTranslation(info.getDisplayWorkName());
+			if (name == null || name.isEmpty()) nameObject = new TextComponentTranslation(info.getTranslationWorkKey());
 			else nameObject = name;
 			ItemStack icon = info.getIcon();
 			if (!icon.isEmpty()) {

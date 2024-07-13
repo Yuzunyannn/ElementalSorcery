@@ -164,6 +164,7 @@ import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerCapStorage;
 import yuzunyannn.elementalsorcery.computer.DeviceCapStorage;
+import yuzunyannn.elementalsorcery.computer.soft.display.SoftDisplayTask;
 import yuzunyannn.elementalsorcery.computer.softs.AppCommand;
 import yuzunyannn.elementalsorcery.computer.softs.AppTutorial;
 import yuzunyannn.elementalsorcery.computer.softs.TaskInventoryItemSelect;
@@ -933,6 +934,7 @@ public class ESInit {
 		FairyCubeModuleInGame.registerAll();
 		// 电脑app
 		registerAllApps();
+		SoftDisplayTask.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品

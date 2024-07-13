@@ -48,6 +48,9 @@ public interface INBTReader {
 
 	<U extends NBTBase, T extends INBTSerializable<U>> List<T> list(String key, Supplier<T> factory);
 
+	<U extends NBTBase, T extends INBTSerializable<U>, L extends List<T>> L list(String key, L list,
+			Supplier<T> factory);
+
 	UUID uuid(String key);
 
 	List<UUID> uuids(String key);
@@ -57,7 +60,7 @@ public interface INBTReader {
 	EnumFacing facing(String key);
 
 	ItemStack itemStack(String key);
-	
+
 	Mantra mantra(String key);
 
 	NBTTagCompound compoundTag(String key);

@@ -6,8 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
+import yuzunyannn.elementalsorcery.api.util.IAliveStatusable;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileEStoneCrock extends TileEntityNetworkOld implements IMagicBeamHandler {

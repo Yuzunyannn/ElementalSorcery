@@ -19,8 +19,9 @@ import yuzunyannn.elementalsorcery.api.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.util.GameCast;
 import yuzunyannn.elementalsorcery.api.util.ICastEnv;
 import yuzunyannn.elementalsorcery.api.util.ICastHandler;
+import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 
-public abstract class CapabilityObjectRef implements ICapabilityProvider {
+public abstract class CapabilityObjectRef implements ICapabilityProvider, IDisplayable {
 
 	public static final int TAG_INVALID = 0;
 	public static final int TAG_PLAYER = 1;
