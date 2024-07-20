@@ -60,7 +60,7 @@ import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
-public class MantraCommon extends Mantra {
+public class MantraCommon extends Mantra implements IMantraProgressable {
 
 	public static final Variable<Vec3d> VEC = new Variable<>("vec", VariableSet.VEC3D);
 	public static final Variable<Vec3d> TOWARD = new Variable<>("toward", VariableSet.VEC3D);
@@ -105,8 +105,7 @@ public class MantraCommon extends Mantra {
 	@SideOnly(Side.CLIENT)
 	public void initEffectCreator() {
 		setEffectCreator(MantraEffectType.MAGIC_CIRCLE, MantraCommon::createEffectMagicCircle, null);
-		setEffectCreator(MantraEffectType.PLAYER_PROGRESS, MantraCommon::createEffectProgress,
-				MantraCommon::updateEffectProgress);
+		setEffectCreator(MantraEffectType.PLAYER_PROGRESS, MantraCommon::createEffectProgress, MantraCommon::updateEffectProgress);
 		setEffectCreator(MantraEffectType.EMIT, MantraCommon::createEffectEmitEffect, null);
 	}
 
@@ -133,8 +132,8 @@ public class MantraCommon extends Mantra {
 
 	public Entity directLaunchMantra(World world, Vec3d vec, @Nullable IWorldObject caster, VariableSet params,
 			NBTTagCompound meta) {
-		EntityGrimoire grimoire = new EntityGrimoire(world, caster == null ? null : caster.toEntityLiving(), this,
-				meta, CastStatus.AFTER_SPELLING);
+		EntityGrimoire grimoire = new EntityGrimoire(world, caster == null ? null : caster.toEntityLiving(), this, meta,
+				CastStatus.AFTER_SPELLING);
 		IMantraData mantraData = grimoire.getMantraData();
 		try {
 			MantraDataCommon mc = (MantraDataCommon) mantraData;
@@ -235,8 +234,7 @@ public class MantraCommon extends Mantra {
 	public void doPotentAttackEffect(World world, ICaster caster, Entity target) {
 		EntityLivingBase player = caster.iWantCaster().toEntityLiving();
 		if (world.isRemote) onPotentAttackEffect(world, caster, target);
-		world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_NOTE_CHIME,
-				player.getSoundCategory(), 1.0F, 0F);
+		world.playSound((EntityPlayer) null, player.posX, player.posY, player.posZ, SoundEvents.BLOCK_NOTE_CHIME, player.getSoundCategory(), 1.0F, 0F);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -401,6 +399,7 @@ public class MantraCommon extends Mantra {
 		return null;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public double getProgressRate(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;

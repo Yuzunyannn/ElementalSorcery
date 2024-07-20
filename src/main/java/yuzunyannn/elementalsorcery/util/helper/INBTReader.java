@@ -8,8 +8,10 @@ import java.util.function.Supplier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
@@ -65,7 +67,11 @@ public interface INBTReader {
 
 	NBTTagCompound compoundTag(String key);
 
+	NBTTagList listTag(String key, int type);
+
 	CapabilityObjectRef capabilityObjectRef(String key);
 
 	Object display(String key);
+
+	Vec3d vec3d(String key);
 }

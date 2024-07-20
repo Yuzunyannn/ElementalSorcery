@@ -36,12 +36,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESStorageKeyEnum;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.item.ESItemStorageEnum;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.DiskItem;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
@@ -376,7 +376,7 @@ public class TileRiteTable extends TileEntityNetworkOld {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getSubCompound(ESItemStorageEnum.DISK_DATA) != null || stack.getItem() == ESObjects.ITEMS.DISK)
+			if (stack.getSubCompound(ESStorageKeyEnum.DISK_DATA) != null || stack.getItem() == ESObjects.ITEMS.DISK)
 				return MultiRets.ret(stack);
 			IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
 			if (computer == null) continue;

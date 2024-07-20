@@ -12,7 +12,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -24,23 +23,11 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class ElementHelper {
-
-	/** 复制src到dst */
-	public static void toElementInventory(IElementInventory src, IElementInventory dst) {
-		if (dst instanceof IElementInventoryModifiable) ((IElementInventoryModifiable) dst).setSlots(src.getSlots());
-		for (int i = 0; i < Math.min(src.getSlots(), dst.getSlots()); i++)
-			dst.setStackInSlot(i, src.getStackInSlot(i).copy());
-		for (int i = src.getSlots(); i < dst.getSlots(); i++) dst.setStackInSlot(i, ElementStack.EMPTY);
-		NBTTagCompound nbt = new NBTTagCompound();
-		src.writeCustomDataToNBT(nbt);
-		dst.readCustomDataFromNBT(nbt);
-	}
 
 	public static boolean canInsert(IElementInventory inventory) {
 		if (inventory == null) return false;
@@ -99,17 +86,18 @@ public class ElementHelper {
 		if (stack.isEmpty()) return null;
 		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) return null;
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		if (inventory.hasState(stack)) inventory.loadState(stack);
+		inventory.applyUse();
 		return inventory;
 	}
 
 	@Nullable
 	static public IElementInventory getElementInventory(ICapabilityProvider provider) {
 		if (!provider.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) return null;
-		return provider.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+		IElementInventory inventory = provider.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+		if (inventory != null) inventory.applyUse();
+		return inventory;
 	}
 
-	@Nullable
 	static public boolean hasElementInventory(ItemStack stack) {
 		if (stack.isEmpty()) return false;
 		return stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null) != null;

@@ -7,6 +7,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.GameCast;
+import yuzunyannn.elementalsorcery.api.util.ICastEnv;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 
 public abstract class EntityObject extends Entity implements IWorldObject {
@@ -42,8 +45,7 @@ public abstract class EntityObject extends Entity implements IWorldObject {
 			double d2 = this.posZ + (this.interpTargetZ - this.posZ) / (double) this.newPosRotationIncrements;
 			double d3 = MathHelper.wrapDegrees(this.interpTargetYaw - (double) this.rotationYaw);
 			this.rotationYaw = (float) ((double) this.rotationYaw + d3 / (double) this.newPosRotationIncrements);
-			this.rotationPitch = (float) ((double) this.rotationPitch
-					+ (this.interpTargetPitch - (double) this.rotationPitch) / (double) this.newPosRotationIncrements);
+			this.rotationPitch = (float) ((double) this.rotationPitch + (this.interpTargetPitch - (double) this.rotationPitch) / (double) this.newPosRotationIncrements);
 			--this.newPosRotationIncrements;
 			this.setPosition(d0, d1, d2);
 			this.setRotation(this.rotationYaw, this.rotationPitch);
@@ -79,6 +81,17 @@ public abstract class EntityObject extends Entity implements IWorldObject {
 	@Override
 	public Vec3d getObjectPosition() {
 		return this.getPositionVector();
+	}
+
+	@Override
+	public <T> T to(Class<T> cls) {
+		if (CapabilityObjectRef.class == cls) return (T) toRef();
+		return GameCast.cast(ICastEnv.EMPTY, this, cls);
+	}
+
+	@Override
+	public CapabilityObjectRef toRef() {
+		return CapabilityObjectRef.of(this);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
+import yuzunyannn.elementalsorcery.nodegui.GActionEaseInOutBack;
 
 public class ModelMantraEmitter extends ModelBase {
 
@@ -56,7 +57,7 @@ public class ModelMantraEmitter extends ModelBase {
 	}
 
 	@Override
-	public void render(Entity entity, float tick, float yaw, float pitch, float f3, float f4, float scale) {
+	public void render(Entity entity, float tick, float yaw, float pitch, float run, float f4, float scale) {
 
 		jiao.rotationPointY = 0;
 		jiao.rotateAngleX = 0;
@@ -76,6 +77,26 @@ public class ModelMantraEmitter extends ModelBase {
 		core.rotationPointY = -8 + dx * 0.5f;
 		core.rotateAngleY = yaw / 180 * 3.1415926f;
 		core.rotateAngleX = pitch / 180 * 3.1415926f;
+
+		float dr = Math.min(run, 1);
+
+		if (dr > 0) {
+//			dr = (float) GActionEaseInOutBack.ease(dr);
+			float rotation = tick;
+			float length = 6;
+
+			c1.rotateAngleZ = ((rotation * 0.1f) % 6.28f) * dr;
+			c2.rotateAngleZ = ((rotation * 0.5f) % 6.28f) * dr;
+			c3.rotateAngleZ = ((rotation * 1.0f) % 6.28f) * dr;
+
+			c1.rotationPointZ = 0.5f - length * dr;
+			c2.rotationPointZ = 0.0f - length * 1.25f * dr;
+			c3.rotationPointZ = -0.5f - length * 1.75f * dr;
+		} else {
+			c1.rotationPointZ = 0;
+			c2.rotationPointZ = 0;
+			c3.rotationPointZ = 0;
+		}
 
 		core.render(scale);
 	}

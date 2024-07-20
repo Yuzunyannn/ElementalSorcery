@@ -19,9 +19,9 @@ public class DeviceInfoItem extends DeviceInfo {
 
 	@Override
 	public String getTranslationWorkKey() {
-		return stack.getTranslationKey();
+		return stack.getTranslationKey() + ".name";
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getDisplayWorkName() {

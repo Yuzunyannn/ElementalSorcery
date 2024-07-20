@@ -137,8 +137,8 @@ public class ItemSpellbookElement extends ItemSpellbook {
 		e.setCount(Math.min(AR_COUNT_PRE_TICK, e.getCount()));
 		if (!eInv.insertElement(e, true)) return false;
 		if (tile instanceof IAltarWake) ((IAltarWake) tile).wake(IAltarWake.OBTAIN, null);
-		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().add(0, 0.5, 0),
-				new Vec3d(tile.getPos()).add(0.5, 0.5, 0.5));
+		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().add(0, 0.5, 0), new Vec3d(
+				tile.getPos()).add(0.5, 0.5, 0.5));
 		eInv.insertElement(e, false);
 		estack.shrink(e.getCount());
 		tile.markDirty();
@@ -156,8 +156,8 @@ public class ItemSpellbookElement extends ItemSpellbook {
 
 		ElementStack ret = accept.accpetMagic(magic, entity.getPosition(), face);
 
-		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().add(0, 0.5, 0),
-				new Vec3d(tile.getPos()).add(0.5, 0.5, 0.5));
+		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().add(0, 0.5, 0), new Vec3d(
+				tile.getPos()).add(0.5, 0.5, 0.5));
 
 		estack.grow(ret);
 

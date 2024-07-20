@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.computer;
 
+import java.util.function.Function;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,10 +16,12 @@ import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTSaver;
 
-public class ComputerDevice extends Computer implements ICapabilityProvider {
+public class ComputerDevice extends Computer implements ICapabilityProvider, IDeviceHoldable<ComputerDevice> {
 
 	protected final Device device;
 	protected IComputEnv env;
+	protected Function<ComputerDevice, ComputerDevice> instanceChanger;
+	protected boolean isHolding;
 
 	public ComputerDevice(String appearance, DeviceInfo info) {
 		super(appearance);
@@ -27,6 +31,30 @@ public class ComputerDevice extends Computer implements ICapabilityProvider {
 	public ComputerDevice(String appearance, ItemStack stack) {
 		super(appearance);
 		device = new Device(this, new DeviceInfoItem(stack));
+	}
+
+	public void asTemplate() {
+		device._copy_template_ = true;
+	}
+
+	@Override
+	public ComputerDevice changeInstance(ComputerDevice newInst) {
+		if (instanceChanger != null) {
+			ComputerDevice uInse = instanceChanger.apply(newInst);
+			uInse.device.info = this.device.info;
+			return uInse;
+		}
+		return this;
+	}
+
+	@Override
+	public boolean inHold() {
+		return isHolding;
+	}
+
+	@Override
+	public void setInHold(boolean hold) {
+		isHolding = hold;
 	}
 
 	public ComputerDevice setEnv(IComputEnv env) {

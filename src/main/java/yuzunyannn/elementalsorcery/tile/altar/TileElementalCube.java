@@ -63,8 +63,7 @@ public class TileElementalCube extends TileEntityNetworkOld implements ITickable
 			from = from.add(rand.nextDouble() - 0.5, rand.nextDouble() - 0.5, rand.nextDouble() - 0.5);
 			pto = pto.add(rand.nextDouble() - 0.5, 0, rand.nextDouble() - 0.5);
 		} else {
-			from = from.add(rand.nextDouble() * 0.5 - 0.25, rand.nextDouble() * 0.5 - 0.25,
-					rand.nextDouble() * 0.5 - 0.25);
+			from = from.add(rand.nextDouble() * 0.5 - 0.25, rand.nextDouble() * 0.5 - 0.25, rand.nextDouble() * 0.5 - 0.25);
 		}
 		effect = new EffectElementFly(world, from, pto);
 		effect.setColor(color);
@@ -73,7 +72,7 @@ public class TileElementalCube extends TileEntityNetworkOld implements ITickable
 	}
 
 	// 仓库
-	protected ElementInventoryStronger inventory = new ElementInventoryStronger();
+	protected ElementInventoryStronger inventory = ElementInventory.sensor(new ElementInventoryStronger(), this);
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
@@ -141,7 +140,7 @@ public class TileElementalCube extends TileEntityNetworkOld implements ITickable
 
 	// 设置仓库
 	public void setElementInventory(IElementInventory inventory) {
-		ElementHelper.toElementInventory(inventory, this.inventory);
+		this.inventory.assign(inventory);
 		if (world.isRemote) changeColor();
 	}
 

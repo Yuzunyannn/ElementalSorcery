@@ -22,7 +22,7 @@ import yuzunyannn.elementalsorcery.util.element.ElementInventoryOnlyInsert;
 public class TileElementPlatform extends TileEntityNetworkOld implements IGetItemStack, ITickable, IAltarWake {
 
 	// 只能存不能取
-	protected ElementInventoryOnlyInsert inventory = new ElementInventoryOnlyInsert(4);
+	protected ElementInventoryOnlyInsert inventory = ElementInventory.sensor(new ElementInventoryOnlyInsert(4), this);
 	protected ItemStack stack = ItemStack.EMPTY;
 	protected NBTTagCompound runData = null;
 	protected int tick;

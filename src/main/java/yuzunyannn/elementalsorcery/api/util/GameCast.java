@@ -15,6 +15,7 @@ public class GameCast {
 	public final static Map<Class, ICastHandler> CAST_MAP = new IdentityHashMap<>();
 
 	public static <T> T cast(ICastEnv env, Object obj, Class<?> toClazz) {
+		if (obj == null) return null;
 		if (toClazz.isAssignableFrom(obj.getClass())) return (T) obj;
 		if (obj instanceof ICastable) {
 			T to = ((ICastable) obj).cast(toClazz);

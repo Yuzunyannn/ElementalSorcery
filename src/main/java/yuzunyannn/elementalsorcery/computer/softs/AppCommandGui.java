@@ -192,8 +192,14 @@ public class AppCommandGui extends AppGuiCommon<AppCommand> implements IAutoComp
 		boolean isNext = element.isCommand() ? element.getEndIndex() <= cursor - 1 : element.getEndIndex() < cursor - 1;
 
 		GInputShift.Fast shift = new GInputShift.Fast();
-		shift.alternative.add("network");
-		shift.alternative.add("network-ls");
+		String eWord = element.getString();
+
+		final String[] words = new String[] { "network-ls", "network-scan", "network-connect", "network-close", "ls",
+				"io", "north", "east", "west", "south", "up", "down", "facing-set" };
+
+		for (String word : words) {
+			if (word.startsWith(eWord)) shift.alternative.add(word);
+		}
 
 		if (isNext) {
 			if (element.isCommand()) shift.prefix = " ";
@@ -204,8 +210,7 @@ public class AppCommandGui extends AppGuiCommon<AppCommand> implements IAutoComp
 		}
 
 //		System.out.println(element.getEndIndex() + ":" + cursor);
-//		return shift;
-		return null;
+		return shift;
 	}
 
 }

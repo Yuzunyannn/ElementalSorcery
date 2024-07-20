@@ -60,7 +60,7 @@ public class DeviceFeatureMap {
 		public Object[] checkAndGetMeetParams(Method method, DNRequest params) {
 			int paramterCount = method.getParameterCount();
 			if (paramterCount == 0) return EMPTY;
-			if (paramterCount > params.size()) return null;
+			if (paramterCount > params.pSize()) return null;
 			Parameter[] paramaters = method.getParameters();
 
 			if (paramterCount == 1 && paramaters[0].getType().isAssignableFrom(DNRequest.class))

@@ -213,13 +213,23 @@ public class GInput extends GNode implements IGInteractor {
 		case Keyboard.KEY_UP:
 		case Keyboard.KEY_DOWN:
 			if (shift == null) {
-				if (val.isEmpty() && historian != null) wordShift = historian.get();
+				if (historian != null) {
+					wordShift = historian.get();
+					if (wordShift != null) {
+						wordShift.flag = 0x01f;
+						wordShift.startIndex = 0;
+						wordShift.endIndex = val.length();
+					}
+				}
 			} else wordShift = shift;
 			if (wordShift != null) doWordShift(keyCode == Keyboard.KEY_UP ? -1 : 1);
 			break;
 		case Keyboard.KEY_TAB:
 			wordShift = shift;
-			autoComplete();
+			if (wordShift != null && (wordShift.flag & 0x01) == 0) {
+				if (wordShift.selectIndex <= 0) wordShift.selectIndex = wordShift.size() - 1;
+				doWordShift(-1);
+			} else autoComplete();
 			break;
 		case Keyboard.KEY_DELETE:
 			remove(false);
@@ -364,10 +374,6 @@ public class GInput extends GNode implements IGInteractor {
 	}
 
 	public void autoComplete() {
-		if (this.wordShift != null) {
-			doWordShift(-1);
-			return;
-		}
 		GInputShift aComplete = findAutoComplete();
 		if (aComplete == null) return;
 		if (aComplete.isEmpty()) return;

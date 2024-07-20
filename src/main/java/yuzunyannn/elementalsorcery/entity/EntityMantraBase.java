@@ -31,6 +31,7 @@ import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
@@ -96,6 +97,11 @@ public abstract class EntityMantraBase extends Entity
 	@Override
 	public CastStatus getCastStatus() {
 		return state;
+	}
+
+	@Override
+	public CapabilityObjectRef toRef() {
+		return CapabilityObjectRef.of(this);
 	}
 
 	@Override

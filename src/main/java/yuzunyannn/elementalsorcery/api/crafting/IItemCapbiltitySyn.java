@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 /** 从物品更新状态[由于物品的cap不会自动同步！！！不会自动同步！！] （当然，这个接口不仅仅作用在mc的能力系统上） */
+@Deprecated
 public interface IItemCapbiltitySyn {
 
 	/**

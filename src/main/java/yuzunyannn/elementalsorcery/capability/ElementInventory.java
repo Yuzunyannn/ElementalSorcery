@@ -5,10 +5,12 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -19,6 +21,9 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESStorageKeyEnum;
+import yuzunyannn.elementalsorcery.api.crafting.IDataSensitivity;
+import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
@@ -27,9 +32,10 @@ import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.detecter.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ElementInventory implements IElementInventoryModifiable, INBTSerializable<NBTTagCompound>,
-		ContainerArrayDetecter.ICanArrayDetected<ElementStack, NBTTagIntArray> {
+		IItemCapbiltitySyn, ContainerArrayDetecter.ICanArrayDetected<ElementStack, NBTTagIntArray> {
 
 	@CapabilityInject(IElementInventory.class)
 	public static Capability<IElementInventory> ELEMENTINVENTORY_CAPABILITY;
@@ -122,30 +128,124 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 	}
 
 	@Override
-	public boolean hasState(NBTTagCompound nbt) {
-		return nbt.hasKey("eInv", NBTTag.TAG_COMPOUND);
-	}
-
-	@Override
-	public void loadState(NBTTagCompound nbt) {
-		nbt = nbt.getCompoundTag("eInv");
-		if (nbt != null) this.deserializeNBT(nbt);
-	}
-
-	@Override
-	public void saveState(NBTTagCompound nbt) {
-		NBTTagCompound dataNBT = this.serializeNBT();
-		nbt.setTag("eInv", dataNBT);
-	}
-
-	@Override
 	public NBTTagCompound serializeNBT() {
-		return (NBTTagCompound) Provider.storage.writeNBT(ELEMENTINVENTORY_CAPABILITY, this, null);
+		NBTTagCompound nbt = new NBTTagCompound();
+		NBTTagList list = new NBTTagList();
+		for (int i = 0; i < getSlots(); i++) {
+			if (getStackInSlot(i).isEmpty()) continue;
+			NBTTagCompound data = getStackInSlot(i).serializeNBT();
+			data.setInteger("slot", i);
+			list.appendTag(data);
+		}
+		nbt.setTag("list", list);
+		nbt.setInteger("size", getSlots());
+		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		Provider.storage.readNBT(ELEMENTINVENTORY_CAPABILITY, this, null, nbt);
+		int size = nbt.getInteger("size");
+		this.setSlots(size);
+		NBTTagList list = nbt.getTagList("list", NBTTag.TAG_COMPOUND);
+		for (NBTBase base : list) {
+			NBTTagCompound data = (NBTTagCompound) base;
+			ElementStack etack = new ElementStack(data);
+			int slot = data.getInteger("slot");
+			if (slot < getSlots()) setStackInSlot(slot, etack.isEmpty() ? ElementStack.EMPTY : etack);
+		}
+	}
+
+	public static boolean hasInvData(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return false;
+		return nbt.hasKey(ESStorageKeyEnum.ELEMENT_INV, NBTTag.TAG_COMPOUND);
+	}
+
+	// IDataSensitivity
+	private IDataSensitivity sensor;
+
+	@Override
+	public void markDirty() {
+		if (sensor != null) sensor.markDirty();
+	}
+
+	@Override
+	public void applyUse() {
+		if (sensor != null) sensor.applyUse();
+	}
+
+	@Override
+	public ElementInventory setSensor(IDataSensitivity sensor) {
+		this.sensor = sensor;
+		return this;
+	}
+
+	public static <T extends IElementInventory> T sensor(T self, ItemStack stack) {
+		self.setSensor(new IDataSensitivity() {
+			@Override
+			public void markDirty() {
+				NBTTagCompound nbt = ItemHelper.getOrCreateTagCompound(stack);
+				NBTTagCompound dat = (NBTTagCompound) Provider.storage.writeNBT(ELEMENTINVENTORY_CAPABILITY, self, null);
+				nbt.setTag(ESStorageKeyEnum.ELEMENT_INV, dat);
+			}
+
+			@Override
+			public void applyUse() {
+				NBTTagCompound nbt = ItemHelper.getOrCreateTagCompound(stack);
+				nbt = nbt.getCompoundTag(ESStorageKeyEnum.ELEMENT_INV);
+				if (nbt != null) Provider.storage.readNBT(ELEMENTINVENTORY_CAPABILITY, self, null, nbt);
+			}
+		});
+		return self;
+	}
+
+	public static <T extends IElementInventory> T sensor(T self, TileEntity tile) {
+		self.setSensor(new IDataSensitivity() {
+			@Override
+			public void markDirty() {
+				tile.markDirty();
+			}
+
+			@Override
+			public void applyUse() {
+
+			}
+		});
+		return self;
+	}
+
+	// IAssignable
+
+	@Override
+	public ElementInventory assign(IElementInventory other) {
+		if (this == other) return this;
+		setSlots(other.getSlots());
+		for (int i = 0; i < Math.min(this.getSlots(), other.getSlots()); i++)
+			this.setStackInSlot(i, other.getStackInSlot(i).copy());
+		for (int i = other.getSlots(); i < this.getSlots(); i++) this.setStackInSlot(i, ElementStack.EMPTY);
+		return this;
+	}
+
+	// IItemCapbiltitySyn
+
+	@Override
+	@Deprecated
+	public boolean hasState(NBTTagCompound nbt) {
+		return nbt.hasKey(ESStorageKeyEnum.ELEMENT_INV, NBTTag.TAG_COMPOUND);
+	}
+
+	@Override
+	@Deprecated
+	public void loadState(NBTTagCompound nbt) {
+		nbt = nbt.getCompoundTag(ESStorageKeyEnum.ELEMENT_INV);
+		if (nbt != null) this.deserializeNBT(nbt);
+	}
+
+	@Override
+	@Deprecated
+	public void saveState(NBTTagCompound nbt) {
+		NBTTagCompound dataNBT = this.serializeNBT();
+		nbt.setTag(ESStorageKeyEnum.ELEMENT_INV, dataNBT);
 	}
 
 	// ICanArrayDetected
@@ -197,37 +297,14 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 
 		@Override
 		public NBTBase writeNBT(Capability<IElementInventory> capability, IElementInventory instance, EnumFacing side) {
-			NBTTagCompound nbt = new NBTTagCompound();
-			instance.writeCustomDataToNBT(nbt);
-			NBTTagList list = new NBTTagList();
-			for (int i = 0; i < instance.getSlots(); i++) {
-				if (instance.getStackInSlot(i).isEmpty()) continue;
-				NBTTagCompound data = instance.getStackInSlot(i).serializeNBT();
-				data.setInteger("slot", i);
-				list.appendTag(data);
-			}
-			nbt.setTag("list", list);
-			nbt.setInteger("size", instance.getSlots());
-			return nbt;
+			return instance.serializeNBT();
 		}
 
 		@Override
 		public void readNBT(Capability<IElementInventory> capability, IElementInventory instance, EnumFacing side,
 				NBTBase tag) {
 			if (tag == null) return;
-			NBTTagCompound nbt = (NBTTagCompound) tag;
-			int size = nbt.getInteger("size");
-			if (instance instanceof IElementInventoryModifiable)
-				((IElementInventoryModifiable) instance).setSlots(size);
-			NBTTagList list = nbt.getTagList("list", 10);
-			for (NBTBase base : list) {
-				NBTTagCompound data = (NBTTagCompound) base;
-				ElementStack etack = new ElementStack(data);
-				int slot = data.getInteger("slot");
-				if (slot < instance.getSlots())
-					instance.setStackInSlot(slot, etack.isEmpty() ? ElementStack.EMPTY : etack);
-			}
-			instance.readCustomDataFromNBT(nbt);
+			instance.deserializeNBT((NBTTagCompound) tag);
 		}
 
 	}
@@ -267,4 +344,5 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 			storage.readNBT(ELEMENTINVENTORY_CAPABILITY, inventory, null, compound);
 		}
 	}
+
 }

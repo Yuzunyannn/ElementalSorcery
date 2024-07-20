@@ -89,4 +89,10 @@ public class CORPlayerItem extends CORPlayer {
 		return stack.isEmpty() ? null : stack.getCapability(capability, facing);
 	}
 
+	@Override
+	public boolean is(Object obj) {
+		if (obj == ItemStack.class) return true;
+		return super.is(obj);
+	}
+
 }

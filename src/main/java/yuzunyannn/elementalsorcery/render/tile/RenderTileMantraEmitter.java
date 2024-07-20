@@ -25,7 +25,8 @@ public class RenderTileMantraEmitter extends TileEntitySpecialRenderer<TileMantr
 		RenderFriend.startTileEntitySpecialRenderForReverseModel(x + 0.5, y, z + 0.5, alpha);
 		float yaw = RenderFriend.getPartialTicks(tile.yaw, tile.prevYaw, partialTicks);
 		float pitch = RenderFriend.getPartialTicks(tile.pitch, tile.prevPitch, partialTicks);
-		MODEL.render(null, EventClient.tickRender + partialTicks, yaw, pitch, 0, 0, 1);
+		float run = RenderFriend.getPartialTicks(tile.runRate, tile.prevRunRate, partialTicks);
+		MODEL.render(null, EventClient.tickRender + partialTicks, yaw, pitch, run, 0, 1);
 		RenderFriend.endTileEntitySpecialRenderForReverseModel();
 		RenderFriend.bindDestoryTextureEnd(destroyStage);
 	}

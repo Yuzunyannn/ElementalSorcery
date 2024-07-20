@@ -91,9 +91,9 @@ public class DeviceAskerDisplay extends SoftBlockDisplay<DeviceAskerDisplay.Info
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	protected void initRefresh() {
+	protected void initLoading() {
 		GProgressBar bar = new GProgressBar();
-		bg.addChild(refresh = bar);
+		bg.addChild(loading = bar);
 		bar.setRunning(true);
 		bar.setColorRef(currNode.getColor());
 		bar.setMaxWidth(bg.getWidth() - 10);
@@ -146,7 +146,7 @@ public class DeviceAskerDisplay extends SoftBlockDisplay<DeviceAskerDisplay.Info
 			dpg.setDisplayObject(objs);
 		} else dpg.setDisplayObject(ref.toDisplayObject());
 
-		refresh.setVisible(false);
+		loading.setVisible(false);
 		container.addChild(dpg);
 		container.layout();
 	}

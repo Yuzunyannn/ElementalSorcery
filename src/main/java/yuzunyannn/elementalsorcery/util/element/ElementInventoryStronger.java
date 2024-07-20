@@ -63,19 +63,32 @@ public class ElementInventoryStronger extends ElementInventory {
 	}
 
 	@Override
-	public void writeCustomDataToNBT(NBTTagCompound nbt) {
-		super.writeCustomDataToNBT(nbt);
-		if (upperLimit > 0) nbt.setInteger("upper", upperLimit);
-		if (lowerLimit > 0) nbt.setInteger("lower", lowerLimit);
-		if (terminal > 0) nbt.setByte("terminal", terminal);
-	}
-
-	@Override
-	public void readCustomDataFromNBT(NBTTagCompound nbt) {
-		super.readCustomDataFromNBT(nbt);
+	public void deserializeNBT(NBTTagCompound nbt) {
+		super.deserializeNBT(nbt);
 		upperLimit = nbt.getInteger("upper");
 		lowerLimit = nbt.getInteger("lower");
 		terminal = nbt.getByte("terminal");
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound nbt = super.serializeNBT();
+		if (upperLimit > 0) nbt.setInteger("upper", upperLimit);
+		if (lowerLimit > 0) nbt.setInteger("lower", lowerLimit);
+		if (terminal > 0) nbt.setByte("terminal", terminal);
+		return nbt;
+	}
+
+	@Override
+	public ElementInventoryStronger assign(IElementInventory other) {
+		super.assign(other);
+		if (other instanceof ElementInventoryStronger) {
+			ElementInventoryStronger stronger = (ElementInventoryStronger) other;
+			upperLimit = stronger.upperLimit;
+			lowerLimit = stronger.lowerLimit;
+			terminal = stronger.terminal;
+		}
+		return this;
 	}
 
 	@Override
@@ -92,8 +105,7 @@ public class ElementInventoryStronger extends ElementInventory {
 		if (getTerminal() == 0) return false;
 		IElementInventory eInv = ElementHelper.getElementInventory(world.getTileEntity(pos));
 		if (eInv instanceof ElementInventoryStronger) {
-			player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_ELEMENT_INVENTORY_STRONGER, world, pos.getX(),
-					pos.getY(), pos.getZ());
+			player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_ELEMENT_INVENTORY_STRONGER, world, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
 		return false;

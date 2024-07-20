@@ -52,9 +52,9 @@ public abstract class BlockElementContainer extends BlockContainerNormal {
 		IElementInventory eInv = ElementHelper.getElementInventory(tile);
 		if (eInv == null) return;
 		IElementInventory itemInv = ElementHelper.getElementInventory(stack);
-		ElementHelper.toElementInventory(eInv, itemInv);
+		itemInv.assign(eInv);
 		itemInv.getStackInSlot(0).grow(-1);
-		itemInv.saveState(stack);
+		itemInv.markDirty();
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public abstract class BlockElementContainer extends BlockContainerNormal {
 		IElementInventory einv = BlockHelper.getElementInventory(world, pos, null);
 		if (einv == null) return;
 		if (EntityHelper.isCreative(user)) stack = stack.copy();
-		ElementHelper.toElementInventory(ElementHelper.getElementInventory(stack), einv);
+		einv.assign(ElementHelper.getElementInventory(stack));
 	}
 
 	@Override

@@ -8,9 +8,11 @@ import yuzunyannn.elementalsorcery.api.util.render.IDisplayObject;
 @SideOnly(Side.CLIENT)
 public interface IDisplayNode extends IDisplayObject {
 
+	@SideOnly(Side.CLIENT)
 	GNode getGNode();
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	default Vec3d getSize() {
 		GNode node = getGNode();
 		if (node == null) return Vec3d.ZERO;
@@ -18,6 +20,7 @@ public interface IDisplayNode extends IDisplayObject {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	default void update() {
 		GNode node = getGNode();
 		if (node == null || node.isInScene()) return;
@@ -25,6 +28,7 @@ public interface IDisplayNode extends IDisplayObject {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	default void doRender(float partialTicks) {
 		GNode node = getGNode();
 		if (node == null) return;

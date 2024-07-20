@@ -8,12 +8,16 @@ import javax.annotation.Nullable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.crafting.IAssignable;
+import yuzunyannn.elementalsorcery.api.crafting.IDataSensitivity;
 import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
-public interface IElementInventory extends IItemCapbiltitySyn {
+public interface IElementInventory
+		extends IDataSensitivity, IAssignable<IElementInventory>, INBTSerializable<NBTTagCompound>, IItemCapbiltitySyn {
 
 	/**
 	 * 获取最多有多少个槽位，每个槽位只能存放一种ElementStack
@@ -118,14 +122,15 @@ public interface IElementInventory extends IItemCapbiltitySyn {
 	@SideOnly(Side.CLIENT)
 	void addInformation(@Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn);
 
-	/** 读取自定义字段 */
-	default void readCustomDataFromNBT(NBTTagCompound nbt) {
+//	/** 读取自定义字段 */
+//	default void readCustomDataFromNBT(NBTTagCompound nbt) {
+//
+//	}
+//
+//	/** 写入自定义字段 */
+//	default void writeCustomDataToNBT(NBTTagCompound nbt) {
+//
+//	}
 
-	}
-
-	/** 写入自定义字段 */
-	default void writeCustomDataToNBT(NBTTagCompound nbt) {
-
-	}
-
+	public IElementInventory setSensor(IDataSensitivity sensor);
 }

@@ -7,6 +7,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import yuzunyannn.elementalsorcery.api.util.GameCast;
+import yuzunyannn.elementalsorcery.api.util.ICastEnv;
 
 public class WorldObjectEntity implements IWorldObject {
 
@@ -14,6 +16,18 @@ public class WorldObjectEntity implements IWorldObject {
 
 	public WorldObjectEntity(Entity entity) {
 		this.entity = entity;
+	}
+
+	@Override
+	public <T> T to(Class<T> cls) {
+		if (cls == CapabilityObjectRef.class) return (T) toRef();
+		if (cls == BlockPos.class) return (T) getPosition();
+		return GameCast.cast(ICastEnv.EMPTY, entity, cls);
+	}
+
+	@Override
+	public CapabilityObjectRef toRef() {
+		return CapabilityObjectRef.of(entity);
 	}
 
 	@Override

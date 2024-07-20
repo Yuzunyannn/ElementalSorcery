@@ -52,7 +52,7 @@ public class ContainerElementWorkbench extends Container {
 						IElementInventory inventory = ElementHelper.getElementInventory(stack_);
 						List<ElementStack> elist = irecipe.getNeedElements();
 						for (ElementStack estack : elist) inventory.extractElement(estack, false);
-						inventory.saveState(stack_);
+						inventory.markDirty();
 						irecipe.shrink(craftMatrix);
 						craftElement.setInventorySlotContents(0, stack_);
 						if (!world.isRemote && lastHave) detectAndSendChanges();

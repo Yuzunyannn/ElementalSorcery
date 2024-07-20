@@ -66,7 +66,7 @@ public class ItemGrimoire extends Item implements IRenderLayoutFix {
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-		return new Grimoire.Provider(this.initElementInventory(stack));
+		return new Grimoire.Provider(ElementInventory.sensor(this.initElementInventory(stack), stack));
 	}
 
 	@Override

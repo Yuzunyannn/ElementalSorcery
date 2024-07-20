@@ -27,6 +27,11 @@ public class TileStarFlower extends TileEntityNetworkOld implements ITickable {
 			if (estack.getElement() instanceof IStarFlowerCast) return super.insertElement(slot, estack, simulate);
 			return false;
 		};
+
+		@Override
+		public void markDirty() {
+			this.markDirty();
+		}
 	};
 	protected int tick;
 

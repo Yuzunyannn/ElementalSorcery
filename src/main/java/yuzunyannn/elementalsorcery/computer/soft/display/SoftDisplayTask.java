@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.IDisplayNode;
 import yuzunyannn.elementalsorcery.nodegui.IDisplaySustainable;
+import yuzunyannn.elementalsorcery.tile.device.TileMantraEmitterRunDisplay;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
@@ -42,7 +43,7 @@ public abstract class SoftDisplayTask<T, U extends NBTBase> implements IDisplayN
 		return condition;
 	}
 
-	public <T> T conditionCast(Class<T> clazz) {
+	public <K> K conditionCast(Class<K> clazz) {
 		return condition == null ? null : condition.cast(clazz);
 	}
 
@@ -146,8 +147,9 @@ public abstract class SoftDisplayTask<T, U extends NBTBase> implements IDisplayN
 	}
 
 	public static void registerAll() {
-		GameDisplayCast.C_MAP.put(DeviceScanDisplay.ID, () -> new DeviceScanDisplay());
-		GameDisplayCast.C_MAP.put(DeviceAskerDisplay.ID, () -> new DeviceAskerDisplay());
+		GameDisplayCast.C_MAP.put(DeviceScanDisplay.ID, DeviceScanDisplay::new);
+		GameDisplayCast.C_MAP.put(DeviceAskerDisplay.ID, DeviceAskerDisplay::new);
+		GameDisplayCast.C_MAP.put(TileMantraEmitterRunDisplay.ID, TileMantraEmitterRunDisplay::new);
 	}
 
 }

@@ -11,6 +11,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Function;
@@ -125,6 +126,22 @@ public class JavaHelper {
 	public static boolean isArray(Object obj) {
 		if (obj == null) return false;
 		return obj.getClass().isArray();
+	}
+
+	public final static Iterator<?> EMPTY = new Iterator() {
+		@Override
+		public boolean hasNext() {
+			return false;
+		}
+
+		@Override
+		public Object next() {
+			return null;
+		}
+	};
+
+	public static <T> Iterator<T> emptyIterator() {
+		return (Iterator<T>) EMPTY;
 	}
 
 //	public static <T, U> T[] toArray(Collection<U> list, Function<U, T> func) {

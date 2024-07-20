@@ -34,6 +34,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryPromote;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.detecter.ContainerMapDetecter;
+import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
@@ -107,7 +108,8 @@ public class TileDevolveCube extends TileEntityNetworkOld implements ITickable {
 	/** 地图当前遍历的index位置 */
 	protected int ergodicIndex = 0;
 	/** 自身的元素容器 */
-	protected ElementStackDoubleExchanger exchanger = new ElementStackDoubleExchanger(SLOT_COUNT);
+	protected ElementStackDoubleExchanger exchanger = ElementInventory.sensor(new ElementStackDoubleExchanger(
+			SLOT_COUNT), this);
 	/** 自动传输列表，为elementContainer的value in/outEnable的记录set */
 	protected Set<BlockPos> autoTransferSet = new HashSet<>();
 	/** 自动传输列表的更新mark用于数据同步 */

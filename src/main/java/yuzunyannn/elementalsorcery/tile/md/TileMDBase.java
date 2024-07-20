@@ -99,6 +99,11 @@ public abstract class TileMDBase extends TileEntity
 			markDirty();
 			return get;
 		};
+
+		@Override
+		public void markDirty() {
+			this.markDirty();
+		}
 	}
 
 	/** 给予魔力的目标 */
@@ -163,14 +168,14 @@ public abstract class TileMDBase extends TileEntity
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return (T) eInventory;
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) return (T) eInventory;
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return (T) inventory;
 		return super.getCapability(capability, facing);
 	}
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return true;
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) return true;
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return inventory != null;
 		return super.hasCapability(capability, facing);
 	}
@@ -467,9 +472,7 @@ public abstract class TileMDBase extends TileEntity
 	public static void magicEffectTo(World world, BlockPos from, EnumFacing facing, BlockPos to) {
 		BlockPos pos = from.offset(facing);
 		if (pos.equals(to)) return;
-		FirewrokShap.createSparkUniformlySpeed(world, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
-				to.getX() + 0.5, to.getY() + 0.5, to.getZ() + 0.5, 0.2f, TileMDBase.PARTICLE_COLOR,
-				TileMDBase.PARTICLE_COLOR_FADE, false, false);
+		FirewrokShap.createSparkUniformlySpeed(world, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5, to.getX() + 0.5, to.getY() + 0.5, to.getZ() + 0.5, 0.2f, TileMDBase.PARTICLE_COLOR, TileMDBase.PARTICLE_COLOR_FADE, false, false);
 	}
 
 	/** 记录的tick */

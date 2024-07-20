@@ -59,15 +59,13 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 					if (entity instanceof EntityPlayer) {
 						// 如果不是创造模式
 						if (!((EntityPlayer) entity).isCreative()) {
-							ItemStack the = BlockItemTypeInfo.getItemStackCanUsed(((EntityPlayer) entity).inventory,
-									need);
+							ItemStack the = BlockItemTypeInfo.getItemStackCanUsed(((EntityPlayer) entity).inventory, need);
 							if (the.getCount() < need.getCount()) continue;
 							need = the.splitStack(need.getCount());
 						}
 					}
 					Vec3d from = entity.getPositionVector();
-					from = from.add(MathHelper.sin(rand.nextFloat() * 6.28f) * 5, rand.nextDouble() + 1,
-							MathHelper.sin(rand.nextFloat() * 6.28f) * 5);
+					from = from.add(MathHelper.sin(rand.nextFloat() * 6.28f) * 5, rand.nextDouble() + 1, MathHelper.sin(rand.nextFloat() * 6.28f) * 5);
 					EntityBlockMove toBlock = new EntityBlockMove(world, ((EntityPlayer) entity), from, pos, need,
 							state);
 					if (state.isOpaqueCube()) {

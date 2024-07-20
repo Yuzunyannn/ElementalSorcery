@@ -24,15 +24,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
+import yuzunyannn.elementalsorcery.util.world.EntityMasterBinder;
 
 public class EntityPuppet extends EntityCreature {
 
 	protected int lifeTick = 120;
-	protected MasterBinder myMaster = new MasterBinder();
-	protected MasterBinder myTarget = new MasterBinder().setDataKey("mTar");
+	protected EntityMasterBinder myMaster = new EntityMasterBinder();
+	protected EntityMasterBinder myTarget = new EntityMasterBinder().setDataKey("mTar");
 	protected float pDamage;
 	protected float nDamage;
 
@@ -91,8 +91,8 @@ public class EntityPuppet extends EntityCreature {
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
-		this.myMaster.writeEntityToNBT(compound);
-		this.myTarget.writeEntityToNBT(compound);
+		this.myMaster.writeDataToNBT(compound);
+		this.myTarget.writeDataToNBT(compound);
 		compound.setInteger("lifeTick", lifeTick);
 		compound.setFloat("pD", pDamage);
 		compound.setFloat("nD", nDamage);
@@ -101,8 +101,8 @@ public class EntityPuppet extends EntityCreature {
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
-		this.myMaster.readEntityFromNBT(compound);
-		this.myTarget.readEntityFromNBT(compound);
+		this.myMaster.readDataFromNBT(compound);
+		this.myTarget.readDataFromNBT(compound);
 		this.lifeTick = compound.getInteger("lifeTick");
 		this.pDamage = compound.getFloat("pD");
 		this.nDamage = compound.getFloat("nD");

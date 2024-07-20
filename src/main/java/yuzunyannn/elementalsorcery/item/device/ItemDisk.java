@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.item.ESItemStorageEnum;
+import yuzunyannn.elementalsorcery.api.ESStorageKeyEnum;
 import yuzunyannn.elementalsorcery.computer.DiskItem;
 import yuzunyannn.elementalsorcery.computer.soft.EOS;
 import yuzunyannn.elementalsorcery.computer.softs.AppCommand;
@@ -28,7 +28,7 @@ public class ItemDisk extends Item {
 	@Override
 	public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
 		super.onCreated(stack, worldIn, playerIn);
-		stack.getOrCreateSubCompound(ESItemStorageEnum.DISK_DATA);
+		stack.getOrCreateSubCompound(ESStorageKeyEnum.DISK_DATA);
 	}
 
 }

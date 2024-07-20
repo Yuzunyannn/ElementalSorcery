@@ -107,9 +107,10 @@ public class GTutorialBuilding extends GNode {
 			}
 
 			@Override
-			public void onMouseWheel(GNode node, Vec3d worldPos, int detal) {
+			public boolean onMouseWheel(GNode node, Vec3d worldPos, int detal) {
 				float n = detal / 120f;
 				bScale = MathHelper.clamp(bScale + n / 10, 0.5f, 2);
+				return true;
 			}
 
 			@Override
@@ -220,12 +221,10 @@ public class GTutorialBuilding extends GNode {
 					IBlockState state = entry.state;
 					TileEntity tile = entry.getRenderTileIfSepcialRender();
 					if (tile != null) toNext: {
-						TileEntitySpecialRenderer<TileEntity> tileRender = TileEntityRendererDispatcher.instance
-								.getRenderer(tile);
+						TileEntitySpecialRenderer<TileEntity> tileRender = TileEntityRendererDispatcher.instance.getRenderer(tile);
 						if (tileRender == null) break toNext;
 						try {
-							tileRender.render(tile, pos.getX(), pos.getY(), pos.getZ(), mc.getRenderPartialTicks(), -1,
-									1);
+							tileRender.render(tile, pos.getX(), pos.getY(), pos.getZ(), mc.getRenderPartialTicks(), -1, 1);
 						} catch (Exception e) {} finally {
 							mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 							RenderFriend.disableLightmap(true);
@@ -235,8 +234,7 @@ public class GTutorialBuilding extends GNode {
 					if (entry.isRenderModel()) {
 						GlStateManager.disableCull();
 						bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
-						render.renderModelFlat(mc.world, blockrendererdispatcher.getModelForState(state), state, pos,
-								bufferbuilder, false, MathHelper.getPositionRandom(pos));
+						render.renderModelFlat(mc.world, blockrendererdispatcher.getModelForState(state), state, pos, bufferbuilder, false, MathHelper.getPositionRandom(pos));
 						tessellator.draw();
 					}
 				}

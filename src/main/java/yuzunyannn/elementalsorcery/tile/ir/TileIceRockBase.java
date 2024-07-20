@@ -101,6 +101,10 @@ public abstract class TileIceRockBase extends TileEntityNetworkOld implements IE
 			return ElementStack.magic(count, power);
 		};
 
+		@Override
+		public void markDirty() {
+			this.markDirty();
+		}
 	}
 
 	protected IceRockElementInventory eInventoryAdapter = new IceRockElementInventory();
@@ -111,13 +115,13 @@ public abstract class TileIceRockBase extends TileEntityNetworkOld implements IE
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return true;
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) return true;
 		return super.hasCapability(capability, facing);
 	}
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return (T) eInventoryAdapter;
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) return (T) eInventoryAdapter;
 		return super.getCapability(capability, facing);
 	}
 

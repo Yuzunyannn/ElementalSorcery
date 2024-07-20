@@ -155,7 +155,7 @@ public class BlockElementCube extends BlockElementContainer {
 			ElementStack estack = new ElementStack(e, 10000, 1000);
 			IElementInventory inventory = ElementHelper.getElementInventory(stack);
 			inventory.setStackInSlot(0, estack);
-			inventory.saveState(stack);
+			inventory.markDirty();
 			items.add(stack);
 
 		}

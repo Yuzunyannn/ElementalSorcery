@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.world;
 
 import java.lang.ref.WeakReference;
 import java.util.UUID;
@@ -9,9 +9,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class MasterBinder {
+public class EntityMasterBinder {
 
 	/** 主人的uuid */
 	protected UUID uuid;
@@ -24,20 +23,20 @@ public class MasterBinder {
 
 	protected String dataKey = "master";
 
-	public MasterBinder(EntityLivingBase master) {
+	public EntityMasterBinder(EntityLivingBase master) {
 		this.master = new WeakReference<>(master);
 		this.uuid = master.getUniqueID();
 	}
 
-	public MasterBinder(UUID playerUUID) {
+	public EntityMasterBinder(UUID playerUUID) {
 		this.uuid = playerUUID;
 	}
 
-	public MasterBinder() {
+	public EntityMasterBinder() {
 
 	}
 
-	public MasterBinder setDataKey(String dataName) {
+	public EntityMasterBinder setDataKey(String dataName) {
 		this.dataKey = dataName;
 		return this;
 	}
@@ -100,11 +99,11 @@ public class MasterBinder {
 		return master;
 	}
 
-	public void writeEntityToNBT(NBTTagCompound compound) {
+	public void writeDataToNBT(NBTTagCompound compound) {
 		if (uuid != null) compound.setUniqueId(this.dataKey, uuid);
 	}
 
-	public void readEntityFromNBT(NBTTagCompound compound) {
+	public void readDataFromNBT(NBTTagCompound compound) {
 		if (compound.hasKey(this.dataKey + "Most")) uuid = compound.getUniqueId(this.dataKey);
 	}
 

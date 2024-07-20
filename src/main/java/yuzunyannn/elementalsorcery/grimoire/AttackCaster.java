@@ -19,6 +19,7 @@ import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.target.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
@@ -173,6 +174,11 @@ public class AttackCaster implements ICaster, ICasterObject {
 	@Override
 	public Entity toEntity() {
 		return null;
+	}
+
+	@Override
+	public CapabilityObjectRef toRef() {
+		return CapabilityObjectRef.INVALID;
 	}
 
 	@Override

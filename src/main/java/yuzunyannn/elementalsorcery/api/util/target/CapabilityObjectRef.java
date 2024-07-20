@@ -186,4 +186,6 @@ public abstract class CapabilityObjectRef implements ICapabilityProvider, IDispl
 
 	public abstract boolean equals(CapabilityObjectRef other);
 
+	public abstract boolean is(Object obj);
+
 }

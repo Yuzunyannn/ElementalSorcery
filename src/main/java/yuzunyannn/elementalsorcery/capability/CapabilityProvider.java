@@ -24,17 +24,18 @@ public class CapabilityProvider {
 
 		public ElementInventoryUseProvider(ItemStack dyStack, IElementInventory inventory) {
 			this.inventory = inventory == null ? new ElementInventory() : inventory;
-			if (this.inventory.hasState(dyStack)) this.inventory.loadState(dyStack);
+			ElementInventory.sensor(inventory, dyStack);
+			inventory.applyUse();
 		}
 
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-			return ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability);
+			return ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability;
 		}
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return (T) inventory;
+			if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) return (T) inventory;
 			return null;
 		}
 
@@ -52,19 +53,19 @@ public class CapabilityProvider {
 
 		public ElementInventoryUseProviderCheck(ItemStack dyStack, IElementInventory inventory) {
 			this.inventory = inventory == null ? new ElementInventory() : inventory;
-			this.stack = dyStack;
-			if (this.inventory.hasState(dyStack)) this.inventory.loadState(dyStack);
+			ElementInventory.sensor(inventory, this.stack = dyStack);
+			inventory.applyUse();
 		}
 
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-			return ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability) && inventory.hasState(stack);
+			return ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability && ElementInventory.hasInvData(stack);
 		}
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability))
-				if (inventory.hasState(stack)) return (T) inventory;
+			if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability)
+				if (ElementInventory.hasInvData(stack)) return (T) inventory;
 			return null;
 		}
 
@@ -82,10 +83,9 @@ public class CapabilityProvider {
 		public SpellbookUseProvider(ItemStack dyStack, IElementInventory inventory) {
 			instance.inventory = inventory;
 			if (instance.inventory != null) {
-				if (instance.inventory.hasState(dyStack)) instance.inventory.loadState(dyStack);
-				else instance.inventory.saveState(dyStack);
+				ElementInventory.sensor(inventory, dyStack);
+				inventory.applyUse();
 			}
-
 		}
 
 		@Override
@@ -105,8 +105,7 @@ public class CapabilityProvider {
 	public static class FairyCubeMasterProvider implements ICapabilitySerializable<NBTTagCompound> {
 
 		private IFairyCubeMaster master;
-		public final static IStorage<IFairyCubeMaster> storage = FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY
-				.getStorage();
+		public final static IStorage<IFairyCubeMaster> storage = FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY.getStorage();
 
 		public FairyCubeMasterProvider() {
 			this(null);

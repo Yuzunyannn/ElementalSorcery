@@ -75,6 +75,7 @@ public class TileDevice extends TileEntityNetwork {
 	public void update() {
 		ticksExisted++;
 		device.update();
+		if (taskMgr != null) taskMgr.update();
 	}
 
 	public void updateByBlock() {

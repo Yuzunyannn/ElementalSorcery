@@ -9,7 +9,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.crafting.IDataSensitivity;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.detecter.ContainerArrayDetecter.ICanArrayDetected;
@@ -157,4 +159,31 @@ public class ElementStackDoubleExchanger implements INBTSerializable<NBTTagCompo
 		ElementHelper.addElementInformation(this, worldIn, tooltip, flagIn);
 	}
 
+	private IDataSensitivity sensor;
+
+	@Override
+	public void markDirty() {
+		if (sensor != null) sensor.markDirty();
+	}
+
+	@Override
+	public void applyUse() {
+		if (sensor != null) sensor.applyUse();
+	}
+
+	@Override
+	public ElementStackDoubleExchanger setSensor(IDataSensitivity sensor) {
+		this.sensor = sensor;
+		return this;
+	}
+
+	@Override
+	public IElementInventory assign(IElementInventory other) {
+		if (this == other) return this;
+		setSlots(other.getSlots());
+		for (int i = 0; i < Math.min(this.getSlots(), other.getSlots()); i++)
+			this.setStackInSlot(i, other.getStackInSlot(i).copy());
+		for (int i = other.getSlots(); i < this.getSlots(); i++) this.setStackInSlot(i, ElementStack.EMPTY);
+		return this;
+	}
 }

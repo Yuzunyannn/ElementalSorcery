@@ -130,15 +130,15 @@ public class GameDisplayCast {
 			nbt = buf.readCompoundTag();
 			String id = nbt.getString("id");
 			Supplier<IDisplayObject> factory = C_MAP.get(id);
-			if (factory == null) return String.format("Display Miss %d", id);
+			if (factory == null) return String.format("Display Miss %s", id);
 			try {
 				IDisplayObject obj = factory.get();
-				if (obj == null) return String.format("Display Miss %d", id);
+				if (obj == null) return String.format("Display Miss %s", id);
 				obj.deserializeNBT(nbt);
 				return obj;
 			} catch (Exception e) {
 				ESAPI.logger.warn("Display Error", e);
-				return String.format("Display Error %d", id);
+				return String.format("Display Error %s", id);
 			}
 		}
 		default:

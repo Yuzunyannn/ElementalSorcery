@@ -45,6 +45,7 @@ public class CMDRecord implements INBTSS {
 		path = reader.string("pth");
 		sSet.setId(id);
 		if (reader.has("code")) code = DNResultCode.fromMeta(reader.nint("code"));
+		setDisplayObject(reader.display("dpo"));
 	}
 
 	@Override
@@ -53,6 +54,7 @@ public class CMDRecord implements INBTSS {
 		writer.write("cmd", cmd);
 		if (path != null && !path.isEmpty()) writer.write("pth", path);
 		if (code != null) writer.write("code", (byte) code.getMeta());
+		writer.writeDisplay("dpo", displayObject);
 	}
 
 	@Override

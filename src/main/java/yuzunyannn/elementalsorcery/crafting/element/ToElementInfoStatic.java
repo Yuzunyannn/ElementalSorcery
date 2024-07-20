@@ -60,6 +60,7 @@ public class ToElementInfoStatic {
 
 		eInv = eInv == null ? ElementHelper.getElementInventory(elementContainer) : eInv;
 		if (eInv == null) return null;
+		eInv.applyUse();
 
 		List<ElementStack> elements = new ArrayList<>(eInv.getSlots());
 		for (int i = 0; i < eInv.getSlots(); i++) {
@@ -70,7 +71,7 @@ public class ToElementInfoStatic {
 		}
 
 		if (elements.isEmpty()) return null;
-		eInv.saveState(elementContainer);
+		eInv.markDirty();
 
 		return ToElementInfoStatic.create(1, elementContainer, elements);
 	}

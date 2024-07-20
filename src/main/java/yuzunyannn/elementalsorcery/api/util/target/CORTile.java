@@ -107,6 +107,12 @@ public class CORTile extends CapabilityObjectRef {
 	}
 
 	@Override
+	public boolean is(Object obj) {
+		if (obj == TileEntity.class) return true;
+		return toTileEntity() == obj;
+	}
+
+	@Override
 	public Object toDisplayObject() {
 		List<String> list = new LinkedList<>();
 		list.add(String.format("World: %d", worldId));

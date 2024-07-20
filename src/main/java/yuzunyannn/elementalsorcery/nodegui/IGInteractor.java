@@ -8,12 +8,12 @@ public interface IGInteractor {
 		return node.testHit(worldPos);
 	}
 
-	default public boolean blockMouseEvent(GNode node, Vec3d worldPos) {
-		return true;
+	default public boolean onMouseWheel(GNode node, Vec3d worldPos, int detal) {
+		return false;
 	}
 
-	default public void onMouseWheel(GNode node, Vec3d worldPos, int detal) {
-
+	default public boolean blockMouseEvent(GNode node, Vec3d worldPos) {
+		return true;
 	}
 
 	default public boolean onMousePressed(GNode node, Vec3d worldPos) {

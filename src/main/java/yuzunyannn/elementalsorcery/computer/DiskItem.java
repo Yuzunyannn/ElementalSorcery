@@ -2,8 +2,8 @@ package yuzunyannn.elementalsorcery.computer;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.api.ESStorageKeyEnum;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
-import yuzunyannn.elementalsorcery.api.item.ESItemStorageEnum;
 
 public class DiskItem implements IDisk {
 
@@ -23,7 +23,7 @@ public class DiskItem implements IDisk {
 
 	@Override
 	public NBTTagCompound getContext() {
-		return stack.getOrCreateSubCompound(ESItemStorageEnum.DISK_DATA);
+		return stack.getOrCreateSubCompound(ESStorageKeyEnum.DISK_DATA);
 	}
 
 	public ItemStack getItemStack() {

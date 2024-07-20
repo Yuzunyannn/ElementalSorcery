@@ -1,25 +1,36 @@
 package yuzunyannn.elementalsorcery.computer;
 
+import java.util.function.Function;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-public class ComputerProviderOfItem implements ICapabilitySerializable<NBTTagCompound> {
+public class ComputerProviderOfItem
+		implements ICapabilitySerializable<NBTTagCompound>, Function<ComputerDevice, ComputerDevice> {
 
 	protected ComputerDevice computer;
 
 	public ComputerProviderOfItem(ItemStack stack, String appearance) {
 		computer = new ComputerDevice(appearance, stack);
+		computer.instanceChanger = this;
 	}
 
 	public ComputerProviderOfItem(ItemStack stack, ComputerDevice computer) {
 		this.computer = computer;
+		computer.instanceChanger = this;
 	}
 
 	public Computer getComputer() {
 		return computer;
+	}
+
+	@Override
+	public ComputerDevice apply(ComputerDevice newInst) {
+		if (computer == newInst) return newInst;
+		return computer = newInst;
 	}
 
 	@Override

@@ -118,6 +118,22 @@ public class CORPlayer extends CapabilityObjectRef {
 	}
 
 	@Override
+	public boolean is(Object obj) {
+		if (obj == Entity.class) return true;
+		if (obj == EntityPlayer.class) return true;
+		EntityPlayer player = toEntityPlayer();
+		if (player != null) return player == obj;
+		if (obj instanceof EntityPlayer) {
+			UUID uuid = ((EntityPlayer) obj).getUniqueID();
+			if (uuid.equals(playerUUID)) {
+				ref = new WeakReference(obj);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public Object toDisplayObject() {
 		List<String> list = new LinkedList<>();
 		list.add(String.format("World: %d", worldId));

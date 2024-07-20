@@ -45,6 +45,7 @@ import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
 import yuzunyannn.elementalsorcery.api.entity.IFairyCubeObject;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.capability.FairyCubeMaster;
 import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
@@ -254,8 +255,7 @@ public class EntityFairyCube extends EntityLivingBase
 			double d2 = this.posZ + (this.interpTargetZ - this.posZ) / (double) this.newPosRotationIncrements;
 			double d3 = MathHelper.wrapDegrees(this.interpTargetYaw - (double) this.rotationYaw);
 			this.rotationYaw = (float) ((double) this.rotationYaw + d3 / (double) this.newPosRotationIncrements);
-			this.rotationPitch = (float) ((double) this.rotationPitch
-					+ (this.interpTargetPitch - (double) this.rotationPitch) / (double) this.newPosRotationIncrements);
+			this.rotationPitch = (float) ((double) this.rotationPitch + (this.interpTargetPitch - (double) this.rotationPitch) / (double) this.newPosRotationIncrements);
 			--this.newPosRotationIncrements;
 			this.setPosition(d0, d1, d2);
 			this.setRotation(this.rotationYaw, this.rotationPitch);
@@ -702,8 +702,7 @@ public class EntityFairyCube extends EntityLivingBase
 		if (absorbColors.isEmpty()) return;
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setByte("T", (byte) 3);
-		int[] colors = Arrays.stream(absorbColors.toArray(new Integer[absorbColors.size()])).mapToInt(Integer::valueOf)
-				.toArray();
+		int[] colors = Arrays.stream(absorbColors.toArray(new Integer[absorbColors.size()])).mapToInt(Integer::valueOf).toArray();
 		nbt.setIntArray("C", colors);
 		MessageEntitySync.sendToClient(this, nbt);
 	}
@@ -780,8 +779,7 @@ public class EntityFairyCube extends EntityLivingBase
 					double d2 = this.rand.nextGaussian() * 0.2;
 					double d0 = this.rand.nextGaussian() * 0.2;
 					double d1 = this.rand.nextGaussian() * 0.2;
-					world.spawnParticle(type, posX + d0, posY + 0.5 + d2, posZ + d1, this.rand.nextGaussian(), 0.0D,
-							0.0D);
+					world.spawnParticle(type, posX + d0, posY + 0.5 + d2, posZ + d1, this.rand.nextGaussian(), 0.0D, 0.0D);
 				}
 			} else if (effctKind == 0xffAB) {
 				Vec3d vec = new Vec3d(posX, posY + 0.5, posZ);
@@ -917,5 +915,10 @@ public class EntityFairyCube extends EntityLivingBase
 	@Override
 	public Vec3d getObjectPosition() {
 		return getPositionVector();
+	}
+
+	@Override
+	public CapabilityObjectRef toRef() {
+		return CapabilityObjectRef.of(this);
 	}
 }

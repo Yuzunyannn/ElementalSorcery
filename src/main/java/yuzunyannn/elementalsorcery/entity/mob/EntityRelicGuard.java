@@ -59,9 +59,9 @@ import yuzunyannn.elementalsorcery.entity.skill.EntitySkillPotion;
 import yuzunyannn.elementalsorcery.entity.skill.EntitySkillPotionRain;
 import yuzunyannn.elementalsorcery.entity.skill.EntitySkillSet;
 import yuzunyannn.elementalsorcery.item.prop.ItemRelicGuardCore;
-import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
+import yuzunyannn.elementalsorcery.util.world.EntityMasterBinder;
 
 public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob, IHasMaster {
 
@@ -83,7 +83,7 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 	protected static final DataParameter<Boolean> CORE = EntityDataManager.<Boolean>createKey(EntityRelicGuard.class,
 			DataSerializers.BOOLEAN);
 
-	protected MasterBinder master = new MasterBinder();
+	protected EntityMasterBinder master = new EntityMasterBinder();
 
 	protected EntitySkillSet magician = new EntitySkillSet(this);
 	protected EntitySkillJump jumpSkill = new EntitySkillJump(this);
@@ -112,7 +112,7 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
-		master.writeEntityToNBT(compound);
+		master.writeDataToNBT(compound);
 		compound.setByte("status", getStatus());
 		compound.setByte("type", (byte) getType());
 		compound.setBoolean("hCore", hasCore());
@@ -121,7 +121,7 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
-		master.readEntityFromNBT(compound);
+		master.readDataFromNBT(compound);
 		setStatus(compound.getByte("status"));
 		setType(compound.getByte("type"));
 		setCore(compound.getBoolean("hCore"));

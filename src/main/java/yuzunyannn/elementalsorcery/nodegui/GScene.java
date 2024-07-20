@@ -74,8 +74,8 @@ public class GScene {
 			for (GNode node : interactorList) {
 				IGInteractor interactor = node.interactor;
 				if (interactor.testHit(node, worldPos)) {
-					interactor.onMouseWheel(node, worldPos, dWheel);
-					if (interactor.blockMouseEvent(node, worldPos)) break;
+					boolean block = interactor.onMouseWheel(node, worldPos, dWheel);
+					if (block) break;
 				}
 			}
 		} else if (isClick) {

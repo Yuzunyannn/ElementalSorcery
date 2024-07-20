@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
@@ -15,7 +16,7 @@ import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 public abstract class DeviceInfo implements IDeviceInfo, INBTSS {
 
 	protected String name = "";
-	protected String manufacturer;
+	protected String manufacturer = TextFormatting.OBFUSCATED + "Clover";
 	protected ItemStack icon = ItemStack.EMPTY;
 
 	@Override

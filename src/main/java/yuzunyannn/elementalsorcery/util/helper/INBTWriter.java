@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
@@ -40,7 +41,7 @@ public interface INBTWriter {
 	void write(String key, EnumFacing facing);
 
 	void write(String key, ItemStack stack);
-	
+
 	void write(String key, Mantra mantra);
 
 	void write(String key, NBTBase base);
@@ -56,4 +57,6 @@ public interface INBTWriter {
 	void writeUUIDs(String key, List<UUID> uuids);
 
 	void writeDisplay(String key, Object displayObject);
+
+	void write(String key, Vec3d vec);
 }

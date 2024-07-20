@@ -22,8 +22,17 @@ public class DNRequest extends DNBase implements ICastEnv {
 	protected World world;
 	protected Map<Class<?>, Function<String, ?>> finderMap;
 	protected List<Object> logList;
+	protected int extCount;
 
 	public DNRequest() {
+	}
+
+	public int pSize() {
+		return objMap.size() - extCount;
+	}
+
+	public void setExtCount(int extCount) {
+		this.extCount = extCount;
 	}
 
 	public void setWorld(World world) {

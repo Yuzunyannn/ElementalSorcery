@@ -23,34 +23,34 @@ import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaserMantra;
-import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 import yuzunyannn.elementalsorcery.util.var.Variables;
+import yuzunyannn.elementalsorcery.util.world.EntityMasterBinder;
 
 public class MantraLaser extends MantraCommon {
 
 	public static class MantraDataLaser extends MantraDataCommon {
 
-		public final MasterBinder afterTarget = new MasterBinder();
+		public final EntityMasterBinder afterTarget = new EntityMasterBinder();
 
 		@Override
 		public NBTTagCompound serializeNBT() {
 			NBTTagCompound nbt = super.serializeNBT();
-			afterTarget.writeEntityToNBT(nbt);
+			afterTarget.writeDataToNBT(nbt);
 			return nbt;
 		}
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
 			super.deserializeNBT(nbt);
-			afterTarget.readEntityFromNBT(nbt);
+			afterTarget.readDataFromNBT(nbt);
 		}
 
 		@Override
 		public NBTTagCompound serializeNBTForSend() {
 			NBTTagCompound nbt = super.serializeNBTForSend();
-			afterTarget.writeEntityToNBT(nbt);
+			afterTarget.writeDataToNBT(nbt);
 			return nbt;
 		}
 	}

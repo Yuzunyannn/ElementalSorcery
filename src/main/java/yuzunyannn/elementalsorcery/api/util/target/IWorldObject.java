@@ -19,7 +19,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.GameCast;
 import yuzunyannn.elementalsorcery.api.util.IAliveStatusable;
+import yuzunyannn.elementalsorcery.api.util.ICastEnv;
 
 public interface IWorldObject extends ICapabilityProvider, IAliveStatusable {
 
@@ -41,10 +43,15 @@ public interface IWorldObject extends ICapabilityProvider, IAliveStatusable {
 	}
 
 	@Nonnull
+	CapabilityObjectRef toRef();
+
+	@Nonnull
 	Vec3d getObjectPosition();
 
 	@Nonnull
 	World getWorld();
+
+	<T> T to(Class<T> cls);
 
 	/** as Tile */
 	@Nullable

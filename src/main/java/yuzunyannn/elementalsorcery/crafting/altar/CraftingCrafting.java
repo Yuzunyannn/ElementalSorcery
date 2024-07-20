@@ -103,8 +103,7 @@ public class CraftingCrafting implements ICraftingAltar {
 		// 如果有需要的元素
 		if (workingEInventory != null) {
 			// 寻找一个所需元素
-			ElementStack need = workingEInventory
-					.getStackInSlot(TileStaticMultiBlock.rand.nextInt(workingEInventory.getSlots()));
+			ElementStack need = workingEInventory.getStackInSlot(TileStaticMultiBlock.rand.nextInt(workingEInventory.getSlots()));
 			if (need.isEmpty()) {
 				if (!ElementHelper.isEmpty(workingEInventory)) {
 					for (int i = 0; i < workingEInventory.getSlots(); i++) {

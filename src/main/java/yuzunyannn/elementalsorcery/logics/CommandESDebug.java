@@ -48,6 +48,7 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
+import yuzunyannn.elementalsorcery.computer.DeviceInstHolder;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
 import yuzunyannn.elementalsorcery.dungeon.DungeonLib;
@@ -225,18 +226,20 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
-				EntityPlayerMP player = (EntityPlayerMP) entity;
+//				EntityPlayerMP player = (EntityPlayerMP) entity;
+//
+//				boolean isDebugBuild = false;
+//				DungeonWorld dw = DungeonWorld.getDungeonWorld(player.world);
+//				dw.debugClear();
+//				DungeonArea area = dw.newDungeon(pos);
+//				if (area.isFail()) System.out.println(area.getFailMsg());
+//				else {
+//					if (isDebugBuild) area.debugBuildDungeon(player.world);
+//					else area.startBuildRoom(player.world, 0, player);
+//				}
 
-				boolean isDebugBuild = false;
-				DungeonWorld dw = DungeonWorld.getDungeonWorld(player.world);
-				dw.debugClear();
-				DungeonArea area = dw.newDungeon(pos);
-				if (area.isFail()) System.out.println(area.getFailMsg());
-				else {
-					if (isDebugBuild) area.debugBuildDungeon(player.world);
-					else area.startBuildRoom(player.world, 0, player);
-				}
-
+//				DeviceInstHolder.from(world.isRemote).map;
+				
 //				EntityPlayer fakePlayer = ESFakePlayer.get(player.getServerWorld());
 //				player.attackEntityFrom(
 //						DamageHelper.getDamageSource(new ElementStack(ESObjects.ELEMENTS.MAGIC), fakePlayer, null)

@@ -6,6 +6,7 @@ import java.util.List;
 public abstract class GInputShift {
 	public int startIndex;
 	public int endIndex;
+	public int flag;
 
 	public int selectIndex;
 

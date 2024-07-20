@@ -1,34 +1,17 @@
 package yuzunyannn.elementalsorcery.entity;
 
-import java.util.Collection;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBed;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockPistonBase;
-import net.minecraft.block.BlockRedstoneTorch;
-import net.minecraft.block.BlockStaticLiquid;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemDoor;
-import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityBed;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -36,11 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
@@ -49,9 +28,9 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.building.BlockItemTypeInfo;
+import yuzunyannn.elementalsorcery.building.PutBlock;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -169,20 +148,6 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 
 	}
 
-	/** 根据blockState获取面向 */
-	public static EnumFacing getFacingFromState(IBlockState state) {
-		if (state == null) return EnumFacing.NORTH;
-		Collection<IProperty<?>> properties = state.getPropertyKeys();
-		for (IProperty<?> property : properties) {
-			if (property instanceof PropertyDirection) {
-				EnumFacing facing = state.getValue((PropertyDirection) property);
-				if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) return EnumFacing.NORTH;
-				return facing == null ? EnumFacing.NORTH : facing;
-			}
-		}
-		return EnumFacing.NORTH;
-	}
-
 	public static final byte FLAG_FORCE_DESTRUCT = 0x01; // 是否可以破坏目标点的方块
 	public static final byte FLAG_DESTRUCT_DROP = 0x02; // 破坏目标点的方块，是否掉落
 	public static final byte FLAG_INTO_CHEST = 0x04; // 如果目标点是箱子，进入箱子
@@ -222,7 +187,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		this.trace = new MoveTrace(new Vec3d(from.getX() + 0.5, from.getY(), from.getZ() + 0.5), to);
 		this.state = world.getBlockState(from);
 		this.stack = new BlockItemTypeInfo(state).getItemStack();
-		this.facing = getFacingFromState(this.state).getOpposite().rotateY();
+		this.facing = PutBlock.getFacingFromState(this.state).getOpposite().rotateY();
 		this.setPosition(this.trace.from.x, this.trace.from.y, this.trace.from.z);
 		this.trace.randomOrder(this.rand);
 	}
@@ -245,7 +210,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		this.trace = new MoveTrace(from, to);
 		this.stack = flyItem;
 		this.state = state;
-		if (facing == null) this.facing = getFacingFromState(state).getOpposite().rotateY();
+		if (facing == null) this.facing = PutBlock.getFacingFromState(state).getOpposite().rotateY();
 		else this.facing = facing;
 		if (this.stack.isEmpty() && state != null) this.stack = ItemHelper.toItemStack(state);
 		this.setPosition(from.x, from.y, from.z);
@@ -410,101 +375,18 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		return tileSave;
 	}
 
-	private static void loadTileSave(World world, BlockPos at, NBTTagCompound tileSave, boolean initFlag) {
-		if (tileSave == null) return;
-		TileEntity tile = world.getTileEntity(at);
-		if (tile == null) return;
-		tileSave = tileSave.copy();
-		if (initFlag) tileSave.setBoolean("_copy_init_", false);
-		NBTTagCompound nbt = handleTileSave(tileSave, tile);
-		tile.deserializeNBT(nbt);
-
-	}
-
+	/**
+	 * @deprecated use {@link PutBlock}
+	 */
+	@Deprecated
 	public static ItemStack putBlock(World world, @Nullable EntityPlayer player, BlockPos to, ItemStack stack,
 			@Nullable IBlockState state, @Nullable EnumFacing facing, @Nullable NBTTagCompound tileSave,
 			boolean forcePut) {
-		if (!BlockHelper.isReplaceBlock(world, to) && !forcePut) return stack;
-		facing = facing == null ? getFacingFromState(state) : facing;
-		// 放置方块
-		Item item = stack.getItem();
-		if (item instanceof ItemBlock) {
-			ItemBlock itemBlock = (ItemBlock) item;
-			IBlockState toState = itemBlock.getBlock().getStateFromMeta(stack.getItemDamage());
-			if (world.isRemote) {
-				world.setBlockState(to, toState);
-				return ItemStack.EMPTY;
-			}
-
-			Block block = toState.getBlock();
-			if (block == Blocks.PISTON || block == Blocks.STICKY_PISTON) {
-				// 活塞
-				if (state != null) toState = state.withProperty(BlockPistonBase.EXTENDED, false);
-				else toState = toState.withProperty(BlockPistonBase.FACING, facing);
-				world.setBlockState(to, toState);
-
-			} else {
-
-				if (state != null) {
-					if (state.getBlock() == Blocks.UNLIT_REDSTONE_TORCH) {
-						// 红石火把
-						facing = state.getValue(BlockRedstoneTorch.FACING);
-						toState = toState.withProperty(BlockRedstoneTorch.FACING, facing);
-					} else {
-						if (itemBlock instanceof ItemSlab) toState = state;
-						else if (itemBlock.getBlock() == state.getBlock()) toState = state;
-					}
-				}
-
-				boolean needPlace = false;
-				needPlace = needPlace || block instanceof BlockDoublePlant || block instanceof ITileEntityProvider;
-
-				if (needPlace) {
-					if (player == null) player = ESFakePlayer.get((WorldServer) world);
-					itemBlock.placeBlockAt(stack, player, world, to, EnumFacing.UP, 0, 0, 0, toState);
-					state = world.getBlockState(to);
-					if (state != toState && state.getBlock() == toState.getBlock()) world.setBlockState(to, toState, 2);
-					loadTileSave(world, to, tileSave, player == null);
-				} else {
-					world.setBlockState(to, toState);
-					loadTileSave(world, to, tileSave, true);
-				}
-
-			}
-			return ItemStack.EMPTY;
-		} else if (stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null) != null) {
-			// 液体
-			IFluidHandlerItem fhi = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-			FluidStack fstack = fhi.drain(1000, true);
-			if (fstack != null) {
-				IBlockState fluidState = fstack.getFluid().getBlock().getDefaultState();
-				if (fluidState.getBlock() instanceof BlockStaticLiquid) {
-					fluidState = BlockStaticLiquid.getFlowingBlock(fluidState.getMaterial()).getDefaultState();
-					world.setBlockState(to, fluidState);
-				} else world.setBlockState(to, fluidState);
-			}
-			return fhi.getContainer();
-		} else if (item == Items.BED) {
-			// 床
-			if (state == null) return stack;
-			facing = state.getValue(BlockBed.FACING);
-			world.setBlockState(to, state);
-			world.setBlockState(to.offset(facing), state.cycleProperty(BlockBed.PART));
-			TileEntityBed bed = BlockHelper.getTileEntity(world, to, TileEntityBed.class);
-			if (bed != null) bed.setColor(EnumDyeColor.byMetadata(stack.getMetadata()));
-			bed = BlockHelper.getTileEntity(world, to.offset(facing), TileEntityBed.class);
-			if (bed != null) bed.setColor(EnumDyeColor.byMetadata(stack.getMetadata()));
-			return ItemStack.EMPTY;
-		} else if (item instanceof ItemDoor) {
-			if (state == null) return stack;
-			ItemDoor.placeDoor(world, to, facing, state.getBlock(), false);
-			return ItemStack.EMPTY;
-		} else if (state != null) {
-			world.setBlockState(to, state);
-			loadTileSave(world, to, tileSave, true);
-			return ItemStack.EMPTY;
-		}
-		return stack;
+		PutBlock puter = new PutBlock(world);
+		puter.setFacing(facing).setTileSave(tileSave);
+		puter.setItemStack(stack).setBlockState(state);
+		puter.setPlayer(player).setForce(forcePut);
+		return puter.execute(to);
 	}
 
 	@Override

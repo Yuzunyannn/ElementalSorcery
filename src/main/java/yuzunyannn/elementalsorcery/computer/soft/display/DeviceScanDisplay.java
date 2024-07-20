@@ -108,8 +108,8 @@ public class DeviceScanDisplay extends SoftBlockDisplay<Integer, NBTTagList> {
 			if (dinfo != null) objs.add(dinfo.getDisplayWorkName());
 		}
 
+		objs.add(info.ref.toDisplayObject());
 		objs.add(info.uuid.toString());
-
 		GLabel label = new GLabel("-------------------");
 		label.setColorRef(currNode.getColor());
 		objs.add(label);

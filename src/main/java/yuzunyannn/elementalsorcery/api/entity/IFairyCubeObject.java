@@ -11,6 +11,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.GameCast;
+import yuzunyannn.elementalsorcery.api.util.ICastEnv;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 
 public interface IFairyCubeObject extends IWorldObject, IHasMaster {
@@ -94,6 +97,11 @@ public interface IFairyCubeObject extends IWorldObject, IHasMaster {
 
 	default public void setLookAt(Entity entity) {
 		this.setLookAt(entity.getPositionEyes(1));
+	}
+
+	default <T> T to(Class<T> cls) {
+		if (cls == CapabilityObjectRef.class) return (T) toRef();
+		return GameCast.cast(ICastEnv.EMPTY, this, cls);
 	}
 
 }

@@ -55,6 +55,7 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	protected final List<Entry<DeviceFeatureMap, Object>> features = new ArrayList<>();
 	protected final U target;
 	protected final ICapabilityProvider capabilityProvider;
+	protected boolean _copy_template_;
 
 	public Device(U target, DeviceInfo info) {
 		this.info = info;
@@ -171,6 +172,7 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	/* ------------ ------------** >_< **------------ ------------ */
 
 	public void writeSaveData(INBTWriter writer) {
+		if (_copy_template_) writer.write("_template_", true);
 		writer.write("uuid", udid);
 		writer.write("network", network);
 		writer.write("info", info);
@@ -180,7 +182,7 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		udid = reader.uuid("uuid");
 		network = reader.obj("network", network);
 		info = reader.obj("info", info);
-		if (reader.has("_copy_init_")) {
+		if (reader.nboolean("_template_")) {
 			udid = UUID.randomUUID();
 			network.clear();
 		}
@@ -313,8 +315,8 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		return asker;
 	}
 
-	@DeviceFeature(id = "network-conntect")
-	public void networkConntect(UUID uuid) {
+	@DeviceFeature(id = "network-connect")
+	public void networkConnect(UUID uuid) {
 
 		IDeviceNetwork network = getNetwork();
 		IDeviceLinker linker = network.getLinker(uuid);

@@ -15,10 +15,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESStorageKeyEnum;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInitializable;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
-import yuzunyannn.elementalsorcery.api.item.ESItemStorageEnum;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.WideNetwork;
@@ -63,7 +63,7 @@ public abstract class BlockDevice extends BlockContainerNormal {
 		super.writeTileDataToItemStack(world, pos, user, tile, stack);
 		IDevice device = tile.getCapability(Computer.DEVICE_CAPABILITY, null);
 		if (device != null) {
-			NBTSaver saver = new NBTSaver(stack.getOrCreateSubCompound(ESItemStorageEnum.DEVICE_TILE));
+			NBTSaver saver = new NBTSaver(stack.getOrCreateSubCompound(ESStorageKeyEnum.DEVICE_TILE));
 			saver.write("name", device.getInfo().getName());
 			saver.write("udid", device.getUDID());
 			List<UUID> uuidList = new LinkedList<>();
@@ -82,7 +82,7 @@ public abstract class BlockDevice extends BlockContainerNormal {
 		super.readTileDataFromItemStack(world, pos, user, tile, stack);
 		IDevice device = tile.getCapability(Computer.DEVICE_CAPABILITY, null);
 		if (device instanceof IDeviceInitializable) {
-			NBTSaver saver = new NBTSaver(stack.getOrCreateSubCompound(ESItemStorageEnum.DEVICE_TILE));
+			NBTSaver saver = new NBTSaver(stack.getOrCreateSubCompound(ESStorageKeyEnum.DEVICE_TILE));
 			IDeviceInitializable.Init init = new IDeviceInitializable.Init();
 			init.udid = saver.uuid("udid");
 			init.name = saver.string("name");

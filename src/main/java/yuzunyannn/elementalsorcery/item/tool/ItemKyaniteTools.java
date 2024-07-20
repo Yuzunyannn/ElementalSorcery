@@ -59,8 +59,8 @@ public class ItemKyaniteTools {
 
 	/// 当破坏方块
 	private static void dealBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, EntityLivingBase entity) {
-		IElementInventory inventory = new ElementInventory();
-		if (inventory.hasState(stack) == false) return;
+		if (!ElementInventory.hasInvData(stack)) return;
+		IElementInventory inventory = ElementInventory.sensor(new ElementInventory(), stack);
 		ItemStack blockStack = ItemHelper.toItemStack(state);
 		if (blockStack.isEmpty()) return;
 		IToElementInfo teInfo = ElementMap.instance.toElement(blockStack);
@@ -77,12 +77,11 @@ public class ItemKyaniteTools {
 				estack = new ElementStack(ESObjects.ELEMENTS.WATER, 1, 3);
 			} else {
 				estack = estacks[0].copy();
-				estack = estack.onDeconstruct(worldIn, ItemHelper.toItemStack(state), teInfo.complex(),
-						Element.DP_TOOLS);
+				estack = estack.onDeconstruct(worldIn, ItemHelper.toItemStack(state), teInfo.complex(), Element.DP_TOOLS);
 			}
-			inventory.loadState(stack);
+			inventory.applyUse();
 			inventory.insertElement(estack, false);
-			inventory.saveState(stack);
+			inventory.markDirty();
 		}
 	}
 
@@ -90,15 +89,17 @@ public class ItemKyaniteTools {
 	public static interface toolsCapability extends IToElementItem {
 
 		default void provide(ItemStack stack) {
-			IElementInventory inventory = new ElementInventory(6);
-			inventory.saveState(stack);
+			ElementInventory.sensor(new ElementInventory(6), stack).markDirty();
 		}
 
 		default IToElementInfo toElement(ItemStack stack) {
-			IElementInventory inventory = new ElementInventory(6);
-			if (!inventory.hasState(stack)) return null;
-			inventory.loadState(stack);
-			return ToElementInfoStatic.createWithElementContainer(stack.copy(), inventory);
+			if (!ElementInventory.hasInvData(stack)) return null;
+			IElementInventory inventory = ElementInventory.sensor(new ElementInventory(6), stack);
+			inventory.applyUse();
+
+			stack = stack.copy();
+			inventory = ElementInventory.sensor(inventory, stack);
+			return ToElementInfoStatic.createWithElementContainer(stack, inventory);
 		}
 	}
 

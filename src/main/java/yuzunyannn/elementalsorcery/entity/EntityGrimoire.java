@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.logics.ITickTask;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
-import yuzunyannn.elementalsorcery.util.MasterBinder;
+import yuzunyannn.elementalsorcery.util.world.EntityMasterBinder;
 
 public class EntityGrimoire extends EntityMantraBase {
 
@@ -53,7 +53,7 @@ public class EntityGrimoire extends EntityMantraBase {
 	}
 
 	/** 使用者，如果服务器关闭后尽可能会被还原，但是STATE_AFTER_SPELLING中可能存在为null的时候 */
-	protected MasterBinder user = new MasterBinder();
+	protected EntityMasterBinder user = new EntityMasterBinder();
 	/** 魔导书 */
 	public Grimoire grimoire;
 	public ItemStack grimoireStack = ItemStack.EMPTY;
@@ -62,12 +62,12 @@ public class EntityGrimoire extends EntityMantraBase {
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		user.readEntityFromNBT(nbt);
+		user.readDataFromNBT(nbt);
 	}
 
 	protected void writeEntityToNBT(NBTTagCompound nbt, boolean isSend) {
 		super.writeEntityToNBT(nbt, isSend);
-		user.writeEntityToNBT(nbt);
+		user.writeDataToNBT(nbt);
 	}
 
 	@Override

@@ -1393,6 +1393,11 @@
             "zh_CN": "找不到指定的路径",
             "en_US": "Cannot Find The Path Specified",
             "ja_JP": "指定されたパスが見つかりません"
+        },
+        "es.app.abandon": {
+            "zh_CN": "放弃",
+            "en_US": "Abandon",
+            "ja_JP": "あきらめる"
         }
     }
 }

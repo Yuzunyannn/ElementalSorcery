@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.computer.soft.display;
 import net.minecraft.nbt.NBTBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.detecter.IDataRef;
 import yuzunyannn.elementalsorcery.api.util.render.ITheme;
 import yuzunyannn.elementalsorcery.computer.render.GDragContainer;
 import yuzunyannn.elementalsorcery.computer.render.GEasyLayoutContainer;
@@ -29,7 +30,7 @@ public abstract class SoftBlockDisplay<T, U extends NBTBase> extends SoftDisplay
 	protected GEasyLayoutContainer container;
 
 	@SideOnly(Side.CLIENT)
-	protected GNode refresh;
+	protected GNode loading;
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -48,22 +49,22 @@ public abstract class SoftBlockDisplay<T, U extends NBTBase> extends SoftDisplay
 		bg.addChild(dragContainer);
 		dragContainer.setPosition(5, 2);
 
-		initRefresh();
+		initLoading();
 	}
 
 	@SideOnly(Side.CLIENT)
-	protected void initRefresh() {
-		refresh = new GImage(SoftGuiCommon.TEXTURE_1, SoftGuiCommon.FRAME_REFRESH);
-		bg.addChild(refresh);
-		refresh.runAction(new GActionForever(new GActionRotateBy(20, 360)));
-		refresh.setAnchor(0.5, 0.5);
-		refresh.setColorRef(currNode.getColor());
-		refresh.setPosition(bg.getWidth() - refresh.getWidth(), refresh.getHeight(), 1);
+	protected void initLoading() {
+		loading = new GImage(SoftGuiCommon.TEXTURE_1, SoftGuiCommon.FRAME_REFRESH);
+		bg.addChild(loading);
+		loading.runAction(new GActionForever(new GActionRotateBy(20, 360)));
+		loading.setAnchor(0.5, 0.5);
+		loading.setColorRef(currNode.getColor());
+		loading.setPosition(bg.getWidth() - loading.getWidth(), loading.getHeight(), 1);
 	}
 
 	@Override
 	protected void updateWhenDead() {
-		refresh.setVisible(false);
+		loading.setVisible(false);
 	}
 
 	@Override
@@ -72,5 +73,15 @@ public abstract class SoftBlockDisplay<T, U extends NBTBase> extends SoftDisplay
 		if (currNode == null) return;
 		int color = theme.getColor(SoftGuiThemePart.OBJECT_1);
 		currNode.setColor(color);
+	}
+
+	@Override
+	public U detectChanges(IDataRef<T> templateRef) {
+		return null;
+	}
+
+	@Override
+	public void mergeChanges(U nbt) {
+
 	}
 }

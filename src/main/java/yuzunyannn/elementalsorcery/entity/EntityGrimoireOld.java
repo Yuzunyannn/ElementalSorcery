@@ -35,6 +35,7 @@ import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.target.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
@@ -567,6 +568,11 @@ public class EntityGrimoireOld extends Entity
 	@Override
 	public Vec3d getObjectPosition() {
 		return this.getPositionVector();
+	}
+	
+	@Override
+	public CapabilityObjectRef toRef() {
+		return CapabilityObjectRef.of(this);
 	}
 
 }

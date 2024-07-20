@@ -40,7 +40,6 @@ public class TileRingReader extends TileDevice implements IGetItemStack {
 
 	public TileRingReader() {
 		DeviceInfoTile info = (DeviceInfoTile) device.getInfo();
-		info.setManufacturer(TextFormatting.OBFUSCATED + "mantragic");
 		info.setIcon(new ItemStack(ESObjects.BLOCKS.RING_READER));
 		folder = new LogicDeviceFolder(DeviceFilePath.of());
 		folder.set("device.info", path -> new ConstDeviceFile(path, info.serializeNBT()));

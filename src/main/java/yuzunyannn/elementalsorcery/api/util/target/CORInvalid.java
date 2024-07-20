@@ -58,6 +58,11 @@ public class CORInvalid extends CapabilityObjectRef {
 	}
 
 	@Override
+	public boolean is(Object obj) {
+		return false;
+	}
+
+	@Override
 	public Object toDisplayObject() {
 		return "Invalid";
 	}

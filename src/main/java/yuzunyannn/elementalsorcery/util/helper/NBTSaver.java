@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
@@ -313,6 +314,11 @@ public class NBTSaver implements INBTReader, INBTWriter {
 	}
 
 	@Override
+	public NBTTagList listTag(String key, int tag) {
+		return nbt.getTagList(key, tag);
+	}
+
+	@Override
 	public void write(String key, CapabilityObjectRef ref) {
 		nbt.setByteArray(key, CapabilityObjectRef.write(ref));
 	}
@@ -386,6 +392,24 @@ public class NBTSaver implements INBTReader, INBTWriter {
 	@Override
 	public Mantra mantra(String key) {
 		return Mantra.REGISTRY.getValue(nbt.getString(key));
+	}
+
+	@Override
+	public void write(String key, Vec3d vec) {
+		if (vec == null) return;
+		if (vec == Vec3d.ZERO) nbt.setIntArray(key, new int[0]);
+		else {
+			nbt.setIntArray(key, new int[] { Float.floatToIntBits((float) vec.x), Float.floatToIntBits((float) vec.y),
+					Float.floatToIntBits((float) vec.z) });
+		}
+	}
+
+	@Override
+	public Vec3d vec3d(String key) {
+		int[] array = nbt.getIntArray(key);
+		if (array == null || array.length < 3) return Vec3d.ZERO;
+		return new Vec3d(Float.intBitsToFloat(array[0]), Float.intBitsToFloat(array[1]),
+				Float.intBitsToFloat(array[2]));
 	}
 
 }

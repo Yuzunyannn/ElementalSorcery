@@ -12,6 +12,10 @@ public class DeviceProcess {
 		this.device = device;
 	}
 
+	public <T> T argv(String key, Class<T> cls) {
+		return currParams != null ? currParams.ask(key, cls) : null;
+	}
+
 	public boolean isLogEnabled() {
 		return currParams != null ? currParams.getLogList() != null : false;
 	}

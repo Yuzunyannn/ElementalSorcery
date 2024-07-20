@@ -5,28 +5,38 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.ESStorageKeyEnum;
 import yuzunyannn.elementalsorcery.api.entity.IHasMaster;
 import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.mantra.MantraCasterFlags;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.WorldObjectBlock;
 import yuzunyannn.elementalsorcery.api.util.target.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.grimoire.mantra.IMantraProgressable;
 import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.IEffectBinder.IEffectBinderGetter;
-import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTSaver;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
+import yuzunyannn.elementalsorcery.util.world.EntityMasterBinder;
+import yuzunyannn.elementalsorcery.util.world.SuperMasterBinder;
 
 public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderGetter, IHasMaster {
 
+	/**
+	 * @author yuzun
+	 *
+	 */
 	public static class AutoMantraConfig implements INBTSerializable<NBTTagCompound> {
 
 		public static final int DIRECTTRACK_MOVE = 0;
@@ -45,10 +55,11 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 		public int blockTrack = BLOCKTRACK_DIRECT;
 		public int entityTrack = ENTITYTRACK_DIRECT;
 
-		public MasterBinder target = new MasterBinder().setDataKey("t");
+		public EntityMasterBinder target = new EntityMasterBinder().setDataKey("t");
 		public Vec3d moveVec = Vec3d.ZERO;
 		public float randomRange = 4;
 		public boolean excludeUser = true;
+		public boolean userElement = false;
 
 		public void setTarget(EntityLivingBase target, double speed) {
 			this.target.setMaster(target);
@@ -63,28 +74,36 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 
 		@Override
 		public NBTTagCompound serializeNBT() {
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setByte("d", (byte) directTrack);
-			nbt.setByte("b", (byte) blockTrack);
-			nbt.setByte("e", (byte) entityTrack);
-			nbt.setFloat("r", randomRange);
-			nbt.setBoolean("eu", excludeUser);
-			NBTHelper.setVec3d(nbt, "m", moveVec);
-			if (directTrack == DIRECTTRACK_FOLLOW || blockTrack == BLOCKTRACK_UNDERFOOT) target.writeEntityToNBT(nbt);
-			return nbt;
+			NBTSaver saver = new NBTSaver();
+			if (directTrack != 0) saver.write("d", (byte) directTrack);
+			if (blockTrack != 0) saver.write("b", (byte) blockTrack);
+			if (entityTrack != 0) saver.write("e", (byte) entityTrack);
+			if (randomRange != 0) saver.write("r", randomRange);
+			if (excludeUser) saver.write("eu", excludeUser);
+			saver.write("m", moveVec);
+			if (directTrack == DIRECTTRACK_FOLLOW || blockTrack == BLOCKTRACK_UNDERFOOT)
+				target.writeDataToNBT(saver.tag());
+			if (userElement) saver.write("ue", userElement);
+			return saver.tag();
 		}
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
-			directTrack = nbt.getInteger("d");
-			blockTrack = nbt.getInteger("b");
-			entityTrack = nbt.getInteger("e");
-			target.readEntityFromNBT(nbt);
-			moveVec = NBTHelper.getVec3d(nbt, "m");
-			randomRange = nbt.getFloat("r");
-			excludeUser = nbt.getBoolean("eu");
+			NBTSaver saver = new NBTSaver(nbt);
+			directTrack = saver.nint("d");
+			blockTrack = saver.nint("b");
+			entityTrack = saver.nint("e");
+			target.readDataFromNBT(nbt);
+			moveVec = saver.vec3d("m");
+			randomRange = saver.nfloat("r");
+			excludeUser = saver.nboolean("eu");
+			userElement = saver.nboolean("ue");
 		}
 
+	}
+
+	public interface IMantraElementSupplier {
+		IElementInventory supplyElementInventory();
 	}
 
 	public EntityAutoMantra(World worldIn) {
@@ -93,18 +112,33 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 
 	public EntityAutoMantra(World worldIn, AutoMantraConfig config, EntityLivingBase user, Mantra mantra,
 			NBTTagCompound metaData) {
+		this(worldIn, config, new WorldObjectEntity(user), mantra, metaData);
+	}
+
+	public EntityAutoMantra(World worldIn, AutoMantraConfig config, TileEntity user, Mantra mantra,
+			NBTTagCompound metaData) {
+		this(worldIn, config, new WorldObjectBlock(user), mantra, metaData);
+	}
+
+	public EntityAutoMantra(World worldIn, AutoMantraConfig config, EntityLivingBase user, Mantra mantra,
+			NBTTagCompound metaData, CastStatus state) {
+		this(worldIn, config, new WorldObjectEntity(user), mantra, metaData, state);
+	}
+
+	public EntityAutoMantra(World worldIn, AutoMantraConfig config, IWorldObject user, Mantra mantra,
+			NBTTagCompound metaData) {
 		this(worldIn, config, user, mantra, metaData, CastStatus.BEFORE_SPELLING);
 	}
 
 	// 这个构造方法是给予某些不通过魔法书进行处理的
-	public EntityAutoMantra(World worldIn, AutoMantraConfig config, @Nullable EntityLivingBase user, Mantra mantra,
+	public EntityAutoMantra(World worldIn, AutoMantraConfig config, @Nullable IWorldObject user, Mantra mantra,
 			NBTTagCompound metaData, CastStatus state) {
 		super(worldIn, mantra, metaData, state);
 		this.config = config;
 		this.user.setMaster(user);
 	}
 
-	protected MasterBinder user = new MasterBinder();
+	protected SuperMasterBinder user = new SuperMasterBinder();
 	protected IElementInventory elementInv = new ElementInventory(4);
 	/** 强效 */
 	protected float potent = 0;
@@ -114,28 +148,29 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 	/** 配置 */
 	public AutoMantraConfig config = new AutoMantraConfig();
 	public Vec3d orient = new Vec3d(0, 1, 0);
+	public boolean byLoadedFlag;
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
-		user.readEntityFromNBT(nbt);
-		elementInv.loadState(nbt);
+		user.readDataFromNBT(nbt);
 		this.potent = nbt.getFloat("potent");
 		this.potentPoint = nbt.getFloat("potentPoint");
 		this.config.deserializeNBT(nbt.getCompoundTag("_config"));
 		orient = NBTHelper.getVec3d(nbt, "orient");
 		spellingTick = nbt.getInteger("sTick");
+		if (!config.userElement) elementInv.deserializeNBT(nbt.getCompoundTag(ESStorageKeyEnum.ELEMENT_INV));
 	}
 
 	protected void writeEntityToNBT(NBTTagCompound nbt, boolean isSend) {
 		super.writeEntityToNBT(nbt, isSend);
-		user.writeEntityToNBT(nbt);
-		elementInv.saveState(nbt);
+		user.writeDataToNBT(nbt);
 		nbt.setFloat("potent", potent);
 		nbt.setFloat("potentPoint", potentPoint);
 		nbt.setTag("_config", config.serializeNBT());
 		nbt.setInteger("sTick", spellingTick);
 		NBTHelper.setVec3d(nbt, "orient", orient);
+		if (!config.userElement) nbt.setTag(ESStorageKeyEnum.ELEMENT_INV, elementInv.serializeNBT());
 	}
 
 	public void setSpellingTick(int spellingTick) {
@@ -153,13 +188,24 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 
 	@Override
 	protected IWorldObject getUser() {
-		return user.getMaster() == null ? new WorldObjectEntity(this) : new WorldObjectEntity(user.getMaster());
+		IWorldObject master = user.getMaster();
+		return master == null ? new WorldObjectEntity(this) : master;
+	}
+
+	@Override
+	protected boolean restore() {
+		IWorldObject caster = user.getMaster();
+		if (caster == null) this.restoreUser();
+		return true;
 	}
 
 	@Override
 	protected void onLockUser() {
-		EntityLivingBase master = user.getMaster();
-		if (master != null) master.timeUntilPortal = 20;
+		IWorldObject master = user.getMaster();
+		if (master != null) {
+			Entity entity = master.toEntity();
+			if (entity != null) entity.timeUntilPortal = 20;
+		}
 		this.timeUntilPortal = 20;
 	}
 
@@ -196,12 +242,18 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 
 	@Override
 	public boolean canContinueSpelling() {
-		if (tick % 20 == 0) if (ElementHelper.isEmpty(elementInv)) return false;
+		if (!config.userElement && tick % 20 == 0) if (ElementHelper.isEmpty(elementInv)) return false;
 		return this.spellingTick > 0;
 	}
 
 	@Override
 	public IElementInventory getElementInventory() {
+		if (config.userElement) {
+			IWorldObject master = user.getMaster();
+			if (master == null) return this.elementInv;
+			IMantraElementSupplier supplier = master.to(IMantraElementSupplier.class);
+			if (supplier != null) return supplier.supplyElementInventory();
+		}
 		return this.elementInv;
 	}
 
@@ -252,7 +304,7 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 		if (this.config.entityTrack == AutoMantraConfig.ENTITYTRACK_DIRECT) {
 			EntityHelper.setLookOrient(this, this.orient);
 			WorldTarget worldTarget = CasterHelper.findLookTargetResult(e -> {
-				if (this.config.excludeUser && e.getUniqueID().equals(user.getUUID())) return false;
+				if (this.config.excludeUser && user.is(e)) return false;
 				return cls.isAssignableFrom(e.getClass());
 			}, this, 128);
 			return worldTarget;
@@ -302,12 +354,25 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 
 	@Override
 	public EntityLivingBase getMaster() {
-		return user.getMaster();
+		IWorldObject master = user.getMaster();
+		if (master == null) return null;
+		return master.toEntityLiving();
 	}
 
 	@Override
 	public boolean isOwnerless() {
+		if (!user.is(Entity.class)) return true;
 		return user.isOwnerless();
 	}
 
+	public double tryGetMantraProgress() {
+		if (state != CastStatus.BEFORE_SPELLING && state != CastStatus.SPELLING) return 1;
+		if (mantra instanceof IMantraProgressable)
+			return ((IMantraProgressable) mantra).getProgressRate(world, mantraData, this);
+		return -1;
+	}
+
+	public int tryGetMantraColor() {
+		return mantra.getColor(mantraData);
+	}
 }

@@ -4,10 +4,10 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import net.minecraft.item.ItemStack;
+import yuzunyannn.elementalsorcery.api.ESStorageKeyEnum;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceFile;
-import yuzunyannn.elementalsorcery.api.item.ESItemStorageEnum;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
 import yuzunyannn.elementalsorcery.computer.DiskItem;
@@ -35,7 +35,7 @@ public class ItemDeviceFile extends DeviceFileAdapter {
 
 	static protected IDeviceFile getFile(DeviceFilePath path, ItemStack stack) {
 
-		if (stack.getItem() == ESObjects.ITEMS.DISK || ItemHelper.hasSubCompound(stack, ESItemStorageEnum.DISK_DATA)) {
+		if (stack.getItem() == ESObjects.ITEMS.DISK || ItemHelper.hasSubCompound(stack, ESStorageKeyEnum.DISK_DATA)) {
 			DiskItem disk = new DiskItem(stack);
 			return new DiskDeviceFile(path, disk.getContext(), path.length());
 		}

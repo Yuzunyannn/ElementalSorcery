@@ -4,14 +4,12 @@ import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -23,16 +21,17 @@ import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBladeController;
-import yuzunyannn.elementalsorcery.util.MasterBinder;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.world.EntityMasterBinder;
 
 public class EntityRotaryWindmillBlate extends EntityObject
 		implements IEntityAdditionalSpawnData, IWindmillBladeController {
 
 	// 只回复重要的两个数据，其他数据如果重启了，就直接结束旋转吧
 	protected ItemStack blate = ItemStack.EMPTY;
-	protected MasterBinder masterBinder = new MasterBinder();
+	protected EntityMasterBinder masterBinder = new EntityMasterBinder();
 
 	protected int amplifier;
 	protected Vec3d targetVec;
@@ -96,13 +95,13 @@ public class EntityRotaryWindmillBlate extends EntityObject
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setTag("item", blate.serializeNBT());
-		masterBinder.writeEntityToNBT(compound);
+		masterBinder.writeDataToNBT(compound);
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		blate = new ItemStack(compound.getCompoundTag("item"));
-		masterBinder.readEntityFromNBT(compound);
+		masterBinder.readDataFromNBT(compound);
 	}
 
 	public IWindmillBlade getWindmillBlade() {

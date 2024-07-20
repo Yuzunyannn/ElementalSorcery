@@ -40,7 +40,7 @@ public class DTCDevice extends DTCBase {
 	public boolean isAlive() {
 		if (getAbstractObject() == null) {
 			dieDelay--;
-			return dieDelay <= 0;
+			return dieDelay > 0;
 		}
 		dieDelay = 10;
 		return true;
@@ -50,7 +50,7 @@ public class DTCDevice extends DTCBase {
 	public void update(IOS os) {
 		if (this.uuid == null) return;
 		if (getter == null) {
-			getter = os.askCapability(null, Computer.DEVICE_CAPABILITY, null);
+			getter = os.askCapability(uuid, Computer.DEVICE_CAPABILITY, null);
 			getter.toughGet();
 		}
 	}

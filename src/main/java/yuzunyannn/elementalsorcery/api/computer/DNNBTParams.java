@@ -2,8 +2,6 @@ package yuzunyannn.elementalsorcery.api.computer;
 
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.util.GameCast;
-import yuzunyannn.elementalsorcery.api.util.var.IVariableType;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
 public class DNNBTParams extends DNRequest {
 
@@ -16,6 +14,11 @@ public class DNNBTParams extends DNRequest {
 	@Override
 	public int size() {
 		return super.size() + nbt.getSize();
+	}
+
+	@Override
+	public int pSize() {
+		return super.pSize() + nbt.getSize();
 	}
 
 	@Override

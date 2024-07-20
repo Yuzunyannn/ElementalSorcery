@@ -26,7 +26,7 @@ public class Spellbook {
 
 	/** 初始化释放 */
 	public void initSpelling(World world, ItemStack stack, EntityLivingBase player, EnumHand hand) {
-		if (this.inventory != null) this.inventory.loadState(stack);
+		if (this.inventory != null) this.inventory.applyUse();
 	}
 
 	/** 开始释放 */
@@ -47,7 +47,7 @@ public class Spellbook {
 	 */
 	public void endSpelling(World world, EntityLivingBase player, ItemStack stack) {
 		this.spelling = false;
-		if (this.inventory != null) this.inventory.saveState(stack);
+		if (this.inventory != null) this.inventory.markDirty();
 	}
 
 	/** 释放状态 */

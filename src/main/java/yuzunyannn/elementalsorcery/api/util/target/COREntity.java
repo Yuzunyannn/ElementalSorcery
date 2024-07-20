@@ -94,6 +94,12 @@ public class COREntity extends CapabilityObjectRef {
 	}
 
 	@Override
+	public boolean is(Object obj) {
+		if (obj == Entity.class) return true;
+		return toEntity() == obj;
+	}
+
+	@Override
 	public Object toDisplayObject() {
 		Entity entity = toEntity();
 		if (entity == null) return "Entity Lost";
