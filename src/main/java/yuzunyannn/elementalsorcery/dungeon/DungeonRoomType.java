@@ -73,6 +73,11 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			Block block = state.getBlock();
 			if (block == ESObjects.BLOCKS.DUNGEON_DOOR) initDoor(iter.getPos());
 			else if (block == ESObjects.BLOCKS.DUNGEON_FUNCTION) initFunc(iter.getPos());
+			else {
+				NBTTagCompound tileSave = iter.getTileNBTSave();
+				if (tileSave != null && tileSave.hasKey("ForgeData") && tileSave.getCompoundTag("ForgeData").hasKey("_dungeon_func_config_"))
+					initFunc(iter.getPos());
+			}
 		}
 
 	}
@@ -151,6 +156,13 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 		if (tileSave == null) return;
 
 		String dungeonConfig = tileSave.getString("dungeon_config");
+		if (dungeonConfig.isEmpty() && tileSave.hasKey("ForgeData")) {
+			NBTTagCompound data = tileSave.getCompoundTag("ForgeData");
+			if (data.hasKey("_dungeon_func_config_")) {
+				dungeonConfig = data.getString("_dungeon_func_config_");
+			}
+		}
+
 		if (dungeonConfig.isEmpty()) return;
 
 		funcs.add(new AbstractMap.SimpleEntry(pos, dungeonConfig));
@@ -271,8 +283,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			block = state.getBlock();
 			newState = state;
 		} else if (block == Blocks.STONE) {
-			newState = ESObjects.BLOCKS.DUNGEON_BRICK.getDefaultState().withProperty(BlockDungeonBrick.VARIANT,
-					BlockDungeonBrick.EnumType.STONE);
+			newState = ESObjects.BLOCKS.DUNGEON_BRICK.getDefaultState().withProperty(BlockDungeonBrick.VARIANT, BlockDungeonBrick.EnumType.STONE);
 		}
 		Random rand = world.rand;
 
@@ -300,8 +311,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			if (rand.nextFloat() < 0.2 && world.isAirBlock(pos.up())) {
 				IBlockState grass = Blocks.TALLGRASS.getDefaultState();
 				BlockTallGrass.EnumType[] types = BlockTallGrass.EnumType.values();
-				world.setBlockState(pos.up(),
-						grass.withProperty(BlockTallGrass.TYPE, types[rand.nextInt(types.length)]));
+				world.setBlockState(pos.up(), grass.withProperty(BlockTallGrass.TYPE, types[rand.nextInt(types.length)]));
 			}
 		} else if (block == Blocks.GLOWSTONE) {
 			newState = ESObjects.BLOCKS.DUNGEON_LIGHT.getDefaultState();
@@ -316,16 +326,20 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 	}
 
 	public void buildCoreBlock(World world, DungeonAreaRoom room, BlockPos pos, IBlockState state,
-			NBTTagCompound tileSave) {
+			NBTTagCompound tileSave, DungeonCategory category) {
 		Block block = state.getBlock();
 		// 门
 		if (block == ESObjects.BLOCKS.DUNGEON_DOOR || block == ESObjects.BLOCKS.DUNGEON_DOOR_EXPAND) {
 			if (block == ESObjects.BLOCKS.DUNGEON_DOOR && tileSave == null) tileSave = new NBTTagCompound();
 			this.buildDoor(world, room, pos, tileSave);
 			return;
-		} else if (block == ESObjects.BLOCKS.DUNGEON_FUNCTION) {
-			this.buildFunc(world, room, pos, tileSave);
-			return;
+		} else {
+			DungeonFuncExecuteContextBuild context = this.tryCreateBuildContext(world, room, pos, tileSave);
+			if (context != null) {
+				context.setCategory(category);
+				context.doExecute();
+				return;
+			}
 		}
 	}
 
@@ -340,8 +354,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			isBlock = true;
 		}
 		if (isBlock) {
-			world.setBlockState(at, ESObjects.BLOCKS.DUNGEON_BRICK.getDefaultState()
-					.withProperty(BlockDungeonBrick.VARIANT, BlockDungeonBrick.EnumType.STONE));
+			world.setBlockState(at, ESObjects.BLOCKS.DUNGEON_BRICK.getDefaultState().withProperty(BlockDungeonBrick.VARIANT, BlockDungeonBrick.EnumType.STONE));
 			return;
 		}
 
@@ -384,12 +397,13 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 		return tempPosMapRef.get();
 	}
 
-	protected void buildFunc(World world, DungeonAreaRoom room, BlockPos at, NBTTagCompound coreNBT) {
+	protected DungeonFuncExecuteContextBuild tryCreateBuildContext(World world, DungeonAreaRoom room, BlockPos at,
+			NBTTagCompound coreNBT) {
 		BlockPos pos = BuildingFace.face(at.subtract(room.at), BuildingFace.getRoation(room.facing, EnumFacing.NORTH));
 		Map<BlockPos, Integer> map = getTempPosFuncMap();
 		Integer index = map.get(pos);
-		if (index == null) return;
-		new DungeonFuncExecuteContextBuild(room, index, world, at).doExecute();
+		if (index == null) return null;
+		return new DungeonFuncExecuteContextBuild(room, index, world, at);
 	}
 
 	public void deubgBuild(World world, DungeonArea area, DungeonAreaRoom room) {

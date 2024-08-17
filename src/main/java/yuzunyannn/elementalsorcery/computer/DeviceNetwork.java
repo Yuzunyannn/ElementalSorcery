@@ -19,9 +19,11 @@ import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerConnectException;
 
 public class DeviceNetwork
@@ -69,20 +71,6 @@ public class DeviceNetwork
 	}
 
 	@Override
-	public boolean handshake(IDevice other, IDeviceEnv otherEnv, boolean simulate) throws ComputerConnectException {
-		if (linkerMap.size() > MAX_CONNECT_COUNT) return false;
-		if (simulate) return true;
-		UUID udid = other.getUDID();
-		helplessMap.remove(udid);
-		IDeviceLinker linker = linkerMap.get(udid);
-		if (linker != null && !linker.isClose()) return true;
-		linkerMap.put(udid, linker = new DeviceLinker(this, otherEnv.createRef()));
-		IDeviceEnv env = mySelf.getEnv();
-		if (env != null) env.markDirty();
-		return true;
-	}
-
-	@Override
 	public DNResult notice(DeviceNetworkRoute route, String method, DNRequest request) {
 		request.setSrcDevice(mySelf);
 		if (route.isLocal()) return mySelf.notice(method, request);
@@ -90,7 +78,10 @@ public class DeviceNetwork
 		IDeviceLinker linker = linkerMap.get(uuid);
 		if (linker != null) {
 			if (!linker.isConnecting()) return DNResult.unavailable();
-			return linker.getRemoteDevice().getNetwork().notice(route, method, request);
+			final IDeviceNetwork network = linker.getRemoteDevice().getNetwork();
+			final DNResult result = network.notice(route, method, request);
+			result.setNetworkRoute(route);
+			return result;
 		}
 		// TODO find mod
 		return DNResult.invalid();
@@ -189,5 +180,46 @@ public class DeviceNetwork
 			linkerMap.put(linker.getRemoteUUID(), linker);
 		}
 		if (this.selfLinker != null) linkerMap.put(selfLinker.getRemoteUUID(), selfLinker);
+	}
+
+	@Override
+	public boolean handshake(IDevice other, IDeviceEnv otherEnv, boolean simulate) throws ComputerConnectException {
+		if (linkerMap.size() > MAX_CONNECT_COUNT) return false;
+		if (simulate) return true;
+		UUID udid = other.getUDID();
+		helplessMap.remove(udid);
+		IDeviceLinker linker = linkerMap.get(udid);
+		if (linker != null && !linker.isClose()) return true;
+		linkerMap.put(udid, linker = new DeviceLinker(this, otherEnv.createRef()));
+		IDeviceEnv env = mySelf.getEnv();
+		if (env != null) env.markDirty();
+		return true;
+	}
+
+	public static StateCode doNetworkConnect(IDevice from, CapabilityObjectRef to) {
+		IDeviceEnv env = from.getEnv();
+		if (env == null) return StateCode.UNAVAILABLE;
+
+		if (!to.checkReference()) {
+			to.restore(env.getWorld());
+			if (!to.checkReference()) return StateCode.FAIL;
+		}
+
+		IDevice other = to.getCapability(Computer.DEVICE_CAPABILITY, null);
+		if (other == null) return StateCode.FAIL;
+		if (other.getEnv() == null) return StateCode.FAIL;
+
+		IDeviceNetwork network = from.getNetwork();
+		IDeviceNetwork otherNetwork = other.getNetwork();
+
+		boolean s1 = network.handshake(other, other.getEnv(), true);
+		boolean s2 = otherNetwork.handshake(from, from.getEnv(), true);
+
+		if (!s1 || !s2) return StateCode.REFUSE;
+
+		network.handshake(other, other.getEnv(), false);
+		otherNetwork.handshake(from, from.getEnv(), false);
+
+		return StateCode.SUCCESS;
 	}
 }

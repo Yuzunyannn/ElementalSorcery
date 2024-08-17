@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.computer.softs;
 
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.api.util.render.RenderRect;
 import yuzunyannn.elementalsorcery.computer.render.GClickLabel;
 import yuzunyannn.elementalsorcery.computer.render.GDisplayObject;
@@ -32,12 +32,12 @@ public class AppCommandGRecord extends GNode implements IGNodeLayoutable {
 	public void refresh(CMDRecord record) {
 		cmdLabel.setString(">" + record.cmd);
 		this.setName(record.cmd);
-		if (record.code == DNResultCode.SUCCESS) this.setColor(0xbbaebc);
+		if (record.code == StateCode.SUCCESS) this.setColor(0xbbaebc);
 		else {
-			if (record.code == DNResultCode.INVALID) this.setColor(0x533c3c);
-			else if (record.code == DNResultCode.FAIL) this.setColor(0xbe0000);
-			else if (record.code == DNResultCode.REFUSE) this.setColor(0xbe6200);
-			else if (record.code == DNResultCode.UNAVAILABLE) this.setColor(0x3c4f53);
+			if (record.code == StateCode.INVALID) this.setColor(0x533c3c);
+			else if (record.code == StateCode.FAIL) this.setColor(0xbe0000);
+			else if (record.code == StateCode.REFUSE) this.setColor(0xbe6200);
+			else if (record.code == StateCode.UNAVAILABLE) this.setColor(0x3c4f53);
 			else this.setColor(0x564f56);
 		}
 		this.cmdLabel.setColorRef(this.color);

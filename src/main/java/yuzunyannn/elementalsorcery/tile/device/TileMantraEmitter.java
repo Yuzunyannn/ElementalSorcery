@@ -3,31 +3,41 @@ package yuzunyannn.elementalsorcery.tile.device;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
+import yuzunyannn.elementalsorcery.api.util.GameCast;
 import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
+import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.computer.DeviceInfoTile;
 import yuzunyannn.elementalsorcery.entity.EntityAutoMantra;
 import yuzunyannn.elementalsorcery.entity.EntityAutoMantra.AutoMantraConfig;
 import yuzunyannn.elementalsorcery.nodegui.GActionEaseInOutBack;
 import yuzunyannn.elementalsorcery.tile.TileTask;
-import yuzunyannn.elementalsorcery.util.element.ElementInventoryInfinite;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryMerge;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
+import yuzunyannn.elementalsorcery.util.world.TileFinder;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileMantraEmitter extends TileDevice implements ITickable, EntityAutoMantra.IMantraElementSupplier {
 
 	public static final int SPELL = 0;
 	protected EnumFacing facing = EnumFacing.NORTH;
 	protected Mantra mantra;
+	protected int duration;
+	protected TileFinder elsupporter = new TileFinder(4);
 
 	public TileMantraEmitter() {
 		DeviceInfoTile info = (DeviceInfoTile) device.getInfo();
@@ -40,6 +50,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 				return null;
 			}
 		});
+		this.initSyncObject(elsupporter);
 	}
 
 	@Override
@@ -47,6 +58,8 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 		super.writeSaveData(writer);
 		writer.write("facing", facing);
 		writer.write("mantra", mantra);
+		writer.write("elsupport", elsupporter);
+		writer.write("duration", duration);
 	}
 
 	@Override
@@ -54,12 +67,15 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 		super.readSaveData(reader);
 		facing = reader.facing("facing");
 		mantra = reader.mantra("mantra");
+		elsupporter = reader.obj("elsupport", elsupporter);
+		duration = reader.nint("duration");
 	}
 
 	@Override
 	public void writeUpdateData(INBTWriter writer) {
 		super.writeUpdateData(writer);
 		writer.write("facing", facing);
+		writer.write("esp", elsupporter);
 	}
 
 	@Override
@@ -67,12 +83,28 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 		super.readUpdateData(reader);
 		facing = reader.facing("facing");
 		updateClientFacing(facing, 5);
+		elsupporter = reader.obj("esp", elsupporter);
+	}
+
+	@Override
+	public void onLoad() {
+		super.onLoad();
+		elsupporter.urgent(80);
+		elsupporter.setBox(WorldHelper.createAABB(pos, 6, 6, 6));
+		elsupporter.setFliter(TileFinder.ALTAR_ELEMENT_INV);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void recvUpdateData(INBTReader reader) {
 		if (reader.has("fc")) this.setFacing(reader.facing("fc"));
+	}
+
+	@DeviceFeature(id = "shutdown")
+	public void stop() {
+		if (world.isRemote) return;
+		TaskSpell task = (TaskSpell) taskMgr.getTask(SPELL);
+		if (task != null) task.shutdown();
 	}
 
 	@DeviceFeature(id = "launch")
@@ -94,12 +126,17 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 	}
 
 	@DeviceFeature(id = "mantra-set")
-	public DNResultCode setMantra(Mantra mantra) {
-		if (world.isRemote) return DNResultCode.SUCCESS;
+	public StateCode setMantra(Mantra mantra) {
+		if (world.isRemote) return StateCode.SUCCESS;
 
 		if (this.mantra == mantra) {
 			process.log("mantra unchange");
-			return DNResultCode.REFUSE;
+			return StateCode.REFUSE;
+		}
+
+		if (taskMgr.getTask(SPELL) != null) {
+			process.log("mantra cannot change");
+			return StateCode.REFUSE;
 		}
 
 		this.mantra = mantra;
@@ -107,7 +144,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 		if (mantra == null) process.log("clear mantra");
 		else process.log("set mantra to ", mantra);
 
-		return DNResultCode.SUCCESS;
+		return StateCode.SUCCESS;
 	}
 
 	@DeviceFeature(id = "mantra-clear")
@@ -116,20 +153,20 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 	}
 
 	@DeviceFeature(id = "facing-set")
-	public DNResultCode setFacing(EnumFacing facing) {
+	public StateCode setFacing(EnumFacing facing) {
 		if (world.isRemote) {
 			updateClientFacing(facing, 20);
-			return DNResultCode.SUCCESS;
+			return StateCode.SUCCESS;
 		}
 
 		if (this.facing == facing) {
 			process.log("facing unchange");
-			return DNResultCode.REFUSE;
+			return StateCode.REFUSE;
 		}
 
 		if (taskMgr.getTask(SPELL) != null) {
 			process.log("facing cannot change");
-			return DNResultCode.REFUSE;
+			return StateCode.REFUSE;
 		}
 
 		this.facing = facing;
@@ -138,7 +175,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 		this.updateToClient(sender.tag());
 		this.markDirty();
 		process.log("set facing to " + facing);
-		return DNResultCode.SUCCESS;
+		return StateCode.SUCCESS;
 	}
 
 	@Override
@@ -151,16 +188,28 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 		return this.facing;
 	}
 
+	@DeviceFeature(id = "duration-set")
+	public void setDuration(float sec) {
+		if (world.isRemote) return;
+		this.duration = Math.min(MathHelper.floor(sec * 20), (20 * 60 * 60));
+		this.markDirty();
+		if (process.isLogEnabled()) process.log(String.format("set duration to %s", TextHelper.toTime(this.duration)));
+	}
+
+	@DeviceFeature(id = "duration")
+	public float getDuration() {
+		if (world.isRemote) return this.duration / 20.f;
+		return this.duration / 20.f;
+	}
+
 	@Override
 	public void update() {
 		super.update();
+		elsupporter.update(world);
 		if (world.isRemote) {
 			updateClient();
 			return;
 		}
-//		notice("facing", DNParams.empty()).thenAccept(reulst -> {
-////			System.out.println(reulst.getReturn(EnumFacing.class));
-//		});
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -207,6 +256,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 
 		protected int tick = 0;
 		protected int totalTick = 0;
+		protected boolean shutdown = false;
 		protected CapabilityObjectRef mRef = CapabilityObjectRef.INVALID;
 
 		@Override
@@ -244,7 +294,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 			super.onEnter();
 			if (world.isRemote) return;
 
-			this.totalTick = 20 * 10;
+			this.totalTick = duration <= 0 ? 20 * 10 : duration;
 
 			AutoMantraConfig config = new EntityAutoMantra.AutoMantraConfig();
 			config.setMoveVec(Vec3d.ZERO);
@@ -258,7 +308,7 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 			mantraEntity.setPosition(vec.x, vec.y, vec.z);
 			mantraEntity.setSpellingTick(totalTick);
 			mantraEntity.setOrient(new Vec3d(dir));
-			mantraEntity.iWantGivePotent(10, 0.2f);
+			mantraEntity.iWantGivePotent(0.2f, 10);
 
 			world.spawnEntity(mantraEntity);
 			mRef = CapabilityObjectRef.of(mantraEntity);
@@ -279,7 +329,27 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 				return;
 			}
 
+			elsupporter.urgent(20);
 			if (tick % 20 == 0) markDirty();
+		}
+
+		public void shutdown() {
+			mRef.restore(world);
+			this.tick = this.totalTick - 0;
+			this.shutdown = true;
+			EntityAutoMantra mantraEntity = (EntityAutoMantra) mRef.toEntity();
+			if (mantraEntity == null) return;
+			mantraEntity.spellingTick = 0;
+		}
+
+		public boolean byShutdown() {
+			return shutdown;
+		}
+
+		@Override
+		public boolean needSyncToClient(int mode) {
+			if (shutdown && mode == 1) return true;
+			return super.needSyncToClient(mode);
 		}
 
 		@SideOnly(Side.CLIENT)
@@ -291,15 +361,31 @@ public class TileMantraEmitter extends TileDevice implements ITickable, EntityAu
 		@Override
 		public Object toDisplayObject() {
 			TileMantraEmitterRunDisplay display = new TileMantraEmitterRunDisplay();
-			display.init(TileMantraEmitter.this, mRef);
+			display.init(TileMantraEmitter.this, mRef, mantra);
 			return display;
 		}
 
 	}
 
+	protected IElementInventory dynElementInventory;
+
 	@Override
 	public IElementInventory supplyElementInventory() {
-		return new ElementInventoryInfinite();
+		if (dynElementInventory == null) {
+			dynElementInventory = new ElementInventoryMerge(
+					elsupporter.asCapabilityList(world, ElementInventory.ELEMENTINVENTORY_CAPABILITY, new ElementInventory())) {
+				@Override
+				protected void onChange(IElementInventory einv, ElementStack eStack, boolean extract) {
+					if (eStack.isEmpty()) return;
+					IAltarWake altar = GameCast.cast(einv, IAltarWake.class);
+					if (altar == null) return;
+					int type = extract ? IAltarWake.SEND : IAltarWake.OBTAIN;
+					altar.wake(type, pos);
+					if (world.isRemote) altar.updateEffect(world, type, eStack, new Vec3d(pos).add(0.5, 0.5, 0.5));
+				}
+			};
+		}
+		return dynElementInventory;
 	}
 
 }

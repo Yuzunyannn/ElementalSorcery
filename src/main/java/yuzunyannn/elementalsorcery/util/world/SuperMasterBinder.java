@@ -3,9 +3,7 @@ package yuzunyannn.elementalsorcery.util.world;
 import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
@@ -16,7 +14,7 @@ public class SuperMasterBinder {
 	/** 主人 */
 	protected CapabilityObjectRef ref = CapabilityObjectRef.INVALID;
 
-	/** 寻找主人，找不到的情况的cd时间记录 */
+	/* 寻找主人，找不到的情况的cd时间记录 */
 	protected long masterFindFailCD = 0;
 	protected int masterFindFailTimes = 0;
 	protected int maxMasterFindFailTimes = Integer.MAX_VALUE;
@@ -48,6 +46,12 @@ public class SuperMasterBinder {
 
 	@Nullable
 	public IWorldObject getMaster() {
+		return ref.toWorldObject();
+	}
+
+	@Nullable
+	public IWorldObject toughGetMaster() {
+		ref.checkReference();
 		return ref.toWorldObject();
 	}
 

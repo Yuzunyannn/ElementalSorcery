@@ -135,4 +135,28 @@ public class TextHelper {
 		if (i < strs.length) builder.append(strs[i]);
 		return builder.toString();
 	}
+
+	public static String toTime(double tick) {
+		double time = tick / 20.0;
+		if (time < 60) return String.format("%.0fs", time);
+		time = time / 60;
+		if (time < 60) {
+			double n = time - Math.floor(time);
+			String min = String.format("%.0fm", time);
+			if (n == 0) return min;
+			return min + "-" + toTime(n * 60 * 20);
+		}
+		time = time / 60;
+		if (time < 24) {
+			double n = time - Math.floor(time);
+			String hour = String.format("%.0fh", time);
+			if (n == 0) return hour;
+			return hour + "-" + toTime(n * 60 * 60 * 20);
+		}
+		time = time / 24;
+		double n = time - Math.floor(time);
+		String day = String.format("%.0fd", time);
+		if (n == 0) return day;
+		return day + "-" + toTime(n * 24 * 60 * 60 * 20);
+	}
 }

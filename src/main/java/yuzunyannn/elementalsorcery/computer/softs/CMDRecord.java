@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.computer.softs;
 
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.nodegui.SustainSet;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTSS;
@@ -12,7 +12,7 @@ public class CMDRecord implements INBTSS {
 	private int id;
 	protected String path;
 	protected String cmd;
-	protected DNResultCode code;
+	protected StateCode code;
 	private Object displayObject;
 	protected SustainSet sSet = new SustainSet();
 
@@ -44,7 +44,7 @@ public class CMDRecord implements INBTSS {
 		cmd = reader.string("cmd");
 		path = reader.string("pth");
 		sSet.setId(id);
-		if (reader.has("code")) code = DNResultCode.fromMeta(reader.nint("code"));
+		if (reader.has("code")) code = StateCode.fromMeta(reader.nint("code"));
 		setDisplayObject(reader.display("dpo"));
 	}
 
@@ -60,17 +60,13 @@ public class CMDRecord implements INBTSS {
 	@Override
 	public void readUpdateData(INBTReader reader) {
 		readSaveData(reader);
-		if (reader.has("dpl")) displayObject = reader.display("dpl");
-		else displayObject = null;
 		sSet.readUpdateData(reader);
-		setDisplayObject(displayObject);
 	}
 
 	@Override
 	public void writeUpdateData(INBTWriter writer) {
 		writeSaveData(writer);
 		sSet.writeUpdateData(writer);
-		if (displayObject != null) writer.writeDisplay("dpl", displayObject);
 	}
 
 	public void setDisplayObject(Object obj) {

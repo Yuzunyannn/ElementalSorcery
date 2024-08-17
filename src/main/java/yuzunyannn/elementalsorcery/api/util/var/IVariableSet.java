@@ -8,14 +8,22 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public interface IVariableSet extends INBTSerializable<NBTTagCompound> {
 
-	public <T> void set(Variable<T> var, T obj);
+	public <T> void set(String key, T obj, IVariableType<T> type);
 
 	public void set(String key, NBTBase tag);
 
-	public <T> T get(Variable<T> var);
+	default public <T> void set(Variable<T> var, T obj) {
+		set(var.key, obj, var.type);
+	}
+
+	public <T> T get(String key, IVariableType<T> type);
 
 	@Nullable
 	public NBTBase get(String key);
+
+	default public <T> T get(Variable<T> var) {
+		return get(var.key, var.type);
+	}
 
 	@Nullable
 	public Object ask(String key);
@@ -27,17 +35,17 @@ public interface IVariableSet extends INBTSerializable<NBTTagCompound> {
 		return null;
 	}
 
+	boolean has(String key);
+
 	default public boolean has(Variable<?> var) {
 		return has(var.key);
 	}
 
-	boolean has(String key);
+	public void remove(String key);
 
 	default public void remove(Variable<?> var) {
 		remove(var.key);
 	}
-
-	public void remove(String key);
 
 	public void clear();
 

@@ -10,7 +10,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.DeviceNetworkRoute;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
@@ -18,6 +17,7 @@ import yuzunyannn.elementalsorcery.api.computer.soft.DeviceShellBadInvoke;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceFile;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShell;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShellExecutor;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.tile.device.DeviceFeature;
 import yuzunyannn.elementalsorcery.tile.device.DeviceFeatureMap;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
@@ -336,7 +336,7 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 		DeviceNetworkRoute route = request.get("route", DeviceNetworkRoute.class);
 		if (path == null || device == null || route == null) {
 			request.log(new TextComponentTranslation("es.app.errPath"));
-			return DNResultCode.FAIL;
+			return StateCode.FAIL;
 		}
 
 		DNRequest ioRequest = new DNRequest();
@@ -348,11 +348,11 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 		IDeviceFile file = result.getReturn(IDeviceFile.class);
 		if (!file.exists() || file == null) {
 			request.log(new TextComponentTranslation("es.app.errPath"));
-			return DNResultCode.FAIL;
+			return StateCode.FAIL;
 		}
 
 		Collection<IDeviceFile> files = file.list();
-		if (files == null) return DNResultCode.REFUSE;
+		if (files == null) return StateCode.REFUSE;
 
 		return JavaHelper.toList(files, p -> {
 			if (p.isDirectory()) return TextFormatting.BLUE + "/" + p.getName();

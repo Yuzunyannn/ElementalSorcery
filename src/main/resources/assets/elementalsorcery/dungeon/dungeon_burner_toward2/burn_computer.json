@@ -1,0 +1,18 @@
+{
+    "type": "attach",
+    "label": "mainComputer",
+    "config": {
+        "computer": {
+            "init-disk": true,
+            "boot": "elementalsorcery:command"
+        },
+        "device": {
+            "network": {
+                "link-to": [
+                    "emitter",
+                    "reader"
+                ]
+            }
+        }
+    }
+}

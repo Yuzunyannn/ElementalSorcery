@@ -94,6 +94,14 @@
                     "type": "number"
                 }
             }
+        },
+        "EnumFacing": {
+            "enum": [
+                "sourth",
+                "north",
+                "west",
+                "east"
+            ]
         }
     },
     "type": "object",
@@ -116,6 +124,7 @@
                 "potion",
                 "mantra",
                 "block",
+                "attach",
                 "dungeon:global",
                 "dungeon:area"
             ]
@@ -589,6 +598,9 @@
                         "properties": {
                             "block": {
                                 "$ref": "./es_item.json"
+                            },
+                            "facing": {
+                                "$ref": "#/definitions/EnumFacing"
                             }
                         }
                     }
@@ -622,6 +634,36 @@
                             },
                             "onceTryTimes": {
                                 "$ref": "#/definitions/RNumber"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "attach"
+                    }
+                }
+            },
+            "then": {
+                "title": "附加",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "required": [
+                            "config"
+                        ],
+                        "properties": {
+                            "label": {
+                                "type": "string"
+                            },
+                            "config": {
+                                "type": "object"
                             }
                         }
                     }

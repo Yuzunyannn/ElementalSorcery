@@ -15,11 +15,11 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInitializable;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerDevice;
 import yuzunyannn.elementalsorcery.computer.ComputerProviderOfItem;
@@ -69,7 +69,7 @@ public class ItemTutorialPad extends ItemPad {
 			if ("get-inventory".equals(method)) {
 				if (env == null) return DNResult.unavailable();
 				if (inventory == null) return DNResult.unavailable();
-				DNResult result = DNResult.of(DNResultCode.SUCCESS);
+				DNResult result = DNResult.of(StateCode.SUCCESS);
 				result.set("inventory", inventory);
 				return result;
 			}

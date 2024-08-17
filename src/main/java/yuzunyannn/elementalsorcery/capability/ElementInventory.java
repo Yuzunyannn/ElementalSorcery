@@ -28,6 +28,8 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
+import yuzunyannn.elementalsorcery.api.util.GameCast;
+import yuzunyannn.elementalsorcery.api.util.ICastable;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.detecter.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.config.Config;
@@ -35,7 +37,7 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ElementInventory implements IElementInventoryModifiable, INBTSerializable<NBTTagCompound>,
-		IItemCapbiltitySyn, ContainerArrayDetecter.ICanArrayDetected<ElementStack, NBTTagIntArray> {
+		IItemCapbiltitySyn, ContainerArrayDetecter.ICanArrayDetected<ElementStack, NBTTagIntArray>, ICastable {
 
 	@CapabilityInject(IElementInventory.class)
 	public static Capability<IElementInventory> ELEMENTINVENTORY_CAPABILITY;
@@ -180,37 +182,68 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 		return this;
 	}
 
-	public static <T extends IElementInventory> T sensor(T self, ItemStack stack) {
-		self.setSensor(new IDataSensitivity() {
-			@Override
-			public void markDirty() {
-				NBTTagCompound nbt = ItemHelper.getOrCreateTagCompound(stack);
-				NBTTagCompound dat = (NBTTagCompound) Provider.storage.writeNBT(ELEMENTINVENTORY_CAPABILITY, self, null);
-				nbt.setTag(ESStorageKeyEnum.ELEMENT_INV, dat);
-			}
+	public static class ItemStackDataSensitivity implements IDataSensitivity, ICastable {
+		final ItemStack stack;
+		final IElementInventory self;
 
-			@Override
-			public void applyUse() {
-				NBTTagCompound nbt = ItemHelper.getOrCreateTagCompound(stack);
-				nbt = nbt.getCompoundTag(ESStorageKeyEnum.ELEMENT_INV);
-				if (nbt != null) Provider.storage.readNBT(ELEMENTINVENTORY_CAPABILITY, self, null, nbt);
-			}
-		});
+		public ItemStackDataSensitivity(IElementInventory self, ItemStack stack) {
+			this.stack = stack;
+			this.self = self;
+		}
+
+		@Override
+		public void markDirty() {
+			NBTTagCompound nbt = ItemHelper.getOrCreateTagCompound(stack);
+			NBTTagCompound dat = (NBTTagCompound) Provider.storage.writeNBT(ELEMENTINVENTORY_CAPABILITY, self, null);
+			nbt.setTag(ESStorageKeyEnum.ELEMENT_INV, dat);
+		}
+
+		@Override
+		public void applyUse() {
+			NBTTagCompound nbt = ItemHelper.getOrCreateTagCompound(stack);
+			nbt = nbt.getCompoundTag(ESStorageKeyEnum.ELEMENT_INV);
+			if (nbt != null) Provider.storage.readNBT(ELEMENTINVENTORY_CAPABILITY, self, null, nbt);
+		}
+
+		@Override
+		public <T> T cast(Class<?> to) {
+			if (to == ItemStack.class) return (T) stack;
+			return null;
+		}
+	}
+
+	public static class TileDataSensitivity implements IDataSensitivity, ICastable {
+		final TileEntity tile;
+		final IElementInventory self;
+
+		public TileDataSensitivity(IElementInventory self, TileEntity tile) {
+			this.tile = tile;
+			this.self = self;
+		}
+
+		@Override
+		public void markDirty() {
+			tile.markDirty();
+		}
+
+		@Override
+		public void applyUse() {
+		}
+
+		@Override
+		public <T> T cast(Class<?> to) {
+			if (to.isAssignableFrom(tile.getClass())) return (T) tile;
+			return null;
+		}
+	}
+
+	public static <T extends IElementInventory> T sensor(T self, ItemStack stack) {
+		self.setSensor(new ItemStackDataSensitivity(self, stack));
 		return self;
 	}
 
 	public static <T extends IElementInventory> T sensor(T self, TileEntity tile) {
-		self.setSensor(new IDataSensitivity() {
-			@Override
-			public void markDirty() {
-				tile.markDirty();
-			}
-
-			@Override
-			public void applyUse() {
-
-			}
-		});
+		self.setSensor(new TileDataSensitivity(self, tile));
 		return self;
 	}
 
@@ -224,6 +257,13 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 			this.setStackInSlot(i, other.getStackInSlot(i).copy());
 		for (int i = other.getSlots(); i < this.getSlots(); i++) this.setStackInSlot(i, ElementStack.EMPTY);
 		return this;
+	}
+
+	// ICastable
+
+	@Override
+	public <T> T cast(Class<?> to) {
+		return GameCast.cast(sensor, to);
 	}
 
 	// IItemCapbiltitySyn

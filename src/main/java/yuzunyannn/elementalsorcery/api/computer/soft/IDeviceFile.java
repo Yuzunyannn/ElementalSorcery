@@ -8,9 +8,10 @@ import javax.annotation.Nullable;
 import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.computer.ICalculatorObject;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
+import yuzunyannn.elementalsorcery.api.util.ICastable;
 import yuzunyannn.elementalsorcery.api.util.render.IDisplayable;
 
-public interface IDeviceFile extends ICalculatorObject, IDisplayable {
+public interface IDeviceFile extends ICalculatorObject, IDisplayable, ICastable {
 
 	boolean isDirectory();
 
@@ -34,6 +35,11 @@ public interface IDeviceFile extends ICalculatorObject, IDisplayable {
 	String getName();
 
 	@Override
+	default <T> T cast(Class<?> to) {
+		return null;
+	}
+
+	@Override
 	default Object toDisplayObject() {
 		if (isDirectory()) return "folder:" + getPath().toString();
 		if (exists()) return "file:" + getPath().toString();
@@ -50,4 +56,5 @@ public interface IDeviceFile extends ICalculatorObject, IDisplayable {
 	public static IDeviceFile invalid(DeviceFilePath path) {
 		return new DeviceFileInvalid(path);
 	}
+
 }

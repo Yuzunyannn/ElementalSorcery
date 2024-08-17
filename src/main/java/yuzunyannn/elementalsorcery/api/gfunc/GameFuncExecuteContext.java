@@ -10,13 +10,14 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import yuzunyannn.elementalsorcery.api.event.ESEvent;
 import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.target.WorldObjectEntity;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
 public class GameFuncExecuteContext {
 
 	protected IWorldObject srcObj;
 	protected IWorldObject triggerObj;
 	protected Event event;
-
+	protected VariableSet extra;
 	protected BlockPos pos = null;
 
 	public GameFunc doExecute(GameFunc func) {
@@ -103,6 +104,15 @@ public class GameFuncExecuteContext {
 	public GameFuncExecuteContext setTriggerObj(Entity entity) {
 		this.triggerObj = entity == null ? null : new WorldObjectEntity(entity);
 		return this;
+	}
+
+	public void setExtra(VariableSet extra) {
+		this.extra = extra;
+	}
+
+	public VariableSet getExtra() {
+		if (extra == null) extra = new VariableSet();
+		return extra;
 	}
 
 }

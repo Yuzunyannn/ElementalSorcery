@@ -10,7 +10,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.api.util.detecter.IDataRef;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.computer.render.GDisplayObject;
@@ -26,7 +26,7 @@ public class DeviceAskerDisplay extends SoftBlockDisplay<DeviceAskerDisplay.Info
 
 	static class Info implements INBTSSA {
 		CapabilityObjectRef ref;
-		DNResultCode code;
+		StateCode code;
 
 		public Info() {
 			ref = CapabilityObjectRef.INVALID;
@@ -45,7 +45,7 @@ public class DeviceAskerDisplay extends SoftBlockDisplay<DeviceAskerDisplay.Info
 		@Override
 		public void readSaveData(INBTReader reader) {
 			ref = reader.capabilityObjectRef("ref");
-			code = reader.has("code") ? DNResultCode.fromMeta(reader.nint("code")) : null;
+			code = reader.has("code") ? StateCode.fromMeta(reader.nint("code")) : null;
 		}
 	}
 
@@ -72,7 +72,7 @@ public class DeviceAskerDisplay extends SoftBlockDisplay<DeviceAskerDisplay.Info
 		this.info.deserializeNBT(nbt);
 	}
 
-	public void onFinish(CapabilityObjectRef ref, DNResultCode code) {
+	public void onFinish(CapabilityObjectRef ref, StateCode code) {
 		info = new Info(ref);
 		if (code != null) info.code = code;
 	}
@@ -138,8 +138,8 @@ public class DeviceAskerDisplay extends SoftBlockDisplay<DeviceAskerDisplay.Info
 
 		if (info.code != null) {
 			List<Object> objs = new LinkedList<>();
-			if (info.code == DNResultCode.SUCCESS) objs.add(TextFormatting.GREEN + I18n.format("es.app.status.linked"));
-			else if (info.code == DNResultCode.REFUSE)
+			if (info.code == StateCode.SUCCESS) objs.add(TextFormatting.GREEN + I18n.format("es.app.status.linked"));
+			else if (info.code == StateCode.REFUSE)
 				objs.add(TextFormatting.GOLD + I18n.format("es.app.connect.fail"));
 			else objs.add(TextFormatting.RED + I18n.format("es.app.connect.fail"));
 			objs.add(ref.toDisplayObject());

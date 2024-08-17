@@ -9,11 +9,13 @@ import java.util.UUID;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.DoubleKey;
+import yuzunyannn.elementalsorcery.util.ds.DoubleKey;
 
 @SideOnly(Side.CLIENT)
 public class EffectEntityMapping {
 
+	//-- use WeakValueHashMap
+	@Deprecated
 	public static class ValueWeakHashMap<K, V> {
 		protected Map<K, WeakReference<V>> map = new HashMap();
 

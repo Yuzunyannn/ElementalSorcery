@@ -706,6 +706,7 @@ es.app.err.boot.fail=Boot failure: %s
 es.app.errCmdFormat=Incorrect instruction format
 es.app.errPath=Cannot Find The Path Specified
 es.app.abandon=Abandon
+es.app.running=Running
 
 elf.time.year=%d Year 
 elf.time.mon.0=Spring 

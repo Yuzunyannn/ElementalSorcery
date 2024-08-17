@@ -35,6 +35,8 @@ public interface INBTReader {
 	boolean nboolean(String key);
 
 	byte[] bytes(String key);
+	
+	int[] nints(String key);
 
 	<T> T sobj(String key, Function<PacketBuffer, T> reader);
 

@@ -47,11 +47,6 @@ public class SustainDisplayManager {
 				Iterator<SustainSet> iter = sustainMap.values().iterator();
 				while (iter.hasNext()) {
 					SustainSet set = iter.next();
-					if (!set.isSustaining()) {
-						iter.remove();
-						onRemove(set);
-						continue;
-					}
 					IDataRef<SustainSetUnit> recordRef = tmp.get(set.getId());
 					boolean isFirst = false;
 					if (recordRef == null) {
@@ -59,10 +54,17 @@ public class SustainDisplayManager {
 						isFirst = true;
 					}
 					NBTTagCompound changes = set.detectChanges(recordRef);
-					if (changes == null) continue;
-					if (isFirst) continue; // todo 自动同步模式
-					changes.setInteger("id", set.getId());
-					detectList.appendTag(changes);
+					boolean isSustaining = set.isSustaining();
+					detect: {
+						if (changes == null) break detect;
+						if (isFirst && isSustaining) break detect;// TODO 自动同步模式
+						changes.setInteger("id", set.getId());
+						detectList.appendTag(changes);
+					}
+					if (!isSustaining) {
+						iter.remove();
+						onRemove(set);
+					}
 				}
 			}
 

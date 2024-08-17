@@ -367,10 +367,10 @@ public class MantraCommon extends Mantra implements IMantraProgressable {
 
 	@SideOnly(Side.CLIENT)
 	public void addEffectBlockIndicatorEffect(World world, IMantraData data, ICaster caster) {
-		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) return;
 		if (addCustomEffectHandle(world, data, caster, MantraEffectType.INDICATOR)) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (!caster.iWantCaster().isClientPlayer()) return;
+		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE)));
+		else if (!caster.iWantCaster().isClientPlayer()) return;
 		if (dataEffect.getEffectMap().hasMark(MantraEffectType.INDICATOR)) return;
 		EffectLookAtBlock lookAt = new EffectLookAtBlock(world, caster, this.getColor(dataEffect));
 		lookAt.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
@@ -379,10 +379,10 @@ public class MantraCommon extends Mantra implements IMantraProgressable {
 
 	@SideOnly(Side.CLIENT)
 	public void addEffectEntityIndicatorEffect(World world, IMantraData data, ICaster caster) {
-		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) return;
 		if (addCustomEffectHandle(world, data, caster, MantraEffectType.INDICATOR)) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (!caster.iWantCaster().isClientPlayer()) return;
+		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE)));
+		else if (!caster.iWantCaster().isClientPlayer()) return;
 		if (dataEffect.getEffectMap().hasMark(MantraEffectType.INDICATOR)) return;
 		EffectLookAtEntity lookAt = new EffectLookAtEntity(world, caster, this.getColor(dataEffect));
 		lookAt.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));

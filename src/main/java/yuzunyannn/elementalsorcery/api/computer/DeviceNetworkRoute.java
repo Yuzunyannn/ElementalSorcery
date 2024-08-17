@@ -11,7 +11,7 @@ public final class DeviceNetworkRoute {
 
 	public DeviceNetworkRoute(UUID udid) {
 		if (udid != null) {
-			chain = new ArrayList<>(8);
+			chain = new ArrayList<>(4);
 			chain.add(udid);
 		}
 	}

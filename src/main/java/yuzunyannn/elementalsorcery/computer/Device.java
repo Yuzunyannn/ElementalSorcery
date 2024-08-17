@@ -17,13 +17,13 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInitializable;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.api.util.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
@@ -324,14 +324,14 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 			if (process.isLogEnabled()) {
 				DeviceAskerDisplay display = new DeviceAskerDisplay();
 				display.setDigest("DS:" + System.identityHashCode(asker));
-				display.onFinish(linker.getRemoteRef(), DNResultCode.SUCCESS);
+				display.onFinish(linker.getRemoteRef(), StateCode.SUCCESS);
 				process.log(display);
 			}
 			return;
 		}
 
 		Asker asker = (Asker) networkFind(uuid);
-		LambdaReference<DNResultCode> code = LambdaReference.of(DNResultCode.INVALID);
+		LambdaReference<StateCode> code = LambdaReference.of(StateCode.INVALID);
 		CompletableFuture<CapabilityObjectRef> feture = asker.thenApply(ref -> {
 			code.set(networkHandshake(ref));
 			return ref;
@@ -348,7 +348,7 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 	}
 
 	@DeviceFeature(id = "network-close")
-	public DNResultCode networkHandshake(UUID udid) {
+	public StateCode networkClose(UUID udid) {
 		IDeviceNetwork network = this.getNetwork();
 		IDeviceLinker linker = network.getLinker(udid);
 		if (linker != null) {
@@ -358,33 +358,12 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 				process.log(new TextComponentTranslation("es.app.disconnect").setStyle(style).appendText(":" + udid));
 			}
 		}
-		return DNResultCode.SUCCESS;
+		return StateCode.SUCCESS;
 	}
 
 	@DeviceFeature(id = "network-handshake")
-	public DNResultCode networkHandshake(CapabilityObjectRef ref) {
-
-		if (!ref.checkReference()) {
-			ref.restore(env.getWorld());
-			if (!ref.checkReference()) return DNResultCode.FAIL;
-		}
-
-		IDevice other = ref.getCapability(Computer.DEVICE_CAPABILITY, null);
-		if (other == null) return DNResultCode.FAIL;
-		if (other.getEnv() == null) return DNResultCode.FAIL;
-
-		IDeviceNetwork network = this.getNetwork();
-		IDeviceNetwork otherNetwork = other.getNetwork();
-
-		boolean s1 = network.handshake(other, other.getEnv(), true);
-		boolean s2 = otherNetwork.handshake(this, this.getEnv(), true);
-
-		if (!s1 || !s2) return DNResultCode.REFUSE;
-
-		network.handshake(other, other.getEnv(), false);
-		otherNetwork.handshake(this, this.getEnv(), false);
-
-		return DNResultCode.SUCCESS;
+	public StateCode networkHandshake(CapabilityObjectRef ref) {
+		return DeviceNetwork.doNetworkConnect(this, ref);
 	}
 
 	@DeviceFeature(id = "network-ls")
@@ -396,7 +375,7 @@ public class Device<U> implements IDeviceInitializable, ISyncDetectable<NBTTagCo
 		case "*":
 			return JavaHelper.toList(linkers, liner -> liner);
 		default:
-			return DNResultCode.REFUSE;
+			return StateCode.REFUSE;
 		}
 	}
 

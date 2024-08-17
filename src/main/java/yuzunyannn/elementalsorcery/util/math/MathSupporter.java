@@ -3,8 +3,10 @@ package yuzunyannn.elementalsorcery.util.math;
 import java.util.List;
 import java.util.function.Function;
 
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 
 public class MathSupporter {
 
@@ -75,18 +77,27 @@ public class MathSupporter {
 
 		float t = (float) rotation;
 
-		double nx = u * MathHelper.cos(t) + (y * w - z * v) * MathHelper.sin(t)
-				+ x * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
-		double ny = v * MathHelper.cos(t) + (z * u - x * w) * MathHelper.sin(t)
-				+ y * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
-		double nz = w * MathHelper.cos(t) + (x * v - y * u) * MathHelper.sin(t)
-				+ z * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
+		double nx = u * MathHelper.cos(t) + (y * w - z * v) * MathHelper.sin(t) + x * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
+		double ny = v * MathHelper.cos(t) + (z * u - x * w) * MathHelper.sin(t) + y * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
+		double nz = w * MathHelper.cos(t) + (x * v - y * u) * MathHelper.sin(t) + z * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
 
 		return new Vec3d(nx, ny, nz);
 	}
 
 	public static double decimalForIntegralization(double num) {
 		return -(num - Math.floor(num));
+	}
+
+	public static boolean contains(AxisAlignedBB box, Vec3i vec) {
+		if (vec.getX() > box.minX && vec.getX() < box.maxX) {
+			if (vec.getY() > box.minY && vec.getY() < box.maxY) {
+				return vec.getZ() > box.minZ && vec.getZ() < box.maxZ;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 
 }

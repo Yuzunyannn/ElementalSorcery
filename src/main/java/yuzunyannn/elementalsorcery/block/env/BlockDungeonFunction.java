@@ -6,6 +6,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.io.File;
 import java.util.List;
+import java.util.function.Consumer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -16,8 +17,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -37,6 +41,32 @@ import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 
+	public class ItemDFB extends ItemBlock {
+
+		public ItemDFB() {
+			super(BlockDungeonFunction.this);
+		}
+
+		@Override
+		public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+				EnumFacing facing, float hitX, float hitY, float hitZ) {
+			TileEntity tileEntity = worldIn.getTileEntity(pos);
+			if (tileEntity != null && hand == EnumHand.OFF_HAND) {
+				NBTTagCompound tileData = tileEntity.getTileData();
+				if (trySet(player, json -> {
+					tileData.setString("_dungeon_func_config_", json.toString());
+					tileEntity.markDirty();
+				}, false)) return EnumActionResult.SUCCESS;
+			}
+			return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+		}
+
+	}
+
+	public ItemBlock getItemBlock() {
+		return new ItemDFB();
+	}
+
 	public BlockDungeonFunction() {
 		super(Material.ROCK);
 		this.setTranslationKey("dungeonFunction");
@@ -51,6 +81,13 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 	}
 
 	protected boolean trySet(EntityPlayer playerIn, TileDungeonFunction tile, boolean needFailMsg) {
+		return trySet(playerIn, json -> {
+			tile.setConfig(json);
+			tile.markDirty();
+		}, needFailMsg);
+	}
+
+	protected static boolean trySet(EntityPlayer playerIn, Consumer<JsonObject> configSetter, boolean needFailMsg) {
 		Style badStyle = new Style().setColor(TextFormatting.RED);
 		Style niceStyle = new Style().setColor(TextFormatting.GOLD);
 
@@ -87,8 +124,7 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 				moreInfo = "from copied string.";
 			}
 			if (json == null) throw new RuntimeException();
-			tile.setConfig(json);
-			tile.markDirty();
+			configSetter.accept(json);
 			playerIn.sendMessage(new TextComponentString("set Config success! " + moreInfo).setStyle(niceStyle));
 			return true;
 		} catch (Exception e) {
@@ -118,6 +154,11 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 				playerIn.sendMessage(new TextComponentString("cannot create dungeon function").setStyle(badStyle));
 			else {
 				func.setSeed(RandomHelper.rand.nextLong());
+				String assets = tile.getAssetsPath();
+				if (assets != null) {
+					Style style2 = new Style().setColor(TextFormatting.GOLD).setBold(true);
+					playerIn.sendMessage(new TextComponentString("assets: " + assets).setStyle(style2));
+				}
 				playerIn.sendMessage(new TextComponentString(func.toString()).setStyle(style));
 				ItemStack stack = playerIn.getHeldItem(hand);
 				if (stack.getItem() == Items.WOODEN_AXE || stack.getItem() == Items.STONE_AXE) {

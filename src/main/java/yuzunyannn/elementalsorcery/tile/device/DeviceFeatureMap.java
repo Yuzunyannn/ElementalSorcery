@@ -12,7 +12,7 @@ import java.util.Map;
 
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 
 public class DeviceFeatureMap {
 
@@ -48,11 +48,11 @@ public class DeviceFeatureMap {
 				Object[] args = checkAndGetMeetParams(method, params);
 				if (args != null) {
 					Object ret = method.invoke(self, args);
-					if (ret == null) return DNResultCode.SUCCESS;
+					if (ret == null) return StateCode.SUCCESS;
 					return ret;
 				}
 			}
-			return DNResultCode.REFUSE;
+			return StateCode.REFUSE;
 		}
 
 		public final static Object[] EMPTY = new Object[0];
@@ -115,7 +115,7 @@ public class DeviceFeatureMap {
 
 	public Object invoke(Object self, String id, DNRequest params) {
 		Call call = callMap.get(id);
-		if (call == null) return DNResultCode.INVALID;
+		if (call == null) return StateCode.INVALID;
 		try {
 			return call.invoke(self, params);
 		} catch (InvocationTargetException e) {
@@ -123,7 +123,7 @@ public class DeviceFeatureMap {
 		} catch (ReflectiveOperationException e) {
 			callMap.remove(id);
 			ESAPI.logger.error("invoke err!", e);
-			return DNResultCode.FAIL;
+			return StateCode.FAIL;
 		} catch (Exception e) {
 			throw e;
 		}

@@ -1395,9 +1395,14 @@
             "ja_JP": "指定されたパスが見つかりません"
         },
         "es.app.abandon": {
-            "zh_CN": "放弃",
+            "zh_CN": "丢弃",
             "en_US": "Abandon",
             "ja_JP": "あきらめる"
+        },
+        "es.app.running": {
+            "zh_CN": "运行中...",
+            "en_US": "Running",
+            "ja_JP": "実行中..."
         }
     }
 }

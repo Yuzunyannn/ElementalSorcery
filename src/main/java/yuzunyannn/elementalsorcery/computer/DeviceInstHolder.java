@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.GameCast;
 import yuzunyannn.elementalsorcery.api.util.ICastEnv;
-import yuzunyannn.elementalsorcery.util.WeakValueHashMap;
+import yuzunyannn.elementalsorcery.util.ds.WeakValueHashMap;
 
 /**
  * 这个类是为了解决{@link yuzunyannn.elementalsorcery.computer.Computer#update()}中描述的问题<br/>

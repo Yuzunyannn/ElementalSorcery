@@ -50,7 +50,6 @@ public class JsonArray extends Json {
 		return json.size();
 	}
 
-
 	@Override
 	public String toString() {
 		return json.toString();
@@ -143,9 +142,11 @@ public class JsonArray extends Json {
 		JsonElement checkJE = json.get(0);
 		if (checkJE.isJsonPrimitive()) {
 			JsonPrimitive jp = checkJE.getAsJsonPrimitive();
-			Number number = jp.getAsNumber();
-			float f = number.floatValue();
-			if (f - MathHelper.floor(f) == 0) return this.asNBTIntArray();
+			if (jp.isNumber()) {
+				Number number = jp.getAsNumber();
+				float f = number.floatValue();
+				if (f - MathHelper.floor(f) == 0) return this.asNBTIntArray();
+			}
 		}
 		// 其他情况
 		NBTTagList nbt = new NBTTagList();

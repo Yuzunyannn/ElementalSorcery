@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.ds;
 
 import java.util.Collection;
 import java.util.HashMap;

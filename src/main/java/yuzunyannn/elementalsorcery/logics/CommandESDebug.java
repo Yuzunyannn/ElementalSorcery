@@ -3,9 +3,13 @@ package yuzunyannn.elementalsorcery.logics;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
+
+import javax.naming.CannotProceedException;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -43,16 +47,14 @@ import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.GameCast;
 import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
-import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
-import yuzunyannn.elementalsorcery.computer.DeviceInstHolder;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
+import yuzunyannn.elementalsorcery.dungeon.DungeonFakeArea;
+import yuzunyannn.elementalsorcery.dungeon.DungeonFakeArea.DungeonFakeAreaRoom;
 import yuzunyannn.elementalsorcery.dungeon.DungeonLib;
-import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
@@ -64,7 +66,6 @@ import yuzunyannn.elementalsorcery.parchment.Tutorials;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
@@ -73,9 +74,9 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class CommandESDebug {
 
 	private static boolean passpass = false;
-	public static final String[] autoTips = new String[] { "reflush", "reflushLootTable", "buildTest", "portalTest",
-			"showInfo", "blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle",
-			"reloadShader", "jsonSchema", "fragmentTest", "tickUpddate" };
+	public static final String[] autoTips = new String[] { "reflush", "reflushLootTable", "dungeonResave",
+			"dungeonTrySummon", "portalTest", "showInfo", "blockMoveTest", "textTest", "reloadeTexture", "quest",
+			"statistics", "statisticsHandle", "reloadShader", "jsonSchema", "fragmentTest", "tickUpddate" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -155,6 +156,31 @@ public class CommandESDebug {
 
 			return;
 		}
+		case "dungeonResave":
+			try {
+				String name = null;
+				try {
+					name = args[1];
+				} catch (Exception e) {}
+				saveDungeonBuilding((EntityPlayer) sender.getCommandSenderEntity(), name);
+			} catch (Exception e) {
+				ESAPI.logger.error("gg", e);
+			}
+			return;
+		case "dungeonTrySummon":
+			try {
+				String name = null;
+				try {
+					name = args[1];
+				} catch (Exception e) {}
+				EntityPlayer entity = (EntityPlayer) sender.getCommandSenderEntity();
+				RayTraceResult rtr = WorldHelper.getLookAtBlock(entity.world, entity, 64);
+				BlockPos pos = rtr != null ? rtr.getBlockPos() : null;
+				summonDungeonBuilding(entity, pos, name);
+			} catch (Exception e) {
+				ESAPI.logger.error("gg", e);
+			}
+			return;
 		default:
 			EntityLivingBase entity = (EntityLivingBase) sender.getCommandSenderEntity();
 			RayTraceResult rtr = WorldHelper.getLookAtBlock(entity.world, entity, 64);
@@ -162,29 +188,6 @@ public class CommandESDebug {
 			Random rand = world.rand;
 			BlockPos pos = rtr != null ? rtr.getBlockPos() : null;
 			switch (args[0]) {
-			// 测试建筑
-			case "buildTest":
-				try {
-					saveDungeonBuilding(args[1], (EntityPlayer) sender.getCommandSenderEntity());
-//				GenElfEdifice g = new GenElfEdifice(true);
-//				g.genMainTreeEdifice(entity.world, pos, entity.world.rand);
-//				g.buildToTick(entity.world);
-					// new WorldGenElfTree(true, 3).generate(entity.world, entity.world.rand, pos);
-					/*
-					 * VillageCreationHandler h = new VillageCreationHandler();
-					 * StructureVillagePieces.Village v = h.buildComponent(null, null, new
-					 * LinkedList<StructureComponent>(), new Random(), pos.getX(), pos.getY(),
-					 * pos.getZ(), EnumFacing.NORTH, 0); try { Field field =
-					 * StructureVillagePieces.Village.class.getDeclaredField("averageGroundLvl") ;
-					 * field.setAccessible(true); field.setInt(v, pos.getY()); } catch (Exception e)
-					 * { ElementalSorcery.logger.warn("debug指令错误", e); }
-					 * v.addComponentParts(sender.getEntityWorld(), new Random(),
-					 * v.getBoundingBox());
-					 */
-				} catch (Exception e) {
-					ESAPI.logger.error("gg", e);
-				}
-				return;
 			case "jsonSchema": {
 				JsonObject obj = new JsonObject();
 				obj.set("$schema", "http://json-schema.org/draft-07/schema#");
@@ -239,7 +242,7 @@ public class CommandESDebug {
 //				}
 
 //				DeviceInstHolder.from(world.isRemote).map;
-				
+
 //				EntityPlayer fakePlayer = ESFakePlayer.get(player.getServerWorld());
 //				player.attackEntityFrom(
 //						DamageHelper.getDamageSource(new ElementStack(ESObjects.ELEMENTS.MAGIC), fakePlayer, null)
@@ -503,39 +506,64 @@ public class CommandESDebug {
 		System.out.println(builder);
 	}
 
-	static public void saveDungeonBuilding(String name, EntityPlayer player) {
+	static public void summonDungeonBuilding(EntityPlayer player, BlockPos pos, String name) throws Exception {
 		try {
-			if (name == null || name.isEmpty()) {
-				System.out.println("你的id呢");
-				return;
-			}
 			ItemStack ruler = player.getHeldItem(EnumHand.MAIN_HAND);
-			BlockPos pos1 = ItemMagicRuler.getRulerPos(ruler, true);
-			BlockPos pos2 = ItemMagicRuler.getRulerPos(ruler, false);
-			if (pos1 == null || pos2 == null) throw new WrongUsageException("commands.es.building.recordFail");
-			Building building = Building.createBuilding(player.getEntityWorld(), player.getHorizontalFacing().getOpposite(), pos1, pos2, true);
-			building.setAuthor("yuzunyannn");
-			building.setName(TextHelper.castToCamel(name));
-			BuildingLib.instance.releaseAllSaveData();
-			Method method = BuildingLib.class.getDeclaredMethod("addBuilding", BuildingSaveData.class);
-			method.setAccessible(true);
-			String path = "../src/main/resources/assets/elementalsorcery/structures/" + name + ".nbt";
-			File file = new File(path);
-			if (file.exists() && !passpass) {
-				System.out.println("存在" + name + "了，请三四而后行！");
-				passpass = true;
-				return;
-			}
-			passpass = false;
-			method.invoke(BuildingLib.instance, new BuildingSaveData(building, name, file) {
-				{}
-			});
-			ItemHelper.addItemStackToPlayer(player, ArcInfo.createArcInfoItem(building.getKeyName()));
-			System.out.println("为你保存了" + path);
-			BuildingLib.instance.releaseAllSaveData();
-		} catch (Exception e) {
-			ESAPI.logger.error("gg", e);
+			String buildingKey = ruler.getTagCompound().getString("building_key");
+			if (name == null || name.isEmpty()) name = buildingKey;
+			if ("it".equals(name)) name = buildingKey;
+		} catch (Exception e) {}
+
+		Building building = BuildingLib.instance.getBuilding(name);
+		if (building == null) throw new CannotProceedException("cannot find building " + name);
+
+		World world = player.getEntityWorld();
+		DungeonFakeArea area = DungeonFakeArea.getOrCreate().reset();
+		DungeonFakeAreaRoom room = area.fakeRoom(world, pos, player.getHorizontalFacing(), name);
+		area.startBuildRoom(world, room.getId(), player);
+	}
+
+	static public void saveDungeonBuilding(EntityPlayer player, String name) throws Exception {
+		ItemStack ruler = player.getHeldItem(EnumHand.MAIN_HAND);
+		BlockPos pos1 = ItemMagicRuler.getRulerPos(ruler, true);
+		BlockPos pos2 = ItemMagicRuler.getRulerPos(ruler, false);
+		if (pos1 == null || pos2 == null) throw new WrongUsageException("commands.es.building.recordFail");
+
+		String buildingKey = ruler.getTagCompound().getString("building_key");
+		if (name == null || name.isEmpty()) name = buildingKey;
+		if ("it".equals(name)) name = buildingKey;
+
+		if (name == null || name.isEmpty()) {
+			System.out.println("你的id呢");
+			return;
 		}
+
+		Building building = Building.createBuilding(player.getEntityWorld(), player.getHorizontalFacing().getOpposite(), pos1, pos2, true);
+		building.setAuthor("yuzunyannn");
+		building.setName(TextHelper.castToCamel(name));
+		BuildingLib.instance.releaseAllSaveData();
+		Method method = BuildingLib.class.getDeclaredMethod("addBuilding", BuildingSaveData.class);
+		method.setAccessible(true);
+		String path = "../src/main/resources/assets/elementalsorcery/structures/" + name + ".nbt";
+		File file = new File(path);
+		if (file.exists() && !passpass) {
+			player.sendMessage(new TextComponentString("存在" + name + "了，请三四而后行！"));
+			passpass = true;
+			return;
+		}
+		passpass = false;
+		method.invoke(BuildingLib.instance, new BuildingSaveData(building, name, file) {
+			{}
+		});
+
+		BuildingLib.instance.releaseAllSaveData();
+		player.sendMessage(new TextComponentString("为你保存了" + path));
+
+		Field field = BuildingLib.class.getDeclaredField("mapLib");
+		field.setAccessible(true);
+		Map<String, Building> mapLib = (Map<String, Building>) field.get(BuildingLib.instance);
+		mapLib.put(name, building);
+		player.sendMessage(new TextComponentString("为你刷新了" + name));
 	}
 
 	static public void doSomethingInRange(World world, EntityPlayer player, BlockPos from, BlockPos to) {

@@ -19,6 +19,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
@@ -91,10 +92,12 @@ public class MantraArrow extends MantraTypeAccumulative {
 		super.addRuleInformation(stack, worldIn, tooltip, flagIn);
 		float i = ((CollectRuleRepeated) this.mainRule).interval;
 		float r = this.mainRule.collectList.get(0).eStack.getCount() / i;
-		tooltip.add(TextFormatting.DARK_PURPLE + "⚪" + createCollectInfomation(
-				CollectInfo.create(new ElementStack(ESObjects.ELEMENTS.EARTH, 1, 4), 1, 1), r));
-		tooltip.add(TextFormatting.DARK_PURPLE + "⚪" + createCollectInfomation(
-				CollectInfo.create(new ElementStack(ESObjects.ELEMENTS.WOOD, 1, 3), 1, 1), r));
+		tooltip.add(TextFormatting.DARK_PURPLE + "⚪"
+				+ createCollectInfomation(CollectInfo.create(new ElementStack(ESObjects.ELEMENTS.EARTH, 1,
+						4), 1, 1), r));
+		tooltip.add(TextFormatting.DARK_PURPLE + "⚪"
+				+ createCollectInfomation(CollectInfo.create(new ElementStack(ESObjects.ELEMENTS.WOOD, 1,
+						3), 1, 1), r));
 	}
 
 	public void tryShoot(World world, IMantraData data, ICaster caster, int count) {
@@ -102,24 +105,27 @@ public class MantraArrow extends MantraTypeAccumulative {
 		IWorldObject co = caster.iWantCaster();
 		Vec3d vec = co.getEyePosition();
 		Vec3d dir = caster.iWantDirection();
-		if (world.isRemote) {
-			playEffect(world, vec, dir, this.getColor(data));
-			return;
-		}
 
 		boolean infinite = false;
 		ItemStack arrow = ItemStack.EMPTY;
-
 		EntityLivingBase entity = co.toEntityLiving();
-		if (entity == null) {
-			entity = ESFakePlayer.get((WorldServer) world);
-			entity.setPosition(vec.x, vec.y - entity.getEyeHeight() + 0.1, vec.z);
-			float raw = (float) MathHelper.atan2(dir.z, dir.x) / 3.1415926f * 180 - 90;
-			entity.rotationYaw = raw;
-			entity.rotationPitch = (float) (-dir.y * 90);
-		} else if (entity instanceof EntityPlayer) {
-			arrow = findAmmo((EntityPlayer) entity);
-			infinite = ((EntityPlayer) entity).isCreative();
+
+		if (world.isRemote) {
+			if (entity instanceof EntityPlayer) {
+				arrow = findAmmo((EntityPlayer) entity);
+				infinite = ((EntityPlayer) entity).isCreative();
+			}
+		} else {
+			if (entity == null) {
+				entity = ESFakePlayer.get((WorldServer) world);
+				entity.setPosition(vec.x, vec.y - entity.getEyeHeight() + 0.1, vec.z);
+				float raw = (float) MathHelper.atan2(dir.z, dir.x) / 3.1415926f * 180 - 90;
+				entity.rotationYaw = raw;
+				entity.rotationPitch = (float) (-dir.y * 90);
+			} else if (entity instanceof EntityPlayer) {
+				arrow = findAmmo((EntityPlayer) entity);
+				infinite = ((EntityPlayer) entity).isCreative();
+			}
 		}
 
 		if (arrow.isEmpty()) {
@@ -130,6 +136,11 @@ public class MantraArrow extends MantraTypeAccumulative {
 			caster.iWantSomeElement(earth, true);
 			caster.iWantSomeElement(wood, true);
 			infinite = true;
+		}
+
+		if (world.isRemote) {
+			playEffect(world, vec, dir, this.getColor(data));
+			return;
 		}
 
 		boolean fire = false;
@@ -178,6 +189,7 @@ public class MantraArrow extends MantraTypeAccumulative {
 		ItemArrow itemarrow = (ItemArrow) (arrow.getItem() instanceof ItemArrow ? arrow.getItem() : Items.ARROW);
 		EntityArrow entityarrow = itemarrow.createArrow(world, arrow, shooter);
 		entityarrow.shoot(shooter, shooter.rotationPitch, shooter.rotationYaw, 0.0F, v * 3.0F, 1.0F);
+		if (entityarrow.shootingEntity instanceof FakePlayer) entityarrow.shootingEntity = null;
 
 		if (v == 1.0F) entityarrow.setIsCritical(true);
 
@@ -189,8 +201,7 @@ public class MantraArrow extends MantraTypeAccumulative {
 
 		world.spawnEntity(entityarrow);
 
-		world.playSound((EntityPlayer) null, shooter.posX, shooter.posY, shooter.posZ, SoundEvents.ENTITY_ARROW_SHOOT,
-				SoundCategory.PLAYERS, 1.0F, 1.0F / (world.rand.nextFloat() * 0.4F + 1.2F) + v * 0.5F);
+		world.playSound((EntityPlayer) null, shooter.posX, shooter.posY, shooter.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.PLAYERS, 1.0F, 1.0F / (world.rand.nextFloat() * 0.4F + 1.2F) + v * 0.5F);
 
 		return true;
 	}

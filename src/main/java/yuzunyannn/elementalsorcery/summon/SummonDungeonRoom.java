@@ -9,9 +9,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
+import yuzunyannn.elementalsorcery.dungeon.DungeonCategory;
 import yuzunyannn.elementalsorcery.dungeon.DungeonRoomType;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.logics.EventServer;
@@ -27,9 +29,15 @@ public class SummonDungeonRoom extends SummonCommon {
 	protected int iIter = 0;
 	protected BuildingBlocks iter;
 	protected DungeonAreaRoom room;
+	protected DungeonCategory category = new DungeonCategory(new VariableSet());
 
 	public SummonDungeonRoom(World world) {
 		super(world, BlockPos.ORIGIN, 0xcccccc);
+		category.setWorld(world);
+	}
+
+	public boolean isDevTest() {
+		return areaId == -1;
 	}
 
 	@Override
@@ -102,7 +110,10 @@ public class SummonDungeonRoom extends SummonCommon {
 		case 3:// 第三步，构建核心陷阱等
 			updateBuildCore();
 			break;
-		case 4:// 第四步，开门
+		case 4:// 构建完成回调
+			updateTasks();
+			break;
+		case 5:// 第四步，开门
 			updateDoorOpen();
 			break;
 		default:
@@ -121,6 +132,16 @@ public class SummonDungeonRoom extends SummonCommon {
 		while (_updateBuildBase());
 	}
 
+	public void updateTasks() {
+		while (true) {
+			Runnable runable = category.popCompleteTask();
+			if (runable == null) break;
+			runable.run();
+			if (EventServer.bigComputeWatch.msBiggerThan(DungeonWorld.DUNGEON_BUILDING_BLOCK_SPEED_LIMIT)) return;
+		}
+		nextStep();
+	}
+
 	protected boolean fin(double ms) {
 		if (ms < 0) return true;
 		if (EventServer.bigComputeWatch.msBiggerThan(ms)) return false;
@@ -135,10 +156,9 @@ public class SummonDungeonRoom extends SummonCommon {
 		IBlockState state;
 		while (iter.next()) {
 			state = iter.getState();
-			if (type.isBaseBlockType(world, state)) continue;
 			BlockPos pos = iter.getPos();
 			BlockPos at = pos.add(room.getCenterPos());
-			type.buildCoreBlock(world, room, at, state, iter.getTileNBTSave());
+			type.buildCoreBlock(world, room, at, state, iter.getTileNBTSave(), category); // 一类方块也可能被赋予数据
 		}
 
 		nextStep();
@@ -221,6 +241,7 @@ public class SummonDungeonRoom extends SummonCommon {
 		nbt.setInteger("areaId", this.areaId);
 		nbt.setInteger("roomId", this.roomId);
 		nbt.setByte("step", step);
+		nbt.setTag("category", category.serializeNBT());
 		return nbt;
 	}
 
@@ -229,6 +250,7 @@ public class SummonDungeonRoom extends SummonCommon {
 		this.areaId = nbt.getInteger("areaId");
 		this.roomId = nbt.getInteger("roomId");
 		this.step = nbt.getByte("step");
+		this.category.deserializeNBT(nbt.getCompoundTag("category"));
 	}
 
 }

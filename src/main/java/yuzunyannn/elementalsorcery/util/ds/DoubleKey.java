@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.ds;
 
 public class DoubleKey<K1, K2> {
 

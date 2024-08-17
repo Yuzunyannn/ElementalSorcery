@@ -16,6 +16,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
+@Deprecated
 public class TileEntityGetter {
 
 	protected AxisAlignedBB checkBox;

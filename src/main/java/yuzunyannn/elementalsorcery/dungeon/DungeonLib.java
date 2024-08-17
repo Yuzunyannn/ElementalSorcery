@@ -35,7 +35,7 @@ public class DungeonLib {
 	public static DungeonRoomType DUNGEON_TOWARD4;
 	public static DungeonRoomType DUNGEON_GUARD_FACTORY_TOWARD4;
 	public static DungeonRoomType DUNGEON_CALAMITY_EDIFICE_TOWARD4;
-	public static DungeonRoomType DUNGEON_INVERT_LAB_TOWARD2 ;
+	public static DungeonRoomType DUNGEON_INVERT_LAB_TOWARD2;
 	public static DungeonRoomType DUNGEON_METEORITE_CRATER_TOWARD1;
 	public static DungeonRoomType DUNGEON_POSTERN_TOWARD1;
 
@@ -48,6 +48,14 @@ public class DungeonLib {
 		room.setRegistryName(ESAPI.MODID, room.getStructure().getKeyName());
 		room.postInit();
 		DungeonRoomType.REGISTRY.register(room);
+		return room;
+	}
+
+	public static DungeonRoomType devRegister(String id) {
+		DungeonRoomType room = new DungeonRoomType(BuildingLib.instance.getBuilding(id));
+		room.setRegistryName(ESAPI.MODID, room.getStructure().getKeyName());
+		room.postInit();
+		DungeonRoomType.REGISTRY.registerReplace(room);
 		return room;
 	}
 
@@ -98,6 +106,7 @@ public class DungeonLib {
 		GameFunc.factoryMap.put("potion", DungeonFuncPotion.class);
 		GameFunc.factoryMap.put("mantra", DungeonFuncMantra.class);
 		GameFunc.factoryMap.put("block", DungeonFuncBlock.class);
+		GameFunc.factoryMap.put("attach", DungeonFuncTileAttach.class);
 		// dungeon
 		GameFunc.factoryMap.put("dungeon:global", DungeonFuncGlobal.class);
 		GameFunc.factoryMap.put("dungeon:area", DungeonFuncArea.class);

@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.ds;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;

@@ -5,11 +5,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.ICastable;
 import yuzunyannn.elementalsorcery.api.util.detecter.IDataRef;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
@@ -18,10 +20,10 @@ import yuzunyannn.elementalsorcery.computer.soft.display.DTCDevice;
 import yuzunyannn.elementalsorcery.computer.soft.display.SoftBlockDisplay;
 import yuzunyannn.elementalsorcery.entity.EntityAutoMantra;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
+import yuzunyannn.elementalsorcery.nodegui.GMantra;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
-import yuzunyannn.elementalsorcery.tile.TileTask;
 import yuzunyannn.elementalsorcery.tile.TileTaskManager;
+import yuzunyannn.elementalsorcery.tile.device.TileMantraEmitter.TaskSpell;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 
@@ -32,6 +34,7 @@ public class TileMantraEmitterRunDisplay extends SoftBlockDisplay<Boolean, NBTTa
 	public CapabilityObjectRef dref = CapabilityObjectRef.INVALID;
 	public CapabilityObjectRef mref = CapabilityObjectRef.INVALID;
 	public boolean fin;
+	public Mantra mantra;
 
 	public TileMantraEmitterRunDisplay() {
 		super(ID);
@@ -43,6 +46,7 @@ public class TileMantraEmitterRunDisplay extends SoftBlockDisplay<Boolean, NBTTa
 		writer.write("dref", dref);
 		writer.write("mref", mref);
 		writer.write("fin", fin);
+		if (mantra != null) writer.write("ma", mantra);
 	}
 
 	@Override
@@ -51,6 +55,7 @@ public class TileMantraEmitterRunDisplay extends SoftBlockDisplay<Boolean, NBTTa
 		dref = reader.capabilityObjectRef("dref");
 		mref = reader.capabilityObjectRef("mref");
 		fin = reader.nboolean("fin");
+		mantra = reader.mantra("ma");
 	}
 
 	@Override
@@ -70,10 +75,11 @@ public class TileMantraEmitterRunDisplay extends SoftBlockDisplay<Boolean, NBTTa
 		fin = b == 0 ? false : true;
 	}
 
-	public void init(TileDevice tile, CapabilityObjectRef mref) {
+	public void init(TileDevice tile, CapabilityObjectRef mref, Mantra mantra) {
 		this.setCondition(new DTCDevice(tile.getDevice()));
 		this.dref = CapabilityObjectRef.of(tile);
 		this.mref = mref;
+		this.mantra = mantra;
 		this.setDigest("TMER_" + TileMantraEmitter.SPELL);
 	}
 
@@ -85,9 +91,11 @@ public class TileMantraEmitterRunDisplay extends SoftBlockDisplay<Boolean, NBTTa
 		try {
 			IDeviceEnv env = device.getEnv();
 			TileTaskManager taskManager = ((TileEntityNetwork) env.createWorldObj().toTileEntity()).getTaskMgr();
-			TileTask task = taskManager.getTask(TileMantraEmitter.SPELL);
+			TaskSpell task = (TaskSpell) taskManager.getTask(TileMantraEmitter.SPELL);
 			if (task == null) {
 				fin = true;
+				setDead();
+			} else if (task.byShutdown()) {
 				setDead();
 			}
 		} catch (Exception e) {
@@ -115,23 +123,36 @@ public class TileMantraEmitterRunDisplay extends SoftBlockDisplay<Boolean, NBTTa
 			if (task == null) return;
 
 			GProgressBar bar = (GProgressBar) loading;
-			bar.setWidth((task.tick / (float) task.totalTick) * (bg.getWidth() - 6));
+			bar.setProgress(task.tick / (float) task.totalTick);
 
 			Entity entity = mref.toEntity();
 			if (entity == null) {
 				mref.restore(Minecraft.getMinecraft().world);
 				entity = mref.toEntity();
 			}
+			double progress = 0;
 			if (entity instanceof EntityAutoMantra) {
 				EntityAutoMantra autoMantra = (EntityAutoMantra) entity;
-				double progress = autoMantra.tryGetMantraProgress();
+				progress = autoMantra.tryGetMantraProgress();
 				int color = autoMantra.tryGetMantraColor();
+				mantraProgress.setColor(color);
 			}
+
+			if (progress < 0) progress = 1;
+			float sec = (task.totalTick - task.tick) / 20.0f;
+			String str = I18n.format("es.app.running");
+			String pstr = String.format(" %d%%, %.1fs", MathHelper.ceil(progress * 100), sec);
+
+			mantraProgress.setProgress(progress);
+			statusLabel.setString(str + pstr);
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	protected GNode mantraProgress;
+	protected GProgressBar mantraProgress;
+
+	@SideOnly(Side.CLIENT)
+	protected GLabel statusLabel;
 
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -144,7 +165,26 @@ public class TileMantraEmitterRunDisplay extends SoftBlockDisplay<Boolean, NBTTa
 		bar.setSize(0, 2);
 		bar.setPosition(3, 1, 20);
 
+		statusLabel = new GLabel(I18n.format("es.app.running"));
+		this.bg.addChild(statusLabel);
+		statusLabel.setColor(0xffff00);
+		statusLabel.setPosition(4, bg.getHeight() - 10, 1);
+
 		mantraProgress = new GProgressBar();
+		bg.addChild(mantraProgress);
+		mantraProgress.setMaxWidth(bg.getWidth() - 32);
+		mantraProgress.setSize(0, 8);
+		mantraProgress.setPosition(3, bg.getHeight() - 22, 0);
+		mantraProgress.setRunning(true);
+		mantraProgress.setProgress(0);
+
+		if (this.mantra != null) {
+			GMantra mantra = new GMantra(this.mantra);
+			bg.addChild(mantra);
+			mantra.setPosition(bg.getWidth() - 14, 16, 1);
+			mantra.setSize(28, 28);
+			mantraProgress.setColor(this.mantra.getColor(null));
+		}
 	}
 
 	@Override
@@ -152,13 +192,17 @@ public class TileMantraEmitterRunDisplay extends SoftBlockDisplay<Boolean, NBTTa
 	protected void updateWhenDead() {
 		GProgressBar bar = (GProgressBar) loading;
 		bar.setRunning(false);
+		mantraProgress.setRunning(false);
 		if (!fin) {
 			this.currNode.setAlpha(0.5f);
-			GLabel label = new GLabel(I18n.format("es.app.abandon"));
-			this.bg.addChild(label);
-			label.setPosition(4, bg.getHeight() - 10);
+			statusLabel.setColor(0xffffff);
+			statusLabel.setString(I18n.format("es.app.abandon"));
+			statusLabel.setPosition(4, bg.getHeight() - 10);
 		} else {
-			bar.setWidth((bg.getWidth() - 6));
+			statusLabel.setString(I18n.format("info.complete"));
+			statusLabel.setColor(0x00ff00);
+			mantraProgress.setProgress(1); 
+			bar.setProgress(1);
 		}
 	}
 

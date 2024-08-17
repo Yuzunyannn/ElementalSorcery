@@ -705,7 +705,8 @@ es.app.err.boot.cannotFind=找不到启动引导
 es.app.err.boot.fail=启动%s失败
 es.app.errCmdFormat=错误的指令格式
 es.app.errPath=找不到指定的路径
-es.app.abandon=放弃
+es.app.abandon=丢弃
+es.app.running=运行中...
 
 elf.time.year=%d年
 elf.time.mon.0=春

@@ -35,6 +35,8 @@ public interface INBTWriter {
 	void write(String key, String str);
 
 	void write(String key, byte[] bytes);
+	
+	void write(String key, int[] ints);
 
 	void write(String key, ByteBuf byteBuf);
 

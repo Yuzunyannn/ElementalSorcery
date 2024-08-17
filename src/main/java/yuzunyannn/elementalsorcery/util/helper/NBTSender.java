@@ -52,6 +52,7 @@ public class NBTSender extends NBTSaver {
 
 	@Override
 	public Mantra mantra(String key) {
+		if (!nbt.hasKey(key)) return null;
 		return Mantra.REGISTRY.getValue(nbt.getInteger(key));
 	}
 

@@ -55,6 +55,24 @@ public class ESImplRegister<T extends IForgeRegistryEntry<T>> implements IForgeR
 		} catch (ReflectiveOperationException e) {}
 	}
 
+	public T registerReplace(T value) {
+		int id = 0;
+		T old = null;
+		if (REGISTRY.containsKey(value.getRegistryName())) {
+			old = REGISTRY.getObject(value.getRegistryName());
+			id = REGISTRY.getIDForObject(old);
+		} else id = nId++;
+		REGISTRY.register(id, value.getRegistryName(), value);
+		try {
+			Field idField = superType.getDeclaredField("registryId");
+			if (idField != null) {
+				idField.setAccessible(true);
+				idField.set(value, REGISTRY.getIDForObject(value));
+			}
+		} catch (ReflectiveOperationException e) {}
+		return old;
+	}
+
 	@Override
 	public Iterator<T> iterator() {
 		return REGISTRY.iterator();

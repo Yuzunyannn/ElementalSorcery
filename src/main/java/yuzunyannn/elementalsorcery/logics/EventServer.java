@@ -404,7 +404,6 @@ public class EventServer {
 		World world = event.getWorld();
 		if (world.getBlockState(pos).getBlock() == ESObjects.BLOCKS.GOAT_GOLD_BRICK) {
 			if (!EntityHelper.isCreative(event.getEntityPlayer())) {
-//			ItemStack holdItem = event.getItemStack();
 				event.setCanceled(true);
 				return;
 			}

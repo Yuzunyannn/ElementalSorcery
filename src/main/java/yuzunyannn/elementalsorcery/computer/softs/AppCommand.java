@@ -9,7 +9,6 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
-import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceInfo;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.soft.App;
@@ -18,6 +17,7 @@ import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceFile;
 import yuzunyannn.elementalsorcery.api.computer.soft.IDeviceShellExecutor;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.api.util.render.GameDisplayCast;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
@@ -187,7 +187,7 @@ public class AppCommand extends AppBase {
 				result.setReturn(e.getMessage());
 			}
 			Object ret = result.getReturn();
-			if (ret instanceof DNResultCode);
+			if (ret instanceof StateCode);
 			else displayObject = GameDisplayCast.cast(ret);
 			if (logs != null) {
 				if (displayObject != null) logs.add(displayObject);
@@ -195,7 +195,7 @@ public class AppCommand extends AppBase {
 			}
 			record.code = result.code;
 		} catch (IllegalArgumentException e) {
-			record.code = DNResultCode.FAIL;
+			record.code = StateCode.FAIL;
 			displayObject = new TextComponentTranslation("es.app.errCmdFormat");
 		}
 		record.setDisplayObject(displayObject);

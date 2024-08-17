@@ -32,9 +32,10 @@ import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.TileEntityGetter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTSender;
+import yuzunyannn.elementalsorcery.util.world.TileFinder;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGetItemStack, ITickable {
@@ -47,19 +48,26 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		blade = nbtReadItemStack(compound, "blade");
-		if (!isSending()) {
-			NBTHelper.setElementList(compound, "elms", outList);
-		}
+		if (!isSending()) NBTHelper.setElementList(compound, "elms", outList);
+		else tileGetter.readUpdateData(new NBTSender(compound));
 		super.readFromNBT(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		nbtWriteItemStack(compound, "blade", blade);
-		if (!isSending()) {
-			outList = NBTHelper.getElementList(compound, "elms");
-		}
+		if (!isSending()) outList = NBTHelper.getElementList(compound, "elms");
+		else tileGetter.writeUpdateData(new NBTSender(compound));
 		return super.writeToNBT(compound);
+	}
+
+	@Override
+	public void handleUpdateTag(NBTTagCompound tag) {
+		if (tag.hasKey("tls")) {
+			tileGetter.fromData(tag.getIntArray("tls"));
+			return;
+		}
+		super.handleUpdateTag(tag);
 	}
 
 	private ItemStack blade = ItemStack.EMPTY;
@@ -130,14 +138,16 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 
 	protected float speed = 0;
 	protected List<ElementStack> outList = new ArrayList<>();
-	protected TileEntityGetter tileGetter = new TileEntityGetter();
+//	protected TileEntityGetter tileGetter = new TileEntityGetter();
+	protected TileFinder tileGetter = new TileFinder(4);
 
 	@Override
 	public void onLoad() {
 		super.onLoad();
+		tileGetter.urgent(80);
 		tileGetter.setBox(WorldHelper.createAABB(pos, 6, 10, 3));
-		tileGetter.setChecker(
-				tile -> ElementHelper.canInsert(ElementHelper.getElementInventory(tile)) && tile instanceof IAltarWake);
+		tileGetter.setFliter(tile -> ElementHelper.canInsert(ElementHelper.getElementInventory(tile)) && tile instanceof IAltarWake);
+//		tileGetter.setChecker(tile -> ElementHelper.canInsert(ElementHelper.getElementInventory(tile)) && tile instanceof IAltarWake);
 	}
 
 	@Override
@@ -153,7 +163,14 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 			return;
 		}
 
-		if (checkTime % 200 == 0) tileGetter.doCheck(world);
+//		if (checkTime % 200 == 0) tileGetter.doCheck(world);
+		tileGetter.update(world);
+		if (!world.isRemote && tileGetter.tick % 10 == 0 && tileGetter.byDirty()) {
+			tileGetter.isDirty = false;
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setIntArray("tls", tileGetter.toData());
+			this.updateToClient(nbt);
+		}
 
 		try {
 			BlockPos bladePos = pos.up(7);
@@ -195,7 +212,12 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	public void doProduce(ElementStack estack) {
 		if (estack.isEmpty()) return;
 
-		TileEntity outTile = tileGetter.checkAndGetTileCanInsertElement(world, rand.nextInt(100), estack);
+//		TileEntity outTile = tileGetter.checkAndGetTileCanInsertElement(world, rand.nextInt(100), estack);
+		TileEntity outTile = tileGetter.applyUntil(world, estack.getElement().getRegistryId(), tile -> {
+			IElementInventory eInv = ElementHelper.getElementInventory(tile);
+			if (eInv == null) return false;
+			return eInv.insertElement(estack, true);
+		});
 		if (world.isRemote) doProduceEffect(estack, outTile);
 		if (outTile == null) return;
 
@@ -206,6 +228,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 		IElementInventory eInv = ElementHelper.getElementInventory(outTile);
 		boolean isEmpty = ElementHelper.isEmpty(eInv);
 		eInv.insertElement(estack, false);
+		eInv.markDirty();
 		altarWake.wake(IAltarWake.OBTAIN, pos);
 		if (isEmpty) altarWake.onInventoryStatusChange();
 	}

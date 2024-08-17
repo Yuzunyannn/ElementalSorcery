@@ -28,6 +28,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
@@ -151,7 +152,7 @@ public class PutBlock {
 			itemBlock.placeBlockAt(stack, player, world, to, EnumFacing.UP, 0, 0, 0, toState);
 			state = world.getBlockState(to);
 			if (state != toState && state.getBlock() == toState.getBlock()) world.setBlockState(to, toState, 2);
-			loadTileSave(to, (player == null) || player.isCreative());
+			loadTileSave(to, (player == null) || player.isCreative() || player instanceof FakePlayer);
 			return ItemStack.EMPTY;
 		}
 

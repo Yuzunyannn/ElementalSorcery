@@ -706,6 +706,7 @@ es.app.err.boot.fail=%sを起動失敗
 es.app.errCmdFormat=命令フォーマットが不正です
 es.app.errPath=指定されたパスが見つかりません
 es.app.abandon=あきらめる
+es.app.running=実行中...
 
 elf.time.year=%d年
 elf.time.mon.0=春

@@ -16,7 +16,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.tile.ICanSync;
+import yuzunyannn.elementalsorcery.api.tile.ISyncable;
 import yuzunyannn.elementalsorcery.api.util.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
@@ -26,6 +28,9 @@ import yuzunyannn.elementalsorcery.util.helper.NBTSaver;
 import yuzunyannn.elementalsorcery.util.helper.NBTSender;
 
 public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveStatusable, INBTSS {
+
+	public static final byte TASK_SEND_ID = 1;
+	public static final byte SYNC_SEND_ID = 2;
 
 	protected TileTaskManager taskMgr;
 
@@ -40,7 +45,7 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 				if (task == null) return null;
 				if (task.needSyncToClient(0)) {
 					NBTTagCompound tag = this.createTaskUpdateData(task);
-					tag.setByte("~)", (byte) 1);
+					tag.setByte("~)", TASK_SEND_ID);
 					updateToClient(new SPacketUpdateTileEntity(TileEntityNetwork.this.pos, getBlockMetadata(), tag));
 				}
 				markDirty();
@@ -54,8 +59,9 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 				if (task == null) return null;
 				if (exit && task.needSyncToClient(0) && task.needSyncToClient(1)) {
 					NBTTagCompound tag = new NBTTagCompound();
-					tag.setByte("~)", (byte) 1);
+					tag.setByte("~)", TASK_SEND_ID);
 					tag.setByte("rm", (byte) task.rid);
+					updateToClient(new SPacketUpdateTileEntity(TileEntityNetwork.this.pos, getBlockMetadata(), tag));
 				}
 				markDirty();
 				return task;
@@ -67,6 +73,22 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 	@Nullable
 	public TileTaskManager getTaskMgr() {
 		return taskMgr;
+	}
+
+	protected ISyncable[] syncs;
+
+	protected void initSyncObject(ISyncable... objs) {
+		syncs = objs;
+		for (int i = 0; i < objs.length; i++) {
+			final byte id = (byte) i;
+			objs[i].setSyncDispatcher(base -> {
+				NBTTagCompound tag = new NBTTagCompound();
+				tag.setByte("~)", SYNC_SEND_ID);
+				tag.setByte("i", id);
+				tag.setTag("d", base);
+				updateToClient(new SPacketUpdateTileEntity(TileEntityNetwork.this.pos, getBlockMetadata(), tag));
+			});
+		}
 	}
 
 	@Override
@@ -197,12 +219,20 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 		case 0:
 			recvUpdateData(new NBTSender(origin));
 			break;
-		case 1:
+		case TASK_SEND_ID:
 			if (taskMgr == null) return;
 			if (origin.hasKey("rm")) {
 				int rid = origin.getInteger("rm");
 				taskMgr.removeTaskRT(rid);
 			} else taskMgr.readTaskUpdateData(origin, true);
+			break;
+		case SYNC_SEND_ID:
+			try {
+				int index = origin.getInteger("i");
+				syncs[index].onRecvMessage(origin.getTag("d"));
+			} catch (Exception e) {
+				if (ESAPI.isDevelop) ESAPI.logger.error("sync error", e);
+			}
 			break;
 		default:
 			break;

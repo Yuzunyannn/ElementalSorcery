@@ -10,6 +10,7 @@ import java.util.function.Function;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.SeedRandom;
@@ -74,7 +75,10 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 			jsonCreateContext.push(func, json, refJson);
 			func.loadFromJson(json, jsonCreateContext);
 			return func;
+		} catch (PassInjectException e) {
+			return NOTHING;
 		} catch (RuntimeException e) {
+			if (ESAPI.isDevelop) ESAPI.logger.warn("func解析异常", e);
 			return NOTHING;
 		} finally {
 			jsonCreateContext.pop();

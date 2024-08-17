@@ -53,6 +53,16 @@ public class NBTSaver implements INBTReader, INBTWriter {
 	public boolean has(String key) {
 		return nbt.hasKey(key);
 	}
+	
+	@Override
+	public void write(String key, int[] ints) {
+		nbt.setIntArray(key, ints);
+	}
+	
+	@Override
+	public int[] nints(String key) {
+		return nbt.getIntArray(key);
+	}
 
 	@Override
 	public void write(String key, UUID uuid) {

@@ -242,7 +242,16 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 
 	@Override
 	public boolean canContinueSpelling() {
-		if (!config.userElement && tick % 20 == 0) if (ElementHelper.isEmpty(elementInv)) return false;
+		if (!config.userElement) {
+			if (tick % 20 == 0) {
+				if (ElementHelper.isEmpty(elementInv)) return false;
+			}
+		} else {
+			if (tick % 20 == 0) {
+				IWorldObject master = user.toughGetMaster();
+				if (master == null) return false;
+			}
+		}
 		return this.spellingTick > 0;
 	}
 

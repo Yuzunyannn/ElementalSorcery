@@ -23,18 +23,6 @@ public class DNBase {
 		return objMap.size();
 	}
 
-	public <T> void setReturn(T obj) {
-		objMap.put("return", obj);
-	}
-
-	public <T> T getReturn(Class<T> cls) {
-		return get("return", cls);
-	}
-
-	public <T> T getReturn() {
-		return get("return");
-	}
-
 	public <T> void set(String key, T obj) {
 		objMap.put(key, obj);
 	}

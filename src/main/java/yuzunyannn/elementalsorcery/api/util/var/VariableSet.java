@@ -28,9 +28,9 @@ public class VariableSet implements IVariableSet {
 
 	private static class VariableEntry<T> {
 
-		static VariableEntry of(Variable<?> var, Object obj) {
+		static VariableEntry of(IVariableType<?> type, Object obj) {
 			VariableEntry entry = new VariableEntry();
-			entry.type = var.type;
+			entry.type = type;
 			entry.obj = obj;
 			return entry;
 		}
@@ -48,12 +48,12 @@ public class VariableSet implements IVariableSet {
 	protected Map<String, VariableEntry> map = new HashMap<>();
 
 	@Override
-	public <T> void set(Variable<T> var, T obj) {
+	public <T> void set(String key, T obj, IVariableType<T> type) {
 		if (obj == null) {
-			this.remove(var);
+			this.remove(key);
 			return;
 		}
-		map.put(var.key, VariableEntry.of(var, obj));
+		map.put(key, VariableEntry.of(type, obj));
 	}
 
 	@Override
@@ -68,12 +68,11 @@ public class VariableSet implements IVariableSet {
 	}
 
 	@Override
-	public <T> T get(Variable<T> var) {
-		String key = var.key;
+	public <T> T get(String key, IVariableType<T> type) {
 		VariableEntry<T> entry = map.get(key);
 		if (entry != null) {
 			try {
-				return var.type.cast(entry.obj);
+				return type.cast(entry.obj);
 			} catch (Exception e) {}
 		}
 		NBTBase base = null;
@@ -82,8 +81,8 @@ public class VariableSet implements IVariableSet {
 			nbt.removeTag(key);
 			if (nbt.isEmpty()) nbt = null;
 		}
-		T obj = var.type.newInstance(base);
-		map.put(key, VariableEntry.of(var, obj));
+		T obj = type.newInstance(base);
+		map.put(key, VariableEntry.of(type, obj));
 		return obj;
 	}
 
@@ -186,29 +185,33 @@ public class VariableSet implements IVariableSet {
 	public final static IVariableType<Double> DOUBLE = new VTPrimitive.VTDouble();
 	public final static IVariableType<Boolean> BOOL = new VTBoolean();
 	public final static IVariableType<String> STRING = new VTString();
-	public final static IVariableType<VariableSet> VAR_SET = new VTVariableSet();
+	public final static IVariableType<Object> JOBJ = new VTJavaObject();
 
 	public final static IVariableType<NBTTagCompound> NBT_TAG = new VTNBTTagCompound();
 
+	public final static IVariableType<VariableSet> VAR_SET = new VTVariableSet();
+	public final static IVariableType<ArrayList<VariableSet>> VAR_SET_ARRAY_LIST = new VTVTArrayList<>(VAR_SET);
+	public final static IVariableType<LinkedList<VariableSet>> VAR_SET_LINKED_LIST = new VTVTLinkedList<>(VAR_SET);
+
 	public final static IVariableType<ElementStack> ELEMENT = new VTElement();
-	public final static IVariableType<LinkedList<ElementStack>> ELEMENT_LINKED_LIST = new VTVTLinkedList<>(ELEMENT);
 	public final static IVariableType<ArrayList<ElementStack>> ELEMENT_ARRAY_LIST = new VTVTArrayList<>(ELEMENT);
+	public final static IVariableType<LinkedList<ElementStack>> ELEMENT_LINKED_LIST = new VTVTLinkedList<>(ELEMENT);
 
 	public final static IVariableType<ItemStack> ITEM = new VTItem();
-	public final static IVariableType<LinkedList<ItemStack>> ITEM_LINKED_LIST = new VTVTLinkedList<>(ITEM);
 	public final static IVariableType<ArrayList<ItemStack>> ITEM_ARRAY_LIST = new VTVTArrayList<>(ITEM);
+	public final static IVariableType<LinkedList<ItemStack>> ITEM_LINKED_LIST = new VTVTLinkedList<>(ITEM);
 
 	public final static IVariableType<BlockPos> BLOCK_POS = new VTBlockPos();
-	public final static IVariableType<LinkedList<BlockPos>> BLOCK_POS_LINKED_LIST = new VTVTLinkedList<>(BLOCK_POS);
 	public final static IVariableType<ArrayList<BlockPos>> BLOCK_POS_ARRAY_LIST = new VTVTArrayList<>(BLOCK_POS);
+	public final static IVariableType<LinkedList<BlockPos>> BLOCK_POS_LINKED_LIST = new VTVTLinkedList<>(BLOCK_POS);
 
 	public final static IVariableType<Vec3d> VEC3D = new VTVec3d();
-	public final static IVariableType<LinkedList<Vec3d>> VEC3D_LINKED_LIST = new VTVTLinkedList<>(VEC3D);
 	public final static IVariableType<ArrayList<Vec3d>> VEC3D_ARRAY_LIST = new VTVTArrayList<>(VEC3D);
+	public final static IVariableType<LinkedList<Vec3d>> VEC3D_LINKED_LIST = new VTVTLinkedList<>(VEC3D);
 
-	public final static IVariableType<LinkedList<String>> STRING_LINKED_LIST = new VTVTLinkedList<>(STRING);
 	public final static IVariableType<ArrayList<String>> STRING_ARRAY_LIST = new VTVTArrayList<>(STRING);
-	
+	public final static IVariableType<LinkedList<String>> STRING_LINKED_LIST = new VTVTLinkedList<>(STRING);
+
 	public final static IVariableType<UUID> UUID = new VTUUID();
 
 }

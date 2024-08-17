@@ -32,6 +32,11 @@ public class GProgressBar extends GImage {
 		this.maxWidth = maxWidth;
 	}
 
+	public void setProgress(double progress) {
+		setWidth(progress * this.maxWidth);
+		if (!this.running) this.setFrame(getPlayFrame(rTick, (float) (this.width / this.maxWidth)));
+	}
+
 	@Override
 	public void update() {
 		super.update();

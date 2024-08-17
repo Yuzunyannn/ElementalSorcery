@@ -8,7 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
+import yuzunyannn.elementalsorcery.dungeon.DungeonFakeArea;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.SummonDungeonRoom;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
@@ -41,6 +44,18 @@ public class SummonRecipeDungeonRoom extends SummonRecipe {
 				summon.setCreativeBuild(EntityHelper.isCreative(world.getEntityByID(id)));
 			}
 		}
+		if (ESAPI.isDevelop && summon.isDevTest()) return createDevTestSummon(summon, world, pos);
+		return summon;
+	}
+
+	protected Summon createDevTestSummon(SummonDungeonRoom real, World world, BlockPos pos) {
+		SummonDungeonRoom summon = new SummonDungeonRoom(world) {
+			@Override
+			public DungeonArea getArea() {
+				return DungeonFakeArea.getOrCreate();
+			}
+		};
+		summon.deserializeNBT(real.serializeNBT());
 		return summon;
 	}
 }

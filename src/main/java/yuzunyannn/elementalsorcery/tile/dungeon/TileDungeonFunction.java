@@ -1,8 +1,9 @@
 package yuzunyannn.elementalsorcery.tile.dungeon;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
@@ -24,6 +25,12 @@ public class TileDungeonFunction extends TileEntity {
 
 	public GameFunc createTextDungeonFunc() {
 		return GameFunc.create(this.config);
+	}
+
+	@Nullable
+	public String getAssetsPath() {
+		if (config.hasString("/assets")) return config.getString("/assets");
+		return null;
 	}
 
 	@Override

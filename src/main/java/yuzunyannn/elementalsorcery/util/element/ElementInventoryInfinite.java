@@ -29,7 +29,9 @@ public class ElementInventoryInfinite extends ElementInventoryAdapter {
 	
 	@Override
 	public ElementStack extractElement(int slot, ElementStack estack, boolean simulate) {
-		return estack.copy();
+		estack = estack.copy();
+		estack.setPower(power);
+		return estack;
 	}
 
 }

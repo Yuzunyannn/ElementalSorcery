@@ -16,6 +16,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
+import yuzunyannn.elementalsorcery.api.computer.DeviceNetworkRoute;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
@@ -400,12 +401,7 @@ public abstract class EOS implements IOS {
 			params.setSrcDevice(computer.device());
 			return computer.notice(method, params);
 		}
-		IDeviceNetwork network = computer.device().getNetwork();
-		IDeviceLinker linker = network.getLinker(udid);
-		if (linker == null) return DNResult.invalid();
-		params.setSrcDevice(computer.device());
-		if (!linker.isConnecting()) return DNResult.unavailable();
-		return linker.getRemoteDevice().notice(method, params);
+		return computer.device().getNetwork().notice(new DeviceNetworkRoute(udid), method, params);
 	}
 
 	@Override

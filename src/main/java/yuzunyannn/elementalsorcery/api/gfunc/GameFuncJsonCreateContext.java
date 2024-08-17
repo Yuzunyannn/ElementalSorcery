@@ -62,7 +62,11 @@ public class GameFuncJsonCreateContext {
 				String val = json.getString(key);
 				if (val.charAt(0) == '$') {
 					com.google.gson.JsonElement j = this.getParamString(val);
-					if (j == null) throw new RuntimeException("cannot inject " + val);
+					if (j == null) {
+						if (json.hasBoolean("inject_force") && json.getBoolean("inject_force"))
+							throw new RuntimeException("cannot inject " + val);
+						else throw new PassInjectException("cannot inject " + val);
+					}
 					json.getGoogleJson().add(key, j);
 				}
 			}

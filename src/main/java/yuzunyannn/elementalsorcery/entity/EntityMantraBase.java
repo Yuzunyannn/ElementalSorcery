@@ -237,7 +237,8 @@ public abstract class EntityMantraBase extends Entity
 	public ElementStack iWantAnyElementSample(int seed) {
 		seed = Math.abs(seed);
 		IElementInventory eInv = this.getElementInventory();
-		Entity userEntity = getUser() != null ? getUser().toEntity() : null;
+		IWorldObject wuser = getUser();
+		Entity userEntity = wuser != null ? wuser.toEntity() : null;
 		if (eInv == null || eInv.getSlots() == 0) {
 			if (EntityHelper.isCreative(userEntity))
 				return new ElementStack(Element.getElementFromIndex(seed, true), 1000, 1000);

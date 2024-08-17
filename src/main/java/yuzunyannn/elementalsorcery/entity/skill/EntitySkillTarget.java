@@ -75,7 +75,7 @@ public class EntitySkillTarget extends EntitySkillLiving {
 		mantraEntity.setPosition(start.x, start.y, start.z);
 		mantraEntity.setSpellingTick(tick);
 		mantraEntity.setOrient(new Vec3d(0, isRev ? 1 : -1, 0));
-		if (potent > 0) mantraEntity.iWantGivePotent(100, (float) potent);
+		if (potent > 0) mantraEntity.iWantGivePotent((float) potent, 100);
 		IElementInventory elementInv = mantraEntity.getElementInventory();
 		for (ElementStack eStack : ElementHelper.toArray(elements)) elementInv.insertElement(eStack, false);
 		world.spawnEntity(mantraEntity);
@@ -89,7 +89,7 @@ public class EntitySkillTarget extends EntitySkillLiving {
 		mantraEntity.setPosition(start.x, start.y, start.z);
 		mantraEntity.setSpellingTick(tick);
 		mantraEntity.setOrient(orient);
-		if (potent > 0) mantraEntity.iWantGivePotent(100, (float) potent);
+		if (potent > 0) mantraEntity.iWantGivePotent((float) potent, 100);
 		IElementInventory elementInv = mantraEntity.getElementInventory();
 		for (ElementStack eStack : ElementHelper.toArray(elements)) elementInv.insertElement(eStack, false);
 		world.spawnEntity(mantraEntity);
