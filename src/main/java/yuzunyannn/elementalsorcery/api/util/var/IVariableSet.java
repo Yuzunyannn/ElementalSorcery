@@ -54,7 +54,7 @@ public interface IVariableSet extends INBTSerializable<NBTTagCompound> {
 	public IVariableSet copy();
 
 	default IVariableSet getVariableSet(String str) {
-		return get(new Variable<VariableSet>(str, VariableSet.VAR_SET));
+		return get(str, VariableSet.VAR_SET);
 	}
 
 	default IVariableSet getVariableSet(String[] paths) {

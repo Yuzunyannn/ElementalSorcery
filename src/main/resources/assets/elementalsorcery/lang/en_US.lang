@@ -276,6 +276,7 @@ tile.stoneDecoration.dungeonReactor.name=Strange Reactor
 tile.mantraEmitter.name=Mantra Emitter
 tile.cloverComputer.name=Dungeon Terminal
 tile.ringReader.name=Dungeon Reader
+tile.elementTerminal.name=Dungeon Element Terminal
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -707,6 +708,8 @@ es.app.errCmdFormat=Incorrect instruction format
 es.app.errPath=Cannot Find The Path Specified
 es.app.abandon=Abandon
 es.app.running=Running
+es.app.err.parameterError=parameter error
+es.app.err.insufficientPermissions=insufficient permissions
 
 elf.time.year=%d Year 
 elf.time.mon.0=Spring 

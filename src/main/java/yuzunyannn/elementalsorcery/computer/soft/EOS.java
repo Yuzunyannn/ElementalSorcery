@@ -398,7 +398,7 @@ public abstract class EOS implements IOS {
 	@Override
 	public DNResult notice(UUID udid, String method, DNRequest params) {
 		if (udid == null) {
-			params.setSrcDevice(computer.device());
+			params.pushDevice(computer.device());
 			return computer.notice(method, params);
 		}
 		return computer.device().getNetwork().notice(new DeviceNetworkRoute(udid), method, params);

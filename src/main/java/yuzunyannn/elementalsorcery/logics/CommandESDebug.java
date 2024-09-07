@@ -228,6 +228,9 @@ public class CommandESDebug {
 			}
 				return;
 			case "textTest": {
+				
+				String str = "你好，我叫:${say}";
+				
 
 //				EntityPlayerMP player = (EntityPlayerMP) entity;
 //

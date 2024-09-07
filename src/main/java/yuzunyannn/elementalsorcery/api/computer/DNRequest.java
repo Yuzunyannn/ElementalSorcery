@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.api.computer;
 
 import java.util.IdentityHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -18,13 +19,22 @@ public class DNRequest extends DNBase implements ICastEnv {
 		return new DNRequest();
 	}
 
-	protected IDevice src;
 	protected World world;
 	protected Map<Class<?>, Function<String, ?>> finderMap;
 	protected List<Object> logList;
+	protected LinkedList<IDevice> srcs = new LinkedList<>();
 	protected int extCount;
+	protected int authority;
 
 	public DNRequest() {
+	}
+
+	public void setAuthority(int authority) {
+		this.authority = authority;
+	}
+
+	public int getAuthority() {
+		return authority;
 	}
 
 	public int pSize() {
@@ -57,13 +67,18 @@ public class DNRequest extends DNBase implements ICastEnv {
 		finderMap.put(cls, finder);
 	}
 
-	@Nullable
-	public IDevice getSrcDevice() {
-		return src;
+	public void pushDevice(IDevice from) {
+		srcs.push(from);
 	}
 
-	public void setSrcDevice(IDevice from) {
-		src = from;
+	@Nullable
+	public IDevice getBeginDevice() {
+		if (srcs.isEmpty()) return null;
+		return srcs.getLast();
+	}
+
+	public LinkedList<IDevice> getDeviceRoute() {
+		return srcs;
 	}
 
 	public void setLogList(List<Object> logList) {
@@ -72,6 +87,10 @@ public class DNRequest extends DNBase implements ICastEnv {
 
 	public List<Object> getLogList() {
 		return logList;
+	}
+
+	public boolean isLogEnable() {
+		return logList != null;
 	}
 
 	public void log(Object obj) {

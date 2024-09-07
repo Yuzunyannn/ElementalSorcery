@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaser;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaserMagicTransfer;
-import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCube;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -482,8 +482,8 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 	@SideOnly(Side.CLIENT)
 	public void updateEffect(World world, int type, ElementStack estack, Vec3d pos) {
 		Vec3d myPos = new Vec3d(this.pos).add(0.5, 0.25 + 0.5, 0.5);
-		if (type == IAltarWake.SEND) TileElementalCube.giveParticleElementTo(world, estack.getColor(), myPos, pos, 1);
-		else TileElementalCube.giveParticleElementTo(world, estack.getColor(), pos, myPos, 1);
+		if (type == IAltarWake.SEND) TileElementCube.giveParticleElementTo(world, estack.getColor(), myPos, pos, 1);
+		else TileElementCube.giveParticleElementTo(world, estack.getColor(), pos, myPos, 1);
 	}
 
 }

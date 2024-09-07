@@ -14,12 +14,12 @@ import yuzunyannn.elementalsorcery.api.util.render.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
 import yuzunyannn.elementalsorcery.render.model.ModelElementCube;
-import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCube;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
 @SideOnly(Side.CLIENT)
-public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileElementalCube> implements IRenderItem {
+public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileElementCube> implements IRenderItem {
 
 	static public final TextureBinder TEXTURE = new TextureBinder("textures/blocks/element_cube.png");
 	static public final TextureBinder TEXTURE_COVER = new TextureBinder("textures/blocks/element_cube_cover.png");
@@ -33,7 +33,7 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 	}
 
 	@Override
-	public void render(TileElementalCube tile, double x, double y, double z, float partialTicks, int destroyStage,
+	public void render(TileElementCube tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		RenderFriend.startTileEntitySpecialRender(x + 0.5, y + 0.3225, z + 0.5, 0.5, alpha);

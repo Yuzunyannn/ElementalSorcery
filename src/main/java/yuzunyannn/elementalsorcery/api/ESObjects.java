@@ -250,6 +250,8 @@ public class ESObjects {
 		public Block MANTRA_EMITTER;
 		public Block CLOVER_COMPUTER;
 		public Block RING_READER;
+		public Block ELEMENT_TERMINAL;
+		
 	}
 
 	static public class Elements {

@@ -1366,6 +1366,11 @@
             "zh_CN": "地牢读取器",
             "en_US": "Dungeon Reader",
             "ja_JP": "ダンジョンリーダ"
+        },
+        "tile.elementTerminal.name": {
+            "zh_CN": "地牢元素终端",
+            "en_US": "Dungeon Element Terminal",
+            "ja_JP": "ダンジョンの元素立端末"
         }
     }
 }

@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -25,6 +26,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.logics.ITickTask;
@@ -47,8 +49,7 @@ public class BlockDungeonBarrier extends Block {
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		Item barrier = Item.getItemFromBlock(ESObjects.BLOCKS.DUNGEON_BARRIER);
-		if (player != null && (player.getHeldItemMainhand().getItem() == barrier
-				|| player.getHeldItemOffhand().getItem() == barrier))
+		if (player != null && (player.getHeldItemMainhand().getItem() == barrier || player.getHeldItemOffhand().getItem() == barrier))
 			return EnumBlockRenderType.MODEL;
 		return EnumBlockRenderType.INVISIBLE;
 	}
@@ -126,6 +127,11 @@ public class BlockDungeonBarrier extends Block {
 		if (EntityHelper.isCreative(entityIn)) {
 			EntityPlayer player = (EntityPlayer) entityIn;
 			if (player.capabilities.isFlying) return;
+			if (ESAPI.isDevelop) {
+				Item BARRIER = Item.getItemFromBlock(ESObjects.BLOCKS.DUNGEON_BARRIER);
+				if (player.getHeldItem(EnumHand.MAIN_HAND).getItem() != BARRIER && player.getHeldItem(EnumHand.OFF_HAND).getItem() != BARRIER)
+					return;
+			}
 		}
 		super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, isActualState);
 	}

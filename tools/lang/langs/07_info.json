@@ -1403,6 +1403,16 @@
             "zh_CN": "运行中...",
             "en_US": "Running",
             "ja_JP": "実行中..."
+        },
+        "es.app.err.parameterError": {
+            "zh_CN": "无效的参数",
+            "en_US": "parameter error",
+            "ja_JP": "パラメータエラー"
+        },
+        "es.app.err.insufficientPermissions": {
+            "zh_CN": "没有足够的权限去做这件事",
+            "en_US": "insufficient permissions",
+            "ja_JP": "権限が不足しています"
         }
     }
 }

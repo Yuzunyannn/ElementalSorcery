@@ -19,8 +19,8 @@ import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
-import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.StateCode;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
@@ -72,7 +72,7 @@ public class DeviceNetwork
 
 	@Override
 	public DNResult notice(DeviceNetworkRoute route, String method, DNRequest request) {
-		request.setSrcDevice(mySelf);
+		request.pushDevice(mySelf);
 		if (route.isLocal()) return mySelf.notice(method, request);
 		UUID uuid = route.next();
 		IDeviceLinker linker = linkerMap.get(uuid);
@@ -102,14 +102,7 @@ public class DeviceNetwork
 		return linkerMap.values();
 	}
 
-	public void update(IDeviceEnv env) {
-		tick++;
-
-		if (tick % WideNetwork.SAY_HELLO_INTERVAL == 0) WideNetwork.instance.helloWorld(mySelf, env);
-		if (env.isRemote()) return;
-
-		if (tick % 20 != 0) return;
-
+	public void update(IDeviceEnv env, int dtick) {
 		int linkerSize = linkerMap.size();
 		Iterator<Entry<UUID, IDeviceLinker>> iter = linkerMap.entrySet().iterator();
 		while (iter.hasNext()) {
@@ -122,9 +115,9 @@ public class DeviceNetwork
 			boolean isRemoved = false;
 			try {
 				if (!linker.isConnecting()) {
-					boolean isContinue = linker.onDisconnectTick(env, 20);
+					boolean isContinue = linker.onDisconnectTick(env, dtick);
 					if (!isContinue) isRemoved = true;
-				} else linker.onConnectTick(env, 20);
+				} else linker.onConnectTick(env, dtick);
 			} catch (ComputerConnectException e) {
 				if (ESAPI.isDevelop) ESAPI.logger.warn("device connect warn", e);
 				isRemoved = true;
@@ -141,6 +134,14 @@ public class DeviceNetwork
 		}
 
 		if (linkerSize != linkerMap.size()) env.markDirty();
+	}
+
+	public void update(IDeviceEnv env) {
+		tick++;
+		if (tick % WideNetwork.SAY_HELLO_INTERVAL == 0) WideNetwork.instance.helloWorld(mySelf, env);
+		if (env.isRemote()) return;
+		if (tick % 20 != 0) return;
+		update(env, 20);
 	}
 
 	@Override

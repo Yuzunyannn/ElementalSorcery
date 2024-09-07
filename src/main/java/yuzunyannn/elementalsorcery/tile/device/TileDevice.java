@@ -9,6 +9,7 @@ import yuzunyannn.elementalsorcery.computer.ComputerEnvTile;
 import yuzunyannn.elementalsorcery.computer.Device;
 import yuzunyannn.elementalsorcery.computer.DeviceInfoTile;
 import yuzunyannn.elementalsorcery.computer.DeviceProcess;
+import yuzunyannn.elementalsorcery.computer.WideNetwork;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.util.helper.INBTReader;
 import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
@@ -70,6 +71,12 @@ public class TileDevice extends TileEntityNetwork {
 
 	public Device getDevice() {
 		return device;
+	}
+
+	@Override
+	public void onLoad() {
+		super.onLoad();
+		WideNetwork.instance.helloWorld(device);
 	}
 
 	public void update() {

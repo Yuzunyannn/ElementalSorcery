@@ -276,6 +276,7 @@ tile.stoneDecoration.dungeonReactor.name=異常な炉
 tile.mantraEmitter.name=呪文エミッタ
 tile.cloverComputer.name=ダンジョン端末
 tile.ringReader.name=ダンジョンリーダ
+tile.elementTerminal.name=ダンジョンの元素立端末
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -707,6 +708,8 @@ es.app.errCmdFormat=命令フォーマットが不正です
 es.app.errPath=指定されたパスが見つかりません
 es.app.abandon=あきらめる
 es.app.running=実行中...
+es.app.err.parameterError=パラメータエラー
+es.app.err.insufficientPermissions=権限が不足しています
 
 elf.time.year=%d年
 elf.time.mon.0=春

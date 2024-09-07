@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
-public class TileElementalCube extends TileEntityNetworkOld implements ITickable, IAltarWake {
+public class TileElementCube extends TileEntityNetworkOld implements ITickable, IAltarWake {
 
 	// 根据仓库和所需，获取一个元素
 	public static ElementStack getAndTestElementTransBetweenInventory(ElementStack need, IElementInventory inv,

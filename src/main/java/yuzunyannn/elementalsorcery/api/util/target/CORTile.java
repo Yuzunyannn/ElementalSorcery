@@ -75,7 +75,7 @@ public class CORTile extends CapabilityObjectRef {
 		return false;
 	}
 
-	private boolean _isValid() {
+	final private boolean _isValid() {
 		if (ref == null) return false;
 		if (status != null) return status.isAlive();
 		return !ref.isInvalid();

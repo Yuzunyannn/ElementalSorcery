@@ -4,7 +4,14 @@
     "config": {
         "computer": {
             "init-disk": true,
-            "boot": "elementalsorcery:command"
+            "boot": "elementalsorcery:command",
+            "prompt": {
+                "cmd": [
+                    "network-ls",
+                    "|${sudid.emitter}| mantra-set (|${sudid.reader}| io input.dat)",
+                    "|${sudid.emitter}| launch"
+                ]
+            }
         },
         "device": {
             "network": {

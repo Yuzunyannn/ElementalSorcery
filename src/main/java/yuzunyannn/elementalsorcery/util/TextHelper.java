@@ -159,4 +159,17 @@ public class TextHelper {
 		if (n == 0) return day;
 		return day + "-" + toTime(n * 24 * 60 * 60 * 20);
 	}
+
+	public static String format$(String str, Function<String, String> sf) {
+		Pattern pattern = Pattern.compile("\\$\\{(.*?)\\}");
+		Matcher matcher = pattern.matcher(str);
+		StringBuffer result = new StringBuffer();
+		while (matcher.find()) {
+			String key = matcher.group(1);
+			String replacement = sf.apply(key);
+			matcher.appendReplacement(result, replacement);
+		}
+		matcher.appendTail(result);
+		return result.toString();
+	}
 }

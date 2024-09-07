@@ -149,9 +149,9 @@ public abstract class TileStaticMultiBlock extends TileEntityNetworkOld {
 			refPos = new Vec3d(from).add(0.5, 0.5, 0.5);
 		}
 		if (altarWake == null) {
-			if (isGet) TileElementalCube.giveParticleElementTo(world, estack.getColor(),
+			if (isGet) TileElementCube.giveParticleElementTo(world, estack.getColor(),
 					new Vec3d(from).add(0.5, 0.5, 0.5), refPos, 1);
-			else TileElementalCube.giveParticleElementTo(world, estack.getColor(), refPos,
+			else TileElementCube.giveParticleElementTo(world, estack.getColor(), refPos,
 					new Vec3d(to).add(0.5, 0.5, 0.5), 1);
 		} else altarWake.updateEffect(world, isGet ? IAltarWake.SEND : IAltarWake.OBTAIN, estack, refPos);
 	}

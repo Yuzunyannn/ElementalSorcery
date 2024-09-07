@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.util.text.TextComponentTranslation;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNRequest;
 import yuzunyannn.elementalsorcery.api.util.StateCode;
@@ -25,9 +26,10 @@ public class DeviceFeatureMap {
 		return feature;
 	}
 
-	protected static class Call {
+	protected final static class Call {
 
 		protected final Method[] methods;
+		protected final DeviceFeature[] features;
 
 		public Call(List<Method> methods) {
 			Iterator<Method> iter = methods.iterator();
@@ -36,21 +38,35 @@ public class DeviceFeatureMap {
 				method.setAccessible(true);
 			}
 			methods.sort((a, b) -> b.getParameterCount() - a.getParameterCount());
-			this.methods = methods.toArray(new Method[methods.size()]);
+			int methodSize = methods.size();
+			this.methods = methods.toArray(new Method[methodSize]);
+			this.features = methods.stream().map(e -> e.getAnnotation(DeviceFeature.class)).toArray(DeviceFeature[]::new);
 		}
 
 		boolean isEmpty() {
 			return methods.length == 0;
 		}
 
-		public Object invoke(Object self, DNRequest params) throws ReflectiveOperationException {
-			for (Method method : methods) {
-				Object[] args = checkAndGetMeetParams(method, params);
+		public Object invoke(Object self, DNRequest request) throws ReflectiveOperationException {
+			boolean insufficientPermissions = false;
+			for (int i = 0; i < methods.length; i++) {
+				Method method = methods[i];
+				DeviceFeature feature = features[i];
+				if (feature.authority() > request.getAuthority()) {
+					insufficientPermissions = true;
+					continue;
+				}
+				Object[] args = checkAndGetMeetParams(method, request);
 				if (args != null) {
 					Object ret = method.invoke(self, args);
 					if (ret == null) return StateCode.SUCCESS;
 					return ret;
 				}
+			}
+			if (request.isLogEnable()) {
+				if (insufficientPermissions)
+					request.log(new TextComponentTranslation("es.app.err.insufficientPermissions"));
+				else request.log(new TextComponentTranslation("es.app.err.parameterError"));
 			}
 			return StateCode.REFUSE;
 		}

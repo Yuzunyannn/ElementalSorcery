@@ -16,6 +16,7 @@ import yuzunyannn.elementalsorcery.api.computer.DeviceFilePath;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
+@Deprecated
 public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagCompound> {
 
 	protected static class Node {

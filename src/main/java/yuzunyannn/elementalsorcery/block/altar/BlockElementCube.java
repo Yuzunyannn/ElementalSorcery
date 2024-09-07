@@ -40,7 +40,7 @@ import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleDiggingEffect;
-import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCube;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -104,7 +104,7 @@ public class BlockElementCube extends BlockElementContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileElementalCube();
+		return new TileElementCube();
 	}
 
 	@Override
@@ -164,7 +164,7 @@ public class BlockElementCube extends BlockElementContainer {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		TileElementalCube cube = BlockHelper.getTileEntity(worldIn, pos, TileElementalCube.class);
+		TileElementCube cube = BlockHelper.getTileEntity(worldIn, pos, TileElementCube.class);
 		if (cube == null) return true;
 		if (worldIn.isRemote) {
 			if (cube.wake <= 0) cube.colorRate = 1;
@@ -177,7 +177,7 @@ public class BlockElementCube extends BlockElementContainer {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager) {
-		TileElementalCube tile = BlockHelper.getTileEntity(world, pos, TileElementalCube.class);
+		TileElementCube tile = BlockHelper.getTileEntity(world, pos, TileElementCube.class);
 		Vec3d color = tile.getBaseColor();
 		IBlockState state = world.getBlockState(pos);
 		for (int j = 0; j < 4; ++j) {
@@ -203,14 +203,14 @@ public class BlockElementCube extends BlockElementContainer {
 	public void readTileDataFromItemStack(IBlockAccess world, BlockPos pos, EntityLivingBase user, TileEntity tile,
 			ItemStack stack) {
 		super.readTileDataFromItemStack(world, pos, user, tile, stack);
-		if (tile instanceof TileElementalCube) ((TileElementalCube) tile).setDyeColor(getDyeColor(stack));
+		if (tile instanceof TileElementCube) ((TileElementCube) tile).setDyeColor(getDyeColor(stack));
 	}
 
 	@Override
 	public void writeTileDataToItemStack(IBlockAccess world, BlockPos pos, EntityLivingBase user, TileEntity tile,
 			ItemStack stack) {
 		super.writeTileDataToItemStack(world, pos, user, tile, stack);
-		if (tile instanceof TileElementalCube) setDyeColor(stack, ((TileElementalCube) tile).getDyeColor());
+		if (tile instanceof TileElementCube) setDyeColor(stack, ((TileElementCube) tile).getDyeColor());
 	}
 
 	@Nullable

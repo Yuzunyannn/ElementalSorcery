@@ -317,7 +317,7 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 		DeviceNetworkRoute route = new DeviceNetworkRoute(uuid);
 
 		if (dfeature.has(cmd.method)) {
-			request.setSrcDevice(device);
+			request.pushDevice(device);
 			request.set("route", route);
 			request.set("executor", executor);
 			Object obj = dfeature.invoke(this, cmd.method, request);
@@ -332,7 +332,7 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 		DeviceFilePath path = request.ask(DNResult.args(1), DeviceFilePath.class);
 		if (path == null) path = DeviceFilePath.of();
 
-		IDevice device = request.getSrcDevice();
+		IDevice device = request.getBeginDevice();
 		DeviceNetworkRoute route = request.get("route", DeviceNetworkRoute.class);
 		if (path == null || device == null || route == null) {
 			request.log(new TextComponentTranslation("es.app.errPath"));

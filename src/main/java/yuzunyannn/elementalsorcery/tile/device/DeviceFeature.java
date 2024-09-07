@@ -9,6 +9,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DeviceFeature {
 
+	public static final int AUTHORITY_ROOT = 2;
+	public static final int AUTHORITY_WARDEN = 1;
+	public static final int AUTHORITY_USER = 0;
+
 	String[] id() default {};
 
+	int authority() default AUTHORITY_USER;
 }

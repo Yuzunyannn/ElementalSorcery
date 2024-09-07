@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.dungeon;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,7 +28,9 @@ import yuzunyannn.elementalsorcery.computer.Device;
 import yuzunyannn.elementalsorcery.computer.DeviceNetwork;
 import yuzunyannn.elementalsorcery.computer.DiskItem;
 import yuzunyannn.elementalsorcery.computer.soft.EOS;
+import yuzunyannn.elementalsorcery.computer.softs.AppCommand;
 import yuzunyannn.elementalsorcery.tile.device.ComputerTile;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class DungeonFuncTileAttach extends GameFuncTimes {
@@ -119,6 +122,12 @@ public class DungeonFuncTileAttach extends GameFuncTimes {
 			}
 		}
 
+		if (data.hasKey("prompt")) {
+			VariableSet params = new VariableSet(data.getCompoundTag("prompt"));
+			params.set("pos", tile.getPos(), VariableSet.BLOCK_POS);
+			category.addOnCompleteTask(DungeonFuncTileAttach::doGenPromptCmd, params);
+		}
+
 	}
 
 	public void attachDevice(DungeonCategory category, TileEntity tile, NBTTagCompound data) {
@@ -133,12 +142,12 @@ public class DungeonFuncTileAttach extends GameFuncTimes {
 				VariableSet params = new VariableSet();
 				params.set("labels", list);
 				params.set("pos", tile.getPos(), VariableSet.BLOCK_POS);
-				category.addOnCompleteTask(DungeonFuncTileAttach::doNetworkLink2, params);
+				category.addOnCompleteTask(DungeonFuncTileAttach::doNetworkLink, params);
 			}
 		}
 	}
 
-	public static void doNetworkLink2(DungeonCategory category, VariableSet params) {
+	public static void doNetworkLink(DungeonCategory category, VariableSet params) {
 		NBTTagList list = (NBTTagList) params.get("labels");
 		BlockPos pos = params.get("pos", VariableSet.BLOCK_POS);
 		World world = category.getWorld();
@@ -150,6 +159,49 @@ public class DungeonFuncTileAttach extends GameFuncTimes {
 			TileEntity toDevice = findTileEntity(category, world, label);
 			if (toDevice == null) continue;
 			DeviceNetwork.doNetworkConnect(device, CapabilityObjectRef.of(toDevice));
+		}
+	}
+
+	public static void doGenPromptCmd(DungeonCategory category, VariableSet params) {
+		BlockPos pos = params.get("pos", VariableSet.BLOCK_POS);
+		World world = category.getWorld();
+		TileEntity tile = world.getTileEntity(pos);
+		IComputer computer = tile != null ? tile.getCapability(Computer.COMPUTER_CAPABILITY, null) : null;
+		if (computer == null) return;
+
+		if (params.has("cmd")) {
+			try {
+				IDeviceFile file = computer.getSystem().ioAppData("console", "history");
+				IDeviceStorage storage = file.open();
+				List<String> cmds = storage.get(AppCommand.CMD_CACHE);
+				NBTTagList list = (NBTTagList) params.get("cmd");
+				for (int i = 0; i < list.tagCount(); i++) {
+					String str = list.getStringTagAt(i);
+					str = TextHelper.format$(str, key -> {
+						String method = "udid";
+						if (key.indexOf('.') != -1) {
+							String[] strs = key.split("\\.");
+							method = strs[0];
+							key = strs[1];
+						}
+						switch (method) {
+						case "udid": {
+							TileEntity toDevice = findTileEntity(category, world, key);
+							return toDevice.getCapability(Device.DEVICE_CAPABILITY, null).getUDID().toString();
+						}
+						case "sudid": {
+							TileEntity toDevice = findTileEntity(category, world, key);
+							String ret = toDevice.getCapability(Device.DEVICE_CAPABILITY, null).getUDID().toString();
+							return ret.substring(0, 8);
+						}
+						default:
+							return "";
+						}
+					});
+					cmds.add(str);
+				}
+				storage.close();
+			} catch (Exception e) {}
 		}
 	}
 

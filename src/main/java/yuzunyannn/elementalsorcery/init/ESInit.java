@@ -126,6 +126,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockRiteTable;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.device.BlockCloverComputer;
+import yuzunyannn.elementalsorcery.block.device.BlockElementTerminal;
 import yuzunyannn.elementalsorcery.block.device.BlockMantraEmitter;
 import yuzunyannn.elementalsorcery.block.device.BlockRingReader;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonActinicGlass;
@@ -393,6 +394,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileEStoneMatrix;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementReactor;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileElementTerminal;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementTranslocator;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElfBeacon;
@@ -454,9 +456,9 @@ import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileDisintegrateStela;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
-import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileInstantConstitute;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
@@ -464,6 +466,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
 import yuzunyannn.elementalsorcery.tile.device.TileCloverComputer;
+import yuzunyannn.elementalsorcery.tile.device.TileElementTerminal;
 import yuzunyannn.elementalsorcery.tile.device.TileMantraEmitter;
 import yuzunyannn.elementalsorcery.tile.device.TileRingReader;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
@@ -625,6 +628,7 @@ public class ESInit {
 		ESObjects.BLOCKS.MANTRA_EMITTER = new BlockMantraEmitter();
 		ESObjects.BLOCKS.CLOVER_COMPUTER = new BlockCloverComputer();
 		ESObjects.BLOCKS.RING_READER = new BlockRingReader();
+		ESObjects.BLOCKS.ELEMENT_TERMINAL = new BlockElementTerminal();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -1084,7 +1088,7 @@ public class ESInit {
 	}
 
 	static void registerAllTiles() {
-		register(TileElementalCube.class, "ElementalCube");
+		register(TileElementCube.class, "ElementalCube");
 		register(TileHearth.class, "Hearth");
 		register(TileSmeltBox.class, "SmeltBox");
 		register(TileMagicPlatform.class, "MagicPlatform");
@@ -1141,6 +1145,7 @@ public class ESInit {
 		register(TileMantraEmitter.class, "MantraEmitter");
 		register(TileCloverComputer.class, "CloverPC");
 		register(TileRingReader.class, "RingReader");
+		register(TileElementTerminal.class, "ElementTerminal");
 	}
 
 	static void registerAllCapability() {
@@ -1409,7 +1414,7 @@ public class ESInit {
 		registerRender(TileTranscribeTable.class, new RenderTileTranscribeTable());
 		registerRender(TileIceRockCrystalBlock.class, new RenderTileIceRockSendRecv());
 
-		registerRender(BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class, new RenderTileElementalCube());
+		registerRender(BLOCKS.ELEMENTAL_CUBE, TileElementCube.class, new RenderTileElementalCube());
 		registerRender(BLOCKS.MAGIC_DESK, TileMagicDesk.class, new RenderTileMagicDesk());
 		registerRender(BLOCKS.ELEMENT_CRAFTING_TABLE, TileElementCraftingTable.class, new RenderTileElementCraftingTable());
 		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE, TileDeconstructAltarTable.class, new RenderTileDeconstructAltarTable(
@@ -1455,6 +1460,7 @@ public class ESInit {
 		registerRender(BLOCKS.MANTRA_EMITTER, TileMantraEmitter.class, new RenderTileMantraEmitter());
 		registerRender(BLOCKS.CLOVER_COMPUTER, TileCloverComputer.class, new RenderTileCloverComputer());
 		registerRender(BLOCKS.RING_READER, TileRingReader.class, new RenderTileRingReader());
+		registerRender(BLOCKS.ELEMENT_TERMINAL, TileElementTerminal.class, new RenderTileElementTerminal());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

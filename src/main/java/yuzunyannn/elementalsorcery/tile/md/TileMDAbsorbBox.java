@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.config.Config;
-import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCube;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class TileMDAbsorbBox extends TileMDBase implements ITickable {
@@ -76,7 +76,7 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 						// 生成粒子效果
 						Vec3d from = new Vec3d(curPos).add(0.5, 0.5, 0.5);
 						Vec3d to = new Vec3d(pos).add(0.5, 0.5, 0.5);
-						TileElementalCube.giveParticleElementTo(world, estack.getColor(), from, to, 1.0f);
+						TileElementCube.giveParticleElementTo(world, estack.getColor(), from, to, 1.0f);
 					} else {
 						// 记录真实数据
 						inventory.insertElement(estack, false);

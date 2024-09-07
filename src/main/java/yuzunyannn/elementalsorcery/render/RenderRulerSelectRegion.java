@@ -31,18 +31,13 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 	/** 展示物品显示区域 */
 	static public boolean showItem(EntityPlayer player, EnumHand hand) {
 		ItemStack ruler = player.getHeldItem(hand);
-		if (inner.contains(hand)) {
-			return true;
-		}
+		if (inner.contains(hand)) return true;
 		Integer dimensionId = ItemMagicRuler.getDimensionId(ruler);
-		if (dimensionId == null || dimensionId != player.dimension)
-			return false;
+		if (dimensionId == null || dimensionId != player.dimension) return false;
 		BlockPos pos = ItemMagicRuler.getRulerPos(ruler, true);
-		if (pos == null)
-			return false;
+		if (pos == null) return false;
 		pos = ItemMagicRuler.getRulerPos(ruler, false);
-		if (pos == null)
-			return false;
+		if (pos == null) return false;
 		RenderRulerSelectRegion render = new RenderRulerSelectRegion(player, hand);
 		EventClient.addTickTask(render);
 		EventClient.addRenderTask(render);
@@ -75,8 +70,7 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		this.stack = this.player.getHeldItem(hand);
 		this.pos1 = ItemMagicRuler.getRulerPos(stack, true);
 		this.pos2 = ItemMagicRuler.getRulerPos(stack, false);
-		if (this.pos1 == null || this.pos2 == null)
-			this.end();
+		if (this.pos1 == null || this.pos2 == null) this.end();
 		EnumDyeColor dyeColor = ItemMagicRuler.getColor(this.stack);
 		this.setColor(dyeColor.getColorValue());
 		inner.add(hand);
@@ -91,32 +85,34 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 	@Override
 	public int onTick() {
 		this.theta += DTHETA;
-		if (this.player.getEntityWorld() != Minecraft.getMinecraft().world) {
+		Minecraft mc = Minecraft.getMinecraft();
+		if (this.player.getEntityWorld() != mc.world) {
 			this.end();
 		}
-		ItemStack stack = this.player.getHeldItem(hand);
-		if (stack != this.stack) {
-			this.checkSame();
-			this.wantEnd = this.wantEnd | 0x01;
+		if (this.player != mc.player) {
+			this.wantEnd = this.wantEnd | 0x04;
+			inner.remove(this.hand);
 		} else {
-			this.wantEnd = this.wantEnd & 0xFE;
+			ItemStack stack = this.player.getHeldItem(hand);
+			if (stack != this.stack) {
+				this.checkSame();
+				this.wantEnd = this.wantEnd | 0x01;
+			} else {
+				this.wantEnd = this.wantEnd & 0xFE;
+			}
 		}
-		if (EventClient.tick % 10 == 0)
-			this.checkPos();
+		if (EventClient.tick % 10 == 0) this.checkPos();
 		if (this.wantEnd != 0) {
 			if (fadeTime > 0) {
 				inFade = true;
 				fadeTime -= FADE_RATE;
-				if (fadeTime < 0)
-					fadeTime = 0.0f;
-			} else
-				this.end();
+				if (fadeTime < 0) fadeTime = 0.0f;
+			} else this.end();
 		} else {
 			if (fadeTime < 1) {
 				inFade = false;
 				fadeTime += FADE_RATE;
-				if (fadeTime >= 1.0f)
-					fadeTime = 1.0f;
+				if (fadeTime >= 1.0f) fadeTime = 1.0f;
 			}
 		}
 		return isEnd ? ITickTask.END : ITickTask.SUCCESS;
@@ -140,8 +136,7 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 
 	// 检测相同的物品
 	private void checkSame() {
-		if (this.endWithNotSame())
-			return;
+		if (this.endWithNotSame()) return;
 		ItemStack stack = this.player.getHeldItem(hand);
 		if (stack.getItem() == this.stack.getItem()) {
 			EnumDyeColor dyeColor = ItemMagicRuler.getColor(this.stack);
@@ -160,8 +155,7 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 
 	private void end() {
 		isEnd = true;
-		if (!this.endWithNotSame())
-			inner.remove(this.hand);
+		if (!this.endWithNotSame()) inner.remove(this.hand);
 	}
 
 	final Tessellator tessellator = Tessellator.getInstance();
@@ -169,8 +163,7 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 
 	@Override
 	public int onRender(float partialTicks) {
-		if (isEnd)
-			return IRenderClient.END;
+		if (isEnd) return IRenderClient.END;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(pos1.getX(), pos1.getY(), pos1.getZ());
 		float lx = pos2.getX() - pos1.getX();
@@ -194,12 +187,10 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		float fadeTime;
 		if (inFade) {
 			fadeTime = this.fadeTime - FADE_RATE * partialTicks;
-			if (fadeTime < 0)
-				fadeTime = 0;
+			if (fadeTime < 0) fadeTime = 0;
 		} else {
 			fadeTime = this.fadeTime + FADE_RATE * partialTicks;
-			if (fadeTime > 1)
-				fadeTime = 1;
+			if (fadeTime > 1) fadeTime = 1;
 		}
 		float theta = this.theta + DTHETA * partialTicks;
 
