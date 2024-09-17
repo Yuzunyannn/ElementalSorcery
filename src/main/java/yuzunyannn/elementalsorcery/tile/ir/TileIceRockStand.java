@@ -23,6 +23,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockIceRockStand;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv.FaceStatus;
 import yuzunyannn.elementalsorcery.util.LambdaReference;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryMonitor;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
@@ -67,6 +68,12 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		if (isSending()) return nbt;
 		NBTHelper.setBlockPosCollection(nbt, "subNs", subNodes);
 		return nbt;
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		eim.checkChange(eInventoryAdapter);
+		return super.getUpdateTag();
 	}
 
 	@Override
@@ -136,9 +143,19 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		super.updateToClient();
 	}
 
+//	@Override
+//	public void onInventoryStatusChange() {
+//		updateToClient();
+//	}
+
+	protected ElementInventoryMonitor eim = new ElementInventoryMonitor();
+
 	@Override
-	public void onInventoryStatusChange() {
-		updateToClient();
+	protected void checkElementInventoryStatusChange() {
+		if (world.isRemote) return;
+		int imp = eim.checkChange(eInventoryAdapter);
+		if (imp == -1) return;
+		if (imp == 0 || imp == 1) updateToClient();
 	}
 
 	public int getLinkCount() {
@@ -246,8 +263,8 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 
 	public boolean isInRange(Vec3d pos, int extend) {
 		int range = getRadiationRange();
-		return new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5).distanceTo(pos) <= range
-				+ extend;
+		return new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5,
+				this.pos.getZ() + 0.5).distanceTo(pos) <= range + extend;
 	}
 
 	/** 进行攻击 */

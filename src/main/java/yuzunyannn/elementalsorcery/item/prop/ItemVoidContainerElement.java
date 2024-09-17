@@ -52,7 +52,7 @@ public class ItemVoidContainerElement extends Item implements EntityThrow.IItemT
 		if (entityItem.ticksExisted % 5 == 0) {
 			if (entityItem.onGround) {
 				IElementInventory eInv = ElementHelper.getElementInventory(entityItem.getItem());
-				if (!ElementHelper.isEmpty(eInv)) {
+				if (!eInv.isEmpty()) {
 					ElementHelper.onElementFreeFromVoid(entityItem.world, entityItem.getPosition(), eInv, null);
 					entityItem.setDead();
 				}
@@ -66,8 +66,7 @@ public class ItemVoidContainerElement extends Item implements EntityThrow.IItemT
 	public void onImpact(EntityThrow entity, RayTraceResult ray) {
 		if (entity.world.isRemote) return;
 		IElementInventory eInv = ElementHelper.getElementInventory(entity.getItemStack());
-		if (!ElementHelper.isEmpty(eInv))
-			ElementHelper.onElementFreeFromVoid(entity.world, entity.getPosition(), eInv, null);
+		if (!eInv.isEmpty()) ElementHelper.onElementFreeFromVoid(entity.world, entity.getPosition(), eInv, null);
 		else entity.dropAsItem(ray.hitVec);
 	}
 

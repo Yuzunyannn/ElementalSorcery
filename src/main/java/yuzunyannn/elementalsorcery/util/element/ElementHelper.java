@@ -42,6 +42,7 @@ public class ElementHelper {
 	}
 
 	// 元素仓库为空
+	@Deprecated
 	public static boolean isEmpty(IElementInventory inventory) {
 		if (inventory == null) return true;
 		return inventory.isEmpty();

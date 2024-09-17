@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementContainer;
 import yuzunyannn.elementalsorcery.tile.device.TileElementTerminal;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class BlockElementTerminal extends BlockDevice {
@@ -37,27 +38,35 @@ public class BlockElementTerminal extends BlockDevice {
 	}
 
 	@Override
-	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity tileEntiy,
-			ItemStack stack) {
-		super.harvestBlock(worldIn, player, pos, state, tileEntiy, stack);
-	}
-
-	@Override
 	public boolean canDropFromExplosion(Explosion explosionIn) {
 		return false;
 	}
 
 	@Override
+	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity tileEntiy,
+			ItemStack stack) {
+		super.harvestBlock(worldIn, player, pos, state, tileEntiy, stack);
+		if (tileEntiy == null) return;
+		if (worldIn.isRemote) return;
+		if (tileEntiy instanceof TileElementTerminal) {
+			((TileElementTerminal) tileEntiy).transferBack();
+			IElementInventory eInv = ElementHelper.getElementInventory(tileEntiy);
+			if (eInv == null || eInv.isEmpty()) return;
+			ElementHelper.onElementFreeFromVoid(worldIn, pos, eInv, player);
+		}
+	}
+
+	@Override
 	public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
 		IBlockState state = world.getBlockState(pos);
-		IElementInventory einv = BlockHelper.getElementInventory(world, pos, null);
+		IElementInventory eInv = BlockHelper.getElementInventory(world, pos, null);
 		super.onBlockExploded(world, pos, explosion);
 		if (world.isRemote) return;
 		try {
-			if (einv.isEmpty()) dropBlockAsItemWithChance(world, pos, state, 1, 0);
+			if (eInv.isEmpty()) dropBlockAsItemWithChance(world, pos, state, 1, 0);
 			else {
 				EntityLivingBase attacker = explosion.getExplosivePlacedBy();
-				BlockElementContainer.doExploded(world, pos, einv, attacker);
+				BlockElementContainer.doExploded(world, pos, eInv, attacker);
 				dropBlockAsItemWithChance(world, pos, state, 0.75f, 0);
 			}
 		} catch (Exception e) {}

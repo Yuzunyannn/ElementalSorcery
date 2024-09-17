@@ -1,10 +1,13 @@
 package yuzunyannn.elementalsorcery.api.element;
 
+import java.io.IOException;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -100,6 +103,10 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	public ElementStack(NBTTagCompound compound) {
 		this.deserializeNBT(compound);
+	}
+
+	public ElementStack(PacketBuffer buffer) {
+		this.deserializeBuff(buffer);
 	}
 
 	protected void setElement(Element element) {
@@ -353,4 +360,34 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		if (stackTagCompound != null && !stackTagCompound.isEmpty()) nbt.setTag("tag", stackTagCompound);
 	}
 
+	public PacketBuffer serializeBuff(PacketBuffer buffer) {
+		if (this.isEmpty()) {
+			buffer.writeInt(EMPTY.getElement().getRegistryId());
+			return buffer;
+		}
+		buffer.writeInt(Element.getIdFromElement(this.getElement()));
+		buffer.writeInt(this.getCount());
+		buffer.writeInt(this.getPower());
+		buffer.writeCompoundTag(this.getTagCompound());
+		return buffer;
+	}
+
+	public void deserializeBuff(PacketBuffer buffer) {
+		int id = buffer.readInt();
+		if (id == EMPTY.getElement().getRegistryId()) {
+			this.setElement(EMPTY.getElement());
+			this.setCount(0);
+			this.setPower(0);
+			this.setTagCompound(null);
+			return;
+		}
+		this.setElement(Element.getElementFromId(id));
+		this.setCount(buffer.readInt());
+		this.setPower(buffer.readInt());
+		try {
+			this.setTagCompound(buffer.readCompoundTag());
+		} catch (IOException e) {
+			this.setTagCompound(null);
+		}
+	}
 }

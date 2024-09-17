@@ -40,6 +40,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryMonitor;
 import yuzunyannn.elementalsorcery.util.element.ElementStackDoubleExchanger;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -109,7 +110,7 @@ public class TileDevolveCube extends TileEntityNetworkOld implements ITickable {
 	protected int ergodicIndex = 0;
 	/** 自身的元素容器 */
 	protected ElementStackDoubleExchanger exchanger = ElementInventory.sensor(new ElementStackDoubleExchanger(
-			SLOT_COUNT), this);
+			SLOT_COUNT), ElementInventoryMonitor.sensor(this));
 	/** 自动传输列表，为elementContainer的value in/outEnable的记录set */
 	protected Set<BlockPos> autoTransferSet = new HashSet<>();
 	/** 自动传输列表的更新mark用于数据同步 */
@@ -502,19 +503,26 @@ public class TileDevolveCube extends TileEntityNetworkOld implements ITickable {
 
 		TileEntity tileEntity = world.getTileEntity(pos);
 		IElementInventory eInv = ElementHelper.getElementInventory(tileEntity);
+
 		if (eInv == null) {
 			removeDevolveData(pos);
 			return ElementStack.EMPTY;
 		}
 
 		ElementStack tranferStack = ElementStack.EMPTY;
-		boolean hasElement = false;
 		IAltarWake altarWake = null;
-		IElementInventoryPromote eInvPromote = null;
-		boolean changeStatus = (flag & 0x4) != 0;
+//		boolean hasElement = false;
+//		IElementInventoryPromote eInvPromote = null;
+//		boolean changeStatus = (flag & 0x4) != 0;
 		// boolean isAuto = (flag & 0x8) != 0;
 
-		if (tileEntity instanceof IElementInventoryPromote) eInvPromote = (IElementInventoryPromote) tileEntity;
+		if (tileEntity instanceof IElementInventoryPromote) {
+			IElementInventoryPromote eInvPromote = (IElementInventoryPromote) tileEntity;
+			if (!eInvPromote.canInventoryOperateBy(this)) {
+				removeDevolveData(pos);
+				return ElementStack.EMPTY;
+			}
+		}
 		if (tileEntity instanceof IAltarWake) altarWake = (IAltarWake) tileEntity;
 
 		if (sendType == IAltarWake.SEND) {
@@ -522,7 +530,7 @@ public class TileDevolveCube extends TileEntityNetworkOld implements ITickable {
 			for (int i = 0; i < eInv.getSlots(); i++) {
 				ElementStack eStack = eInv.getStackInSlot(i);
 				if (eStack.isEmpty()) continue;
-				hasElement = true;
+//				hasElement = true;
 				eStack = eStack.copy();
 				eStack.setCount(Math.min(count, eStack.getCount()));
 				tranferStack = eInv.extractElement(eStack, true);
@@ -532,10 +540,10 @@ public class TileDevolveCube extends TileEntityNetworkOld implements ITickable {
 					break;
 				}
 			}
-			if (hasElement && ElementHelper.isEmpty(eInv)) changeStatus = true;
+//			if (hasElement && ElementHelper.isEmpty(eInv)) changeStatus = true;
 		} else {
 			if (!ElementHelper.canInsert(eInv)) return ElementStack.EMPTY;
-			hasElement = !ElementHelper.isEmpty(eInv);
+//			hasElement = !ElementHelper.isEmpty(eInv);
 			for (int i = 0; i < exchanger.getSlots(); i++) {
 				ElementStack eStack = exchanger.getStackInSlot(i);
 				if (eStack.isEmpty()) continue;
@@ -546,7 +554,7 @@ public class TileDevolveCube extends TileEntityNetworkOld implements ITickable {
 				tranferStack = teStack;
 				break;
 			}
-			if (!hasElement && !tranferStack.isEmpty()) changeStatus = true;
+//			if (!hasElement && !tranferStack.isEmpty()) changeStatus = true;
 		}
 
 		if (tranferStack.isEmpty()) return ElementStack.EMPTY;
@@ -559,8 +567,12 @@ public class TileDevolveCube extends TileEntityNetworkOld implements ITickable {
 		}
 		if ((flag & 0x2) != 0) playTranferEffectServer(pos, sendType, color);
 
-		if (eInvPromote != null && changeStatus) eInvPromote.onInventoryStatusChange();
+//		if (eInvPromote != null && changeStatus) eInvPromote.onInventoryStatusChange();
 		if (altarWake != null) altarWake.wake(sendType, pos);
+		if ((flag & 0x4) != 0) {
+			tileEntity.markDirty();
+			BlockHelper.sendTileUpdate(tileEntity);
+		} else eInv.markDirty();
 
 		return tranferStack;
 	}

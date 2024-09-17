@@ -262,36 +262,44 @@ public abstract class EntityMantraBase extends Entity
 			need.setPower(1000);
 			return need;
 		}
-		IElementInventory inv = this.getElementInventory();
-		if (inv == null) return ElementStack.EMPTY;
-		ElementStack estack = inv.extractElement(need, true);
+		IElementInventory eInv = this.getElementInventory();
+		if (eInv == null) return ElementStack.EMPTY;
+		ElementStack estack = eInv.extractElement(need, true);
 		if (estack.arePowerfulAndMoreThan(need)) {
-			if (consume) return inv.extractElement(need, false);
+			if (consume) {
+				estack = eInv.extractElement(need, false);
+				eInv.markDirty();
+				return estack;
+			}
 			return estack;
 		}
-		if (need.isMagic()) return this.tryChangeToMagic(inv, need, consume);
+		if (need.isMagic()) return this.tryChangeToMagic(eInv, need, consume);
 		return ElementStack.EMPTY;
 	}
 
 	@Override
 	public ElementStack iWantGiveSomeElement(ElementStack give, boolean accpet) {
-		IElementInventory inv = this.getElementInventory();
-		if (inv == null) return give;
-		if (!inv.insertElement(give, true)) return give;
-		if (accpet) inv.insertElement(give, false);
+		IElementInventory eInv = this.getElementInventory();
+		if (eInv == null) return give;
+		if (!eInv.insertElement(give, true)) return give;
+		if (accpet) {
+			eInv.insertElement(give, false);
+			eInv.markDirty();
+		}
 		return ElementStack.EMPTY;
 	}
 
-	protected ElementStack tryChangeToMagic(IElementInventory inv, ElementStack need, boolean consume) {
-		int startIndex = rand.nextInt(inv.getSlots());
-		for (int i = 0; i < inv.getSlots(); i++) {
-			ElementStack es = inv.getStackInSlot((i + startIndex) % inv.getSlots());
+	protected ElementStack tryChangeToMagic(IElementInventory eInv, ElementStack need, boolean consume) {
+		int startIndex = rand.nextInt(eInv.getSlots());
+		for (int i = 0; i < eInv.getSlots(); i++) {
+			ElementStack es = eInv.getStackInSlot((i + startIndex) % eInv.getSlots());
 			if (es.isEmpty()) continue;
 			int count = findNeedCountForChangeToMagic(world, es.copy(), need);
 			if (count > 0) {
 				if (consume) es.shrink(count);
 				es = es.copy();
 				es.setCount(count);
+				if (consume) eInv.markDirty();
 				return es.becomeMagic(world);
 			}
 		}

@@ -5,7 +5,6 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -22,12 +21,14 @@ import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementFly;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryMonitor;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.INBTReader;
+import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 
-public class TileElementCube extends TileEntityNetworkOld implements ITickable, IAltarWake {
+public class TileElementCube extends TileEntityNetwork implements ITickable, IAltarWake {
 
 	// 根据仓库和所需，获取一个元素
 	public static ElementStack getAndTestElementTransBetweenInventory(ElementStack need, IElementInventory inv,
@@ -72,7 +73,8 @@ public class TileElementCube extends TileEntityNetworkOld implements ITickable, 
 	}
 
 	// 仓库
-	protected ElementInventoryStronger inventory = ElementInventory.sensor(new ElementInventoryStronger(), this);
+	protected ElementInventoryMonitor eim = new ElementInventoryMonitor();
+	protected ElementInventoryStronger inventory = ElementInventory.sensor(new ElementInventoryStronger(), ElementInventoryMonitor.sensor(this, () -> checkElementInventoryStatusChange()));
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
@@ -91,23 +93,31 @@ public class TileElementCube extends TileEntityNetworkOld implements ITickable, 
 		this.setWorld(worldIn);
 	}
 
-	// 加载
 	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
-		if (nbt.hasKey("color")) setDyeColor(EnumDyeColor.byMetadata(nbt.getByte("color")));
-		if (isSending()) {
-			if (ElementHelper.isEmpty(inventory)) this.wake = 0;
-			if (world.isRemote) changeColor();
-		}
+	public void writeSaveData(INBTWriter writer) {
+		writer.write("inventory", inventory);
+		if (dyeColor != null) writer.write("color", (byte) dyeColor.getMetadata());
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		nbt.setTag("inventory", inventory.serializeNBT());
-		if (dyeColor != null) nbt.setByte("color", (byte) dyeColor.getMetadata());
-		return super.writeToNBT(nbt);
+	public void readSaveData(INBTReader reader) {
+		inventory = reader.obj("inventory", inventory);
+		if (reader.has("color")) setDyeColor(EnumDyeColor.byMetadata(reader.nbyte("color")));
+	}
+
+	@Override
+	public void writeUpdateData(INBTWriter writer) {
+		eim.checkChange(inventory);
+		writer.write("EI", inventory);
+		if (dyeColor != null) writer.write("color", (byte) dyeColor.getMetadata());
+	}
+
+	@Override
+	public void readUpdateData(INBTReader reader) {
+		inventory = reader.obj("EI", inventory);
+		if (reader.has("color")) setDyeColor(EnumDyeColor.byMetadata(reader.nbyte("color")));
+		if (inventory.isEmpty()) this.wake = 0;
+		if (world.isRemote) changeColor();
 	}
 
 	public ElementInventoryStronger getElementInventory() {
@@ -125,9 +135,17 @@ public class TileElementCube extends TileEntityNetworkOld implements ITickable, 
 		return true;
 	}
 
-	@Override
-	public void onInventoryStatusChange() {
-		if (!world.isRemote) this.updateToClient();
+//	@Override
+//	public void onInventoryStatusChange() {
+//		if (!world.isRemote) this.updateToClient();
+//	}
+
+	protected void checkElementInventoryStatusChange() {
+		if (world.isRemote) return;
+		int imp = eim.checkChange(inventory);
+		if (imp == -1) return;
+		if (imp == 0 || imp == 1) this.updateToClient();
+		System.out.println("??" + imp);
 	}
 
 	@Override

@@ -20,17 +20,16 @@ public class ModelElementTerminalCore extends ModelBase {
 	}
 
 	@Override
-	public void render(Entity entity, float tick, float srt, float f2, float f3, float f4, float scaleFactor) {
-		render(a, tick, srt, f2, f3, f4, scaleFactor);
+	public void render(Entity entity, float tick, float srt, float chaos, float f3, float f4, float scaleFactor) {
+		render(a, tick, srt, chaos, f3, f4, scaleFactor);
 	}
 
-	public void renderCover(Entity entity, float tick, float srt, float f2, float f3, float f4, float scaleFactor) {
-		render(b, tick, srt, f2, f3, f4, scaleFactor);
+	public void renderCover(Entity entity, float tick, float srt, float chaos, float f3, float f4, float scaleFactor) {
+		render(b, tick, srt, chaos, f3, f4, scaleFactor);
 	}
 
-	protected void render(ModelRenderer renderer, float tick, float srt, float f2, float f3, float f4,
+	protected void render(ModelRenderer renderer, float tick, float srt, float chaos, float f3, float f4,
 			float scaleFactor) {
-		float chaos = 0f;
 		final int size = 2;
 		final float detla = 2.5f;
 		final float A = 19f * srt;
@@ -43,7 +42,7 @@ public class ModelElementTerminalCore extends ModelBase {
 					float theta = (float) Math.atan2(z, x);
 					float phase = omega * tick - k * r;
 					float sin = MathHelper.sin(theta + phase);
-					float cos = MathHelper.cos(theta + phase);
+					float cos = MathHelper.cos(theta + phase) * srt;
 					float sinValue = Math.max(0, sin);
 					float y1;
 					if (cos >= 0) {
@@ -52,11 +51,10 @@ public class ModelElementTerminalCore extends ModelBase {
 						float sv = 1 - sinValue;
 						y1 = -A * (1 - sv * sv);
 					}
-					float y2 = -Math.abs(MathHelper.sin(omega / 8 * tick + x + z)) * 0.25f;
+					float y2 = -Math.abs(MathHelper.sin(omega / 8 * tick + x + z)) * 0.25f * srt;
 					renderer.rotationPointY = y1 + y2;
 					if (sinValue > 0) renderer.rotateAngleY = cos * 1.575f;
 					else renderer.rotateAngleY = 0;
-
 				} else {
 					renderer.rotationPointY = 0;
 					renderer.rotateAngleY = 0;

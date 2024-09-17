@@ -21,7 +21,6 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
@@ -105,7 +104,7 @@ public class CraftingCrafting implements ICraftingAltar {
 			// 寻找一个所需元素
 			ElementStack need = workingEInventory.getStackInSlot(TileStaticMultiBlock.rand.nextInt(workingEInventory.getSlots()));
 			if (need.isEmpty()) {
-				if (!ElementHelper.isEmpty(workingEInventory)) {
+				if (!workingEInventory.isEmpty()) {
 					for (int i = 0; i < workingEInventory.getSlots(); i++) {
 						need = workingEInventory.getStackInSlot(i);
 						if (!need.isEmpty()) break;

@@ -120,7 +120,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 						flyEffect(world, e.getColor(), new Vec3d(tile.getPos()).add(0.5, 0.5, 0.5), entity);
 					inventory.insertElement(e, false);
 					srcInv.extractElement(e, false);
-					tile.markDirty();
+					srcInv.markDirty();
 					break;
 				}
 			}
@@ -141,7 +141,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 				tile.getPos()).add(0.5, 0.5, 0.5));
 		eInv.insertElement(e, false);
 		estack.shrink(e.getCount());
-		tile.markDirty();
+		eInv.markDirty();
 		return true;
 	}
 

@@ -5,7 +5,6 @@ import java.util.List;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -14,6 +13,8 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.util.helper.INBTReader;
+import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 
 public class ElementInventoryStronger extends ElementInventory {
 
@@ -63,20 +64,19 @@ public class ElementInventoryStronger extends ElementInventory {
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		super.deserializeNBT(nbt);
-		upperLimit = nbt.getInteger("upper");
-		lowerLimit = nbt.getInteger("lower");
-		terminal = nbt.getByte("terminal");
+	public void writeSaveData(INBTWriter writer) {
+		super.writeSaveData(writer);
+		if (upperLimit > 0) writer.write("upper", upperLimit);
+		if (lowerLimit > 0) writer.write("lower", lowerLimit);
+		if (terminal > 0) writer.write("terminal", terminal);
 	}
 
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = super.serializeNBT();
-		if (upperLimit > 0) nbt.setInteger("upper", upperLimit);
-		if (lowerLimit > 0) nbt.setInteger("lower", lowerLimit);
-		if (terminal > 0) nbt.setByte("terminal", terminal);
-		return nbt;
+	public void readSaveData(INBTReader reader) {
+		super.readSaveData(reader);
+		upperLimit = reader.nint("upper");
+		lowerLimit = reader.nint("lower");
+		terminal = reader.nbyte("terminal");
 	}
 
 	@Override

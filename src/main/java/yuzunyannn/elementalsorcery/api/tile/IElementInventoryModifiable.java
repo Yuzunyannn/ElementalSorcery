@@ -8,4 +8,5 @@ public interface IElementInventoryModifiable extends IElementInventory {
 	 * @param slots 储存槽位的个数
 	 */
 	void setSlots(int slots);
+
 }

@@ -244,7 +244,7 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 	public boolean canContinueSpelling() {
 		if (!config.userElement) {
 			if (tick % 20 == 0) {
-				if (ElementHelper.isEmpty(elementInv)) return false;
+				if (elementInv.isEmpty()) return false;
 			}
 		} else {
 			if (tick % 20 == 0) {

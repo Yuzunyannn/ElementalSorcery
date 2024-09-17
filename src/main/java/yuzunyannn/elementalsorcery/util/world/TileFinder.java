@@ -141,7 +141,10 @@ public class TileFinder implements INBTSS, ISyncable {
 		if (world.isRemote) return;
 		if (box == null) return;
 		if (this.dispatcher != null) {
-			if (tick % 10 == 0 && byDirty()) this.dispatcher.send(new NBTTagIntArray(toData()));
+			if (tick % 10 == 0 && isDirty) {
+				isDirty = false;
+				this.dispatcher.send(new NBTTagIntArray(toData()));
+			}
 		}
 		tick++;
 		if (tilePosList.isFull()) return;

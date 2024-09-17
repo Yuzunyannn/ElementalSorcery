@@ -22,6 +22,7 @@ public interface IAltarWake extends IElementInventoryPromote {
 	 * 
 	 * @param type 唤醒的原型
 	 * @param from 唤醒来源
+	 * @param by   来源元素
 	 * @return 唤醒是否成功 (目前没有用
 	 */
 	boolean wake(int type, @Nullable BlockPos from);

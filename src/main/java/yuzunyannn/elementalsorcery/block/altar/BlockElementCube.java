@@ -36,6 +36,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -153,7 +154,7 @@ public class BlockElementCube extends BlockElementContainer {
 			}
 			ItemStack stack = new ItemStack(this);
 			ElementStack estack = new ElementStack(e, 10000, 1000);
-			IElementInventory inventory = ElementHelper.getElementInventory(stack);
+			IElementInventoryModifiable inventory = (IElementInventoryModifiable) ElementHelper.getElementInventory(stack);
 			inventory.setStackInSlot(0, estack);
 			inventory.markDirty();
 			items.add(stack);

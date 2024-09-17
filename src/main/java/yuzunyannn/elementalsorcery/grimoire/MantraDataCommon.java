@@ -21,7 +21,7 @@ public class MantraDataCommon implements IMantraData, IProgressable {
 	public int speedTick;
 	protected boolean markContinue;
 	/** 当前进度数据 */
-	protected float progress = -1;
+	protected float progress = 0;
 
 	// ---持久数据----
 

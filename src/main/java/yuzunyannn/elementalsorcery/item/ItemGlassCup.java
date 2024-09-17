@@ -154,7 +154,7 @@ public class ItemGlassCup extends Item implements IToElementItem {
 		if (juice == null) return cupToElement();
 		if (juice.getJuiceCount() <= 0) return cupToElement();
 		IElementInventory eInv = ElementHelper.getElementInventory(stack);
-		if (!ElementHelper.isEmpty(eInv)) return null;
+		if (!eInv.isEmpty()) return null;
 		if (juice instanceof IToElementItem) return ((IToElementItem) juice).toElement(stack);
 		return null;
 	}

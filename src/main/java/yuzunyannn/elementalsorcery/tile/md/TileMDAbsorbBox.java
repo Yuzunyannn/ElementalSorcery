@@ -113,7 +113,7 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 			ItemStack stack = ((IGetItemStack) tile).getStack();
 			if (stack.isEmpty()) return false;
 			IElementInventory inventory = getElementInventory(stack);
-			return !ElementHelper.isEmpty(inventory);
+			return !inventory.isEmpty();
 		}
 		return false;
 	}

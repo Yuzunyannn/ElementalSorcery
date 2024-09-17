@@ -272,25 +272,10 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 		return "clear".equals(cmd.method);
 	}
 
-	public static UUID finedUUID(IDevice device, String hint) {
-		DNRequest params = new DNRequest();
-		params.set(DNRequest.args(1), "uuid");
-		DNResult result = device.notice("network-ls", params);
-		List<UUID> list = result.getReturn(List.class);
-		if (list == null) return null;
-		hint = hint.toLowerCase();
-		for (UUID uuid : list) {
-			String uStr = uuid.toString().toLowerCase();
-			if (uStr.startsWith(hint)) return uuid;
-		}
-		return null;
-	}
-
 	protected DNResult invoke(IDeviceShellExecutor executor, Element element) throws DeviceShellBadInvoke {
 		final IDevice device = executor.getDevice();
 		DNRequest request = new DNRequest();
 		request.setLogList(executor.getLogs());
-		request.setFinder(UUID.class, hint -> finedUUID(device, hint));
 
 		if (!element.isExecable()) throw new DeviceShellBadInvoke(String.format("'%s' cannot exec", element));
 
@@ -307,7 +292,7 @@ public class DeviceCommand implements INBTSS, IDeviceShell {
 
 		UUID uuid = null;
 		if (!cmd.orient.isEmpty()) {
-			uuid = finedUUID(device, cmd.orient);
+			uuid = DNRequest.finedUUID(device, cmd.orient);
 			if (uuid == null) {
 				request.log(new TextComponentTranslation("es.app.cannotFind", cmd.orient));
 				return DNResult.invalid();

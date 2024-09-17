@@ -626,10 +626,10 @@ public class EntityFairyCube extends EntityLivingBase
 		}
 
 		IElementInventory env = ElementHelper.getElementInventory(stack);
-		if (!ElementHelper.isEmpty(env)) {
+		if (env != null && !env.isEmpty()) {
 			this.absorbColors.clear();
 			if (this.levelUpModule(env)) {
-				env.saveState(stack);
+				env.markDirty();
 				this.letsElementGrow();
 				return true;
 			}

@@ -366,9 +366,10 @@ public class CommandES extends CommandBase {
 					throw new CommandException("commands.es.element.notModifiable");
 				ElementStack[] cache = new ElementStack[inv.getSlots()];
 				for (int i = 0; i < cache.length; i++) cache[i] = inv.getStackInSlot(i);
-				((IElementInventoryModifiable) inv).setSlots(cache.length + 1);
-				for (int i = 0; i < cache.length; i++) inv.setStackInSlot(i, cache[i]);
-				inv.setStackInSlot(cache.length, estack);
+				IElementInventoryModifiable modifiable = ((IElementInventoryModifiable) inv);
+				modifiable.setSlots(cache.length + 1);
+				for (int i = 0; i < cache.length; i++) modifiable.setStackInSlot(i, cache[i]);
+				modifiable.setStackInSlot(cache.length, estack);
 			}
 			inv.saveState(stack);
 			return;

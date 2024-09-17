@@ -32,6 +32,7 @@ import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryAdapter;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryMonitor;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
@@ -102,7 +103,13 @@ public abstract class TileMDBase extends TileEntity
 
 		@Override
 		public void markDirty() {
+			checkElementInventoryStatusChange();
 			this.markDirty();
+		}
+
+		@Override
+		public long contentHashCode() {
+			return magic.isEmpty() ? 0 : 1;
 		}
 	}
 
@@ -114,6 +121,8 @@ public abstract class TileMDBase extends TileEntity
 	protected ItemStackHandler inventory = this.initItemStackHandler();
 	/** 元素仓库马甲 */
 	protected MDElementInventory eInventory = this.initMDElementInventory();
+	/** 元素仓库变化检查器 */
+	protected ElementInventoryMonitor eim = new ElementInventoryMonitor();
 
 	/** 初始化仓库，不需要返回null */
 	protected ItemStackHandler initItemStackHandler() {
@@ -680,11 +689,26 @@ public abstract class TileMDBase extends TileEntity
 		this.customUpdate(tag);
 	}
 
-	@Override
-	public void onInventoryStatusChange() {
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setInteger("MG", magic.getCount());
-		nbt.setInteger("MP", magic.getPower());
-		updateToClient(nbt);
+	protected void checkElementInventoryStatusChange() {
+		if (world.isRemote) return;
+		int imp = eim.checkChange(eInventory);
+		if (imp == -1) return;
+
+		if (imp == 0 || imp == 1) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setInteger("MG", magic.getCount());
+			nbt.setInteger("MP", magic.getPower());
+			updateToClient(nbt);
+		}
+
 	}
+
+
+//	@Override
+//	public void onInventoryStatusChange() {
+//		NBTTagCompound nbt = new NBTTagCompound();
+//		nbt.setInteger("MG", magic.getCount());
+//		nbt.setInteger("MP", magic.getPower());
+//		updateToClient(nbt);
+//	}
 }

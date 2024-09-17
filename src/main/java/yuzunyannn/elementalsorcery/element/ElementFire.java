@@ -121,8 +121,8 @@ public class ElementFire extends ElementCommon {
 				if (!world.isRemote) world.setBlockToAir(pos);
 				else {
 					Vec3d vec = new Vec3d(pos);
-					for (int k = 0; k < 8; ++k) world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL,
-							vec.x + Math.random(), vec.y + Math.random(), vec.z + Math.random(), 0.0D, 0.0D, 0.0D);
+					for (int k = 0; k < 8; ++k)
+						world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, vec.x + Math.random(), vec.y + Math.random(), vec.z + Math.random(), 0.0D, 0.0D, 0.0D);
 				}
 			}
 			return;
@@ -133,7 +133,7 @@ public class ElementFire extends ElementCommon {
 		if (block instanceof BlockElementContainer) {
 			TileEntity tileEntity = world.getTileEntity(pos);
 			IElementInventory eInv = ElementHelper.getElementInventory(tileEntity);
-			if (eInv != null && !ElementHelper.isEmpty(eInv)) {
+			if (eInv != null && !eInv.isEmpty()) {
 				world.setBlockToAir(pos);
 				BlockElementContainer.doExploded(world, pos, eInv, caster.toEntityLiving());
 				try {
@@ -144,8 +144,7 @@ public class ElementFire extends ElementCommon {
 		}
 
 		if (block instanceof BlockTNT) {
-			((BlockTNT) block).explode(world, pos, state.withProperty(BlockTNT.EXPLODE, true),
-					caster.toEntityLiving());
+			((BlockTNT) block).explode(world, pos, state.withProperty(BlockTNT.EXPLODE, true), caster.toEntityLiving());
 			return;
 		}
 

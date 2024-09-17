@@ -156,7 +156,8 @@ public class MantraSmelt extends MantraTypeSquareArea {
 					if (elementMap.containsKey(eStack.getElement()))
 						elementMap.get(eStack.getElement()).growOrBecome(eStack);
 					else elementMap.put(eStack.getElement(), eStack);
-					if (promote != null && ElementHelper.isEmpty(eInv)) promote.onInventoryStatusChange();
+					eInv.markDirty();
+//					if (promote != null && ElementHelper.isEmpty(eInv)) promote.onInventoryStatusChange();
 				}
 				return;
 			}
@@ -191,8 +192,7 @@ public class MantraSmelt extends MantraTypeSquareArea {
 			BlockAStone.EnumType type = state.getValue(BlockAStone.VARIANT);
 			if (type == BlockAStone.EnumType.FRAGMENTED) {
 				world.setBlockToAir(at);
-				ItemStack stack = ItemHelper
-						.toItemStack(state.withProperty(BlockAStone.VARIANT, BlockAStone.EnumType.STONE));
+				ItemStack stack = ItemHelper.toItemStack(state.withProperty(BlockAStone.VARIANT, BlockAStone.EnumType.STONE));
 				dropItem(world, at, caster, stack, elementMap);
 			}
 			return;
@@ -280,8 +280,7 @@ public class MantraSmelt extends MantraTypeSquareArea {
 		super.addSquareEffect(world, mData, caster, size);
 		Random rand = world.rand;
 		Vec3d center = new Vec3d(caster.iWantDirectCaster().getPosition());
-		Vec3d at = center.add(size / 2f - rand.nextDouble() * size + 0.5, 0,
-				size / 2f - rand.nextDouble() * size + 0.5);
+		Vec3d at = center.add(size / 2f - rand.nextDouble() * size + 0.5, 0, size / 2f - rand.nextDouble() * size + 0.5);
 		world.spawnParticle(EnumParticleTypes.FLAME, at.x, at.y, at.z, 0, 0.4, 0);
 	}
 

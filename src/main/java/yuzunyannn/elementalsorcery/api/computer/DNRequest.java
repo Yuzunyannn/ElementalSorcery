@@ -4,6 +4,7 @@ import java.util.IdentityHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 import javax.annotation.Nullable;
@@ -56,6 +57,7 @@ public class DNRequest extends DNBase implements ICastEnv {
 
 	@Override
 	public <T> T find(String hint, Class<T> cls) {
+		if (UUID.class == cls) return (T) DNRequest.finedUUID(srcs.getLast(), hint);
 		if (finderMap == null) return null;
 		Function<String, T> finder = (Function<String, T>) finderMap.get(cls);
 		if (finder == null) return null;
@@ -103,6 +105,21 @@ public class DNRequest extends DNBase implements ICastEnv {
 		if (obj == null) return null;
 		if (cls.isAssignableFrom(obj.getClass())) return (T) obj;
 		return GameCast.cast(this, obj, cls);
+	}
+
+	public static UUID finedUUID(IDevice device, String hint) {
+		if (device == null) return null;
+		DNRequest params = new DNRequest();
+		params.set(DNRequest.args(1), "uuid");
+		DNResult result = device.notice("network-ls", params);
+		List<UUID> list = result.getReturn(List.class);
+		if (list == null) return null;
+		hint = hint.toLowerCase();
+		for (UUID uuid : list) {
+			String uStr = uuid.toString().toLowerCase();
+			if (uStr.startsWith(hint)) return uuid;
+		}
+		return null;
 	}
 
 }

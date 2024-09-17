@@ -94,7 +94,7 @@ public class ItemKyaniteTools {
 
 		default IToElementInfo toElement(ItemStack stack) {
 			if (!ElementInventory.hasInvData(stack)) return null;
-			IElementInventory inventory = ElementInventory.sensor(new ElementInventory(6), stack);
+			ElementInventory inventory = ElementInventory.sensor(new ElementInventory(6), stack);
 			inventory.applyUse();
 
 			stack = stack.copy();

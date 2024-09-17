@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.render.tile;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.render.IRenderItem;
@@ -14,6 +14,7 @@ import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelElementTerminal;
 import yuzunyannn.elementalsorcery.render.model.ModelElementTerminalCore;
 import yuzunyannn.elementalsorcery.tile.device.TileElementTerminal;
+import yuzunyannn.elementalsorcery.util.helper.Color;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileElementTerminal extends TileEntitySpecialRenderer<TileElementTerminal> implements IRenderItem {
@@ -36,12 +37,15 @@ public class RenderTileElementTerminal extends TileEntitySpecialRenderer<TileEle
 		final float scale = 0.65f;
 		GlStateManager.scale(scale, scale, scale);
 		float dtick = EventClient.tickRender + partialTicks;
-		float rate = 1;
-		MODEL_CORE.render(null, dtick, rate, 0, 0, 0, 1);
+		float rate = RenderFriend.getPartialTicks(tile.wakeRate, tile.prevWakeRate, partialTicks);
+		float chaos = RenderFriend.getPartialTicks(tile.chaosRate, tile.prevChaosRate, partialTicks);
+		MODEL_CORE.render(null, dtick, rate, chaos, 0, 0, 1);
 		RenderFriend.disableLightmap(true);
-		Vec3d color = BlockElementCube.Color.defaultColor.getCoverColor();
-		GlStateManager.color((float) color.x, (float) color.y, (float) color.z, 1.0f);
-		MODEL_CORE.renderCover(null, dtick, rate, 0, 0, 0, 1);
+		Color color = new Color(BlockElementCube.Color.defaultColor.getCoverColor());
+		Color cubeColor = tile.getColor();
+		if (cubeColor != null && rate > 0) color.weight(cubeColor, Math.abs(MathHelper.sin(tile.colorTick) * rate));
+		GlStateManager.color(color.r, color.g, color.b, 1.0f);
+		MODEL_CORE.renderCover(null, dtick, rate, chaos, 0, 0, 1);
 		RenderFriend.disableLightmap(false);
 		RenderFriend.endTileEntitySpecialRenderForReverseModel();
 		RenderFriend.bindDestoryTextureEnd(destroyStage);

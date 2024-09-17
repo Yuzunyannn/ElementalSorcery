@@ -61,10 +61,10 @@ public abstract class BlockElementContainer extends BlockContainerNormal {
 	public void readTileDataFromItemStack(IBlockAccess world, BlockPos pos, EntityLivingBase user, TileEntity tile,
 			ItemStack stack) {
 		super.readTileDataFromItemStack(world, pos, user, tile, stack);
-		IElementInventory einv = BlockHelper.getElementInventory(world, pos, null);
-		if (einv == null) return;
+		IElementInventory eInv = BlockHelper.getElementInventory(world, pos, null);
+		if (eInv == null) return;
 		if (EntityHelper.isCreative(user)) stack = stack.copy();
-		einv.assign(ElementHelper.getElementInventory(stack));
+		eInv.assign(ElementHelper.getElementInventory(stack));
 	}
 
 	@Override
@@ -85,17 +85,17 @@ public abstract class BlockElementContainer extends BlockContainerNormal {
 		} catch (Exception e) {}
 	}
 
-	public static void doExploded(World world, BlockPos pos, IElementInventory einv, EntityLivingBase attacker) {
-		if (einv == null) return;
+	public static void doExploded(World world, BlockPos pos, IElementInventory eInv, EntityLivingBase attacker) {
+		if (eInv == null) return;
 		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
-		for (int i = 0; i < einv.getSlots(); i++) {
-			ElementStack stack = einv.getStackInSlot(i);
+		for (int i = 0; i < eInv.getSlots(); i++) {
+			ElementStack stack = eInv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
 			stack = stack.copy();
 			stack.grow(50);
 			stack.setPower(stack.getPower() + 125);
-			if (ElementExplosion.doExplosion(world, at, stack, attacker) != null)
-				einv.setStackInSlot(i, ElementStack.EMPTY);
+			if (ElementExplosion.doExplosion(world, at, stack, attacker) == null) continue;
+			eInv.setStackInSlot(i, ElementStack.EMPTY);
 		}
 	}
 

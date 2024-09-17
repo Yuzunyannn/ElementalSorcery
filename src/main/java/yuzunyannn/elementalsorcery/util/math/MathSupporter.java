@@ -100,4 +100,10 @@ public class MathSupporter {
 		}
 	}
 
+	public static double calculateArithmeticGeometricTerm(final double a1, final double n, final double p,
+			final double q) {
+		final double c = p / (q - 1);
+		return (a1 + c) * Math.pow(q, n - 1) - c;
+	}
+
 }

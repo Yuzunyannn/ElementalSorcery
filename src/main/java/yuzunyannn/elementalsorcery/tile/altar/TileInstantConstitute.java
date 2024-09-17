@@ -213,7 +213,8 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 				colors[colorIndex++] = eStack.getColor();
 			}
 			altarWake.wake(IAltarWake.SEND, pos);
-			altarWake.onInventoryStatusChange();
+			eInv.markDirty();
+//			altarWake.onInventoryStatusChange();
 
 			NBTTagCompound cDat = new NBTTagCompound();
 			cDat.setByte("i", entry.getKey().byteValue());

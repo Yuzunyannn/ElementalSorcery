@@ -226,11 +226,11 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 		if (altarWake == null) return;
 
 		IElementInventory eInv = ElementHelper.getElementInventory(outTile);
-		boolean isEmpty = ElementHelper.isEmpty(eInv);
+//		boolean isEmpty = ElementHelper.isEmpty(eInv);
 		eInv.insertElement(estack, false);
 		eInv.markDirty();
 		altarWake.wake(IAltarWake.OBTAIN, pos);
-		if (isEmpty) altarWake.onInventoryStatusChange();
+//		if (isEmpty) altarWake.onInventoryStatusChange();
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -34,15 +34,19 @@ import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.detecter.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.INBTReader;
+import yuzunyannn.elementalsorcery.util.helper.INBTSS;
+import yuzunyannn.elementalsorcery.util.helper.INBTWriter;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ElementInventory implements IElementInventoryModifiable, INBTSerializable<NBTTagCompound>,
-		IItemCapbiltitySyn, ContainerArrayDetecter.ICanArrayDetected<ElementStack, NBTTagIntArray>, ICastable {
+		IItemCapbiltitySyn, ContainerArrayDetecter.ICanArrayDetected<ElementStack, NBTTagIntArray>, ICastable, INBTSS {
 
 	@CapabilityInject(IElementInventory.class)
 	public static Capability<IElementInventory> ELEMENTINVENTORY_CAPABILITY;
 
 	@Config(sync = true)
+	@Config.NumberRange(min = 1000, max = 0x00ffffff)
 	public static int MAX_SIZE_ELEMENT_IN_INVENTORY = 10000;
 
 	private ElementStack[] estacks;
@@ -97,7 +101,7 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 	@Override
 	public ElementStack setStackInSlot(int slot, ElementStack estack) {
 		ElementStack old = estacks[slot];
-		estacks[slot] = estack;
+		estacks[slot] = ElementStack.EMPTY == estack ? estack.copy() : estack;
 		return old;
 	}
 
@@ -130,8 +134,7 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 	}
 
 	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = new NBTTagCompound();
+	public void writeSaveData(INBTWriter writer) {
 		NBTTagList list = new NBTTagList();
 		for (int i = 0; i < getSlots(); i++) {
 			if (getStackInSlot(i).isEmpty()) continue;
@@ -139,22 +142,46 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 			data.setInteger("slot", i);
 			list.appendTag(data);
 		}
-		nbt.setTag("list", list);
-		nbt.setInteger("size", getSlots());
-		return nbt;
+		writer.write("list", list);
+		writer.write("size", getSlots());
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		int size = nbt.getInteger("size");
+	public void readSaveData(INBTReader reader) {
+		int size = reader.nint("size");
 		this.setSlots(size);
-		NBTTagList list = nbt.getTagList("list", NBTTag.TAG_COMPOUND);
+		NBTTagList list = reader.listTag("list", NBTTag.TAG_COMPOUND);
 		for (NBTBase base : list) {
 			NBTTagCompound data = (NBTTagCompound) base;
 			ElementStack etack = new ElementStack(data);
 			int slot = data.getInteger("slot");
 			if (slot < getSlots()) setStackInSlot(slot, etack.isEmpty() ? ElementStack.EMPTY : etack);
 		}
+	}
+
+	@Override
+	public void writeUpdateData(INBTWriter writer) {
+		writer.writeStream("n", buff -> serializeBuff(buff));
+	}
+
+	@Override
+	public void readUpdateData(INBTReader reader) {
+		reader.sobj("n", buff -> {
+			deserializeBuff(buff);
+			return this;
+		});
+	}
+
+	public PacketBuffer serializeBuff(PacketBuffer buffer) {
+		buffer.writeInt(estacks.length);
+		for (int i = 0; i < estacks.length; i++) estacks[i].serializeBuff(buffer);
+		return buffer;
+	}
+
+	public void deserializeBuff(PacketBuffer buffer) {
+		int size = buffer.readInt();
+		this.setSlots(size);
+		for (int i = 0; i < size; i++) estacks[i] = new ElementStack(buffer);
 	}
 
 	public static boolean hasInvData(ItemStack stack) {
@@ -212,38 +239,13 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 		}
 	}
 
-	public static class TileDataSensitivity implements IDataSensitivity, ICastable {
-		final TileEntity tile;
-		final IElementInventory self;
-
-		public TileDataSensitivity(IElementInventory self, TileEntity tile) {
-			this.tile = tile;
-			this.self = self;
-		}
-
-		@Override
-		public void markDirty() {
-			tile.markDirty();
-		}
-
-		@Override
-		public void applyUse() {
-		}
-
-		@Override
-		public <T> T cast(Class<?> to) {
-			if (to.isAssignableFrom(tile.getClass())) return (T) tile;
-			return null;
-		}
-	}
-
 	public static <T extends IElementInventory> T sensor(T self, ItemStack stack) {
 		self.setSensor(new ItemStackDataSensitivity(self, stack));
 		return self;
 	}
 
-	public static <T extends IElementInventory> T sensor(T self, TileEntity tile) {
-		self.setSensor(new TileDataSensitivity(self, tile));
+	public static <T extends IElementInventory> T sensor(T self, IDataSensitivity sensor) {
+		self.setSensor(sensor);
 		return self;
 	}
 

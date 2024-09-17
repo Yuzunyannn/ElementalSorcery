@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.tile.device;
+ package yuzunyannn.elementalsorcery.tile.device;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;

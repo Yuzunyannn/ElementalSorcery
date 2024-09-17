@@ -17,12 +17,16 @@ import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.target.WorldObjectBlock;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryMonitor;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryOnlyInsert;
 
 public class TileElementPlatform extends TileEntityNetworkOld implements IGetItemStack, ITickable, IAltarWake {
 
 	// 只能存不能取
-	protected ElementInventoryOnlyInsert inventory = ElementInventory.sensor(new ElementInventoryOnlyInsert(4), this);
+	protected ElementInventoryMonitor eim = new ElementInventoryMonitor();
+	protected ElementInventoryOnlyInsert inventory = ElementInventory.sensor(new ElementInventoryOnlyInsert(
+			4), ElementInventoryMonitor.sensor(this, () -> checkElementInventoryStatusChange()));
+
 	protected ItemStack stack = ItemStack.EMPTY;
 	protected NBTTagCompound runData = null;
 	protected int tick;
@@ -70,6 +74,12 @@ public class TileElementPlatform extends TileEntityNetworkOld implements IGetIte
 		}
 		inventory.saveState(nbt);
 		return super.writeToNBT(nbt);
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		eim.checkChange(inventory);
+		return super.getUpdateTag();
 	}
 
 	@Override
@@ -128,10 +138,19 @@ public class TileElementPlatform extends TileEntityNetworkOld implements IGetIte
 		return type == OBTAIN;
 	}
 
-	@Override
-	public void onInventoryStatusChange() {
+//	@Override	
+//	public void onInventoryStatusChange() {
+//		needSyncEInv = true;
+//		updateToClient();
+//		needSyncEInv = false;
+//	}
+
+	protected void checkElementInventoryStatusChange() {
+		if (world.isRemote) return;
+		int imp = eim.checkChange(inventory);
+		if (imp == -1) return;
 		needSyncEInv = true;
-		updateToClient();
+		if (imp == 0 || imp == 1) this.updateToClient();
 		needSyncEInv = false;
 	}
 

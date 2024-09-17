@@ -90,16 +90,17 @@ public abstract class TileStaticMultiBlock extends TileEntityNetworkOld {
 			IAltarWake altarWake = getAlterWake(tile);
 			if (altarWake == null) continue;
 			// 获取仓库
-			IElementInventory einv = ElementHelper.getElementInventory(tile);
-			if (einv == null) continue;
-			ElementStack extract = einv.extractElement(need, true);
+			IElementInventory eInv = ElementHelper.getElementInventory(tile);
+			if (eInv == null) continue;
+			ElementStack extract = eInv.extractElement(need, true);
 			if (extract.arePowerfulAndMoreThan(need)) {
 				altarWake.wake(IAltarWake.SEND, this.pos);
 				if (world.isRemote) genParticleElementTo(true, altarWake, extract, pos, animePos);
 				else {
 					markDirty();
-					einv.extractElement(need, false);
-					if (ElementHelper.isEmpty(einv)) altarWake.onInventoryStatusChange();
+					eInv.extractElement(need, false);
+					eInv.markDirty();
+//					if (ElementHelper.isEmpty(eInv)) altarWake.onInventoryStatusChange();
 				}
 				return extract;
 			}
@@ -123,14 +124,14 @@ public abstract class TileStaticMultiBlock extends TileEntityNetworkOld {
 		IAltarWake altarWake = getAlterWake(tile);
 		if (altarWake == null) return false;
 		// 获取仓库
-		IElementInventory einv = ElementHelper.getElementInventory(tile);
-		if (einv == null) return false;
-		if (einv.insertElement(estack, true)) {
-			boolean isEmpty = ElementHelper.isEmpty(einv);
+		IElementInventory eInv = ElementHelper.getElementInventory(tile);
+		if (eInv == null) return false;
+		if (eInv.insertElement(estack, true)) {
+//			boolean isEmpty = ElementHelper.isEmpty(eInv);
 			altarWake.wake(IAltarWake.OBTAIN, this.pos);
-			einv.insertElement(estack, false);
+			eInv.insertElement(estack, false);
 			if (world.isRemote) genParticleElementTo(false, altarWake, estack, animePos, pos);
-			else if (isEmpty) altarWake.onInventoryStatusChange();
+			eInv.markDirty();
 			markDirty();
 			return true;
 		}
@@ -149,10 +150,10 @@ public abstract class TileStaticMultiBlock extends TileEntityNetworkOld {
 			refPos = new Vec3d(from).add(0.5, 0.5, 0.5);
 		}
 		if (altarWake == null) {
-			if (isGet) TileElementCube.giveParticleElementTo(world, estack.getColor(),
-					new Vec3d(from).add(0.5, 0.5, 0.5), refPos, 1);
-			else TileElementCube.giveParticleElementTo(world, estack.getColor(), refPos,
-					new Vec3d(to).add(0.5, 0.5, 0.5), 1);
+			if (isGet) TileElementCube.giveParticleElementTo(world, estack.getColor(), new Vec3d(
+					from).add(0.5, 0.5, 0.5), refPos, 1);
+			else TileElementCube.giveParticleElementTo(world, estack.getColor(), refPos, new Vec3d(
+					to).add(0.5, 0.5, 0.5), 1);
 		} else altarWake.updateEffect(world, isGet ? IAltarWake.SEND : IAltarWake.OBTAIN, estack, refPos);
 	}
 

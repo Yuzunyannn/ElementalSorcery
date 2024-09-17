@@ -128,19 +128,19 @@ public class ItemMagicPaper extends Item {
 				IAltarWake altarWake = TileStaticMultiBlock.getAlterWake(tile);
 				if (altarWake == null) continue;
 
-				IElementInventory einv = ElementHelper.getElementInventory(tile);
-				if (einv == null) continue;
+				IElementInventory eInv = ElementHelper.getElementInventory(tile);
+				if (eInv == null) continue;
 
-				ElementStack estack = ElementHelper.randomExtract(einv, 4, world.rand.nextInt());
+				ElementStack estack = ElementHelper.randomExtract(eInv, 4, world.rand.nextInt());
 				if (estack.isEmpty()) continue;
 
 				altarWake.wake(IAltarWake.SEND, pos);
-				if (ElementHelper.isEmpty(einv)) altarWake.onInventoryStatusChange();
+				eInv.markDirty();
+//				if (ElementHelper.isEmpty(einv)) altarWake.onInventoryStatusChange();
 
 				if (world.isRemote) {
 					for (int i = 0; i < 4; i++) {
-						altarWake.updateEffect(world, IAltarWake.SEND, estack,
-								entityItem.getPositionVector().add(0, 0.5, 0));
+						altarWake.updateEffect(world, IAltarWake.SEND, estack, entityItem.getPositionVector().add(0, 0.5, 0));
 						if (world.rand.nextFloat() >= 0.75) break;
 					}
 				}
@@ -156,8 +156,7 @@ public class ItemMagicPaper extends Item {
 			stack.setItemDamage(EnumType.MANTRA.getMeta());
 			stack.setTagCompound(null);
 			entityItem.setItem(stack);
-			NBTTagCompound nbt = FireworkEffect.fastNBT(1, 1, 0.05f, TileMDBase.PARTICLE_COLOR,
-					TileMDBase.PARTICLE_COLOR_FADE);
+			NBTTagCompound nbt = FireworkEffect.fastNBT(1, 1, 0.05f, TileMDBase.PARTICLE_COLOR, TileMDBase.PARTICLE_COLOR_FADE);
 			Effects.spawnEffect(world, Effects.FIREWROK, entityItem.getPositionVector().add(0, 0.5, 0), nbt);
 		}
 

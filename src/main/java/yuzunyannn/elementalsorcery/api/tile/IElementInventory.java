@@ -15,9 +15,10 @@ import yuzunyannn.elementalsorcery.api.crafting.IAssignable;
 import yuzunyannn.elementalsorcery.api.crafting.IDataSensitivity;
 import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.IContentHashable;
 
-public interface IElementInventory
-		extends IDataSensitivity, IAssignable<IElementInventory>, INBTSerializable<NBTTagCompound>, IItemCapbiltitySyn {
+public interface IElementInventory extends IDataSensitivity, IAssignable<IElementInventory>,
+		INBTSerializable<NBTTagCompound>, IContentHashable, IItemCapbiltitySyn {
 
 	/**
 	 * 获取最多有多少个槽位，每个槽位只能存放一种ElementStack
@@ -40,7 +41,7 @@ public interface IElementInventory
 	 * 
 	 * @param slot   访问的槽位
 	 * @param estack 要设置的ElementStack
-	 * @return 原来槽位的ElementStack
+	 * @return origin ElementStack in slot
 	 */
 	@Nonnull
 	ElementStack setStackInSlot(int slot, @Nonnull ElementStack estack);
@@ -117,6 +118,20 @@ public interface IElementInventory
 			if (!getStackInSlot(i).isEmpty()) return false;
 		}
 		return true;
+	}
+
+	/**
+	 * @return 0 is empty
+	 * */
+	@Override
+	default long contentHashCode() {
+		long hash = 0;
+		for (int i = 0; i < getSlots(); i++) {
+			ElementStack stack = getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			hash = (hash << 4) | (stack.getElement().getRegistryId() & 0x0f);
+		}
+		return hash;
 	}
 
 	@SideOnly(Side.CLIENT)

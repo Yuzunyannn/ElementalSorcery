@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.tile.ir;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
@@ -38,9 +39,12 @@ public abstract class TileIceRockBase extends TileEntityNetworkOld implements IE
 		return true;
 	}
 
-	@Override
-	public void onInventoryStatusChange() {
+	protected void checkElementInventoryStatusChange() {
 	}
+
+//	@Override
+//	public void onInventoryStatusChange() {
+//	}
 
 	protected void onFromOrToFragmentChange(double wastageFragment) {
 		markDirty();
@@ -102,7 +106,13 @@ public abstract class TileIceRockBase extends TileEntityNetworkOld implements IE
 		};
 
 		@Override
+		public long contentHashCode() {
+			return getMagicFragment() == 0 ? 0 : 1;
+		}
+
+		@Override
 		public void markDirty() {
+			checkElementInventoryStatusChange();
 			this.markDirty();
 		}
 	}

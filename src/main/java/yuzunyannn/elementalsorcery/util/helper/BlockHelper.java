@@ -27,6 +27,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.tile.ICanSync;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -266,6 +267,15 @@ public class BlockHelper {
 			if (Blocks.NETHER_BRICK == block) return true;
 		} catch (Exception e) {}
 		return false;
+	}
+
+	public static void sendTileUpdate(TileEntity tileEntity) {
+		if (tileEntity.getWorld().isRemote) return;
+		if (tileEntity instanceof ICanSync) {
+			((ICanSync) tileEntity).updateToClient();
+			return;
+		}
+		tileEntity.getWorld().notifyBlockUpdate(tileEntity.getPos(), null, null, 0x2);
 	}
 
 }

@@ -8,11 +8,37 @@ import yuzunyannn.elementalsorcery.logics.EventServer;
 
 public class CapabilityGetter<T> implements IObjectGetter<T> {
 
+	public final static <T> CapabilityGetter<T> emtpy() {
+		return (CapabilityGetter<T>) EMPTY;
+	}
+
+	final static CapabilityGetter<?> EMPTY = new CapabilityGetter() {
+		@Override
+		public void reset() {
+		}
+
+		@Override
+		public Object softGet() {
+			return null;
+		}
+
+		@Override
+		public Object toughGet() {
+			return null;
+		}
+	};
+
 	final IDeviceLinker linker;
 	final Capability<T> capability;
 	final Object key;
 	long ts;
 	T obj;
+
+	private CapabilityGetter() {
+		this.linker = null;
+		this.capability = null;
+		this.key = null;
+	}
 
 	CapabilityGetter(IDeviceLinker linker, Capability<T> capability, Object key) {
 		this.linker = linker;
@@ -23,7 +49,6 @@ public class CapabilityGetter<T> implements IObjectGetter<T> {
 	public void reset() {
 		obj = null;
 		ts = EventServer.chaosTimeStamp;
-		if (linker.isClose()) return;
 		if (!linker.isConnecting()) return;
 		IDevice device = linker.getRemoteDevice();
 		obj = device.getCapability(capability, null);
@@ -31,7 +56,7 @@ public class CapabilityGetter<T> implements IObjectGetter<T> {
 
 	@Override
 	public T softGet() {
-		if (EventServer.chaosTimeStamp - ts > 1000 * 5) reset();
+		if (EventServer.chaosTimeStamp - ts > 1000 * 2) reset();
 		return obj;
 	}
 
